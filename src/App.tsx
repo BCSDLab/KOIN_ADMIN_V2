@@ -1,14 +1,14 @@
-import React from 'react';
+import * as S from './App.style';
 import logo from './logo.svg';
-import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <S.Container>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Edit
+          and save to reload.
         </p>
         <a
           className="App-link"
@@ -18,7 +18,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </S.Container>
     </div>
   );
 }

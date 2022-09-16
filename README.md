@@ -1,18 +1,8 @@
 # KOIN ADMIN V2
 
-[KOIN_ADMIN](https://github.com/BCSDLab/KOIN_ADMIN) Renewal
+Project - [KOIN_ADMIN](https://github.com/BCSDLab/KOIN_ADMIN) Renewal
 
-# Want to Contibute?
-
-See Our [Contribute Guide](./CONTRIBUTE.md).
-
-## Want to question?
-
-Make an issue or Contact with this repository leader.
-
-### Repository leader
-
-[Wonbeen Choi](https://github.com/ChoiWonBeen)
+Backoffice for [KOIN_WEB](https://koreatech.in/) and [BCSD Lab](https://bcsdlab.com/)
 
 # Learn Our Stack
 
@@ -27,7 +17,6 @@ Make an issue or Contact with this repository leader.
   - [React Router v6](https://reactrouter.com/docs/en/v6/getting-started/tutorial)
 - Linting Library
   - [ESLint](https://eslint.org/docs/latest/user-guide/getting-started)
-  - [StyleLint](https://stylelint.io/)
 - Styling Library
   - [Ant Design](https://ant.design/docs/react/introduce)
   - [Styled-Components](https://styled-components.com/docs)

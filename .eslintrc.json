@@ -56,7 +56,9 @@
       "required": {
         "some": ["nesting", "id"]
       }
-    }]
+    }],
+    "no-param-reassign": "off",
+    "import/no-cycle": "off"
   },
   "settings": {
     "import/resolver": {

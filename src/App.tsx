@@ -1,25 +1,30 @@
+import Login from 'pages/Login';
+import { useSelector } from 'react-redux';
+import {
+  Navigate, Outlet, Route, Routes, useLocation,
+} from 'react-router-dom';
+import { RootState } from 'store';
 import * as S from './App.style';
-import logo from './logo.svg';
+
+function RequireAuth() {
+  const { token } = useSelector((state: RootState) => state.auth);
+  const location = useLocation();
+
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <Outlet />;
+}
 
 function App() {
   return (
-    <div className="App">
-      <S.Container>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </S.Container>
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<RequireAuth />}>
+        <Route index element={<S.Container>HOME</S.Container>} />
+      </Route>
+    </Routes>
   );
 }
 

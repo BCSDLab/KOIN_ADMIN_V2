@@ -1,3 +1,4 @@
+import Toast from 'components/common/Toast';
 import Login from 'pages/Login';
 import { useSelector } from 'react-redux';
 import {
@@ -19,12 +20,15 @@ function RequireAuth() {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<RequireAuth />}>
-        <Route index element={<S.Container>HOME</S.Container>} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<RequireAuth />}>
+          <Route index element={<S.Container>HOME</S.Container>} />
+        </Route>
+      </Routes>
+      <Toast />
+    </>
   );
 }
 

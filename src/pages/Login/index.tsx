@@ -2,18 +2,19 @@ import { FormEvent, useEffect, useRef } from 'react';
 import { useLoginMutation } from 'store/api/auth';
 import sha256 from 'sha256';
 import { SECOND_PASSWORD } from 'constant';
-import showToast from 'utils/ts/showToast';
+import makeToast from 'utils/ts/makeToast';
 import { LoginResponse } from 'model/auth.model';
 import { setCredentials } from 'store/slice/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from 'store';
+import type { InputRef } from 'antd';
 import * as S from './Login.style';
 
 function useLogin() {
-  const idRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const secondPasswordRef = useRef<HTMLInputElement>(null);
+  const idRef = useRef<InputRef>(null);
+  const passwordRef = useRef<InputRef>(null);
+  const secondPasswordRef = useRef<InputRef>(null);
   const { user } = useSelector((state: RootState) => state.auth);
   const [loginMutation] = useLoginMutation();
   const dispatch = useDispatch();
@@ -26,19 +27,19 @@ function useLogin() {
   const login = async (e: FormEvent) => {
     e.preventDefault();
     const refList = [idRef.current, passwordRef.current, secondPasswordRef.current];
-    if (refList.some((current) => (current?.value === ''))) showToast('warning', '필수 입력값을 입력해주세요.');
-    else if (refList[2]?.value !== SECOND_PASSWORD) showToast('error', '올바른 계정이 아닙니다.');
+    if (refList.some((current) => (current?.input?.value === ''))) makeToast('warning', '필수 입력값을 입력해주세요.');
+    else if (refList[2]?.input?.value !== SECOND_PASSWORD) makeToast('error', '올바른 계정이 아닙니다.');
     else {
       const res = await loginMutation({
-        portal_account: refList[0]?.value!,
-        password: sha256(refList[1]?.value!),
+        portal_account: refList[0]?.input?.value!,
+        password: sha256(refList[1]?.input?.value!),
       });
 
       if ('data' in res) {
         const credentials = res.data as LoginResponse;
         dispatch(setCredentials(credentials));
       } else if ('error' in res) {
-        showToast('error', '올바른 계정이 아닙니다.');
+        makeToast('error', '올바른 계정이 아닙니다.');
       }
     }
   };
@@ -54,12 +55,15 @@ function Login() {
   } = useLogin();
   return (
     <S.Container>
-      <form onSubmit={login}>
-        <input ref={idRef} autoComplete="id" />
-        <input ref={passwordRef} type="password" autoComplete="current-password" />
-        <input ref={secondPasswordRef} type="password" />
-        <button type="submit">login</button>
-      </form>
+      <S.LogoImg src="https://static.koreatech.in/assets/img/logo_primary.png" alt="KOIN 로고" />
+      <S.LoginForm onSubmit={login}>
+        <S.Header>LOGIN</S.Header>
+        <S.Divider />
+        <S.StyledInput ref={idRef} autoComplete="id" placeholder="ID" />
+        <S.StyledInput ref={passwordRef} type="password" autoComplete="current-password" placeholder="PASSWORD" />
+        <S.StyledInput ref={secondPasswordRef} type="password" placeholder="SECOND PASSWORD" />
+        <S.StyledButton type="primary" htmlType="submit">Login</S.StyledButton>
+      </S.LoginForm>
     </S.Container>
   );
 }

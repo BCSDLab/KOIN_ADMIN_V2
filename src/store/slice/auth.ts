@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { User, LoginResponse } from 'model/auth.model';
+import type { User, LoginState } from 'model/auth.model';
 import { RootState } from 'store';
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: { user: null, token: null } as LoginResponse,
+  initialState: { user: null, token: null } as LoginState,
   reducers: {
     setCredentials: (
       state,

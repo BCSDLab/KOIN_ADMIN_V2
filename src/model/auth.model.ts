@@ -17,8 +17,13 @@ export interface User {
 }
 
 export interface LoginResponse {
-  user: User | null
-  token: string | null
+  user: User;
+  token: string;
+}
+
+export interface LoginState {
+  user: User | null;
+  token: string | null;
 }
 
 export interface LoginRequest {

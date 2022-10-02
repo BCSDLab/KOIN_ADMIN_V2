@@ -56,7 +56,7 @@ export const Divider = styled.hr`
   margin: 0 0 20px;
 `;
 
-export const StyledInput = styled(Input)`
+export const FormInput = styled(Input)`
   height: 50px;
   font-size: 20px;
   text-align: center;
@@ -67,7 +67,7 @@ export const StyledInput = styled(Input)`
   }
 `;
 
-export const StyledButton = styled(Button)`
+export const SubmitButton = styled(Button)`
   width: 100%;
   height: 40px;
   border-radius: 10px;

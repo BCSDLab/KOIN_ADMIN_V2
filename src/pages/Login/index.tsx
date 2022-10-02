@@ -59,10 +59,10 @@ function Login() {
       <S.LoginForm onSubmit={login}>
         <S.Header>LOGIN</S.Header>
         <S.Divider />
-        <S.StyledInput ref={idRef} autoComplete="id" placeholder="ID" />
-        <S.StyledInput ref={passwordRef} type="password" autoComplete="current-password" placeholder="PASSWORD" />
-        <S.StyledInput ref={secondPasswordRef} type="password" placeholder="SECOND PASSWORD" />
-        <S.StyledButton type="primary" htmlType="submit">Login</S.StyledButton>
+        <S.FormInput ref={idRef} autoComplete="id" placeholder="ID" />
+        <S.FormInput ref={passwordRef} type="password" autoComplete="current-password" placeholder="PASSWORD" />
+        <S.FormInput ref={secondPasswordRef} type="password" placeholder="SECOND PASSWORD" />
+        <S.SubmitButton type="primary" htmlType="submit">Login</S.SubmitButton>
       </S.LoginForm>
     </S.Container>
   );

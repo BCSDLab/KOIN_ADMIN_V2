@@ -1,6 +1,14 @@
 import Toast from 'components/common/Toast';
 import DefaultLayout from 'layout/defaultLayout';
+import Bus from 'pages/Bus';
+import Cafeteria from 'pages/Cafeteria';
+import Category from 'pages/Category';
+import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
+import Manager from 'pages/Manager';
+import Room from 'pages/Room';
+import Store from 'pages/Store';
+import User from 'pages/User';
 import { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -26,7 +34,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<RequireAuth><DefaultLayout /></RequireAuth>}>
-          <Route index element={<div>HOME</div>} />
+          <Route index element={<Dashboard />} />
+          <Route path="/store" element={<Store />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/cafeteria" element={<Cafeteria />} />
+          <Route path="/bus" element={<Bus />} />
+          <Route path="/room" element={<Room />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/manager" element={<Manager />} />
           <Route path="*" element={<h1>404</h1>} />
         </Route>
       </Routes>

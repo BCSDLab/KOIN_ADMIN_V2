@@ -7,6 +7,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: { user: null, token: null } as LoginState,
   reducers: {
+    // 어드민은 인증토큰이 중요하므로 따로 스토리지에 보관하지 않고 redux내에서만 관리
     setCredentials: (
       state,
       { payload: { user, token } }: PayloadAction<{ user: User; token: string }>,

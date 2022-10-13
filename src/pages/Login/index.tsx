@@ -1,9 +1,8 @@
-import { FormEvent, useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef } from 'react';
 import { useLoginMutation } from 'store/api/auth';
 import sha256 from 'sha256';
 import { SECOND_PASSWORD } from 'constant';
 import makeToast from 'utils/ts/makeToast';
-import { LoginResponse } from 'model/auth.model';
 import { setCredentials } from 'store/slice/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +23,7 @@ function useLogin() {
     if (user) navigate('/');
   }, [user, navigate]);
 
-  const login = async (e: FormEvent) => {
+  const login = async (e: SyntheticEvent) => {
     e.preventDefault();
     const refList = [idRef.current, passwordRef.current, secondPasswordRef.current];
     if (refList.some((current) => (current?.input?.value === ''))) makeToast('warning', '필수 입력값을 입력해주세요.');
@@ -36,7 +35,7 @@ function useLogin() {
       });
 
       if ('data' in res) {
-        const credentials = res.data as LoginResponse;
+        const credentials = res.data;
         dispatch(setCredentials(credentials));
       } else if ('error' in res) {
         makeToast('error', '올바른 계정이 아닙니다.');

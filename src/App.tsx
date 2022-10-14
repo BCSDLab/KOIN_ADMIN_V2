@@ -7,6 +7,7 @@ import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import Manager from 'pages/Manager';
 import ManagerRequest from 'pages/ManagerRequest';
+import Member from 'pages/Member';
 import Room from 'pages/Room';
 import Store from 'pages/Store';
 import User from 'pages/User';
@@ -44,6 +45,7 @@ function App() {
           <Route path="/user" element={<User />} />
           <Route path="/manager" element={<Manager />} />
           <Route path="/manager-request" element={<ManagerRequest />} />
+          <Route path="/member" element={<Member />} />
           <Route path="*" element={<h1>404</h1>} />
         </Route>
       </Routes>

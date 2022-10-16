@@ -1,22 +1,23 @@
 import Toast from 'components/common/Toast';
 import DefaultLayout from 'layout/defaultLayout';
-import Bus from 'pages/Bus';
-import Cafeteria from 'pages/Cafeteria';
-import Category from 'pages/Category';
+import Bus from 'pages/Services/Bus';
+import Cafeteria from 'pages/Services/Cafeteria';
+import Category from 'pages/Services/Category';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
-import Manager from 'pages/Manager';
-import ManagerRequest from 'pages/ManagerRequest';
-import Member from 'pages/Member';
-import Room from 'pages/Room';
-import Store from 'pages/Store';
-import User from 'pages/User';
+import Manager from 'pages/UserManage/Manager';
+import ManagerRequest from 'pages/UserManage/ManagerRequest';
+import Member from 'pages/UserManage/Member';
+import Room from 'pages/Services/Room';
+import Store from 'pages/Services/Store';
+import UserList from 'pages/UserManage/User/UserList';
 import { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Navigate, Route, Routes, useLocation,
 } from 'react-router-dom';
 import { RootState } from 'store';
+import UserDetail from 'pages/UserManage/User/UserDetail';
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const { token } = useSelector((state: RootState) => state.auth);
@@ -42,7 +43,8 @@ function App() {
           <Route path="/cafeteria" element={<Cafeteria />} />
           <Route path="/bus" element={<Bus />} />
           <Route path="/room" element={<Room />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/user" element={<UserList />} />
+          <Route path="/user/:id" element={<UserDetail />} />
           <Route path="/manager" element={<Manager />} />
           <Route path="/manager-request" element={<ManagerRequest />} />
           <Route path="/member" element={<Member />} />

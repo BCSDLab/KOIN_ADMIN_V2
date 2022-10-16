@@ -34,11 +34,9 @@ interface Props<TableData> {
   handlePageChange: (idx: number) => void;
 }
 
-function CustomTable<TableData extends DefaultTableData>(
-  {
-    tableData, currentPage, totalPage, handlePageChange,
-  }: Props<TableData>,
-) {
+function CustomTable<TableData extends DefaultTableData>({
+  tableData, currentPage, totalPage, handlePageChange,
+}: Props<TableData>) {
   const navigate = useNavigate();
 
   // 리스트의 담긴 Key값들로 구성된 테이블

@@ -1,9 +1,9 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { useGetUserListQuery } from 'store/api/user';
-import * as S from './User.style';
+import * as S from './UserList.style';
 
-function User() {
+function UserList() {
   const [page, setPage] = useState(1);
   const { data: usersRes } = useGetUserListQuery(page);
 
@@ -24,4 +24,4 @@ function User() {
   );
 }
 
-export default User;
+export default UserList;

@@ -37,9 +37,11 @@ export const LoginForm = styled.form`
 
 export const LogoImg = styled.img`
   width: 150px;
+  height: 84px;
   margin-bottom: 50px;
   ${mobile}{
     width: 100px;
+    height: 56px;
     margin-bottom: 30px;
   }
 `;

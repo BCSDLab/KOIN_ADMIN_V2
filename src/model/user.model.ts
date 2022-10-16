@@ -30,7 +30,6 @@ export interface UserDetail {
 }
 
 export interface UserTableHead {
-  key: number | string;
   id: number;
   portal_account: string; // 계정 id
   identity: number; // 0: 학생, 1: 대학원생, 2: 교수, 3: 교직원, 4: 졸업생, 5: 점주

@@ -7,6 +7,6 @@ export const TITLE_MAPPER: { [key: string]: string } = {
   id: 'ID',
   name: '이름',
   portal_account: '아우누리 ID',
-  identity: '구분',
+  identity: '유저 구분',
   nickname: '닉네임',
 };

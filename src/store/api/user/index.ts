@@ -18,20 +18,26 @@ export const userApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getUserList: builder.query<UserTableHead[], number>({
+    getUserList: builder.query<{ userList: UserTableHead[], totalPage: number }, number>({
       query: (page) => `users/?page=${page}`,
       providesTags: ['users'],
       transformResponse:
-        (usersResponse: UsersResponse): UserTableHead[] => usersResponse.items.map(({
-          id, portal_account, identity, nickname, name,
-        }) => ({
-          key: id,
-          id,
-          portal_account,
-          identity,
-          nickname,
-          name,
-        })),
+        (usersResponse: UsersResponse): { userList: UserTableHead[], totalPage: number } => {
+          const tableData = usersResponse.items.map(({
+            id, portal_account, identity, nickname, name,
+          }) => ({
+            id,
+            portal_account,
+            identity,
+            nickname,
+            name,
+          }));
+
+          return {
+            userList: tableData,
+            totalPage: usersResponse.totalPage,
+          };
+        },
     }),
   }),
 });

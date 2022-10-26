@@ -8,7 +8,6 @@ import Login from 'pages/Login';
 import Manager from 'pages/UserManage/Manager';
 import ManagerRequest from 'pages/UserManage/ManagerRequest';
 import Member from 'pages/UserManage/Member';
-import Room from 'pages/Services/Room';
 import Store from 'pages/Services/Store';
 import UserList from 'pages/UserManage/User/UserList';
 import { ReactNode } from 'react';
@@ -18,6 +17,7 @@ import {
 } from 'react-router-dom';
 import { RootState } from 'store';
 import UserDetail from 'pages/UserManage/User/UserDetail';
+import RoomList from 'pages/Services/Room/RoomList';
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const { token } = useSelector((state: RootState) => state.auth);
@@ -42,7 +42,7 @@ function App() {
           <Route path="/category" element={<Category />} />
           <Route path="/cafeteria" element={<Cafeteria />} />
           <Route path="/bus" element={<Bus />} />
-          <Route path="/room" element={<Room />} />
+          <Route path="/room" element={<RoomList />} />
           <Route path="/user" element={<UserList />} />
           <Route path="/user/:id" element={<UserDetail />} />
           <Route path="/manager" element={<Manager />} />

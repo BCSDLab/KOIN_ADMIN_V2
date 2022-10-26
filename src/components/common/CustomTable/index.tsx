@@ -22,7 +22,6 @@ const TableContainer = styled.div`
   }
 `;
 
-// 반드시 id Prop이 포함되어야 함
 interface DefaultTableData {
   id: string | number;
 }
@@ -39,19 +38,20 @@ function CustomTable<TableData extends DefaultTableData>({
 }: Props<TableData>) {
   const navigate = useNavigate();
 
-  // 리스트의 담긴 Key값들로 구성된 테이블
-  const columns: ColumnsType<TableData> = Object.keys(tableData[0])
-    .map((key) => ({
-      // TITLE_MAPPER에 명칭이 존재하면 그 명칭으로 헤더 이름을 변경
+  const getColumns = (): ColumnsType<TableData> => {
+    const columnKeys = Object.keys(tableData[0]);
+
+    return columnKeys.map((key) => ({
       title: TITLE_MAPPER[key] || key.toUpperCase(),
       dataIndex: key,
       key,
     }));
+  };
 
   return (
     <TableContainer>
       <Table
-        columns={columns}
+        columns={getColumns()}
         dataSource={tableData}
         rowKey={(record) => record.id}
         onRow={(record) => ({

@@ -1,7 +1,7 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { useGetRoomListQuery } from 'store/api/Room';
-import * as S from './Room.style';
+import * as S from './RoomList.style';
 
 function RoomList() {
   const [page, setPage] = useState(1);

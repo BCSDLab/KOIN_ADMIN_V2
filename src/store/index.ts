@@ -13,7 +13,7 @@ const store = configureStore({
     [roomApi.reducerPath]: roomApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-    .concat(logger, authApi.middleware, userApi.middleware),
+    .concat(logger, authApi.middleware, userApi.middleware, roomApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

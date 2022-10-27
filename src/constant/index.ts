@@ -11,6 +11,7 @@ export const TITLE_MAPPER: { [key: string]: string } = {
   nickname: '닉네임',
   monthly_fee: '월세',
   charter_fee: '전세',
-  latitude: '경도',
-  longitude: '위도',
+  room_type: '방 종류',
+  management_fee: '관리비',
+  size: '평수',
 };

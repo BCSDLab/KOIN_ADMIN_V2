@@ -27,7 +27,7 @@ export const roomApi = createApi({
           };
         },
     }),
-    getRoom: builder.query<RoomDetail[], number>({
+    getRoom: builder.query<RoomDetail, number>({
       query: (id) => ({ url: `lands/${id}` }),
     }),
   }),

@@ -1,4 +1,7 @@
-import { Form } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import {
+  Button, Form, Upload,
+} from 'antd';
 import React, { ReactNode } from 'react';
 import * as S from './CutomForm.style';
 
@@ -45,10 +48,23 @@ function CustomButton() {
   );
 }
 
+function CustomUpload({ defaultFileList: fileList }: any) {
+  return (
+    <Upload
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      listType="picture"
+      defaultFileList={[...fileList]}
+    >
+      <Button icon={<UploadOutlined />}>Upload</Button>
+    </Upload>
+  );
+}
+
 const CustomForm = Object.assign(SubmitForm, {
   GridRow,
   Button: CustomButton,
   Input: CustomInput,
+  Upload: CustomUpload,
 });
 
 export default CustomForm;

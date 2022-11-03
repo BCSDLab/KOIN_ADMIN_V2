@@ -10,6 +10,16 @@ export default function RoomDetail() {
   const { id }: any = useParams();
   const { data: roomRes } = useGetRoomQuery(id);
   console.log(roomRes);
+  let imageList: any[] = [];
+
+  imageList = roomRes?.image_urls?.map((res: string, index: number) => ({
+    uid: `${-(index + 1)}`,
+    name: res,
+    status: 'done',
+    url: res,
+  }));
+
+  console.log(imageList);
 
   const onFinish = (values: any) => {
     console.log('Finish:', values);
@@ -72,13 +82,14 @@ export default function RoomDetail() {
             <S.FormItem name="옵션">
               <S.CheckboxWrap>
                 {ROOM_OPTION.map((res) => (
-                  <Checkbox name={res.name} value={res.data}>
+                  <Checkbox name={res.name} checked={roomRes[res.data]}>
                     {res.name}
                   </Checkbox>
                 ))}
               </S.CheckboxWrap>
             </S.FormItem>
             <Divider orientation="left">사진</Divider>
+            <CustomForm.Upload defaultFileList={imageList} />
             <CustomForm.Button />
           </CustomForm>
         )}

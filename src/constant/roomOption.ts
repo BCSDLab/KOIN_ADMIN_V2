@@ -1,9 +1,4 @@
-interface RoomOption {
-  name: string;
-  data: string;
-}
-
-const ROOM_OPTION: RoomOption[] = [
+const ROOM_OPTION = [
   {
     name: '냉장고',
     data: 'opt_refrigerator',
@@ -68,6 +63,6 @@ const ROOM_OPTION: RoomOption[] = [
     name: '엘베',
     data: 'opt_elevator',
   },
-];
+] as const;
 
 export default ROOM_OPTION;

@@ -5,7 +5,7 @@ export interface RoomDetail {
   description: string;
   floor: string | number;
   id: number;
-  image_urls: string;
+  image_urls: any;
   latitude: number;
   longitude: number;
   management_fee: string | number;

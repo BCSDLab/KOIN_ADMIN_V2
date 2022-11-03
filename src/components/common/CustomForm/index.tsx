@@ -1,13 +1,13 @@
-import { Button, Form, Input } from 'antd';
+import { Form } from 'antd';
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
+import * as S from './CutomForm.style';
 
 interface InputValue {
   label: string;
   defaultValue: any;
 }
 
-type Grid = string | undefined | any;
+export type Grid = string | undefined | any;
 
 interface GridValue {
   children: ReactNode;
@@ -19,35 +19,30 @@ interface FormValue {
   children: ReactNode;
 }
 
-const InputWrap = styled.div<Grid>`
-  display: grid;
-  grid-template-columns: ${(props) => props.grid};
-`;
+function SubmitForm({ onFinish, children }: FormValue) {
+  const [form] = Form.useForm();
+
+  return <Form form={form} onFinish={onFinish}>{children}</Form>;
+}
 
 function GridRow({ children, grid }: GridValue) {
-  return <InputWrap grid={grid}>{children}</InputWrap>;
+  return <S.GridWrap grid={grid}>{children}</S.GridWrap>;
 }
 
 function CustomInput({ label, defaultValue }: InputValue) {
   return (
-    <Form.Item label={label} name={label}>
-      <Input defaultValue={defaultValue} />
-    </Form.Item>
+    <S.FormItem label={label} name={label}>
+      <S.StyledInput defaultValue={defaultValue} />
+    </S.FormItem>
   );
 }
 
 function CustomButton() {
   return (
-    <Form.Item>
-      <Button type="primary">Submit</Button>
-    </Form.Item>
+    <S.FormItem>
+      <S.StyledButton type="primary">Submit</S.StyledButton>
+    </S.FormItem>
   );
-}
-
-function SubmitForm({ onFinish, children }: FormValue) {
-  const [form] = Form.useForm();
-
-  return <Form form={form} onFinish={onFinish}>{children}</Form>;
 }
 
 const CustomForm = Object.assign(SubmitForm, {

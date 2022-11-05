@@ -1,4 +1,6 @@
-import { Button, Form, Input } from 'antd';
+import {
+  Button, Form, Input,
+} from 'antd';
 import styled from 'styled-components';
 import { Grid } from '.';
 
@@ -9,7 +11,7 @@ export const GridWrap = styled.div<Grid>`
 
 export const FormItem = styled(Form.Item)`
   margin-left: 25px;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   .ant-form-item-label > label {
     font-size: 15px;
     font-weight: 600;
@@ -21,4 +23,5 @@ export const StyledInput = styled(Input)`
   border-radius: 7px;
 `;
 
-export const StyledButton = styled(Button)``;
+export const StyledButton = styled(Button)`
+`;

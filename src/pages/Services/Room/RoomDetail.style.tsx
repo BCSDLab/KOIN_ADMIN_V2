@@ -16,7 +16,7 @@ export const SubHeading = styled.div`
 `;
 
 export const FormWrap = styled.div`
-  padding: 50px 60px;
+  padding: 50px 120px 60px 20px;
   .ant-form-item-label > label {
     font-size: 15px;
     font-weight: 600;
@@ -49,4 +49,20 @@ export const FormItem = styled(Form.Item)`
 export const CheckboxWrap = styled.div`
   padding: 15px 10px;
   width: 45vw;
+`;
+
+export const UpLoadWrap = styled.div`
+  margin-top: 50px;
+  margin-left: 30px;
+  .upload-list-inline .ant-upload-list-item {
+    float: left;
+    width: 700px;
+    margin: 15px 0 0 10px;
+  }
+`;
+
+export const ButtonWrap = styled.div`
+  margin-top: 70px;
+  margin-left: 15px;
+  display: flex;
 `;

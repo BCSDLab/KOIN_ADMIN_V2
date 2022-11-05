@@ -1,3 +1,4 @@
+import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Checkbox, Divider, Input } from 'antd';
 import CustomForm from 'components/common/CustomForm';
 import ROOM_OPTION from 'constant/roomOption';
@@ -9,17 +10,13 @@ import * as S from './RoomDetail.style';
 export default function RoomDetail() {
   const { id }: any = useParams();
   const { data: roomRes } = useGetRoomQuery(id);
-  console.log(roomRes);
-  let imageList: any[] = [];
 
-  imageList = roomRes?.image_urls?.map((res: string, index: number) => ({
+  const imageList: any[] = roomRes?.image_urls?.map((res: string, index: number) => ({
     uid: `${-(index + 1)}`,
     name: res,
     status: 'done',
     url: res,
   }));
-
-  console.log(imageList);
 
   const onFinish = (values: any) => {
     console.log('Finish:', values);
@@ -29,6 +26,7 @@ export default function RoomDetail() {
     <S.Container>
       <S.Heading>Room Detail</S.Heading>
       <S.SubHeading>Home / Room / RoomDetail</S.SubHeading>
+      <Divider />
       <S.FormWrap>
         {roomRes && (
           <CustomForm onFinish={onFinish}>
@@ -89,8 +87,17 @@ export default function RoomDetail() {
               </S.CheckboxWrap>
             </S.FormItem>
             <Divider orientation="left">사진</Divider>
-            <CustomForm.Upload defaultFileList={imageList} />
-            <CustomForm.Button />
+            <S.UpLoadWrap>
+              <CustomForm.Upload defaultFileList={imageList || []} />
+            </S.UpLoadWrap>
+            <S.ButtonWrap>
+              <CustomForm.Button danger={false} icon={<UploadOutlined />}>
+                완료
+              </CustomForm.Button>
+              <CustomForm.Button danger icon={<DeleteOutlined />}>
+                삭제
+              </CustomForm.Button>
+            </S.ButtonWrap>
           </CustomForm>
         )}
       </S.FormWrap>

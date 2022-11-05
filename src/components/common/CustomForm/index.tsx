@@ -22,6 +22,12 @@ interface FormValue {
   children: ReactNode;
 }
 
+interface ButtonValue {
+  children: string;
+  danger: boolean;
+  icon: any;
+}
+
 function SubmitForm({ onFinish, children }: FormValue) {
   const [form] = Form.useForm();
 
@@ -40,23 +46,24 @@ function CustomInput({ label, defaultValue }: InputValue) {
   );
 }
 
-function CustomButton() {
-  return (
-    <S.FormItem>
-      <S.StyledButton type="primary">Submit</S.StyledButton>
-    </S.FormItem>
-  );
-}
-
 function CustomUpload({ defaultFileList: fileList }: any) {
   return (
     <Upload
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
       listType="picture"
       defaultFileList={[...fileList]}
+      className="upload-list-inline"
     >
       <Button icon={<UploadOutlined />}>Upload</Button>
     </Upload>
+  );
+}
+
+function CustomButton({ children, danger, icon }: ButtonValue) {
+  return (
+    <S.FormItem>
+      <S.StyledButton type="primary" danger={danger} icon={icon}>{children}</S.StyledButton>
+    </S.FormItem>
   );
 }
 

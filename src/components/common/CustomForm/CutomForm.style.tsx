@@ -19,6 +19,8 @@ export const FormItem = styled(Form.Item)`
   }
 `;
 
+export const FormItemCheckbox = styled(Form.Item)``;
+
 export const StyledInput = styled(Input)`
   border-radius: 7px;
 `;

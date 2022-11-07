@@ -2,6 +2,7 @@ import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider, Form, Input } from 'antd';
 import CustomForm from 'components/common/CustomForm';
 import ROOM_OPTION from 'constant/roomOption';
+import { RoomResponse } from 'model/room.model';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetRoomQuery, useUpdateRoomMutation } from 'store/api/Room';
@@ -13,22 +14,19 @@ export default function RoomDetail() {
   const [updatePost] = useUpdateRoomMutation();
   const [form] = Form.useForm();
 
-  const imageList: any[] = roomRes?.image_urls?.map((res: string, index: number) => ({
+  const imageList = roomRes?.image_urls?.map((res: string, index: number) => ({
     uid: `${-(index + 1)}`,
     name: res,
     status: 'done',
     url: res,
   }));
 
-  console.log(roomRes);
-
-  const deleteRoom = (values: any) => {
-    updatePost({ id, ...values });
+  const deleteRoom = () => {
+    // TODO: 삭제 기능 추가
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<number, RoomResponse>) => {
     updatePost({ id, ...values });
-    console.log('Finish:', values);
   };
 
   return (

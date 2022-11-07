@@ -65,4 +65,9 @@ const ROOM_OPTION = [
   },
 ] as const;
 
+export interface RoomOptionValue {
+  name: string;
+  data: string;
+}
+
 export default ROOM_OPTION;

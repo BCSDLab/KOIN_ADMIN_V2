@@ -2,9 +2,8 @@ import {
   Button, Form, Input,
 } from 'antd';
 import styled from 'styled-components';
-import { Grid } from '.';
 
-export const GridWrap = styled.div<Grid>`
+export const GridWrap = styled.div<{ grid: string }>`
   display: grid;
   grid-template-columns: ${(props) => props.grid};
 `;

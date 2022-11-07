@@ -3,43 +3,42 @@ import { UploadOutlined } from '@ant-design/icons';
 import {
   Button, Checkbox, Form, Upload,
 } from 'antd';
+import { FormInstance } from 'antd/es/form/Form';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { RoomOptionValue } from 'constant/roomOption';
 import React, { ReactNode } from 'react';
 import * as S from './CutomForm.style';
 
 interface InputValue {
   label: string;
-  defaultValue: any;
+  defaultValue: string | number;
   name: string;
 }
-
-export type Grid = string | undefined | any;
-
 interface GridValue {
   children: ReactNode;
-  grid: Grid;
+  grid: string;
 }
 
 interface FormValue {
   onFinish: any;
   children: ReactNode;
-  form: any;
+  form: FormInstance;
 }
 
 interface ButtonValue {
   children: string;
   danger: boolean;
-  icon: any;
+  icon: ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  htmlType?: any;
+  htmlType?: 'button' | 'submit' | 'reset' | undefined;
 }
 
 interface CheckboxValue {
-  res: any;
+  res: RoomOptionValue;
   children: ReactNode;
   defaultValue: boolean;
   key: string | number;
-  form: any;
+  form: FormInstance;
 }
 
 function SubmitForm({ onFinish, children, form }: FormValue) {
@@ -65,7 +64,6 @@ function CustomCheckbox({
     form.setFieldsValue({
       [e.target.id as string]: e.target.checked,
     });
-    console.log('checked = ', e.target.checked);
   };
 
   return (

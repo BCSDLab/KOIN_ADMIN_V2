@@ -1,11 +1,11 @@
-export interface RoomDetail {
+export interface RoomResponse {
   address: string;
   charter_fee: string | number;
   deposit: string | number;
   description: string;
   floor: string | number;
   id: number;
-  image_urls: any;
+  image_urls: string[];
   latitude: number;
   longitude: number;
   management_fee: string | number;
@@ -40,7 +40,7 @@ export interface RoomTableHead {
   charter_fee: number | null;
 }
 
-export interface RoomResponse {
+export interface RoomsResponse {
   totalPage: number;
   lands: RoomTableHead[];
 }

@@ -36,76 +36,92 @@ export default function RoomDetail() {
       <Divider />
       <S.FormWrap>
         {roomRes && (
-          <CustomForm onFinish={onFinish} form={form}>
+          <CustomForm
+            onFinish={onFinish}
+            form={form}
+            fields={[
+              {
+                name: ['name'],
+                value: roomRes?.name,
+              },
+              {
+                name: ['room_type'],
+                value: roomRes?.room_type,
+              },
+              {
+                name: ['management_fee'],
+                value: roomRes?.management_fee,
+              },
+              {
+                name: ['size'],
+                value: roomRes?.size,
+              },
+              {
+                name: ['monthly_fee'],
+                value: roomRes?.monthly_fee,
+              },
+              {
+                name: ['charter_fee'],
+                value: roomRes?.charter_fee,
+              },
+              {
+                name: ['latitude'],
+                value: roomRes?.latitude,
+              },
+              {
+                name: ['longitude'],
+                value: roomRes?.longitude,
+              },
+              {
+                name: ['latitude'],
+                value: roomRes?.latitude,
+              },
+              {
+                name: ['deposit'],
+                value: roomRes?.deposit,
+              },
+              {
+                name: ['floor'],
+                value: roomRes?.floor,
+              },
+              {
+                name: ['phone'],
+                value: roomRes?.phone,
+              },
+              {
+                name: ['address'],
+                value: roomRes?.address,
+              },
+              {
+                name: ['description'],
+                value: roomRes?.description,
+              },
+              {
+                name: ['address'],
+                value: roomRes?.address,
+              },
+            ]}
+          >
             <CustomForm.GridRow grid="1.5fr 1fr 1fr 1fr">
-              <CustomForm.Input
-                label="방이름"
-                name="name"
-                defaultValue={roomRes?.name}
-              />
-              <CustomForm.Input
-                label="방종류"
-                name="room_type"
-                defaultValue={roomRes?.room_type}
-              />
-              <CustomForm.Input
-                label="관리비"
-                name="management_fee"
-                defaultValue={roomRes?.management_fee}
-              />
-              <CustomForm.Input
-                label="방크기"
-                name="size"
-                defaultValue={roomRes?.size}
-              />
+              <CustomForm.Input label="방이름" name="name" />
+              <CustomForm.Input label="방종류" name="room_type" />
+              <CustomForm.Input label="관리비" name="management_fee" />
+              <CustomForm.Input label="방크기" name="size" />
             </CustomForm.GridRow>
             <CustomForm.GridRow grid="1.5fr 1fr 1fr 1fr">
-              <CustomForm.Input
-                label="월세"
-                name="monthly_fee"
-                defaultValue={roomRes?.monthly_fee}
-              />
-              <CustomForm.Input
-                label="전세"
-                name="charter_fee"
-                defaultValue={roomRes?.charter_fee}
-              />
-              <CustomForm.Input
-                label="위도"
-                name="latitude"
-                defaultValue={roomRes?.latitude}
-              />
-              <CustomForm.Input
-                label="경도"
-                name="longitude"
-                defaultValue={roomRes?.longitude}
-              />
+              <CustomForm.Input label="월세" name="monthly_fee" />
+              <CustomForm.Input label="전세" name="charter_fee" />
+              <CustomForm.Input label="위도" name="latitude" />
+              <CustomForm.Input label="경도" name="longitude" />
             </CustomForm.GridRow>
             <CustomForm.GridRow grid="1fr 1fr 1.5fr 2fr">
-              <CustomForm.Input
-                label="보증금"
-                name="deposit"
-                defaultValue={roomRes?.deposit}
-              />
-              <CustomForm.Input
-                label="층수"
-                name="floor"
-                defaultValue={roomRes?.floor}
-              />
-              <CustomForm.Input
-                label="전화번호"
-                name="phone"
-                defaultValue={roomRes?.phone}
-              />
-              <CustomForm.Input
-                label="주소"
-                name="address"
-                defaultValue={roomRes?.address}
-              />
+              <CustomForm.Input label="보증금" name="deposit" />
+              <CustomForm.Input label="층수" name="floor" />
+              <CustomForm.Input label="전화번호" name="phone" />
+              <CustomForm.Input label="주소" name="address" />
             </CustomForm.GridRow>
             <S.FormItem label="설명" name="description">
               <Input.TextArea
-                defaultValue={roomRes.description}
                 showCount
                 maxLength={200}
               />

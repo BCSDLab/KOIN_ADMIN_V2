@@ -11,7 +11,6 @@ import * as S from './CutomForm.style';
 
 interface InputValue {
   label: string;
-  defaultValue: string | number;
   name: string;
 }
 interface GridValue {
@@ -23,6 +22,7 @@ interface FormValue {
   onFinish: any;
   children: ReactNode;
   form: FormInstance;
+  fields: any;
 }
 
 interface ButtonValue {
@@ -41,18 +41,28 @@ interface CheckboxValue {
   form: FormInstance;
 }
 
-function SubmitForm({ onFinish, children, form }: FormValue) {
-  return <Form form={form} onFinish={onFinish}>{children}</Form>;
+function SubmitForm({
+  onFinish, children, form, fields,
+}: FormValue) {
+  return (
+    <Form
+      form={form}
+      onFinish={onFinish}
+      fields={fields}
+    >
+      {children}
+    </Form>
+  );
 }
 
 function GridRow({ children, grid }: GridValue) {
   return <S.GridWrap grid={grid}>{children}</S.GridWrap>;
 }
 
-function CustomInput({ label, defaultValue, name }: InputValue) {
+function CustomInput({ label, name }: InputValue) {
   return (
     <S.FormItem label={label} name={name}>
-      <S.StyledInput defaultValue={defaultValue} />
+      <S.StyledInput />
     </S.FormItem>
   );
 }

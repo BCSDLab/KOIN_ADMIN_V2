@@ -1,12 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 import { RoomDetail, RoomResponse, RoomTableHead } from 'model/room.model';
+import { RootState } from 'store';
 
 export const roomApi = createApi({
   reducerPath: 'roomApi',
   tagTypes: ['room'],
   baseQuery: fetchBaseQuery({
     baseUrl: `${API_PATH}`,
+    prepareHeaders: (headers, { getState }) => {
+      // 토큰이 필요한 조회에는 헤더를 추가할 필요가 있음.
+      const { token } = (getState() as RootState).auth;
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getRoomList: builder.query<{
@@ -36,7 +45,7 @@ export const roomApi = createApi({
         },
     }),
 
-    getRoom: builder.query<RoomDetail, number>({
+    getRoom: builder.query<RoomDetail | undefined, number>({
       query: (id) => ({ url: `lands/${id}` }),
       providesTags: (result, error, id) => [{ type: 'room', id }],
     }),

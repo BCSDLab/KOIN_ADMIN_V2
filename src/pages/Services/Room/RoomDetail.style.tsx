@@ -47,8 +47,12 @@ export const FormItem = styled(Form.Item)`
 `;
 
 export const CheckboxWrap = styled.div`
-  padding: 15px 10px;
-  width: 45vw;
+  margin-left: 25px;
+  margin-bottom: 50px;
+  margin-top: 40px;
+  display: -webkit-inline-box;
+  flex-wrap: wrap;
+  width: 50vw;
 `;
 
 export const UpLoadWrap = styled.div`

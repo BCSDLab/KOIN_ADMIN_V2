@@ -85,13 +85,15 @@ export default function RoomDetail() {
 
             <S.CheckboxWrap>
               {ROOM_OPTION.map((res) => (
-                <CustomForm.Checkbox
-                  res={res}
-                  defaultValue={roomRes[res.data]}
-                  form={form}
-                >
-                  {res.name}
-                </CustomForm.Checkbox>
+                <div key={res.name}>
+                  <CustomForm.Checkbox
+                    res={res}
+                    defaultChecked={roomRes[res.data]}
+                    form={form}
+                  >
+                    {res.name}
+                  </CustomForm.Checkbox>
+                </div>
               ))}
             </S.CheckboxWrap>
 

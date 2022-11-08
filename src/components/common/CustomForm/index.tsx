@@ -36,8 +36,7 @@ interface ButtonValue {
 interface CheckboxValue {
   res: RoomOptionValue;
   children: ReactNode;
-  defaultValue: boolean;
-  key: string | number;
+  defaultChecked: boolean;
   form: FormInstance;
 }
 
@@ -68,7 +67,10 @@ function CustomInput({ label, name }: InputValue) {
 }
 
 function CustomCheckbox({
-  res, children, defaultValue, key, form,
+  res,
+  children,
+  defaultChecked,
+  form,
 }: CheckboxValue) {
   const onChange = (e: CheckboxChangeEvent) => {
     form.setFieldsValue({
@@ -77,8 +79,8 @@ function CustomCheckbox({
   };
 
   return (
-    <S.FormItemCheckbox key={key} name={res.data}>
-      <Checkbox defaultChecked={defaultValue} onChange={onChange}>
+    <S.FormItemCheckbox name={res.data}>
+      <Checkbox defaultChecked={defaultChecked} onChange={onChange}>
         {children}
       </Checkbox>
     </S.FormItemCheckbox>

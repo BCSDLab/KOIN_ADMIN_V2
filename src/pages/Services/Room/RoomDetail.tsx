@@ -29,6 +29,29 @@ export default function RoomDetail() {
     updatePost({ id, ...values });
   };
 
+  const InputValueArr = [
+    'name',
+    'room_type',
+    'management_fee',
+    'size',
+    'monthly_fee',
+    'charter_fee',
+    'latitude',
+    'longitude',
+    'deposit',
+    'floor',
+    'phone',
+    'address',
+    'description',
+  ] as const;
+
+  const DefaultValueArr = InputValueArr.map(
+    (res) => roomRes && {
+      name: [res],
+      value: roomRes[res],
+    },
+  );
+
   return (
     <S.Container>
       <S.Heading>Room Detail</S.Heading>
@@ -36,72 +59,7 @@ export default function RoomDetail() {
       <Divider />
       <S.FormWrap>
         {roomRes && (
-          <CustomForm
-            onFinish={onFinish}
-            form={form}
-            fields={[
-              {
-                name: ['name'],
-                value: roomRes?.name,
-              },
-              {
-                name: ['room_type'],
-                value: roomRes?.room_type,
-              },
-              {
-                name: ['management_fee'],
-                value: roomRes?.management_fee,
-              },
-              {
-                name: ['size'],
-                value: roomRes?.size,
-              },
-              {
-                name: ['monthly_fee'],
-                value: roomRes?.monthly_fee,
-              },
-              {
-                name: ['charter_fee'],
-                value: roomRes?.charter_fee,
-              },
-              {
-                name: ['latitude'],
-                value: roomRes?.latitude,
-              },
-              {
-                name: ['longitude'],
-                value: roomRes?.longitude,
-              },
-              {
-                name: ['latitude'],
-                value: roomRes?.latitude,
-              },
-              {
-                name: ['deposit'],
-                value: roomRes?.deposit,
-              },
-              {
-                name: ['floor'],
-                value: roomRes?.floor,
-              },
-              {
-                name: ['phone'],
-                value: roomRes?.phone,
-              },
-              {
-                name: ['address'],
-                value: roomRes?.address,
-              },
-              {
-                name: ['description'],
-                value: roomRes?.description,
-              },
-              {
-                name: ['address'],
-                value: roomRes?.address,
-              },
-            ]}
-          >
+          <CustomForm onFinish={onFinish} form={form} fields={DefaultValueArr}>
             <CustomForm.GridRow grid="1.5fr 1fr 1fr 1fr">
               <CustomForm.Input label="방이름" name="name" />
               <CustomForm.Input label="방종류" name="room_type" />
@@ -121,17 +79,13 @@ export default function RoomDetail() {
               <CustomForm.Input label="주소" name="address" />
             </CustomForm.GridRow>
             <S.FormItem label="설명" name="description">
-              <Input.TextArea
-                showCount
-                maxLength={200}
-              />
+              <Input.TextArea showCount maxLength={200} />
             </S.FormItem>
             <Divider orientation="left">옵션</Divider>
 
             <S.CheckboxWrap>
               {ROOM_OPTION.map((res) => (
                 <CustomForm.Checkbox
-                  key={res.name}
                   res={res}
                   defaultValue={roomRes[res.data]}
                   form={form}

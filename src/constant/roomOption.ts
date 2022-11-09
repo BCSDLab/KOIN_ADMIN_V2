@@ -60,7 +60,7 @@ const ROOM_OPTION = [
     data: 'opt_veranda',
   },
   {
-    name: '엘베',
+    name: '엘레베이터',
     data: 'opt_elevator',
   },
 ] as const;

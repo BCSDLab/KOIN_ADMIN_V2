@@ -30,13 +30,15 @@ interface DefaultTableData {
 
 interface Props<TableData> {
   tableData: TableData[];
-  currentPage?: number;
-  totalPage?: number;
-  handlePageChange?: (idx: number) => void;
+  pagination?: {
+    currentPage: number;
+    totalPage: number;
+    handlePageChange: (idx: number) => void;
+  };
 }
 
 function CustomTable<TableData extends DefaultTableData>({
-  tableData, currentPage, totalPage, handlePageChange,
+  tableData, pagination,
 }: Props<TableData>) {
   const navigate = useNavigate();
 
@@ -60,13 +62,15 @@ function CustomTable<TableData extends DefaultTableData>({
             navigate(`${record.id}`);
           },
         })}
-        pagination={totalPage ? false : { position: ['bottomRight'] }}
+        pagination={
+          pagination?.totalPage ? false : { position: ['bottomRight'] }
+        }
       />
-      {totalPage ? (
+      {pagination ? (
         <Pagination
-          current={currentPage}
-          total={totalPage * 10}
-          onChange={handlePageChange}
+          current={pagination.currentPage}
+          total={pagination.totalPage * 10}
+          onChange={pagination.handlePageChange}
           showSizeChanger={false}
           showQuickJumper
         />

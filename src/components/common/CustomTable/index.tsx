@@ -60,6 +60,7 @@ function CustomTable<TableData extends DefaultTableData>({
             navigate(`${record.id}`);
           },
         })}
+        pagination={totalPage ? false : { position: ['bottomRight'] }}
       />
       {totalPage ? (
         <Pagination

@@ -1,11 +1,10 @@
 import CustomTable from 'components/common/CustomTable';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useGetRoomListQuery } from 'store/api/Room';
 import * as S from './RoomList.style';
 
 function RoomList() {
-  const [page, setPage] = useState(1);
-  const { data: roomRes } = useGetRoomListQuery(page);
+  const { data: roomRes } = useGetRoomListQuery(1);
 
   return (
     <S.Container>
@@ -13,9 +12,6 @@ function RoomList() {
       {roomRes && (
         <CustomTable
           tableData={roomRes.roomList}
-          currentPage={page}
-          handlePageChange={setPage}
-          totalPage={roomRes.totalPage}
         />
       )}
     </S.Container>

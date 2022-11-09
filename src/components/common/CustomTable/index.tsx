@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import { Table } from 'antd';
 import Pagination from 'antd/es/pagination';
 import type { ColumnsType } from 'antd/es/table';
@@ -29,9 +30,9 @@ interface DefaultTableData {
 
 interface Props<TableData> {
   tableData: TableData[];
-  currentPage: number;
-  totalPage: number;
-  handlePageChange: (idx: number) => void;
+  currentPage?: number;
+  totalPage?: number;
+  handlePageChange?: (idx: number) => void;
 }
 
 function CustomTable<TableData extends DefaultTableData>({
@@ -59,15 +60,16 @@ function CustomTable<TableData extends DefaultTableData>({
             navigate(`${record.id}`);
           },
         })}
-        pagination={false}
       />
-      <Pagination
-        current={currentPage}
-        total={totalPage * 10}
-        onChange={handlePageChange}
-        showSizeChanger={false}
-        showQuickJumper
-      />
+      {totalPage ? (
+        <Pagination
+          current={currentPage}
+          total={totalPage * 10}
+          onChange={handlePageChange}
+          showSizeChanger={false}
+          showQuickJumper
+        />
+      ) : null}
     </TableContainer>
   );
 }

@@ -20,11 +20,9 @@ export const roomApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getRoomList: builder.query<{
-      roomList: RoomTableHead[], totalPage: number,
-    }, number>({
+    getRoomList: builder.query<{ roomList: RoomTableHead[] }, number>({
       // TODO: admin get api로 변경. (페이지네이션 추가 수정)
-      query: (page) => ({ url: `lands/?page=${page}` }),
+      query: () => ({ url: 'lands' }),
       providesTags: (result) => (result
         ? [
           ...result.roomList.map(({ id }) => ({ type: 'room', id } as const)),
@@ -34,7 +32,7 @@ export const roomApi = createApi({
 
       transformResponse:
         (roomResponse: RoomsResponse):
-        { roomList: RoomTableHead[], totalPage: number } => {
+        { roomList: RoomTableHead[] } => {
           const tableData = roomResponse.lands?.map(({
             id, name, room_type, monthly_fee, charter_fee,
           }) => ({
@@ -42,7 +40,7 @@ export const roomApi = createApi({
           }));
           return {
             roomList: tableData,
-            totalPage: Math.ceil(roomResponse.lands.length / 10),
+            // totalPage: Math.ceil(roomResponse.lands.length / 10),
           };
         },
     }),

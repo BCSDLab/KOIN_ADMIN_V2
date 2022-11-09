@@ -9,15 +9,15 @@ import { RoomOptionValue } from 'constant/roomOption';
 import React, { ReactNode } from 'react';
 import * as S from './CutomForm.style';
 
-interface InputValue {
+interface InputProps {
   label: string;
   name: string;
 }
-interface GridValue {
+interface GridProps {
   children: ReactNode;
   gridColumns: string;
 }
-interface ButtonValue {
+interface ButtonProps {
   children: string;
   danger: boolean;
   icon: ReactNode;
@@ -25,18 +25,18 @@ interface ButtonValue {
   htmlType?: 'button' | 'submit' | 'reset' | undefined;
 }
 
-interface CheckboxValue {
+interface CheckboxProps {
   res: RoomOptionValue;
   children: ReactNode;
   defaultChecked: boolean;
   form: FormInstance;
 }
 
-function GridRow({ children, gridColumns }: GridValue) {
+function GridRow({ children, gridColumns }: GridProps) {
   return <S.GridWrap gridColumns={gridColumns}>{children}</S.GridWrap>;
 }
 
-function CustomInput({ label, name }: InputValue) {
+function CustomInput({ label, name }: InputProps) {
   return (
     <S.FormItem label={label} name={name}>
       <S.StyledInput />
@@ -49,7 +49,7 @@ function CustomCheckbox({
   children,
   defaultChecked,
   form,
-}: CheckboxValue) {
+}: CheckboxProps) {
   const onChange = (e: CheckboxChangeEvent) => {
     form.setFieldsValue({
       [e.target.id!]: e.target.checked,
@@ -79,8 +79,12 @@ function CustomUpload({ defaultFileList: fileList }: any) {
 }
 
 function CustomButton({
-  children, danger, icon, onClick, htmlType,
-}: ButtonValue) {
+  children,
+  danger,
+  icon,
+  onClick,
+  htmlType,
+}: ButtonProps) {
   return (
     <S.FormItem>
       <S.StyledButton

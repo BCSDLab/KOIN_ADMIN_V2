@@ -60,19 +60,19 @@ export default function RoomDetail() {
       <S.FormWrap>
         {roomRes && (
           <CustomForm onFinish={onFinish} form={form} fields={DefaultValueArr}>
-            <CustomForm.GridRow grid="1.5fr 1fr 1fr 1fr">
+            <CustomForm.GridRow gridColumns="1.5fr 1fr 1fr 1fr">
               <CustomForm.Input label="방이름" name="name" />
               <CustomForm.Input label="방종류" name="room_type" />
               <CustomForm.Input label="관리비" name="management_fee" />
               <CustomForm.Input label="방크기" name="size" />
             </CustomForm.GridRow>
-            <CustomForm.GridRow grid="1.5fr 1fr 1fr 1fr">
+            <CustomForm.GridRow gridColumns="1.5fr 1fr 1fr 1fr">
               <CustomForm.Input label="월세" name="monthly_fee" />
               <CustomForm.Input label="전세" name="charter_fee" />
               <CustomForm.Input label="위도" name="latitude" />
               <CustomForm.Input label="경도" name="longitude" />
             </CustomForm.GridRow>
-            <CustomForm.GridRow grid="1fr 1fr 1.5fr 2fr">
+            <CustomForm.GridRow gridColumns="1fr 1fr 1.5fr 2fr">
               <CustomForm.Input label="보증금" name="deposit" />
               <CustomForm.Input label="층수" name="floor" />
               <CustomForm.Input label="전화번호" name="phone" />

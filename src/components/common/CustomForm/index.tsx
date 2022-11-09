@@ -15,7 +15,7 @@ interface InputValue {
 }
 interface GridValue {
   children: ReactNode;
-  grid: string;
+  gridColumns: string;
 }
 
 interface FormValue {
@@ -54,8 +54,8 @@ function SubmitForm({
   );
 }
 
-function GridRow({ children, grid }: GridValue) {
-  return <S.GridWrap grid={grid}>{children}</S.GridWrap>;
+function GridRow({ children, gridColumns }: GridValue) {
+  return <S.GridWrap gridColumns={gridColumns}>{children}</S.GridWrap>;
 }
 
 function CustomInput({ label, name }: InputValue) {

@@ -44,3 +44,10 @@ export interface RoomsResponse {
   totalPage: number;
   lands: RoomTableHead[];
 }
+
+export interface FileList {
+  uid: string;
+  name: string;
+  status: string;
+  url: string;
+}

@@ -3,9 +3,9 @@ import {
 } from 'antd';
 import styled from 'styled-components';
 
-export const GridWrap = styled.div<{ grid: string }>`
+export const GridWrap = styled.div<{ gridColumns: string }>`
   display: grid;
-  grid-template-columns: ${(props) => props.grid};
+  grid-template-columns: ${(props) => props.gridColumns};
 `;
 
 export const FormItem = styled(Form.Item)`
@@ -14,7 +14,7 @@ export const FormItem = styled(Form.Item)`
   .ant-form-item-label > label {
     font-size: 15px;
     font-weight: 600;
-    color: rgb(44 62 80);
+    color: #2c3e50;
   }
 `;
 

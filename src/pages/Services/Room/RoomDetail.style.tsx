@@ -6,7 +6,7 @@ export const Container = styled.div`
 `;
 
 export const Heading = styled.div`
-  color: rgb(44 62 80);
+  color: #2c3e50;
   font-size: 28px;
 `;
 
@@ -20,20 +20,20 @@ export const FormWrap = styled.div`
   .ant-form-item-label > label {
     font-size: 15px;
     font-weight: 600;
-    color: rgb(44 62 80);
+    color: #2c3e50;
   }
 
   .ant-divider-with-text {
     font-size: 15px;
     font-weight: 600;
-    color: rgb(44 62 80);
+    color: #2c3e50;
   }
 
   .ant-checkbox + span {
     padding: 10px 39px 10px 10px;
     font-size: 15px;
     font-weight: 500;
-    color: rgb(44 62 80);
+    color: #2c3e50;
   }
 
   .ant-checkbox-wrapper + .ant-checkbox-wrapper {

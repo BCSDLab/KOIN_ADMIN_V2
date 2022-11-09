@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import { UploadOutlined } from '@ant-design/icons';
 import {
-  Button, Checkbox, Form, FormProps, Upload,
+  Button, Checkbox, Form, Upload,
 } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
@@ -17,14 +17,6 @@ interface GridValue {
   children: ReactNode;
   gridColumns: string;
 }
-
-interface FormValue {
-  onFinish: any;
-  children: ReactNode;
-  form: FormInstance;
-  fields: any;
-}
-
 interface ButtonValue {
   children: string;
   danger: boolean;
@@ -38,11 +30,6 @@ interface CheckboxValue {
   children: ReactNode;
   defaultChecked: boolean;
   form: FormInstance;
-}
-
-function SubmitForm(props: { children: ReactNode } & FormProps) {
-  const { children, ...args } = props;
-  return <Form {...args}>{children}</Form>;
 }
 
 function GridRow({ children, gridColumns }: GridValue) {
@@ -109,7 +96,7 @@ function CustomButton({
   );
 }
 
-const CustomForm = Object.assign(SubmitForm, {
+const CustomForm = Object.assign(Form, {
   GridRow,
   Button: CustomButton,
   Input: CustomInput,

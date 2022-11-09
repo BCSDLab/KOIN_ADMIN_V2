@@ -46,10 +46,10 @@ export default function RoomDetail() {
   ] as const;
 
   const DefaultValueArr = InputValueArr.map(
-    (res) => roomRes && {
+    (res) => ({
       name: [res],
-      value: roomRes[res],
-    },
+      value: roomRes && roomRes[res],
+    }),
   );
 
   return (

@@ -98,9 +98,9 @@ export default function RoomDetail() {
             </S.CheckboxWrap>
 
             <Divider orientation="left">사진</Divider>
-            <S.UpLoadWrap>
+            <S.UploadWrap>
               <CustomForm.Upload defaultFileList={imageList || []} />
-            </S.UpLoadWrap>
+            </S.UploadWrap>
             <S.ButtonWrap>
               <CustomForm.Button
                 danger={false}

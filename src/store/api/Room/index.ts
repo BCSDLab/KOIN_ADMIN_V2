@@ -45,7 +45,7 @@ export const roomApi = createApi({
         },
     }),
 
-    getRoom: builder.query<RoomResponse | undefined, number>({
+    getRoom: builder.query<RoomResponse, number>({
       query: (id) => ({ url: `lands/${id}` }),
       providesTags: (result, error, id) => [{ type: 'room', id }],
     }),

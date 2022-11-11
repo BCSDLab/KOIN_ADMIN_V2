@@ -40,7 +40,6 @@ export const roomApi = createApi({
           }));
           return {
             roomList: tableData,
-            // totalPage: Math.ceil(roomResponse.lands.length / 10),
           };
         },
     }),

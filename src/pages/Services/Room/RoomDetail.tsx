@@ -1,5 +1,5 @@
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import { Divider, Form, Input } from 'antd';
+import { Divider, Form } from 'antd';
 import CustomForm from 'components/common/CustomForm';
 import ROOM_OPTION from 'constant/roomOption';
 import { RoomResponse } from 'model/room.model';
@@ -78,9 +78,11 @@ export default function RoomDetail() {
               <CustomForm.Input label="전화번호" name="phone" />
               <CustomForm.Input label="주소" name="address" />
             </CustomForm.GridRow>
-            <S.FormItem label="설명" name="description">
-              <Input.TextArea showCount maxLength={200} />
-            </S.FormItem>
+            <CustomForm.TextArea
+              label="설명"
+              name="description"
+              maxLength={200}
+            />
             <Divider orientation="left">옵션</Divider>
 
             <S.CheckboxWrap>

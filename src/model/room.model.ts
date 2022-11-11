@@ -1,14 +1,14 @@
 export interface RoomResponse {
   address: string;
-  charter_fee: string | number;
-  deposit: string | number;
+  charter_fee: string;
+  deposit: string;
   description: string;
   floor: string | number;
   id: number;
   image_urls: string[];
   latitude: number;
   longitude: number;
-  management_fee: string | number;
+  management_fee: string;
   monthly_fee: string;
   name: string;
   opt_air_conditioner: boolean;

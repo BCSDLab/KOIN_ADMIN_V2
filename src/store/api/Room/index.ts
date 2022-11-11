@@ -7,7 +7,7 @@ import { RootState } from 'store';
 
 export const roomApi = createApi({
   reducerPath: 'roomApi',
-  tagTypes: ['room'],
+  tagTypes: ['rooms'],
   baseQuery: fetchBaseQuery({
     baseUrl: `${API_PATH}`,
     prepareHeaders: (headers, { getState }) => {
@@ -19,16 +19,12 @@ export const roomApi = createApi({
       return headers;
     },
   }),
+
   endpoints: (builder) => ({
     getRoomList: builder.query<{ roomList: RoomTableHead[] }, number>({
       // TODO: admin get api로 변경. (페이지네이션 추가 수정)
       query: () => ({ url: 'lands' }),
-      providesTags: (result) => (result
-        ? [
-          ...result.roomList.map(({ id }) => ({ type: 'room' as const, id })),
-          { type: 'room', id: 'LIST' },
-        ]
-        : [{ type: 'room', id: 'LIST' }]),
+      providesTags: ['rooms'],
 
       transformResponse:
         (roomResponse: RoomsResponse):
@@ -46,7 +42,7 @@ export const roomApi = createApi({
 
     getRoom: builder.query<RoomResponse, number>({
       query: (id) => ({ url: `lands/${id}` }),
-      providesTags: (result, error, id) => [{ type: 'room', id }],
+      providesTags: (result, error, id) => [{ type: 'rooms', id }],
     }),
 
     updateRoom: builder.mutation<void, Pick<RoomResponse, 'id'> & Partial<RoomResponse>>({
@@ -58,7 +54,7 @@ export const roomApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result, error, { id }) => [{ type: 'room', id }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'rooms', id }],
     }),
   }),
 });

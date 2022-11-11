@@ -25,10 +25,10 @@ interface GridProps {
 }
 interface ButtonProps {
   children: string;
-  danger: boolean;
-  icon: ReactNode;
+  danger?: boolean;
+  icon?: ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  htmlType?: 'button' | 'submit' | 'reset' | undefined;
+  htmlType?: 'button' | 'submit' | 'reset';
 }
 
 interface CheckboxProps {
@@ -79,7 +79,9 @@ function CustomCheckbox({
   );
 }
 
-function CustomUpload({ defaultFileList: fileList }: any) {
+function CustomUpload({
+  defaultFileList: fileList,
+}) {
   return (
     <Upload
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"

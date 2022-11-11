@@ -25,7 +25,7 @@ export const roomApi = createApi({
       query: () => ({ url: 'lands' }),
       providesTags: (result) => (result
         ? [
-          ...result.roomList.map(({ id }) => ({ type: 'room', id } as const)),
+          ...result.roomList.map(({ id }) => ({ type: 'room' as const, id })),
           { type: 'room', id: 'LIST' },
         ]
         : [{ type: 'room', id: 'LIST' }]),

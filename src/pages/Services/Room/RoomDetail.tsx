@@ -1,5 +1,6 @@
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider, Form } from 'antd';
+import { UploadFile } from 'antd/es/upload/interface';
 import CustomForm from 'components/common/CustomForm';
 import { ROOM_INPUT, ROOM_OPTION } from 'constant/roomOption';
 import { RoomResponse } from 'model/room.model';
@@ -14,12 +15,14 @@ export default function RoomDetail() {
   const [updatePost] = useUpdateRoomMutation();
   const [form] = Form.useForm();
 
-  const imageList = roomRes?.image_urls?.map((res: string, index: number) => ({
-    uid: `${-(index + 1)}`,
-    name: res,
-    status: 'done',
-    url: res,
-  }));
+  const imageList: UploadFile[] | undefined = roomRes?.image_urls?.map(
+    (res, index) => ({
+      uid: `${-(index + 1)}`,
+      name: res,
+      status: 'done',
+      url: res,
+    }),
+  );
 
   const deleteRoom = () => {
     // TODO: 삭제 기능 추가

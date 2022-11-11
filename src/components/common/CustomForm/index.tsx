@@ -7,6 +7,7 @@ import { FormInstance } from 'antd/es/form/Form';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { RoomOptionValue } from 'constant/roomOption';
 import React, { ReactNode } from 'react';
+import type { UploadFile } from 'antd/es/upload/interface';
 import * as S from './CutomForm.style';
 
 interface InputProps {
@@ -79,9 +80,7 @@ function CustomCheckbox({
   );
 }
 
-function CustomUpload({
-  defaultFileList: fileList,
-}) {
+function CustomUpload({ defaultFileList: fileList }: { defaultFileList: UploadFile[] }) {
   return (
     <Upload
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"

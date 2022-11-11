@@ -1,7 +1,7 @@
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider, Form } from 'antd';
 import CustomForm from 'components/common/CustomForm';
-import ROOM_OPTION from 'constant/roomOption';
+import { ROOM_INPUT, ROOM_OPTION } from 'constant/roomOption';
 import { RoomResponse } from 'model/room.model';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -29,23 +29,7 @@ export default function RoomDetail() {
     updatePost({ id, ...values });
   };
 
-  const InputValueArr = [
-    'name',
-    'room_type',
-    'management_fee',
-    'size',
-    'monthly_fee',
-    'charter_fee',
-    'latitude',
-    'longitude',
-    'deposit',
-    'floor',
-    'phone',
-    'address',
-    'description',
-  ] as const;
-
-  const DefaultValueArr = InputValueArr.map(
+  const DefaultValueArr = ROOM_INPUT.map(
     (res) => ({
       name: [res],
       value: roomRes && roomRes[res],

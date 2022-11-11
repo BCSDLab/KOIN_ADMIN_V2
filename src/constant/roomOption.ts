@@ -1,3 +1,19 @@
+const ROOM_INPUT = [
+  'name',
+  'room_type',
+  'management_fee',
+  'size',
+  'monthly_fee',
+  'charter_fee',
+  'latitude',
+  'longitude',
+  'deposit',
+  'floor',
+  'phone',
+  'address',
+  'description',
+] as const;
+
 const ROOM_OPTION = [
   {
     name: '냉장고',
@@ -70,4 +86,4 @@ export interface RoomOptionValue {
   data: string;
 }
 
-export default ROOM_OPTION;
+export { ROOM_OPTION, ROOM_INPUT };

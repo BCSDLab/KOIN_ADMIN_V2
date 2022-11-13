@@ -3,16 +3,17 @@ import { Divider, Form } from 'antd';
 import { UploadFile } from 'antd/es/upload/interface';
 import CustomForm from 'components/common/CustomForm';
 import { ROOM_INPUT, ROOM_OPTION } from 'constant/roomOption';
-import { RoomResponse } from 'model/room.model';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetRoomQuery, useUpdateRoomMutation } from 'store/api/Room';
+import { useGetRoomQuery } from 'store/api/Room';
 import * as S from './RoomDetail.style';
+import useRoomMutation from './useRoomMutation';
 
 export default function RoomDetail() {
   const { id }: any = useParams();
   const { data: roomRes } = useGetRoomQuery(id);
-  const [updatePost] = useUpdateRoomMutation();
+  const { onSubmitRoomForm }: any = useRoomMutation(id);
+
   const [form] = Form.useForm();
 
   const imageList: UploadFile[] | undefined = roomRes?.image_urls?.map(
@@ -23,14 +24,6 @@ export default function RoomDetail() {
       url: res,
     }),
   );
-
-  const deleteRoom = () => {
-    // TODO: 삭제 기능 추가
-  };
-
-  const onFinish = (values: Record<number, RoomResponse>) => {
-    updatePost({ id, ...values });
-  };
 
   const DefaultValueArr = ROOM_INPUT.map(
     (res) => ({
@@ -46,7 +39,11 @@ export default function RoomDetail() {
       <Divider />
       <S.FormWrap>
         {roomRes && (
-          <CustomForm onFinish={onFinish} form={form} fields={DefaultValueArr}>
+          <CustomForm
+            onFinish={onSubmitRoomForm}
+            form={form}
+            fields={DefaultValueArr}
+          >
             <CustomForm.GridRow gridColumns="1.5fr 1fr 1fr 1fr">
               <CustomForm.Input label="방이름" name="name" />
               <CustomForm.Input label="방종류" name="room_type" />
@@ -101,7 +98,7 @@ export default function RoomDetail() {
               <CustomForm.Button
                 danger
                 icon={<DeleteOutlined />}
-                onClick={deleteRoom}
+                // onClick={deleteForm}
               >
                 삭제
               </CustomForm.Button>

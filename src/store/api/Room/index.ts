@@ -7,11 +7,11 @@ import { RootState } from 'store';
 
 export const roomApi = createApi({
   reducerPath: 'roomApi',
-  tagTypes: ['rooms'],
+  tagTypes: ['rooms', 'room'],
+
   baseQuery: fetchBaseQuery({
     baseUrl: `${API_PATH}`,
     prepareHeaders: (headers, { getState }) => {
-      // 토큰이 필요한 조회에는 헤더를 추가할 필요가 있음.
       const { token } = (getState() as RootState).auth;
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
@@ -24,7 +24,12 @@ export const roomApi = createApi({
     getRoomList: builder.query<{ roomList: RoomTableHead[] }, number>({
       // TODO: admin get api로 변경. (페이지네이션 추가 수정)
       query: () => ({ url: 'lands' }),
-      providesTags: ['rooms'],
+      providesTags: (result) => (result?.roomList
+        ? [
+          ...(result?.roomList.map(({ id }) => ({ type: 'rooms' as const, id })) ?? []),
+          { type: 'rooms', id: 'LIST' },
+        ]
+        : [{ type: 'rooms', id: 'LIST' }]),
 
       transformResponse:
         (roomResponse: RoomsResponse):
@@ -42,7 +47,7 @@ export const roomApi = createApi({
 
     getRoom: builder.query<RoomResponse, number>({
       query: (id) => ({ url: `lands/${id}` }),
-      providesTags: (result, error, id) => [{ type: 'rooms', id }],
+      providesTags: (result, error, id) => [{ type: 'room', id }],
     }),
 
     updateRoom: builder.mutation<void, Pick<RoomResponse, 'id'> & Partial<RoomResponse>>({
@@ -54,7 +59,7 @@ export const roomApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result, error, { id }) => [{ type: 'rooms', id }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'room', id }],
     }),
   }),
 });

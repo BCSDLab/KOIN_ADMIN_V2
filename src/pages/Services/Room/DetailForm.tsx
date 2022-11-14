@@ -10,9 +10,9 @@ import useRoomMutation from './useRoomMutation';
 import * as S from './RoomDetail.style';
 
 export default function DetailForm() {
-  const { id }: any = useParams();
-  const { data: roomRes } = useGetRoomQuery(id);
-  const { onSubmitRoomForm }: any = useRoomMutation(id);
+  const { id } = useParams();
+  const { data: roomRes } = useGetRoomQuery(Number(id));
+  const { onSubmitRoomForm } = useRoomMutation(Number(id));
 
   const [form] = Form.useForm();
 

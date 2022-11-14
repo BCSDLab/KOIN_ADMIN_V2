@@ -12,7 +12,7 @@ function UserList() {
       <S.Heading>User</S.Heading>
       {usersRes && (
         <CustomTable
-          tableData={usersRes.userList}
+          data={usersRes.userList}
           pagination={
           {
             current: page,

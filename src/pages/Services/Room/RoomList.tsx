@@ -11,7 +11,7 @@ function RoomList() {
       <S.Heading>Room</S.Heading>
       {roomRes && (
         <CustomTable
-          tableData={roomRes.roomList}
+          data={roomRes.roomList}
         />
       )}
     </S.Container>

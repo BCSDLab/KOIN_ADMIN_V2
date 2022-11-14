@@ -29,7 +29,7 @@ interface DefaultTableData {
 }
 
 interface Props<TableData> {
-  tableData: TableData[];
+  data: TableData[];
   pagination?: {
     current: number;
     total: number;
@@ -38,12 +38,12 @@ interface Props<TableData> {
 }
 
 function CustomTable<TableData extends DefaultTableData>({
-  tableData, pagination,
+  data, pagination,
 }: Props<TableData>) {
   const navigate = useNavigate();
 
   // 리스트의 담긴 Key값들로 구성된 테이블
-  const columns: ColumnsType<TableData> = Object.keys(tableData[0])
+  const columns: ColumnsType<TableData> = Object.keys(data[0])
     .map((key) => ({
       // TITLE_MAPPER에 명칭이 존재하면 그 명칭으로 헤더 이름을 변경
       title: TITLE_MAPPER[key] || key.toUpperCase(),
@@ -55,7 +55,7 @@ function CustomTable<TableData extends DefaultTableData>({
     <TableContainer>
       <Table
         columns={columns}
-        dataSource={tableData}
+        dataSource={data}
         rowKey={(record) => record.id}
         onRow={(record) => ({
           onClick: () => {

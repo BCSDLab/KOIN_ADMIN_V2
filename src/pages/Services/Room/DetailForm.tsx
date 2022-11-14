@@ -86,7 +86,6 @@ export default function DetailForm() {
       </S.UploadWrap>
       <S.ButtonWrap>
         <CustomForm.Button
-          danger={false}
           icon={<UploadOutlined />}
           htmlType="submit"
         >

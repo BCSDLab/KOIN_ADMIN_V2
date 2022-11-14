@@ -15,9 +15,9 @@ function UserList() {
           tableData={usersRes.userList}
           pagination={
           {
-            currentPage: page,
-            handlePageChange: setPage,
-            totalPage: usersRes.totalPage,
+            current: page,
+            onChange: setPage,
+            total: usersRes.totalPage,
           }
 }
         />

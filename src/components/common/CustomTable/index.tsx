@@ -31,9 +31,9 @@ interface DefaultTableData {
 interface Props<TableData> {
   tableData: TableData[];
   pagination?: {
-    currentPage: number;
-    totalPage: number;
-    handlePageChange: (idx: number) => void;
+    current: number;
+    total: number;
+    onChange: (idx: number) => void;
   };
 }
 
@@ -63,14 +63,14 @@ function CustomTable<TableData extends DefaultTableData>({
           },
         })}
         pagination={
-          pagination?.totalPage ? false : { position: ['bottomRight'] }
+          pagination?.total ? false : { position: ['bottomRight'] }
         }
       />
       {pagination ? (
         <Pagination
-          current={pagination.currentPage}
-          total={pagination.totalPage * 10}
-          onChange={pagination.handlePageChange}
+          current={pagination.current}
+          total={pagination.total * 10}
+          onChange={pagination.onChange}
           showSizeChanger={false}
           showQuickJumper
         />

@@ -8,7 +8,7 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { RoomOptionValue } from 'constant/roomOption';
 import React, { ReactNode } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
-import * as S from './CutomForm.style';
+import * as S from './CustomForm.style';
 
 interface InputProps {
   label: string;

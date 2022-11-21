@@ -72,7 +72,7 @@ function CustomCheckbox({
   };
 
   return (
-    <S.FormItemCheckbox name={res.data}>
+    <S.FormItemCheckbox name={res.data} valuePropName="checked">
       <Checkbox
         defaultChecked={defaultChecked}
         onChange={onChange}

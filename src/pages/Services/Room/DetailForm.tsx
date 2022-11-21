@@ -5,7 +5,7 @@ import { UploadFile } from 'antd/es/upload/interface';
 import CustomForm from 'components/common/CustomForm';
 import { ROOM_INPUT, ROOM_OPTION } from 'constant/roomOption';
 import { useParams } from 'react-router-dom';
-import { useGetRoomQuery } from 'store/api/Room';
+import { useGetRoomQuery } from 'store/api/room';
 import useRoomMutation from './useRoomMutation';
 import * as S from './RoomDetail.style';
 

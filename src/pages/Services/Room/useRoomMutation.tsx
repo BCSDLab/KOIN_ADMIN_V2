@@ -1,5 +1,5 @@
 import { RoomResponse } from 'model/room.model';
-import { useUpdateRoomMutation } from 'store/api/Room';
+import { useUpdateRoomMutation } from 'store/api/room';
 
 export default function useRoomMutation(id: number) {
   const [updatePost] = useUpdateRoomMutation();

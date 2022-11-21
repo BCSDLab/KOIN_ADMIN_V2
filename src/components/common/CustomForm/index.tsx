@@ -20,10 +20,12 @@ interface TextAreaProps {
   name: string;
   maxLength?: number;
 }
+
 interface GridProps {
   children: ReactNode;
   gridColumns: string;
 }
+
 interface ButtonProps {
   children: string;
   danger?: boolean;

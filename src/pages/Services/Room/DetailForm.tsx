@@ -1,6 +1,6 @@
 import React from 'react';
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import { Divider, Form } from 'antd';
+import { Divider } from 'antd';
 import { UploadFile } from 'antd/es/upload/interface';
 import CustomForm from 'components/common/CustomForm';
 import { ROOM_INPUT, ROOM_OPTION } from 'constant/roomOption';
@@ -14,7 +14,7 @@ export default function DetailForm() {
   const { data: roomRes } = useGetRoomQuery(Number(id));
   const { onSubmitRoomForm } = useRoomMutation(Number(id));
 
-  const [form] = Form.useForm();
+  const [form] = CustomForm.useForm();
 
   const imageList: UploadFile[] | undefined = roomRes?.image_urls?.map(
     (res, index) => ({
@@ -25,7 +25,7 @@ export default function DetailForm() {
     }),
   );
 
-  const DefaultValueArr = ROOM_INPUT.map(
+  const DEFAULT_VALUE_ARR = ROOM_INPUT.map(
     (res) => ({
       name: [res],
       value: roomRes && roomRes[res],
@@ -36,7 +36,7 @@ export default function DetailForm() {
     <CustomForm
       onFinish={onSubmitRoomForm}
       form={form}
-      fields={DefaultValueArr}
+      fields={DEFAULT_VALUE_ARR}
     >
       <CustomForm.GridRow gridColumns="1.5fr 1fr 1fr 1fr">
         <CustomForm.Input label="방이름" name="name" />

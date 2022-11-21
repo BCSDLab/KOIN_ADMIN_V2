@@ -1,5 +1,4 @@
 import CustomTable from 'components/common/CustomTable';
-// import { useState } from 'react';
 import { useGetRoomListQuery } from 'store/api/room';
 import * as S from './RoomList.style';
 

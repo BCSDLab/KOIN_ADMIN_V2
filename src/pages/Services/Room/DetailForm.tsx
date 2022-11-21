@@ -26,9 +26,9 @@ export default function DetailForm() {
   );
 
   const DEFAULT_VALUE_ARR = ROOM_INPUT.map(
-    (res) => ({
-      name: [res],
-      value: roomRes && roomRes[res],
+    (inputRes) => ({
+      name: [inputRes],
+      value: roomRes && roomRes[inputRes],
     }),
   );
 
@@ -64,18 +64,17 @@ export default function DetailForm() {
       <Divider orientation="left">옵션</Divider>
 
       <S.CheckboxWrap>
-        {ROOM_OPTION.map((res) => (
+        {ROOM_OPTION.map((optionRes) => (
           roomRes
             && (
-            <div key={res.name}>
               <CustomForm.Checkbox
-                res={res}
-                defaultChecked={roomRes[res.data]}
+                key={optionRes.name}
+                res={optionRes}
+                defaultChecked={roomRes[optionRes.data]}
                 form={form}
               >
-                {res.name}
+                {optionRes.name}
               </CustomForm.Checkbox>
-            </div>
             )
         ))}
       </S.CheckboxWrap>

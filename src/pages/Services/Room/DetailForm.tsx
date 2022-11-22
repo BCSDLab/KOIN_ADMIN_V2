@@ -26,13 +26,11 @@ export default function DetailForm() {
   );
 
   const defaultValueArr = ROOM_INPUT.map(
-    (inputRes) => ({
-      name: [inputRes],
-      value: roomRes && roomRes[inputRes],
+    (inputData) => ({
+      name: [inputData],
+      value: roomRes && roomRes[inputData],
     }),
   );
-
-  console.log(defaultValueArr);
 
   return (
     <CustomForm
@@ -63,13 +61,13 @@ export default function DetailForm() {
 
       <S.CheckboxWrap>
         {ROOM_OPTION.map(
-          (optionRes) => roomRes && (
+          (optionData) => roomRes && (
           <CustomForm.Checkbox
-            key={optionRes.name}
-            res={optionRes}
+            key={optionData.name}
+            res={optionData}
             form={form}
           >
-            {optionRes.name}
+            {optionData.name}
           </CustomForm.Checkbox>
           ),
         )}

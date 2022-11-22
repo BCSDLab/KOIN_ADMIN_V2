@@ -32,6 +32,8 @@ export default function DetailForm() {
     }),
   );
 
+  console.log(defaultValueArr);
+
   return (
     <CustomForm
       onFinish={onSubmitRoomForm}

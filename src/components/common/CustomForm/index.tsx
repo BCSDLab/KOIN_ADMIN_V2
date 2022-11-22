@@ -3,8 +3,6 @@ import { UploadOutlined } from '@ant-design/icons';
 import {
   Button, Checkbox, Form, Input, Upload,
 } from 'antd';
-import { FormInstance } from 'antd/es/form/Form';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { RoomOptionValue } from 'constant/roomOption';
 import React, { ReactNode } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
@@ -37,7 +35,6 @@ interface ButtonProps {
 interface CheckboxProps {
   res: RoomOptionValue;
   children: ReactNode;
-  form: FormInstance;
 }
 
 function GridRow({ children, gridColumns }: GridProps) {
@@ -63,19 +60,10 @@ function CusctomTextArea({ label, name, maxLength }: TextAreaProps) {
 function CustomCheckbox({
   res,
   children,
-  form,
 }: CheckboxProps) {
-  const onChange = (e: CheckboxChangeEvent) => {
-    form.setFieldsValue({
-      [e.target.id!]: e.target.checked,
-    });
-  };
-
   return (
     <S.FormItemCheckbox name={res.data} valuePropName="checked">
-      <Checkbox
-        onChange={onChange}
-      >
+      <Checkbox>
         {children}
       </Checkbox>
     </S.FormItemCheckbox>

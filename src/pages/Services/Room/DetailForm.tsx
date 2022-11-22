@@ -12,7 +12,7 @@ import * as S from './RoomDetail.style';
 export default function DetailForm() {
   const { id } = useParams();
   const { data: roomRes } = useGetRoomQuery(Number(id));
-  const { updateForm } = useRoomMutation(Number(id));
+  const { updateRoomDetail } = useRoomMutation(Number(id));
 
   const [form] = CustomForm.useForm();
 
@@ -34,7 +34,7 @@ export default function DetailForm() {
 
   return (
     <CustomForm
-      onFinish={updateForm}
+      onFinish={updateRoomDetail}
       form={form}
       fields={defaultValueArr}
     >
@@ -65,7 +65,6 @@ export default function DetailForm() {
           <CustomForm.Checkbox
             key={optionData.name}
             res={optionData}
-            form={form}
           >
             {optionData.name}
           </CustomForm.Checkbox>

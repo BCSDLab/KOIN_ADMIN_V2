@@ -12,6 +12,22 @@ const ROOM_INPUT = [
   'phone',
   'address',
   'description',
+  'opt_refrigerator',
+  'opt_closet',
+  'opt_tv',
+  'opt_microwave',
+  'opt_gas_range',
+  'opt_induction',
+  'opt_water_purifier',
+  'opt_air_conditioner',
+  'opt_washer',
+  'opt_bed',
+  'opt_desk',
+  'opt_shoe_closet',
+  'opt_electronic_door_locks',
+  'opt_bidet',
+  'opt_veranda',
+  'opt_elevator',
 ] as const;
 
 const ROOM_OPTION = [
@@ -49,7 +65,7 @@ const ROOM_OPTION = [
   },
   {
     name: '세탁기',
-    data: 'opt_refrigerator',
+    data: 'opt_washer',
   },
   {
     name: '침대',

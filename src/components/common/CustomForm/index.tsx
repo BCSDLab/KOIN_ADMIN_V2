@@ -37,7 +37,6 @@ interface ButtonProps {
 interface CheckboxProps {
   res: RoomOptionValue;
   children: ReactNode;
-  defaultChecked: boolean;
   form: FormInstance;
 }
 
@@ -64,7 +63,6 @@ function CusctomTextArea({ label, name, maxLength }: TextAreaProps) {
 function CustomCheckbox({
   res,
   children,
-  defaultChecked,
   form,
 }: CheckboxProps) {
   const onChange = (e: CheckboxChangeEvent) => {
@@ -76,7 +74,6 @@ function CustomCheckbox({
   return (
     <S.FormItemCheckbox name={res.data} valuePropName="checked">
       <Checkbox
-        defaultChecked={defaultChecked}
         onChange={onChange}
       >
         {children}

@@ -25,7 +25,7 @@ export default function DetailForm() {
     }),
   );
 
-  const DEFAULT_VALUE_ARR = ROOM_INPUT.map(
+  const defaultValueArr = ROOM_INPUT.map(
     (inputRes) => ({
       name: [inputRes],
       value: roomRes && roomRes[inputRes],
@@ -36,7 +36,7 @@ export default function DetailForm() {
     <CustomForm
       onFinish={onSubmitRoomForm}
       form={form}
-      fields={DEFAULT_VALUE_ARR}
+      fields={defaultValueArr}
     >
       <CustomForm.GridRow gridColumns="1.5fr 1fr 1fr 1fr">
         <CustomForm.Input label="방이름" name="name" />
@@ -56,27 +56,21 @@ export default function DetailForm() {
         <CustomForm.Input label="전화번호" name="phone" />
         <CustomForm.Input label="주소" name="address" />
       </CustomForm.GridRow>
-      <CustomForm.TextArea
-        label="설명"
-        name="description"
-        maxLength={200}
-      />
+      <CustomForm.TextArea label="설명" name="description" maxLength={200} />
       <Divider orientation="left">옵션</Divider>
 
       <S.CheckboxWrap>
-        {ROOM_OPTION.map((optionRes) => (
-          roomRes
-            && (
-              <CustomForm.Checkbox
-                key={optionRes.name}
-                res={optionRes}
-                defaultChecked={roomRes[optionRes.data]}
-                form={form}
-              >
-                {optionRes.name}
-              </CustomForm.Checkbox>
-            )
-        ))}
+        {ROOM_OPTION.map(
+          (optionRes) => roomRes && (
+          <CustomForm.Checkbox
+            key={optionRes.name}
+            res={optionRes}
+            form={form}
+          >
+            {optionRes.name}
+          </CustomForm.Checkbox>
+          ),
+        )}
       </S.CheckboxWrap>
 
       <Divider orientation="left">사진</Divider>
@@ -84,16 +78,10 @@ export default function DetailForm() {
         <CustomForm.Upload defaultFileList={imageList || []} />
       </S.UploadWrap>
       <S.ButtonWrap>
-        <CustomForm.Button
-          icon={<UploadOutlined />}
-          htmlType="submit"
-        >
+        <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
           완료
         </CustomForm.Button>
-        <CustomForm.Button
-          danger
-          icon={<DeleteOutlined />}
-        >
+        <CustomForm.Button danger icon={<DeleteOutlined />}>
           삭제
         </CustomForm.Button>
       </S.ButtonWrap>

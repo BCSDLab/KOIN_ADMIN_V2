@@ -12,7 +12,7 @@ import * as S from './RoomDetail.style';
 export default function DetailForm() {
   const { id } = useParams();
   const { data: roomRes } = useGetRoomQuery(Number(id));
-  const { onSubmitRoomForm } = useRoomMutation(Number(id));
+  const { updateForm } = useRoomMutation(Number(id));
 
   const [form] = CustomForm.useForm();
 
@@ -34,7 +34,7 @@ export default function DetailForm() {
 
   return (
     <CustomForm
-      onFinish={onSubmitRoomForm}
+      onFinish={updateForm}
       form={form}
       fields={defaultValueArr}
     >

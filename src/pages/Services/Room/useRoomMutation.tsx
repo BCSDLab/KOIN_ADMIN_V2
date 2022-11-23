@@ -4,7 +4,7 @@ import { useUpdateRoomMutation } from 'store/api/room';
 export default function useRoomMutation(id: number) {
   const [updatePost] = useUpdateRoomMutation();
 
-  function updateRoomDetail(values: Record<number, RoomResponse>) {
+  function updateRoomDetail(values: Partial<RoomResponse>) {
     return updatePost({ id, ...values });
   }
 

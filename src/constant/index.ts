@@ -9,4 +9,9 @@ export const TITLE_MAPPER: Record<string, string> = {
   portal_account: '아우누리 ID',
   identity: '유저 구분',
   nickname: '닉네임',
+  monthly_fee: '월세',
+  charter_fee: '전세',
+  room_type: '방 종류',
+  management_fee: '관리비',
+  size: '평수',
 };

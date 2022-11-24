@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import { Table } from 'antd';
 import Pagination from 'antd/es/pagination';
 import type { ColumnsType } from 'antd/es/table';
@@ -27,17 +28,19 @@ interface DefaultTableData {
 }
 
 interface Props<TableData> {
-  tableData: TableData[];
-  currentPage: number;
-  totalPage: number;
-  handlePageChange: (idx: number) => void;
+  data: TableData[];
+  pagination?: {
+    current: number;
+    total: number;
+    onChange: (idx: number) => void;
+  };
 }
 
 function CustomTable<TableData extends DefaultTableData>({
-  tableData, currentPage, totalPage, handlePageChange,
+  data, pagination,
 }: Props<TableData>) {
   const navigate = useNavigate();
-
+  
   const getColumns = (): ColumnsType<TableData> => {
     const columnKeys = Object.keys(tableData[0]);
 
@@ -52,22 +55,26 @@ function CustomTable<TableData extends DefaultTableData>({
     <TableContainer>
       <Table
         columns={getColumns()}
-        dataSource={tableData}
+        dataSource={data}
         rowKey={(record) => record.id}
         onRow={(record) => ({
           onClick: () => {
             navigate(`${record.id}`);
           },
         })}
-        pagination={false}
+        pagination={
+          pagination?.total ? false : { position: ['bottomRight'] }
+        }
       />
-      <Pagination
-        current={currentPage}
-        total={totalPage * 10}
-        onChange={handlePageChange}
-        showSizeChanger={false}
-        showQuickJumper
-      />
+      {pagination && (
+        <Pagination
+          current={pagination.current}
+          total={pagination.total * 10}
+          onChange={pagination.onChange}
+          showSizeChanger={false}
+          showQuickJumper
+        />
+      )}
     </TableContainer>
   );
 }

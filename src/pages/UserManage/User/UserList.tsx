@@ -9,15 +9,17 @@ function UserList() {
 
   return (
     <S.Container>
-      <S.Heading>
-        User
-      </S.Heading>
+      <S.Heading>User</S.Heading>
       {usersRes && (
         <CustomTable
-          tableData={usersRes.userList}
-          currentPage={page}
-          handlePageChange={setPage}
-          totalPage={usersRes.totalPage}
+          data={usersRes.userList}
+          pagination={
+          {
+            current: page,
+            onChange: setPage,
+            total: usersRes.totalPage,
+          }
+}
         />
       )}
     </S.Container>

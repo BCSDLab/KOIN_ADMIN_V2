@@ -18,6 +18,7 @@ import {
 import { RootState } from 'store';
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
+import RoomDetail from 'pages/Services/Room/RoomDetail';
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const { token } = useSelector((state: RootState) => state.auth);
@@ -43,6 +44,7 @@ function App() {
           <Route path="/cafeteria" element={<Cafeteria />} />
           <Route path="/bus" element={<Bus />} />
           <Route path="/room" element={<RoomList />} />
+          <Route path="/room/:id" element={<RoomDetail />} />
           <Route path="/user" element={<UserList />} />
           <Route path="/user/:id" element={<UserDetail />} />
           <Route path="/manager" element={<Manager />} />

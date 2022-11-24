@@ -1,35 +1,3 @@
-const ROOM_INPUT = [
-  'name',
-  'room_type',
-  'management_fee',
-  'size',
-  'monthly_fee',
-  'charter_fee',
-  'latitude',
-  'longitude',
-  'deposit',
-  'floor',
-  'phone',
-  'address',
-  'description',
-  'opt_refrigerator',
-  'opt_closet',
-  'opt_tv',
-  'opt_microwave',
-  'opt_gas_range',
-  'opt_induction',
-  'opt_water_purifier',
-  'opt_air_conditioner',
-  'opt_washer',
-  'opt_bed',
-  'opt_desk',
-  'opt_shoe_closet',
-  'opt_electronic_door_locks',
-  'opt_bidet',
-  'opt_veranda',
-  'opt_elevator',
-] as const;
-
 const ROOM_OPTION = [
   {
     name: '냉장고',
@@ -102,4 +70,4 @@ export interface RoomOptionValue {
   data: string;
 }
 
-export { ROOM_OPTION, ROOM_INPUT };
+export { ROOM_OPTION };

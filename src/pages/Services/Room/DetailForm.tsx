@@ -1,11 +1,11 @@
-import React from 'react';
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import { UploadFile } from 'antd/es/upload/interface';
 import CustomForm from 'components/common/CustomForm';
-import { ROOM_INPUT, ROOM_OPTION } from 'constant/roomOption';
+import { ROOM_OPTION } from 'constant/roomOption';
 import { useParams } from 'react-router-dom';
 import { useGetRoomQuery } from 'store/api/room';
+import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
 import useRoomMutation from './useRoomMutation';
 import * as S from './RoomDetail.style';
 
@@ -13,8 +13,8 @@ export default function DetailForm() {
   const { id } = useParams();
   const { data: roomRes } = useGetRoomQuery(Number(id));
   const { updateRoomDetail } = useRoomMutation(Number(id));
-
   const [form] = CustomForm.useForm();
+  const defaultValueArr = getDefaultValueArr(roomRes);
 
   const imageList: UploadFile[] | undefined = roomRes?.image_urls?.map(
     (res, index) => ({
@@ -22,13 +22,6 @@ export default function DetailForm() {
       name: res,
       status: 'done',
       url: res,
-    }),
-  );
-
-  const defaultValueArr = ROOM_INPUT.map(
-    (inputData) => ({
-      name: [inputData],
-      value: roomRes && roomRes[inputData],
     }),
   );
 

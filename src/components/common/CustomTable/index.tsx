@@ -23,7 +23,6 @@ const TableContainer = styled.div`
   }
 `;
 
-// 반드시 id Prop이 포함되어야 함
 interface DefaultTableData {
   id: string | number;
 }
@@ -41,20 +40,21 @@ function CustomTable<TableData extends DefaultTableData>({
   data, pagination,
 }: Props<TableData>) {
   const navigate = useNavigate();
+  
+  const getColumns = (): ColumnsType<TableData> => {
+    const columnKeys = Object.keys(tableData[0]);
 
-  // 리스트의 담긴 Key값들로 구성된 테이블
-  const columns: ColumnsType<TableData> = Object.keys(data[0])
-    .map((key) => ({
-      // TITLE_MAPPER에 명칭이 존재하면 그 명칭으로 헤더 이름을 변경
+    return columnKeys.map((key) => ({
       title: TITLE_MAPPER[key] || key.toUpperCase(),
       dataIndex: key,
       key,
     }));
+  };
 
   return (
     <TableContainer>
       <Table
-        columns={columns}
+        columns={getColumns()}
         dataSource={data}
         rowKey={(record) => record.id}
         onRow={(record) => ({
@@ -66,7 +66,7 @@ function CustomTable<TableData extends DefaultTableData>({
           pagination?.total ? false : { position: ['bottomRight'] }
         }
       />
-      {pagination ? (
+      {pagination && (
         <Pagination
           current={pagination.current}
           total={pagination.total * 10}
@@ -74,7 +74,7 @@ function CustomTable<TableData extends DefaultTableData>({
           showSizeChanger={false}
           showQuickJumper
         />
-      ) : null}
+      )}
     </TableContainer>
   );
 }

@@ -1,16 +1,22 @@
+/**
+ * @param {number} identity 0: 학생, 1: 대학원생, 2: 교수, 3: 교직원, 4: 졸업생, 5: 점주
+ * @param {number} gender 0: 남자, 1: 여자
+ * @param {boolean} is_authed 이메일인증 완료여부
+ */
 export interface UserDetail {
-  id: number; // id
-  portal_account: string; // 계정 id
-  nickname: string | null; // 닉네임
-  name: string | null; // 이름
-  student_number: string | null; // 학번
-  major: string | null; // 학과
-  phone_number: string | null; // 전화번호
-  identity: number; // 0: 학생, 1: 대학원생, 2: 교수, 3: 교직원, 4: 졸업생, 5: 점주
-  gender: 0 | 1; // 0: 남자, 1: 여자
-  is_authed: boolean; // 이메일인증 완료여부
+  id: number;
+  portal_account: string;
+  nickname: string | null;
+  name: string | null;
+  student_number: string | null;
+  major: string | null;
+  phone_number: string | null;
+  identity: number;
+  gender: 0 | 1;
+  is_authed: boolean;
   last_logged_at: string;
 
+  // 없어져야 할 프로퍼티들
   // remember_token: boolean; // ??
   // authority: null; // ??
   // authorities: null, // ??
@@ -29,12 +35,15 @@ export interface UserDetail {
   // credentialsNonExpired: boolean; // ??
 }
 
+/**
+ * @param {number} identity 0: 학생, 1: 대학원생, 2: 교수, 3: 교직원, 4: 졸업생, 5: 점주
+ */
 export interface UserTableHead {
   id: number;
-  portal_account: string; // 계정 id
-  identity: number; // 0: 학생, 1: 대학원생, 2: 교수, 3: 교직원, 4: 졸업생, 5: 점주
-  nickname: string | null; // 닉네임
-  name: string | null; // 이름
+  portal_account: string;
+  identity: number;
+  nickname: string | null;
+  name: string | null;
 }
 
 export interface UsersResponse {

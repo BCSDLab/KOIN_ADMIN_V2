@@ -22,10 +22,6 @@ export const userApi = createApi({
     getUserList: builder.query<{ userList: UserTableHead[], totalPage: number }, number>({
       query: (page) => `users/?page=${page}`,
       providesTags: ['users'],
-
-      // transformResponse: callback(A) => { return B }
-      // A: query에 담은 url로 요청한 API의 리턴값
-      // B: builder.query의 리턴 타입
       transformResponse:
         (usersResponse: UsersResponse): { userList: UserTableHead[], totalPage: number } => {
           // 테이블에 보여주고 싶은 값들만 꺼내기

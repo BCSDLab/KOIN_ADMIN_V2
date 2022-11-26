@@ -31,27 +31,33 @@ export default function DetailForm() {
       form={form}
       fields={defaultValueArr}
     >
-      <CustomForm.GridRow gridColumns="1.5fr 1fr 1fr 1fr">
-        <CustomForm.Input label="방이름" name="name" />
+      <Divider orientation="left">기본 정보</Divider>
+      <CustomForm.Input label="방이름" name="name" />
+      <CustomForm.GridRow gridColumns="1fr 1fr">
         <CustomForm.Input label="방종류" name="room_type" />
-        <CustomForm.Input label="관리비" name="management_fee" />
         <CustomForm.Input label="방크기" name="size" />
       </CustomForm.GridRow>
-      <CustomForm.GridRow gridColumns="1.5fr 1fr 1fr 1fr">
-        <CustomForm.Input label="월세" name="monthly_fee" />
-        <CustomForm.Input label="전세" name="charter_fee" />
+
+      <CustomForm.Input label="월세" name="monthly_fee" />
+      <CustomForm.Input label="전세" name="charter_fee" />
+      <CustomForm.GridRow gridColumns="1fr 1fr">
+        <CustomForm.Input label="관리비" name="management_fee" />
+        <CustomForm.Input label="보증금" name="deposit" />
+      </CustomForm.GridRow>
+
+      <CustomForm.GridRow gridColumns="1fr 1fr">
         <CustomForm.Input label="위도" name="latitude" />
         <CustomForm.Input label="경도" name="longitude" />
       </CustomForm.GridRow>
-      <CustomForm.GridRow gridColumns="1fr 1fr 1.5fr 2fr">
-        <CustomForm.Input label="보증금" name="deposit" />
+
+      <CustomForm.GridRow gridColumns="1fr 1fr">
         <CustomForm.Input label="층수" name="floor" />
         <CustomForm.Input label="전화번호" name="phone" />
-        <CustomForm.Input label="주소" name="address" />
       </CustomForm.GridRow>
+      <CustomForm.Input label="주소" name="address" />
       <CustomForm.TextArea label="설명" name="description" maxLength={200} />
-      <Divider orientation="left">옵션</Divider>
 
+      <Divider orientation="left" style={{ marginTop: '40px' }}>옵션</Divider>
       <S.CheckboxWrap>
         {ROOM_OPTION.map(
           (optionData) => roomRes && (

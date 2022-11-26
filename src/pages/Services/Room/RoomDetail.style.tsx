@@ -16,7 +16,7 @@ export const SubHeading = styled.div`
 `;
 
 export const FormWrap = styled.div`
-  padding: 50px 120px 60px 20px;
+  padding: 20px 120px 60px 20px;
   .ant-form-item-label > label {
     font-size: 15px;
     font-weight: 600;
@@ -48,8 +48,8 @@ export const FormItem = styled(Form.Item)`
 
 export const CheckboxWrap = styled.div`
   margin-left: 25px;
-  margin-bottom: 50px;
-  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-top: 10px;
   display: -webkit-inline-box;
   flex-wrap: wrap;
   width: 50vw;

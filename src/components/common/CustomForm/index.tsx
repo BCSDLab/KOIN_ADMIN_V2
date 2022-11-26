@@ -6,11 +6,14 @@ import {
 import { RoomOptionValue } from 'constant/roomOption';
 import React, { ReactNode } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
+import { Rule } from 'antd/lib/form';
 import * as S from './CustomForm.style';
 
 interface InputProps {
   label: string;
   name: string;
+  disabled?: boolean;
+  rules?: Rule[];
 }
 
 interface TextAreaProps {
@@ -41,10 +44,12 @@ function GridRow({ children, gridColumns }: GridProps) {
   return <S.GridWrap gridColumns={gridColumns}>{children}</S.GridWrap>;
 }
 
-function CustomInput({ label, name }: InputProps) {
+function CustomInput({
+  label, name, disabled, rules,
+}: InputProps) {
   return (
-    <S.FormItem label={label} name={name}>
-      <S.StyledInput />
+    <S.FormItem label={label} name={name} rules={rules}>
+      <S.StyledInput disabled={disabled} bordered={false} />
     </S.FormItem>
   );
 }

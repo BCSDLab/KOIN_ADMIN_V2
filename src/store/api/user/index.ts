@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
-import { UsersResponse, UserTableHead } from 'model/user.model';
+import { UserDetail, UsersResponse, UserTableHead } from 'model/user.model';
 
 export const userApi = createApi({
   reducerPath: 'user',
   // 초기화용 태그
-  tagTypes: ['users'],
+  tagTypes: ['users', 'user'],
   baseQuery: fetchBaseQuery({
-    baseUrl: `${API_PATH}/admin`,
+    baseUrl: `${API_PATH}`,
     prepareHeaders: (headers, { getState }) => {
       const { token } = (getState() as RootState).auth;
       if (token) {
@@ -20,7 +20,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     // builder.query<리턴 타입, 갱신 인자(여기선 page)>
     getUserList: builder.query<{ userList: UserTableHead[], totalPage: number }, number>({
-      query: (page) => `users/?page=${page}`,
+      query: (page) => `admin/users/?page=${page}`,
       providesTags: ['users'],
       transformResponse:
         (usersResponse: UsersResponse): { userList: UserTableHead[], totalPage: number } => {
@@ -41,7 +41,30 @@ export const userApi = createApi({
           };
         },
     }),
+
+    getUser: builder.query<UserDetail, number>({
+      query: (id) => `admin/users/${id}`,
+      providesTags: (result, error, id) => [{ type: 'user', id }],
+    }),
+
+    getNicknameCheck: builder.mutation<{ success: string }, string>({
+      query: (nickname) => `user/check/nickname/${nickname}`,
+    }),
+
+    updateUser: builder.mutation<void, UserDetail>({
+      query(data) {
+        const { id, ...body } = data;
+        return {
+          url: `admin/users/${id}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: (result, error, { id }) => [{ type: 'user', id }],
+    }),
   }),
 });
 
-export const { useGetUserListQuery } = userApi;
+export const {
+  useGetUserListQuery, useGetUserQuery, useGetNicknameCheckMutation, useUpdateUserMutation,
+} = userApi;

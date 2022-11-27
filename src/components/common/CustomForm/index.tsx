@@ -4,7 +4,7 @@ import {
   Button, Checkbox, Form, Input, Upload,
 } from 'antd';
 import { RoomOptionValue } from 'constant/roomOption';
-import React, { ReactNode } from 'react';
+import React, { ChangeEvent, ReactNode } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { Rule } from 'antd/lib/form';
 import * as S from './CustomForm.style';
@@ -14,6 +14,7 @@ interface InputProps {
   name: string;
   disabled?: boolean;
   rules?: Rule[];
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface TextAreaProps {
@@ -45,11 +46,11 @@ function GridRow({ children, gridColumns }: GridProps) {
 }
 
 function CustomInput({
-  label, name, disabled, rules,
+  label, name, disabled, rules, onChange,
 }: InputProps) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <S.StyledInput disabled={disabled} bordered={false} />
+      <S.StyledInput disabled={disabled} bordered={false} onChange={onChange} />
     </S.FormItem>
   );
 }

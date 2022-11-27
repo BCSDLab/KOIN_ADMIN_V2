@@ -5,7 +5,6 @@ import { UserDetail, UsersResponse, UserTableHead } from 'model/user.model';
 
 export const userApi = createApi({
   reducerPath: 'user',
-  // 초기화용 태그
   tagTypes: ['users', 'user'],
   baseQuery: fetchBaseQuery({
     baseUrl: `${API_PATH}`,
@@ -18,13 +17,11 @@ export const userApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    // builder.query<리턴 타입, 갱신 인자(여기선 page)>
     getUserList: builder.query<{ userList: UserTableHead[], totalPage: number }, number>({
       query: (page) => `admin/users/?page=${page}`,
       providesTags: ['users'],
       transformResponse:
         (usersResponse: UsersResponse): { userList: UserTableHead[], totalPage: number } => {
-          // 테이블에 보여주고 싶은 값들만 꺼내기
           const tableData = usersResponse.items.map(({
             id, portal_account, identity, nickname, name,
           }) => ({
@@ -60,7 +57,7 @@ export const userApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result, error, { id }) => [{ type: 'user', id }],
+      invalidatesTags: (result, error, { id }) => ['users', { type: 'user', id }],
     }),
   }),
 });

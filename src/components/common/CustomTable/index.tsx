@@ -40,9 +40,9 @@ function CustomTable<TableData extends DefaultTableData>({
   data, pagination,
 }: Props<TableData>) {
   const navigate = useNavigate();
-  
+
   const getColumns = (): ColumnsType<TableData> => {
-    const columnKeys = Object.keys(tableData[0]);
+    const columnKeys = Object.keys(data[0]);
 
     return columnKeys.map((key) => ({
       title: TITLE_MAPPER[key] || key.toUpperCase(),

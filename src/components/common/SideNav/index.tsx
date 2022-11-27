@@ -48,7 +48,7 @@ const items: MenuProps['items'] = [
 ];
 
 const SideNavConatiner = styled.nav`
-  height: 100vh;
+  height: 100%;
   width: 200px;
   overflow-y: auto;
 `;
@@ -65,7 +65,7 @@ function SideNav() {
         onClick={onClick}
         selectedKeys={[pathname]}
         defaultOpenKeys={['service', 'user']}
-        style={{ height: '100vh' }}
+        style={{ height: '100%' }}
         mode="inline"
         items={items}
       />

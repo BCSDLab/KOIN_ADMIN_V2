@@ -2,7 +2,7 @@ import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import { UploadFile } from 'antd/es/upload/interface';
 import CustomForm from 'components/common/CustomForm';
-import { ROOM_OPTION } from 'constant/roomOption';
+import ROOM_OPTION from 'constant/roomOption';
 import { useParams } from 'react-router-dom';
 import { useGetRoomQuery } from 'store/api/room';
 import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
@@ -59,16 +59,14 @@ export default function DetailForm() {
 
       <Divider orientation="left" style={{ marginTop: '40px' }}>옵션</Divider>
       <S.CheckboxWrap>
-        {ROOM_OPTION.map(
-          (optionData) => roomRes && (
+        {ROOM_OPTION.map((optionData) => roomRes && (
           <CustomForm.Checkbox
             key={optionData.name}
-            res={optionData}
+            name={optionData.data}
           >
             {optionData.name}
           </CustomForm.Checkbox>
-          ),
-        )}
+        ))}
       </S.CheckboxWrap>
 
       <Divider orientation="left">사진</Divider>

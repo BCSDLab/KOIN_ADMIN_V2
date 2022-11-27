@@ -29,6 +29,8 @@ function UserDetail() {
               onFinish={updateUser}
             >
               <Divider orientation="left">기본 정보</Divider>
+              <CustomForm.Checkbox name="is_authed" disabled>이메일 인증 완료 여부</CustomForm.Checkbox>
+
               <CustomForm.Input label="ID" name="id" disabled />
               <CustomForm.Input label="학교 계정" name="portal_account" disabled />
 
@@ -47,6 +49,7 @@ function UserDetail() {
                 <CustomForm.Input label="학번" name="student_number" />
                 <CustomForm.Input label="전공" name="major" disabled />
               </CustomForm.GridRow>
+              <CustomForm.Select label="성별" name="gender" options={{ 0: '남성', 1: '여성' }} />
               <CustomForm.Button htmlType="submit">정보 수정</CustomForm.Button>
             </CustomForm>
           </S.FormWrapper>

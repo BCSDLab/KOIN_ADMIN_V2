@@ -18,8 +18,8 @@ export default function useNicknameCheck(form: FormInstance) {
         makeToast('success', '사용 가능한 닉네임입니다.');
         setNicknameChecked(true);
       })
-      .catch(() => {
-        makeToast('error', '이미 존재하는 닉네임입니다.');
+      .catch(({ data }) => {
+        makeToast('error', data.error.message);
         setNicknameChecked(false);
       });
   };

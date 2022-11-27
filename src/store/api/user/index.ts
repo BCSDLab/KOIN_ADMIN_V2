@@ -48,7 +48,7 @@ export const userApi = createApi({
       query: (nickname) => `user/check/nickname/${nickname}`,
     }),
 
-    updateUser: builder.mutation<void, UserDetail>({
+    updateUser: builder.mutation<void, Pick<UserDetail, 'id'> & Partial<UserDetail>>({
       query(data) {
         const { id, ...body } = data;
         return {

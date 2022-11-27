@@ -2,6 +2,7 @@ import {
   Button, Form, Input,
 } from 'antd';
 import styled from 'styled-components';
+import { mobile } from 'utils/style/mediaQuery';
 
 export const GridWrap = styled.div<{ gridColumns: string }>`
   display: grid;
@@ -25,6 +26,18 @@ export const FormItem = styled(Form.Item)`
     border-radius: 0;
     &:after {
       display: none;
+      flex-basis: auto;
+    }
+  }
+  // 기본 설정된 반응형에 의한 디자인 깨짐 방지용
+  ${mobile}{
+    .ant-row .ant-form-item-label {
+      flex: 0 1 auto;
+      padding: 0;
+    }
+    .ant-row .ant-form-item-control {
+      flex: 1 1 auto;
+      padding: 0;
     }
   }
   .ant-input-borderless:hover, 
@@ -60,5 +73,5 @@ export const StyledInput = styled(Input)`
 
 export const StyledButton = styled(Button)`
   border-radius: 0;
-  width: 80px;
+  min-width: 80px;
 `;

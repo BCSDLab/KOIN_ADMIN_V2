@@ -1,5 +1,7 @@
+import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import CustomForm from 'components/common/CustomForm';
+import SELECT_OPTIONS from 'constant/user';
 import { useParams } from 'react-router-dom';
 import { useGetUserQuery } from 'store/api/user';
 import useNicknameCheck from './hooks/useNicknameCheck';
@@ -30,27 +32,32 @@ function UserDetail() {
             >
               <Divider orientation="left">기본 정보</Divider>
               <CustomForm.Checkbox name="is_authed" disabled>이메일 인증 완료 여부</CustomForm.Checkbox>
-
-              <CustomForm.Input label="ID" name="id" disabled />
+              <CustomForm.GridRow gridColumns="1fr 1fr">
+                <CustomForm.Input label="ID" name="id" disabled />
+                <CustomForm.Input label="최종 로그인 시간" name="last_logged_at" disabled />
+              </CustomForm.GridRow>
               <CustomForm.Input label="학교 계정" name="portal_account" disabled />
-
               <CustomForm.Input label="이름" name="name" />
               <CustomForm.GridRow gridColumns="1fr 80px">
-                <CustomForm.Input
-                  label="닉네임"
-                  name="nickname"
-                  onChange={changeNickname}
-                  rules={[{ validator: nicknameValidator }]}
-                />
+                <CustomForm.Input label="닉네임" name="nickname" onChange={changeNickname} rules={[{ validator: nicknameValidator }]} />
                 <CustomForm.Button onClick={checkDuplicateNickname}>중복확인</CustomForm.Button>
               </CustomForm.GridRow>
-
               <CustomForm.GridRow gridColumns="1fr 1fr">
                 <CustomForm.Input label="학번" name="student_number" />
                 <CustomForm.Input label="전공" name="major" disabled />
               </CustomForm.GridRow>
-              <CustomForm.Select label="성별" name="gender" options={{ 0: '남성', 1: '여성' }} />
-              <CustomForm.Button htmlType="submit">정보 수정</CustomForm.Button>
+              <CustomForm.Select label="성별" name="gender" options={SELECT_OPTIONS.gender} />
+              <CustomForm.Input label="전화번호" name="phone_number" />
+              <CustomForm.Select label="구분" name="identity" options={SELECT_OPTIONS.identity} />
+
+              <S.ButtonWrap>
+                <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
+                  정보 수정
+                </CustomForm.Button>
+                <CustomForm.Button danger icon={<DeleteOutlined />}>
+                  유저 삭제
+                </CustomForm.Button>
+              </S.ButtonWrap>
             </CustomForm>
           </S.FormWrapper>
         </>

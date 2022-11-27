@@ -39,3 +39,10 @@ export const FormWrapper = styled.div`
     margin-left: 0;
   }
 `;
+
+export const ButtonWrap = styled.div`
+  margin-top: 20px;
+  margin-left: 15px;
+  display: flex;
+  justify-content: flex-end;
+`;

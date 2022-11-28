@@ -54,9 +54,21 @@ export const roomApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result, error, { id }) => [{ type: 'room', id }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'room', id }, { type: 'rooms', id: 'LIST' }],
+    }),
+
+    deleteRoom: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `admin/lands/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ((result, error, id) => [{ type: 'room', id }, { type: 'rooms', id: 'LIST' }]),
     }),
   }),
 });
 
-export const { useGetRoomListQuery, useGetRoomQuery, useUpdateRoomMutation } = roomApi;
+export const {
+  useGetRoomListQuery, useGetRoomQuery, useUpdateRoomMutation, useDeleteRoomMutation,
+} = roomApi;

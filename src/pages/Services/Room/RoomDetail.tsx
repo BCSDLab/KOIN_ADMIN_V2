@@ -13,7 +13,7 @@ import * as S from './RoomDetail.style';
 export default function RoomDetail() {
   const { id } = useParams();
   const { data: roomRes } = useGetRoomQuery(Number(id));
-  const { updateRoomDetail } = useRoomMutation(Number(id));
+  const { updateRoomDetail, deleteRoomData } = useRoomMutation(Number(id));
   const [form] = CustomForm.useForm();
   const defaultValueArr = getDefaultValueArr(roomRes);
 
@@ -90,7 +90,7 @@ export default function RoomDetail() {
             <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
               완료
             </CustomForm.Button>
-            <CustomForm.Button danger icon={<DeleteOutlined />}>
+            <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteRoomData}>
               삭제
             </CustomForm.Button>
           </S.ButtonWrap>

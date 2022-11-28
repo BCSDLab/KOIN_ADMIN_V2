@@ -19,7 +19,9 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUserList: builder.query<{ userList: UserTableHead[], totalPage: number }, number>({
       query: (page) => `admin/users/?page=${page}`,
-      providesTags: ['users'],
+      providesTags: (result) => (result
+        ? [...result.userList.map((user) => ({ type: 'user' as const, id: user.id })), { type: 'users', id: 'LIST' }]
+        : [{ type: 'users', id: 'LIST' }]),
       transformResponse:
         (usersResponse: UsersResponse): { userList: UserTableHead[], totalPage: number } => {
           const tableData = usersResponse.items.map(({
@@ -57,7 +59,7 @@ export const userApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result, error, { id }) => ['users', { type: 'user', id }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'user', id }],
     }),
   }),
 });

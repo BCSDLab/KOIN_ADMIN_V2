@@ -1,7 +1,6 @@
-import { FormInstance } from 'antd';
+import { FormInstance, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useGetNicknameCheckMutation } from 'store/api/user';
-import makeToast from 'utils/ts/makeToast';
 
 export default function useNicknameCheck(form: FormInstance) {
   const [nicknameChecked, setNicknameChecked] = useState(true);
@@ -15,11 +14,11 @@ export default function useNicknameCheck(form: FormInstance) {
     checkNickname(form.getFieldValue('nickname'))
       .unwrap()
       .then(() => {
-        makeToast('success', '사용 가능한 닉네임입니다.');
+        message.success('사용 가능한 닉네임입니다.');
         setNicknameChecked(true);
       })
       .catch(({ data }) => {
-        makeToast('error', data.error.message);
+        message.error(data.error.message);
         setNicknameChecked(false);
       });
   };

@@ -38,7 +38,7 @@ function UserDetail() {
               </CustomForm.GridRow>
               <CustomForm.Input label="학교 계정" name="portal_account" disabled />
               <CustomForm.Input label="이름" name="name" />
-              <CustomForm.GridRow gridColumns="1fr 80px">
+              <CustomForm.GridRow gridColumns="1fr auto">
                 <CustomForm.Input label="닉네임" name="nickname" onChange={handleNicknameChange} rules={[{ validator }]} />
                 <CustomForm.Button onClick={checkDuplicateNickname}>중복확인</CustomForm.Button>
               </CustomForm.GridRow>

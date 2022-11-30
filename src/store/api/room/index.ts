@@ -66,9 +66,20 @@ export const roomApi = createApi({
       },
       invalidatesTags: ((result, error, id) => [{ type: 'room', id }, { type: 'rooms', id: 'LIST' }]),
     }),
+
+    addRoom: builder.mutation<RoomResponse, Partial<RoomResponse>>({
+      query: (body) => ({
+        url: 'admin/lands',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'rooms', id: 'LIST' }],
+    }),
+
   }),
 });
 
 export const {
-  useGetRoomListQuery, useGetRoomQuery, useUpdateRoomMutation, useDeleteRoomMutation,
+  useGetRoomListQuery, useGetRoomQuery,
+  useUpdateRoomMutation, useDeleteRoomMutation, useAddRoomMutation,
 } = roomApi;

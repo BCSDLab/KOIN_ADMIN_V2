@@ -8,6 +8,6 @@ export const LayoutContainer = styled.div`
 `;
 
 export const Main = styled.main`
-  width: 100%;
+  width: 1000px;
   padding: 12px;
 `;

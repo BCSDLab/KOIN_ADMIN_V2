@@ -36,9 +36,7 @@ interface Props<TableData> {
   };
 }
 
-function CustomTable<TableData extends DefaultTableData>({
-  data, pagination,
-}: Props<TableData>) {
+function CustomTable<TableData extends DefaultTableData>({ data, pagination }: Props<TableData>) {
   const navigate = useNavigate();
 
   const getColumns = (): ColumnsType<TableData> => {
@@ -62,9 +60,7 @@ function CustomTable<TableData extends DefaultTableData>({
             navigate(`${record.id}`);
           },
         })}
-        pagination={
-          pagination?.total ? false : { position: ['bottomRight'] }
-        }
+        pagination={pagination ? false : { position: ['bottomRight'] }}
       />
       {pagination && (
         <Pagination

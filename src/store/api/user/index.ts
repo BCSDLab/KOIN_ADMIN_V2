@@ -22,11 +22,10 @@ export const userApi = createApi({
       providesTags: (result) => (result
         ? [...result.userList.map((user) => ({ type: 'user' as const, id: user.id })), { type: 'users', id: 'LIST' }]
         : [{ type: 'users', id: 'LIST' }]),
-      transformResponse:
-        (usersResponse: UsersResponse): { userList: UserTableHead[], totalPage: number } => ({
-          userList: usersResponse.users,
-          totalPage: usersResponse.totalPage,
-        }),
+      transformResponse: (usersResponse: UsersResponse) => ({
+        userList: usersResponse.users,
+        totalPage: usersResponse.totalPage,
+      }),
     }),
 
     getUser: builder.query<UserDetail, number>({

@@ -11,6 +11,7 @@ function RoomList() {
       {roomRes && (
         <CustomTable
           data={roomRes.roomList}
+          columnSize={[10, 20, 15, 35, 10]}
         />
       )}
     </S.Container>

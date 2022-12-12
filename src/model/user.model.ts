@@ -41,12 +41,22 @@ export interface UserDetail {
 export interface UserTableHead {
   id: number;
   portal_account: string;
-  identity: number;
-  nickname: string | null;
+  nickname: string;
   name: string | null;
+  major: string | null;
+  student_number: string | null;
 }
 
 export interface UsersResponse {
   totalPage: number;
-  items: UserDetail[];
+  users: UserListData[];
+}
+
+export interface UserListData {
+  id: number;
+  portal_account: string;
+  nickname: string;
+  name: string | null;
+  major: string | null;
+  student_number: string | null;
 }

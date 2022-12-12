@@ -34,7 +34,7 @@ export const roomApi = createApi({
         }));
         return {
           roomList: tableData,
-          totalPage: roomResponse.totalPage,
+          totalPage: roomResponse.total_page,
         };
       },
     }),

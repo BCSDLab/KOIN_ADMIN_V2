@@ -24,7 +24,7 @@ export const userApi = createApi({
         : [{ type: 'users', id: 'LIST' }]),
       transformResponse: (usersResponse: UsersResponse) => ({
         userList: usersResponse.users,
-        totalPage: usersResponse.totalPage,
+        totalPage: usersResponse.total_page,
       }),
     }),
 

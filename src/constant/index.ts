@@ -14,4 +14,6 @@ export const TITLE_MAPPER: Record<string, string> = {
   room_type: '방 종류',
   management_fee: '관리비',
   size: '평수',
+  major: '학과',
+  student_number: '학번',
 };

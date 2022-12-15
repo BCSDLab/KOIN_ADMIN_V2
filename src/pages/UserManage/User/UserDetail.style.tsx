@@ -16,12 +16,6 @@ export const SubHeading = styled.div`
 
 export const FormWrapper = styled.div`
   padding: 10px 120px 60px 20px;
-  .ant-form-item-label > label {
-    font-size: 15px;
-    font-weight: 600;
-    color: #2c3e50;
-  }
-
   .ant-divider-with-text {
     font-size: 15px;
     font-weight: 600;

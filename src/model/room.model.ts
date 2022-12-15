@@ -1,3 +1,5 @@
+import { ListPagination } from './common.model';
+
 export interface RoomResponse {
   address: string;
   charter_fee: string;
@@ -40,8 +42,7 @@ export interface RoomTableHead {
   charter_fee: number | null;
 }
 
-export interface RoomsResponse {
-  totalPage: number;
+export interface RoomsResponse extends ListPagination {
   lands: RoomTableHead[];
 }
 

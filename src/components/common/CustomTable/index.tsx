@@ -34,20 +34,22 @@ interface Props<TableData> {
     total: number;
     onChange: (idx: number) => void;
   };
+  columnSize?: number[];
 }
 
-function CustomTable<TableData extends DefaultTableData>({
-  data, pagination,
-}: Props<TableData>) {
+function CustomTable<TableData extends DefaultTableData>(
+  { data, pagination, columnSize }: Props<TableData>,
+) {
   const navigate = useNavigate();
 
   const getColumns = (): ColumnsType<TableData> => {
     const columnKeys = Object.keys(data[0]);
 
-    return columnKeys.map((key) => ({
+    return columnKeys.map((key, idx) => ({
       title: TITLE_MAPPER[key] || key.toUpperCase(),
       dataIndex: key,
       key,
+      width: columnSize && columnSize[idx] ? `${columnSize[idx]}%` : 'auto',
     }));
   };
 
@@ -62,9 +64,7 @@ function CustomTable<TableData extends DefaultTableData>({
             navigate(`${record.id}`);
           },
         })}
-        pagination={
-          pagination?.total ? false : { position: ['bottomRight'] }
-        }
+        pagination={pagination ? false : { position: ['bottomRight'] }}
       />
       {pagination && (
         <Pagination

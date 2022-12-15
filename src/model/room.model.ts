@@ -1,4 +1,4 @@
-import { ListResponsePagination } from './common.model';
+import { ListPagination } from './common.model';
 
 export interface RoomResponse {
   address: string;
@@ -42,7 +42,7 @@ export interface RoomTableHead {
   charter_fee: number | null;
 }
 
-export interface RoomsResponse extends ListResponsePagination {
+export interface RoomsResponse extends ListPagination {
   lands: RoomTableHead[];
 }
 

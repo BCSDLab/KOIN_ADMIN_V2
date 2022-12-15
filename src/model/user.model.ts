@@ -1,4 +1,4 @@
-import { ListResponsePagination } from './common.model';
+import { ListPagination } from './common.model';
 
 /**
  * @param {number} identity 0: 학생, 1: 대학원생, 2: 교수, 3: 교직원, 4: 졸업생, 5: 점주
@@ -49,7 +49,7 @@ export interface UserTableHead {
   student_number: string | null;
 }
 
-export interface UsersResponse extends ListResponsePagination {
+export interface UsersResponse extends ListPagination {
   users: UserListData[];
 }
 

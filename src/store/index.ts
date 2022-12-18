@@ -4,6 +4,7 @@ import logger from 'redux-logger';
 import { authApi } from './api/auth';
 import { userApi } from './api/user';
 import { roomApi } from './api/room';
+import { memberApi } from './api/member';
 
 const store = configureStore({
   reducer: {
@@ -11,9 +12,16 @@ const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [roomApi.reducerPath]: roomApi.reducer,
+    [memberApi.reducerPath]: memberApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-    .concat(logger, authApi.middleware, userApi.middleware, roomApi.middleware),
+    .concat(
+      logger,
+      authApi.middleware,
+      userApi.middleware,
+      roomApi.middleware,
+      memberApi.middleware,
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

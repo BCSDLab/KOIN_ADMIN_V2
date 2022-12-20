@@ -12,7 +12,7 @@ function UserDetail() {
   const { id } = useParams();
   const { data: userData } = useGetUserQuery(Number(id));
   const [form] = CustomForm.useForm();
-  const { changeNickname, checkDuplicateNickname, nicknameValidator } = useNicknameCheck(form);
+  const { handleNicknameChange, checkDuplicateNickname, validator } = useNicknameCheck(form);
   const { updateUser } = useUserMutation();
 
   return (
@@ -38,8 +38,8 @@ function UserDetail() {
               </CustomForm.GridRow>
               <CustomForm.Input label="학교 계정" name="portal_account" disabled />
               <CustomForm.Input label="이름" name="name" />
-              <CustomForm.GridRow gridColumns="1fr 80px">
-                <CustomForm.Input label="닉네임" name="nickname" onChange={changeNickname} rules={[{ validator: nicknameValidator }]} />
+              <CustomForm.GridRow gridColumns="1fr auto">
+                <CustomForm.Input label="닉네임" name="nickname" onChange={handleNicknameChange} rules={[{ validator }]} />
                 <CustomForm.Button onClick={checkDuplicateNickname}>중복확인</CustomForm.Button>
               </CustomForm.GridRow>
               <CustomForm.GridRow gridColumns="1fr 1fr">

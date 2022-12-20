@@ -19,24 +19,13 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUserList: builder.query<{ userList: UserTableHead[], totalPage: number }, number>({
       query: (page) => `admin/users/?page=${page}`,
-      providesTags: ['users'],
-      transformResponse:
-        (usersResponse: UsersResponse): { userList: UserTableHead[], totalPage: number } => {
-          const tableData = usersResponse.items.map(({
-            id, portal_account, identity, nickname, name,
-          }) => ({
-            id,
-            portal_account,
-            identity,
-            nickname,
-            name,
-          }));
-
-          return {
-            userList: tableData,
-            totalPage: usersResponse.totalPage,
-          };
-        },
+      providesTags: (result) => (result
+        ? [...result.userList.map((user) => ({ type: 'user' as const, id: user.id })), { type: 'users', id: 'LIST' }]
+        : [{ type: 'users', id: 'LIST' }]),
+      transformResponse: (usersResponse: UsersResponse) => ({
+        userList: usersResponse.users,
+        totalPage: usersResponse.total_page,
+      }),
     }),
 
     getUser: builder.query<UserDetail, number>({
@@ -48,7 +37,7 @@ export const userApi = createApi({
       query: (nickname) => `user/check/nickname/${nickname}`,
     }),
 
-    updateUser: builder.mutation<void, UserDetail>({
+    updateUser: builder.mutation<void, Pick<UserDetail, 'id'> & Partial<UserDetail>>({
       query(data) {
         const { id, ...body } = data;
         return {
@@ -57,7 +46,7 @@ export const userApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result, error, { id }) => ['users', { type: 'user', id }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'user', id }],
     }),
   }),
 });

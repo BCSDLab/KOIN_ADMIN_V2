@@ -1,3 +1,5 @@
+import { ListPagination } from './common.model';
+
 /**
  * @param {number} identity 0: 학생, 1: 대학원생, 2: 교수, 3: 교직원, 4: 졸업생, 5: 점주
  * @param {number} gender 0: 남자, 1: 여자
@@ -41,12 +43,21 @@ export interface UserDetail {
 export interface UserTableHead {
   id: number;
   portal_account: string;
-  identity: number;
-  nickname: string | null;
+  nickname: string;
   name: string | null;
+  major: string | null;
+  student_number: string | null;
 }
 
-export interface UsersResponse {
-  totalPage: number;
-  items: UserDetail[];
+export interface UsersResponse extends ListPagination {
+  users: UserListData[];
+}
+
+export interface UserListData {
+  id: number;
+  portal_account: string;
+  nickname: string;
+  name: string | null;
+  major: string | null;
+  student_number: string | null;
 }

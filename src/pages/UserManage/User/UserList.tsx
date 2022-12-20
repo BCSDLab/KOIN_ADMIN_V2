@@ -13,13 +13,12 @@ function UserList() {
       {usersRes && (
         <CustomTable
           data={usersRes.userList}
-          pagination={
-          {
+          pagination={{
             current: page,
             onChange: setPage,
             total: usersRes.totalPage,
-          }
-}
+          }}
+          columnSize={[10, 20, 20, 15, 20, 15]}
         />
       )}
     </S.Container>

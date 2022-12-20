@@ -120,7 +120,7 @@ function CustomSelect({
     <S.FormItem label={label} name={name} rules={rules}>
       <Select disabled={disabled}>
         {Object.entries(options).map(([key, val]) => (
-          <Select.Option value={Number.isNaN(key) ? key : Number(key)} key={key}>
+          <Select.Option value={Number.isNaN(Number(key)) ? key : Number(key)} key={key}>
             {val}
           </Select.Option>
         ))}

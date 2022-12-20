@@ -21,23 +21,15 @@ export const roomApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getRoomList: builder.query<{ roomList: RoomTableHead[] }, number>({
-      // TODO: admin get api로 변경. (페이지 네이션이 추가되면 그에 맞춰 메인 캐싱도 변경)
-      query: () => ({ url: 'lands' }),
-      providesTags: [{ type: 'rooms', id: 'LIST' }],
-
-      transformResponse:
-        (roomResponse: RoomsResponse):
-        { roomList: RoomTableHead[] } => {
-          const tableData = roomResponse.lands?.map(({
-            id, name, room_type, monthly_fee, charter_fee,
-          }) => ({
-            id, name, room_type, monthly_fee, charter_fee,
-          }));
-          return {
-            roomList: tableData,
-          };
-        },
+    getRoomList: builder.query<{ roomList: RoomTableHead[], totalPage: number }, number>({
+      query: (page) => ({ url: `admin/lands?page=${page}` }),
+      providesTags: (result) => (result
+        ? [...result.roomList.map((room) => ({ type: 'room' as const, id: room.id })), { type: 'rooms', id: 'LIST' }]
+        : [{ type: 'rooms', id: 'LIST' }]),
+      transformResponse: (roomResponse: RoomsResponse) => ({
+        roomList: roomResponse.lands,
+        totalPage: roomResponse.total_page,
+      }),
     }),
 
     getRoom: builder.query<RoomResponse, number>({

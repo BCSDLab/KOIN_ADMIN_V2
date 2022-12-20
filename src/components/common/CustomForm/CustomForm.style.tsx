@@ -40,20 +40,7 @@ export const FormItem = styled(Form.Item)`
       padding: 0;
     }
   }
-  .ant-input-borderless:hover, 
-  .ant-input-borderless:focus, 
-  .ant-input-borderless-focused, 
-  .ant-input-borderless-disabled, 
-  .ant-input-borderless[disabled] {
-    border: rgb(217, 217, 217) solid;
-    border-width: 1px;
-  }
-
-  .ant-input-borderless-disabled, 
-  .ant-input-borderless[disabled] {
-    background: #f5f5f5;
-  }
-
+  
   .ant-form-item-explain-error{
     position: absolute;
     right: 12px;

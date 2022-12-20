@@ -6,7 +6,7 @@ export default function useNicknameCheck(form: FormInstance) {
   const [nicknameChecked, setNicknameChecked] = useState(true);
   const [checkNickname] = useGetNicknameCheckMutation();
 
-  const changeNickname = () => {
+  const handleNicknameChange = () => {
     setNicknameChecked(false);
   };
 
@@ -23,11 +23,11 @@ export default function useNicknameCheck(form: FormInstance) {
       });
   };
 
-  const nicknameValidator = () => (nicknameChecked ? Promise.resolve() : Promise.reject(new Error('닉네임 중복을 확인해주세요')));
+  const validator = () => (nicknameChecked ? Promise.resolve() : Promise.reject(new Error('닉네임 중복을 확인해주세요')));
 
   useEffect(() => {
     form.validateFields(['nickname']);
   }, [nicknameChecked, form]);
 
-  return { changeNickname, checkDuplicateNickname, nicknameValidator };
+  return { handleNicknameChange, checkDuplicateNickname, validator };
 }

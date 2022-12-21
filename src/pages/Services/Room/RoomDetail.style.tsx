@@ -51,7 +51,7 @@ export const CheckboxWrap = styled.div`
 `;
 
 export const UploadWrap = styled.div`
-  margin-top: 50px;
+  margin-top: 40px;
   margin-left: 30px;
   .upload-list-inline .ant-upload-list-item {
     float: left;

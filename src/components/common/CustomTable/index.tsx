@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const TableContainer = styled.div`
-  padding: 24px 32px;
-  min-width: 1100px;
+  padding: 24px 0;
+  width: 100%
   display: flex;
   flex-direction: column;
   .ant-table-thead {

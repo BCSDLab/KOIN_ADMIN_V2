@@ -7,7 +7,7 @@ export const userApi = createApi({
   reducerPath: 'user',
   tagTypes: ['users', 'user'],
   baseQuery: fetchBaseQuery({
-    baseUrl: `${API_PATH}`,
+    baseUrl: `${API_PATH}/admin`,
     prepareHeaders: (headers, { getState }) => {
       const { token } = (getState() as RootState).auth;
       if (token) {
@@ -18,7 +18,7 @@ export const userApi = createApi({
   }),
   endpoints: (builder) => ({
     getUserList: builder.query<{ userList: UserTableHead[], totalPage: number }, number>({
-      query: (page) => `admin/users/?page=${page}`,
+      query: (page) => `users/?page=${page}`,
       providesTags: (result) => (result
         ? [...result.userList.map((user) => ({ type: 'user' as const, id: user.id })), { type: 'users', id: 'LIST' }]
         : [{ type: 'users', id: 'LIST' }]),
@@ -29,19 +29,19 @@ export const userApi = createApi({
     }),
 
     getUser: builder.query<UserDetail, number>({
-      query: (id) => `admin/users/${id}`,
+      query: (id) => `users/${id}`,
       providesTags: (result, error, id) => [{ type: 'user', id }],
     }),
 
     getNicknameCheck: builder.mutation<{ success: string }, string>({
-      query: (nickname) => `user/check/nickname/${nickname}`,
+      query: (nickname) => `check/nickname/${nickname}`,
     }),
 
     updateUser: builder.mutation<void, Pick<UserDetail, 'id'> & Partial<UserDetail>>({
       query(data) {
         const { id, ...body } = data;
         return {
-          url: `admin/users/${id}`,
+          url: `users/${id}`,
           method: 'PUT',
           body,
         };

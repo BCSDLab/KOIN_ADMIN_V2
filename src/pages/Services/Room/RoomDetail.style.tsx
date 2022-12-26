@@ -40,9 +40,8 @@ export const CheckboxWrap = styled.div`
   margin-left: 25px;
   margin-bottom: 20px;
   margin-top: 10px;
-  display: -webkit-inline-box;
+  display: flex;
   flex-wrap: wrap;
-  width: 50vw;
 `;
 
 export const UploadWrap = styled.div`

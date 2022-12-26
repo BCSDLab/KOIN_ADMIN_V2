@@ -20,6 +20,7 @@ export default function DetailForm() {
       url: res,
     }),
   );
+
   return (
     <>
       <CustomForm.Input label="방이름" name="name" />
@@ -56,13 +57,13 @@ export default function DetailForm() {
       </Divider>
       <S.CheckboxWrap>
         {ROOM_OPTION.map(
-          (optionData) => roomRes && (
-          <CustomForm.Checkbox
-            key={optionData.name}
-            name={optionData.data}
-          >
-            {optionData.name}
-          </CustomForm.Checkbox>
+          (optionData) => (
+            <CustomForm.Checkbox
+              key={optionData.name}
+              name={optionData.data}
+            >
+              {optionData.name}
+            </CustomForm.Checkbox>
           ),
         )}
       </S.CheckboxWrap>

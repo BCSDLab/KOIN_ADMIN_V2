@@ -5,6 +5,7 @@ import { useGetRoomQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
+import DetailHeading from 'components/common/DetailHeading/DetailHeading';
 import useRoomMutation from './useRoomMutation';
 import DetailForm from './DetailForm';
 import * as S from './RoomDetail.style';
@@ -16,11 +17,10 @@ export default function RoomDetail() {
   // const defaultValueArr = getDefaultValueArr(roomRes);
   const { deleteRoomData } = useRoomMutation(Number(id));
   const [form] = CustomForm.useForm();
-  console.log(roomRes);
 
   return (
     <S.Container>
-      <S.Heading>Room Detail</S.Heading>
+      <DetailHeading>Room Detail</DetailHeading>
       <S.SubHeading>Home / Room / RoomDetail</S.SubHeading>
       <S.FormWrap>
         {roomRes

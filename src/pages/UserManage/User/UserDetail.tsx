@@ -4,6 +4,7 @@ import CustomForm from 'components/common/CustomForm';
 import SELECT_OPTIONS from 'constant/user';
 import { useParams } from 'react-router-dom';
 import { useGetUserQuery } from 'store/api/user';
+import DetailHeading from 'components/common/DetailHeading/DetailHeading';
 import useNicknameCheck from './hooks/useNicknameCheck';
 import useUserMutation from './hooks/useUserMutation';
 import * as S from './UserDetail.style';
@@ -19,7 +20,7 @@ function UserDetail() {
     <S.Container>
       {userData && (
         <>
-          <S.Heading>User Detail</S.Heading>
+          <DetailHeading>User Detail</DetailHeading>
           <S.SubHeading>
             {`User Management / User Detail / ${userData.name}`}
           </S.SubHeading>

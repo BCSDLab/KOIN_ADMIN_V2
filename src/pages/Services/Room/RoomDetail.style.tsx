@@ -5,11 +5,6 @@ export const Container = styled.div`
   font-family: 'Avenir', 'Helvetica', 'Arial', 'sans-serif';
 `;
 
-export const Heading = styled.div`
-  color: #2c3e50;
-  font-size: 28px;
-`;
-
 export const SubHeading = styled.div`
   font-size: 13px;
   padding: 12px 0;

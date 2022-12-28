@@ -34,7 +34,7 @@ function UserDetail() {
               <Divider orientation="left">기본 정보</Divider>
               <CustomForm.Checkbox name="is_authed" disabled>이메일 인증 완료 여부</CustomForm.Checkbox>
               <CustomForm.GridRow gridColumns="1fr 1fr">
-                <CustomForm.Input label="ID" name="id" disabled />
+                <CustomForm.InputNumber label="ID" name="id" disabled />
                 <CustomForm.Input label="최종 로그인 시간" name="last_logged_at" disabled />
               </CustomForm.GridRow>
               <CustomForm.Input label="학교 계정" name="portal_account" disabled />

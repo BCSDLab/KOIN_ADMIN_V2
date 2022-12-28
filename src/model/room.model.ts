@@ -5,7 +5,7 @@ export interface RoomResponse {
   charter_fee: string;
   deposit: string;
   description: string;
-  floor: string | number;
+  floor: number;
   id: number;
   image_urls: string[];
   latitude: number;

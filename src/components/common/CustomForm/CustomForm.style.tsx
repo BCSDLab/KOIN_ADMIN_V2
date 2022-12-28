@@ -1,5 +1,5 @@
 import {
-  Button, Form, Input,
+  Button, Form, Input, InputNumber,
 } from 'antd';
 import styled from 'styled-components';
 import { mobile } from 'utils/style/mediaQuery';
@@ -41,11 +41,15 @@ export const FormItem = styled(Form.Item)`
     }
   }
   
-  .ant-form-item-explain-error{
+  .ant-form-item-explain-error {
     position: absolute;
     right: 12px;
     z-index: 10;
     top: 5px;
+  }
+
+  .ant-input-number-input-wrap {
+    width: 100%;
   }
 `;
 
@@ -58,7 +62,22 @@ export const StyledInput = styled(Input)`
   display: inline-block;
 `;
 
+export const StyledInputNumber = styled(InputNumber)`
+  border: rgb(217, 217, 217) solid;
+  border-width: 1px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
 export const StyledButton = styled(Button)`
   border-radius: 0;
   min-width: 80px;
+`;
+
+export const SwitchWrap = styled.h4`
+  display: flex;
+  gap: 5px;
+  margin: 5px 0;
 `;

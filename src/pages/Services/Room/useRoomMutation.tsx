@@ -11,6 +11,7 @@ export default function useRoomMutation(id: number) {
   function deleteRoomData() {
     deleteRoom(id);
     message.error('삭제되었습니다.');
+    navigate(-1);
   }
 
   function updateRoomDetail(values: Partial<RoomResponse>) {

@@ -13,9 +13,9 @@ import * as S from './RoomDetail.style';
 export default function RoomDetail() {
   const { id } = useParams();
   const { data: roomRes } = useGetRoomQuery(Number(id));
-  const { updateRoomDetail } = useRoomMutation(Number(id));
+  const { updateRoom } = useRoomMutation(Number(id));
   // const defaultValueArr = getDefaultValueArr(roomRes);
-  const { deleteRoomData } = useRoomMutation(Number(id));
+  const { deleteRoom } = useRoomMutation(Number(id));
   const [form] = CustomForm.useForm();
 
   return (
@@ -26,7 +26,7 @@ export default function RoomDetail() {
         {roomRes
           && (
           <CustomForm
-            onFinish={updateRoomDetail}
+            onFinish={updateRoom}
             form={form}
             initialValues={roomRes}
           >
@@ -36,7 +36,7 @@ export default function RoomDetail() {
               <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                 완료
               </CustomForm.Button>
-              <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteRoomData}>
+              <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteRoom}>
                 삭제
               </CustomForm.Button>
             </S.ButtonWrap>

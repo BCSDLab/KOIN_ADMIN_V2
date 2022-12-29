@@ -10,7 +10,7 @@ export const roomApi = createApi({
   tagTypes: ['rooms', 'room'],
 
   baseQuery: fetchBaseQuery({
-    baseUrl: `${API_PATH}/admin`,
+    baseUrl: `${API_PATH}`,
     prepareHeaders: (headers, { getState }) => {
       const { token } = (getState() as RootState).auth;
       if (token) {
@@ -22,7 +22,7 @@ export const roomApi = createApi({
 
   endpoints: (builder) => ({
     getRoomList: builder.query<{ roomList: RoomTableHead[], totalPage: number }, number>({
-      query: (page) => ({ url: `lands?page=${page}` }),
+      query: (page) => ({ url: `admin/lands?page=${page}` }),
       providesTags: (result) => (result
         ? [...result.roomList.map((room) => ({ type: 'room' as const, id: room.id })), { type: 'rooms', id: 'LIST' }]
         : [{ type: 'rooms', id: 'LIST' }]),
@@ -33,7 +33,7 @@ export const roomApi = createApi({
     }),
 
     getRoom: builder.query<RoomResponse, number>({
-      query: (id) => ({ url: `lands/${id}` }),
+      query: (id) => ({ url: `admin/lands/${id}` }),
       providesTags: (result, error, id) => [{ type: 'room', id }],
     }),
 
@@ -41,7 +41,7 @@ export const roomApi = createApi({
       query(data) {
         const { id, ...body } = data;
         return {
-          url: `lands/${id}`,
+          url: `admin/lands/${id}`,
           method: 'PUT',
           body,
         };
@@ -52,7 +52,7 @@ export const roomApi = createApi({
     deleteRoom: builder.mutation<{ success: boolean; id: number }, number>({
       query(id) {
         return {
-          url: `lands/${id}`,
+          url: `admin/lands/${id}`,
           method: 'DELETE',
         };
       },
@@ -61,7 +61,7 @@ export const roomApi = createApi({
 
     addRoom: builder.mutation<RoomResponse, Partial<RoomResponse>>({
       query: (body) => ({
-        url: 'lands',
+        url: 'admin/lands',
         method: 'POST',
         body,
       }),

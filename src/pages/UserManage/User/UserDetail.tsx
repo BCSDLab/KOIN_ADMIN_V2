@@ -4,7 +4,7 @@ import CustomForm from 'components/common/CustomForm';
 import SELECT_OPTIONS from 'constant/user';
 import { useParams } from 'react-router-dom';
 import { useGetUserQuery } from 'store/api/user';
-import DetailHeading from 'components/common/DetailHeading/DetailHeading';
+import DetailHeading from 'components/common/DetailHeading';
 import useNicknameCheck from './hooks/useNicknameCheck';
 import useUserMutation from './hooks/useUserMutation';
 import * as S from './UserDetail.style';

@@ -5,7 +5,7 @@ import { useGetRoomQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
-import DetailHeading from 'components/common/DetailHeading/DetailHeading';
+import DetailHeading from 'components/common/DetailHeading';
 import useRoomMutation from './useRoomMutation';
 import DetailForm from './DetailForm';
 import * as S from './RoomDetail.style';

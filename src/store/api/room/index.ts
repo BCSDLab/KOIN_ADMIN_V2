@@ -61,7 +61,7 @@ export const roomApi = createApi({
 
     addRoom: builder.mutation<RoomResponse, Partial<RoomResponse>>({
       query: (body) => ({
-        url: 'lands',
+        url: 'admin/lands',
         method: 'POST',
         body,
       }),

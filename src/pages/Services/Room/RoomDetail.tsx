@@ -13,9 +13,7 @@ import * as S from './RoomDetail.style';
 export default function RoomDetail() {
   const { id } = useParams();
   const { data: roomRes } = useGetRoomQuery(Number(id));
-  const { updateRoom } = useRoomMutation(Number(id));
-  // const defaultValueArr = getDefaultValueArr(roomRes);
-  const { deleteRoom } = useRoomMutation(Number(id));
+  const { updateRoom, deleteRoom } = useRoomMutation(Number(id));
   const [form] = CustomForm.useForm();
 
   return (

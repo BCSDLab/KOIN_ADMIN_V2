@@ -21,9 +21,9 @@ function UserDetail() {
       {userData && (
         <>
           <DetailHeading>User Detail</DetailHeading>
-          <S.SubHeading>
+          <S.BreadCrumb>
             {`User Management / User Detail / ${userData.name}`}
-          </S.SubHeading>
+          </S.BreadCrumb>
           <Divider />
           <S.FormWrapper>
             <CustomForm

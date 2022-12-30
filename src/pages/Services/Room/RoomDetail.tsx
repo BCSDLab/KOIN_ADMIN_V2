@@ -19,7 +19,7 @@ export default function RoomDetail() {
   return (
     <S.Container>
       <DetailHeading>Room Detail</DetailHeading>
-      <S.SubHeading>Home / Room / RoomDetail</S.SubHeading>
+      <S.BreadCrumb>Home / Room / RoomDetail</S.BreadCrumb>
       <S.FormWrap>
         {roomRes
           && (

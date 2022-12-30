@@ -10,7 +10,7 @@ export default function useRoomMutation(id: number) {
 
   function deleteRoom() {
     deleteRoomMutation(id);
-    message.error('삭제되었습니다.');
+    message.success('삭제되었습니다.');
     navigate(-1);
   }
 

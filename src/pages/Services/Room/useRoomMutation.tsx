@@ -1,11 +1,12 @@
 import { message } from 'antd';
 import { RoomResponse } from 'model/room.model';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteRoomMutation, useUpdateRoomMutation } from 'store/api/room';
+import { useAddRoomMutation, useDeleteRoomMutation, useUpdateRoomMutation } from 'store/api/room';
 
-export default function useRoomMutation(id: number) {
+export default function useRoomMutation(id?: number) {
   const [updateRoomMutation] = useUpdateRoomMutation();
   const [deleteRoomMutation] = useDeleteRoomMutation();
+  const [addRoomMutation] = useAddRoomMutation();
   const navigate = useNavigate();
 
   function deleteRoom() {
@@ -20,5 +21,10 @@ export default function useRoomMutation(id: number) {
     navigate(-1);
   }
 
-  return { updateRoom, deleteRoom } as const;
+  function addRoom(values: Partial<RoomResponse>) {
+    addRoomMutation({ ...values });
+    message.success('정보 추가가 완료되었습니다.');
+  }
+
+  return { updateRoom, deleteRoom, addRoom } as const;
 }

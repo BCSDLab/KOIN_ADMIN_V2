@@ -4,7 +4,7 @@ import { useGetRoomListQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import * as S from './RoomList.style';
-import RoomModal from './RoomModal';
+import AddRoomModal from './AddRoomModal';
 
 function RoomList() {
   const [page, setPage] = useState(1);
@@ -24,7 +24,7 @@ function RoomList() {
           onCancel={closeModal}
           onClick={openModal}
         >
-          <RoomModal onCancel={closeModal} />
+          <AddRoomModal onCancel={closeModal} />
         </CustomForm.Modal>
       </S.ModalWrap>
       {roomRes && (

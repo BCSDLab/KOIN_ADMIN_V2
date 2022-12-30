@@ -31,7 +31,7 @@ export default function RoomDetail() {
             initialValues={roomRes}
           >
             <Divider orientation="left">기본 정보</Divider>
-            <DetailForm />
+            <DetailForm roomRes={roomRes} />
             <S.ButtonWrap>
               <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                 완료

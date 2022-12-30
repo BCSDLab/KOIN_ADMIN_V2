@@ -3,15 +3,11 @@ import CustomForm from 'components/common/CustomForm';
 import React from 'react';
 import { UploadFile } from 'antd/es/upload/interface';
 import ROOM_OPTION from 'constant/roomOption';
-import { useParams } from 'react-router-dom';
-import { useGetRoomQuery } from 'store/api/room';
 import { Divider } from 'antd';
+import { RoomResponse } from 'model/room.model';
 import * as S from './RoomDetail.style';
 
-export default function DetailForm() {
-  const { id } = useParams();
-  const { data: roomRes } = useGetRoomQuery(Number(id));
-
+export default function DetailForm({ roomRes }: { roomRes?: RoomResponse }) {
   const imageList: UploadFile[] | undefined = roomRes?.image_urls?.map(
     (res, index) => ({
       uid: `${-(index + 1)}`,

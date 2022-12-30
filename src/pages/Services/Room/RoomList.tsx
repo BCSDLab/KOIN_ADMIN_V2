@@ -2,7 +2,6 @@ import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { useGetRoomListQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
-import { PlusOutlined } from '@ant-design/icons';
 import useBooleanState from 'utils/hooks/useBoolean';
 import * as S from './RoomList.style';
 import RoomModal from './RoomModal';
@@ -10,14 +9,23 @@ import RoomModal from './RoomModal';
 function RoomList() {
   const [page, setPage] = useState(1);
   const { data: roomRes } = useGetRoomListQuery(page);
-  const { setTrue: openModal } = useBooleanState();
+  const { setTrue: openModal, isValue: isModalOpen, setFalse: closeModal } = useBooleanState();
 
   return (
     <S.Container>
       <S.Heading>Room</S.Heading>
       <S.ModalWrap>
-        <CustomForm.Button icon={<PlusOutlined />} onClick={openModal}>생성</CustomForm.Button>
-        <RoomModal />
+        <CustomForm.Modal
+          buttonText="생성"
+          title="등록하기"
+          width={900}
+          footer={null}
+          open={isModalOpen}
+          onCancel={closeModal}
+          onClick={openModal}
+        >
+          <RoomModal onCancel={closeModal} />
+        </CustomForm.Modal>
       </S.ModalWrap>
       {roomRes && (
         <CustomTable

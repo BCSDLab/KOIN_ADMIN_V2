@@ -3,7 +3,7 @@ import { RoomResponse } from 'model/room.model';
 import { useNavigate } from 'react-router-dom';
 import { useAddRoomMutation, useDeleteRoomMutation, useUpdateRoomMutation } from 'store/api/room';
 
-export default function useRoomMutation(id?: number) {
+export default function useRoomMutation(id: number) {
   const [updateRoomMutation] = useUpdateRoomMutation();
   const [deleteRoomMutation] = useDeleteRoomMutation();
   const [addRoomMutation] = useAddRoomMutation();

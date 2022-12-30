@@ -7,7 +7,7 @@ import useRoomMutation from './useRoomMutation';
 
 export default function AddRoomModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();
-  const { addRoom } = useRoomMutation();
+  const { addRoom } = useRoomMutation(1);
 
   const createRoom = (values: Partial<RoomResponse>) => {
     addRoom(values);

@@ -11,3 +11,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #222222;
 }
+
+@font-face {
+  font-family: "AppleSDGothicNeoB00";
+  src: url('https://static.koreatech.in/assets/bcsdlab_img/font/AppleSDGothicNeoB.eot');
+  src:local(※),
+    url('https://static.koreatech.in/assets/bcsdlab_img/font/AppleSDGothicNeoB00.woff') format('woff'),
+    url('https://static.koreatech.in/assets/bcsdlab_img/font/AppleSDGothicNeoB.eot?#iefix') format('embedded-opentype'),
+    url('https://static.koreatech.in/assets/bcsdlab_img/font/AppleSDGothicNeoB.ttf') format('truetype'),
+    url('https://static.koreatech.in/assets/bcsdlab_img/font/AppleSDGothicNeoB.svg#NanumGothic') format('svg');
+}

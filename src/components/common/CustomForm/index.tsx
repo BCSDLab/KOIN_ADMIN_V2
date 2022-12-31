@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import { UploadOutlined } from '@ant-design/icons';
 import {
-  Button, Checkbox, Form, Input, InputProps, Select, Upload,
+  Button, Checkbox, Form, Input, InputNumberProps, InputProps, Select, Switch, SwitchProps, Upload,
 } from 'antd';
 import React, { ReactNode } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
@@ -30,6 +30,16 @@ function CustomInput({
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <S.StyledInput disabled={disabled} {...args} />
+    </S.FormItem>
+  );
+}
+
+function CustomInputNumber({
+  label, name, rules, disabled, ...args
+}: FormItemProps & InputNumberProps) {
+  return (
+    <S.FormItem label={label} name={name} rules={rules}>
+      <S.StyledInputNumber controls={false} disabled={disabled} {...args} />
     </S.FormItem>
   );
 }
@@ -129,14 +139,29 @@ function CustomSelect({
   );
 }
 
+function CustomSwitch({
+  name, checkedChildren, unCheckedChildren, label, ...args
+}: FormItemProps & SwitchProps) {
+  return (
+    <S.SwitchWrap>
+      {`${label} `}
+      <S.FormItem name={name} valuePropName="checked">
+        <Switch checkedChildren={checkedChildren} unCheckedChildren={unCheckedChildren} {...args} />
+      </S.FormItem>
+    </S.SwitchWrap>
+  );
+}
+
 const CustomForm = Object.assign(Form, {
   GridRow,
   Button: CustomButton,
   Input: CustomInput,
+  InputNumber: CustomInputNumber,
   TextArea: CusctomTextArea,
   Upload: CustomUpload,
   Checkbox: CustomCheckbox,
   Select: CustomSelect,
+  Switch: CustomSwitch,
 });
 
 export default CustomForm;

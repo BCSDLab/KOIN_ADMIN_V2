@@ -5,7 +5,7 @@ import {
   BarChartOutlined, UserAddOutlined, BoldOutlined,
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -53,6 +53,20 @@ const SideNavConatiner = styled.nav`
   overflow-y: auto;
 `;
 
+const Logo = styled.div`
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #f0f0f0;
+`;
+
+const LogoImg = styled.img`
+  width: 100px;
+  height: 56px;
+  cursor: pointer;
+`;
+
 function SideNav() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -61,6 +75,11 @@ function SideNav() {
   };
   return (
     <SideNavConatiner>
+      <Logo>
+        <Link to="/">
+          <LogoImg src="https://static.koreatech.in/assets/img/logo_primary.png" alt="KOIN 로고" />
+        </Link>
+      </Logo>
       <Menu
         onClick={onClick}
         selectedKeys={[pathname]}

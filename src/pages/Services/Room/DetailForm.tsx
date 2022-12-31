@@ -35,7 +35,7 @@ export default function DetailForm() {
       <CustomForm.Input label="방이름" name="name" />
       <CustomForm.GridRow gridColumns="1fr 1fr">
         <CustomForm.Input label="방종류" name="room_type" />
-        <CustomForm.Input label="방크기" name="size" />
+        <CustomForm.InputNumber label="방크기" name="size" />
       </CustomForm.GridRow>
 
       <CustomForm.Input label="월세" name="monthly_fee" />
@@ -46,12 +46,12 @@ export default function DetailForm() {
       </CustomForm.GridRow>
 
       <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.Input label="위도" name="latitude" />
-        <CustomForm.Input label="경도" name="longitude" />
+        <CustomForm.InputNumber label="위도" name="latitude" />
+        <CustomForm.InputNumber label="경도" name="longitude" />
       </CustomForm.GridRow>
 
       <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.Input label="층수" name="floor" />
+        <CustomForm.InputNumber label="층수" name="floor" />
         <CustomForm.Input label="전화번호" name="phone" />
       </CustomForm.GridRow>
       <CustomForm.Input label="주소" name="address" />

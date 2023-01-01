@@ -5,12 +5,7 @@ export const Container = styled.div`
   font-family: 'Avenir', 'Helvetica', 'Arial', 'sans-serif';
 `;
 
-export const Heading = styled.div`
-  color: #2c3e50;
-  font-size: 28px;
-`;
-
-export const SubHeading = styled.div`
+export const BreadCrumb = styled.div`
   font-size: 13px;
   padding: 12px 0;
 `;
@@ -45,13 +40,12 @@ export const CheckboxWrap = styled.div`
   margin-left: 25px;
   margin-bottom: 20px;
   margin-top: 10px;
-  display: -webkit-inline-box;
+  display: flex;
   flex-wrap: wrap;
-  width: 50vw;
 `;
 
 export const UploadWrap = styled.div`
-  margin-top: 50px;
+  margin-top: 40px;
   margin-left: 30px;
   .upload-list-inline .ant-upload-list-item {
     float: left;

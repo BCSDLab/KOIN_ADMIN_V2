@@ -33,7 +33,7 @@ export const roomApi = createApi({
     }),
 
     getRoom: builder.query<RoomResponse, number>({
-      query: (id) => ({ url: `lands/${id}` }),
+      query: (id) => ({ url: `admin/lands/${id}` }),
       providesTags: (result, error, id) => [{ type: 'room', id }],
     }),
 
@@ -46,9 +46,32 @@ export const roomApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result, error, { id }) => [{ type: 'room', id }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'room', id }, { type: 'rooms', id: 'LIST' }],
     }),
+
+    deleteRoom: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `admin/lands/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ((result, error, id) => [{ type: 'room', id }, { type: 'rooms', id: 'LIST' }]),
+    }),
+
+    addRoom: builder.mutation<RoomResponse, Partial<RoomResponse>>({
+      query: (body) => ({
+        url: 'admin/lands',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'rooms', id: 'LIST' }],
+    }),
+
   }),
 });
 
-export const { useGetRoomListQuery, useGetRoomQuery, useUpdateRoomMutation } = roomApi;
+export const {
+  useGetRoomListQuery, useGetRoomQuery,
+  useUpdateRoomMutation, useDeleteRoomMutation, useAddRoomMutation,
+} = roomApi;

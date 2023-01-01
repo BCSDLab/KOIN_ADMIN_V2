@@ -1,7 +1,8 @@
-/* eslint-disable react/require-default-props */
-import { UploadOutlined } from '@ant-design/icons';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import {
-  Button, Checkbox, Form, Input, InputNumberProps, InputProps, Select, Switch, SwitchProps, Upload,
+  Button, Checkbox, Form,
+  Input, InputNumberProps, InputProps,
+  Modal, ModalProps, Select, Switch, SwitchProps, Upload,
 } from 'antd';
 import React, { ReactNode } from 'react';
 import type { UploadFile } from 'antd/es/upload/interface';
@@ -152,6 +153,32 @@ function CustomSwitch({
   );
 }
 
+interface CustomModalProps {
+  onClick: () => void;
+  buttonText: string;
+  children: ReactNode;
+}
+
+function CustomModal({
+  buttonText, title, width, footer, children, open, onCancel, onClick,
+}: CustomModalProps & ModalProps) {
+  return (
+    <>
+      <Button icon={<PlusOutlined />} onClick={onClick}>{buttonText}</Button>
+      <Modal
+        title={title}
+        open={open}
+        onCancel={onCancel}
+        centered
+        width={width}
+        footer={footer}
+      >
+        {children}
+      </Modal>
+    </>
+  );
+}
+
 const CustomForm = Object.assign(Form, {
   GridRow,
   Button: CustomButton,
@@ -162,6 +189,7 @@ const CustomForm = Object.assign(Form, {
   Checkbox: CustomCheckbox,
   Select: CustomSelect,
   Switch: CustomSwitch,
+  Modal: CustomModal,
 });
 
 export default CustomForm;

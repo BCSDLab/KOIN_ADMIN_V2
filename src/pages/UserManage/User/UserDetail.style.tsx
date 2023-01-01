@@ -9,7 +9,7 @@ export const Heading = styled.div`
   font-size: 28px;
 `;
 
-export const SubHeading = styled.div`
+export const BreadCrumb = styled.div`
   font-size: 13px;
   padding: 12px 0;
 `;

@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import CustomForm from 'components/common/CustomForm';
 import React from 'react';
 import { UploadFile } from 'antd/es/upload/interface';

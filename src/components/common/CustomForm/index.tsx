@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import {
   Button, Checkbox, Form,

@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import { Table } from 'antd';
 import Pagination from 'antd/es/pagination';
 import type { ColumnsType } from 'antd/es/table';

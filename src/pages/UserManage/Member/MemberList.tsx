@@ -2,33 +2,38 @@ import { TRACK_LIST, TRACK_MAPPER } from 'constant/member';
 import { Track } from 'model/member.model';
 import { useState } from 'react';
 import { useGetMemberListQuery } from 'store/api/member';
+import * as S from './MemberList.style';
+import MemberCard from './component/MemberCard';
 
-const useMemberList = () => {
+const useMemberList = ({ track }: { track: Track }) => {
   const [page] = useState(1);
-  const [track, setTrack] = useState<Track>('FrontEnd');
   const { data } = useGetMemberListQuery({ page, track: TRACK_MAPPER[track] });
 
-  return { data, setTrack };
+  return { data };
 };
 
 function MemberList() {
-  const { data: memberList, setTrack } = useMemberList();
+  const [currentTrack, setTrack] = useState<Track>('FrontEnd');
+  const { data: membersRes } = useMemberList({ track: currentTrack });
+
   return (
     <div>
       <h1>
-        MemberList
+        Member
       </h1>
 
-      <div>
+      <S.Tabs>
         {TRACK_LIST.map((track) => (
-          <button onClick={() => setTrack(track)} type="button">{track}</button>
+          <S.Tab key={track} onClick={() => setTrack(track)} type="button" selected={track === currentTrack}>{track}</S.Tab>
         ))}
-      </div>
+      </S.Tabs>
 
-      {memberList && (
-      <div>
-        {memberList.memberList[0].name}
-      </div>
+      {membersRes && (
+        <S.CardList>
+          {membersRes.memberList.map((member) => (
+            <MemberCard member={member} key={member.id} />
+          ))}
+        </S.CardList>
       )}
     </div>
   );

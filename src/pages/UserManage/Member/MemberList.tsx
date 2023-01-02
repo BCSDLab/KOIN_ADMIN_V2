@@ -1,20 +1,30 @@
 import { TRACK_LIST, TRACK_MAPPER } from 'constant/member';
-import { Track } from 'model/member.model';
+import { MemberTableHead, Track } from 'model/member.model';
 import { useState } from 'react';
 import { useGetMemberListQuery } from 'store/api/member';
 import * as S from './MemberList.style';
 import MemberCard from './component/MemberCard';
 
-const useMemberList = ({ track }: { track: Track }) => {
-  const [page] = useState(1);
-  const { data } = useGetMemberListQuery({ page, track: TRACK_MAPPER[track] });
+const POSITION_SCORE = {
+  Mentor: 3,
+  Regular: 2,
+  Beginner: 1,
+};
 
-  return { data };
+const getSortedMemberList = (memberList: MemberTableHead[]): MemberTableHead[] => {
+  const sortedMemberList = [...memberList].sort(
+    (a, b) => POSITION_SCORE[b.position] - POSITION_SCORE[a.position],
+  );
+
+  return sortedMemberList;
 };
 
 function MemberList() {
   const [currentTrack, setTrack] = useState<Track>('FrontEnd');
-  const { data: membersRes } = useMemberList({ track: currentTrack });
+  const { data: membersRes } = useGetMemberListQuery({
+    page: 1,
+    track: TRACK_MAPPER[currentTrack],
+  });
 
   return (
     <div>
@@ -30,7 +40,7 @@ function MemberList() {
 
       {membersRes && (
         <S.CardList>
-          {membersRes.memberList.map((member) => (
+          {getSortedMemberList(membersRes.memberList).map((member) => (
             <MemberCard member={member} key={member.id} />
           ))}
         </S.CardList>

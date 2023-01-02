@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from 'store';
 import { InputRef, message } from 'antd';
+
 import * as S from './Login.style';
 
 function useLogin() {
@@ -37,6 +38,8 @@ function useLogin() {
       if ('data' in res) {
         const credentials = res.data;
         dispatch(setCredentials(credentials));
+
+        sessionStorage.setItem('token', credentials.token);
       } else if ('error' in res) {
         message.error('올바른 계정이 아닙니다.');
       }

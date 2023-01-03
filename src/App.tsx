@@ -10,20 +10,20 @@ import Member from 'pages/UserManage/Member';
 import Store from 'pages/Services/Store';
 import UserList from 'pages/UserManage/User/UserList';
 import { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 import {
   Navigate, Route, Routes, useLocation,
 } from 'react-router-dom';
-import { RootState } from 'store';
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 function RequireAuth({ children }: { children: ReactNode }) {
-  const { token } = useSelector((state: RootState) => state.auth);
   const location = useLocation();
+  const { token } = useSelector((state: RootState) => state.auth);
 
-  if (!token) {
+  if (token === null) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

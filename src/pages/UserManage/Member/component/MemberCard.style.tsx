@@ -6,14 +6,14 @@ export const Card = styled.button`
   appearance: none;
   border: none;
 
-  width: 260px;
+  width: 230px;
   height: auto;
   position: relative;
   margin-top: 72px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 13%), 0 1px 6px -1px rgb(0 0 0 / 11%), 0 2px 4px 0 rgb(0 0 0 / 11%);
   display: flex;
   flex-direction: column;
-  padding: 40px 22px 34px;
+  padding: 30px 22px 34px;
   border-radius: 8px;
   transition: 0.2s;
   cursor: pointer;
@@ -30,8 +30,8 @@ export const ProfileCover = styled.div`
 `;
 
 export const ProfileImg = styled.img<{ position: PositionType }>`
-  width: 120px;
-  height: 120px;
+  width: 110px;
+  height: 110px;
   border-radius: 100%;
   background: black;
   position: absolute;
@@ -45,12 +45,12 @@ export const ProfileImg = styled.img<{ position: PositionType }>`
 
 export const UserName = styled.div`
   font-weight: bold;
-  font-size: 26px;
+  font-size: 24px;
   line-height: 1;
 `;
 
 export const Position = styled.div<{ position: PositionType }>`
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'AppleSDGothicNeoB00';
   text-transform: uppercase;
   align-self: flex-start;
@@ -62,18 +62,18 @@ export const Position = styled.div<{ position: PositionType }>`
 export const Label = styled.div`
   font-family: 'AppleSDGothicNeoB00';
   letter-spacing: -.39px;
-  font-size: 18px;
+  font-size: 15px;
   color: #656565;
   margin-top: 16px;
   line-height: 1;
 `;
 
 export const StudentNumberLabel = styled(Label)`
-  margin-top: 32px;
+  margin-top: 42px;
 `;
 
 export const Description = styled.div`
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   letter-spacing: -.7px;
 `;

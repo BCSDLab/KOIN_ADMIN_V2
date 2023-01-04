@@ -13,7 +13,7 @@ export interface Member {
 
 export type Track = 'FrontEnd' | 'BackEnd' | 'Android' | 'Game' | 'UI/UX';
 export type TrackForParam = 'FRONTEND' | 'BACKEND' | 'ANDROID' | 'GAME' | 'UI_UX';
-export type Position = 'Regular' | 'Mentor';
+export type Position = 'Beginner' | 'Regular' | 'Mentor';
 
 export interface MembersResponse extends ListPagination {
   members: Member[]

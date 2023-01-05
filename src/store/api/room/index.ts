@@ -68,6 +68,14 @@ export const roomApi = createApi({
       invalidatesTags: [{ type: 'rooms', id: 'LIST' }],
     }),
 
+    addRoomImages: builder.mutation<RoomResponse, Partial<RoomResponse>>({
+      query: (body) => ({
+        url: 'admin/lands/image',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'rooms', id: 'LIST' }],
+    }),
   }),
 });
 

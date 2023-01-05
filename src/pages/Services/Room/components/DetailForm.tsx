@@ -1,10 +1,11 @@
+/* eslint-disable no-restricted-imports */
 import CustomForm from 'components/common/CustomForm';
 import React from 'react';
 import { UploadFile } from 'antd/es/upload/interface';
 import ROOM_OPTION from 'constant/roomOption';
 import { Divider } from 'antd';
 import { RoomResponse } from 'model/room.model';
-import * as S from './RoomDetail.style';
+import * as S from '../RoomDetail.style';
 
 export default function DetailForm({ roomRes }: { roomRes?: RoomResponse }) {
   const imageList: UploadFile[] | undefined = roomRes?.image_urls?.map(

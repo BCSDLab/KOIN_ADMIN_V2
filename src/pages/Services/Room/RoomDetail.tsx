@@ -7,7 +7,7 @@ import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import useRoomMutation from './useRoomMutation';
-import DetailForm from './DetailForm';
+import DetailForm from './components/DetailForm';
 import * as S from './RoomDetail.style';
 
 export default function RoomDetail() {

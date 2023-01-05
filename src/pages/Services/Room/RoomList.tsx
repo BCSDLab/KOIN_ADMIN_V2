@@ -4,7 +4,7 @@ import { useGetRoomListQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import * as S from './RoomList.style';
-import AddRoomModal from './AddRoomModal';
+import AddRoomModal from './components/AddRoomModal';
 
 function RoomList() {
   const [page, setPage] = useState(1);

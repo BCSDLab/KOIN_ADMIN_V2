@@ -1,9 +1,10 @@
+/* eslint-disable no-restricted-imports */
 import { UploadOutlined } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
 import { RoomResponse } from 'model/room.model';
 import DetailForm from './DetailForm';
-import * as S from './RoomList.style';
-import useRoomMutation from './useRoomMutation';
+import * as S from '../RoomList.style';
+import useRoomMutation from '../useRoomMutation';
 
 export default function AddRoomModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();

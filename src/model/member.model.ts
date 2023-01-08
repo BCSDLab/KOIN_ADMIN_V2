@@ -31,4 +31,5 @@ export interface MemberTableHead {
   position: Position;
   image_url: string;
   email: string;
+  student_number: string;
 }

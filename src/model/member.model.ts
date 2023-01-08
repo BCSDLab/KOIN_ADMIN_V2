@@ -32,4 +32,5 @@ export interface MemberTableHead {
   image_url: string;
   email: string;
   student_number: string;
+  is_deleted: boolean;
 }

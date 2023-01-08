@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
 export default function useBooleanState(defaultValue?: boolean) {
-  const [isValue, setIsValue] = useState(!!defaultValue);
+  const [value, setValue] = useState(!!defaultValue);
 
-  const setTrue = () => setIsValue(true);
-  const setFalse = () => setIsValue(false);
-  const changeValue = () => setIsValue((x) => !x);
+  const setTrue = () => setValue(true);
+  const setFalse = () => setValue(false);
+  const changeValue = () => setValue((x) => !x);
 
   return {
-    isValue, setIsValue, setTrue, setFalse, changeValue,
+    value, setValue, setTrue, setFalse, changeValue,
   } as const;
 }

@@ -40,7 +40,11 @@ export const ProfileImg = styled.img<{ position: PositionType }>`
 
   border-width: 3px;
   border-style: solid;
-  border-color: ${({ position }) => (position === 'Mentor' ? '#795cf2' : '#1abc9c')};
+  border-color: ${({ position }) => {
+    if (position === 'Mentor') return '#795cf2';
+    if (position === 'Regular') return '#1abc9c';
+    return '#81d4fa';
+  }};
 `;
 
 export const UserName = styled.div`
@@ -56,7 +60,11 @@ export const Position = styled.div<{ position: PositionType }>`
   align-self: flex-start;
   letter-spacing: -.39px;
 
-  color: ${({ position }) => (position === 'Mentor' ? '#795cf2' : '#1abc9c')};
+  color: ${({ position }) => {
+    if (position === 'Mentor') return '#795cf2';
+    if (position === 'Regular') return '#1abc9c';
+    return '#81d4fa';
+  }};
 `;
 
 export const Label = styled.div`

@@ -2,6 +2,8 @@ import { TRACK_LIST, TRACK_MAPPER } from 'constant/member';
 import { MemberTableHead, Track } from 'model/member.model';
 import { useState } from 'react';
 import { useGetMemberListQuery } from 'store/api/member';
+import useBooleanState from 'utils/hooks/useBoolean';
+import { Switch } from 'antd';
 import * as S from './MemberList.style';
 import MemberCard from './component/MemberCard';
 
@@ -19,12 +21,26 @@ const getSortedMemberList = (memberList: MemberTableHead[]): MemberTableHead[] =
   return sortedMemberList;
 };
 
-function MemberList() {
-  const [currentTrack, setTrack] = useState<Track>('FrontEnd');
+const useMemberList = (currentTrack: Track, containDeletedMember: boolean) => {
   const { data: membersRes } = useGetMemberListQuery({
     page: 1,
     track: TRACK_MAPPER[currentTrack],
   });
+
+  const filteredData = containDeletedMember
+    ? membersRes?.memberList
+    : membersRes?.memberList.filter((member) => member.is_deleted !== true);
+
+  return { data: filteredData };
+};
+
+function MemberList() {
+  const [currentTrack, setTrack] = useState<Track>('FrontEnd');
+  const {
+    value: containDeletedMember,
+    changeValue: toggleContainDeletedMember,
+  } = useBooleanState(false);
+  const { data: memberList } = useMemberList(currentTrack, containDeletedMember);
 
   return (
     <div>
@@ -34,13 +50,30 @@ function MemberList() {
 
       <S.Tabs>
         {TRACK_LIST.map((track) => (
-          <S.Tab key={track} onClick={() => setTrack(track)} type="button" selected={track === currentTrack}>{track}</S.Tab>
+          <S.Tab
+            key={track}
+            onClick={() => setTrack(track)}
+            type="button"
+            selected={track === currentTrack}
+          >
+            {track}
+
+          </S.Tab>
         ))}
       </S.Tabs>
 
-      {membersRes && (
+      <S.SwitchWrapper>
+        <Switch
+          onClick={toggleContainDeletedMember}
+          checked={containDeletedMember}
+          checkedChildren="탈퇴 인원 포함"
+          unCheckedChildren="탈퇴 인원 포함"
+        />
+      </S.SwitchWrapper>
+
+      {memberList && (
         <S.CardList>
-          {getSortedMemberList(membersRes.memberList).map((member) => (
+          {getSortedMemberList(memberList).map((member) => (
             <MemberCard member={member} key={member.id} />
           ))}
         </S.CardList>

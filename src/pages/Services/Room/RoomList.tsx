@@ -9,7 +9,7 @@ import AddRoomModal from './AddRoomModal';
 function RoomList() {
   const [page, setPage] = useState(1);
   const { data: roomRes } = useGetRoomListQuery(page);
-  const { setTrue: openModal, isValue: isModalOpen, setFalse: closeModal } = useBooleanState();
+  const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
 
   return (
     <S.Container>

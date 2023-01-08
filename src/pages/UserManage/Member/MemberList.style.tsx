@@ -34,9 +34,13 @@ export const Tabs = styled.div`
 `;
 
 export const CardList = styled.div`
-  padding: 30px;
+  padding: 20px 30px;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
+`;
+
+export const SwitchWrapper = styled.div`
+  margin: 40px 40px 0;
 `;

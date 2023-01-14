@@ -13,34 +13,25 @@ const POSITION_SCORE = {
   Beginner: 1,
 };
 
-const getSortedMemberList = (memberList: MemberTableHead[]): MemberTableHead[] => {
-  const sortedMemberList = [...memberList].sort(
-    (a, b) => POSITION_SCORE[b.position] - POSITION_SCORE[a.position],
-  );
-
-  return sortedMemberList;
+const comparePosition = (a: MemberTableHead, b:MemberTableHead) => {
+  return POSITION_SCORE[b.position] - POSITION_SCORE[a.position];
 };
 
-const useMemberList = (currentTrack: Track, containDeletedMember: boolean) => {
-  const { data: membersRes } = useGetMemberListQuery({
-    page: 1,
-    track: TRACK_MAPPER[currentTrack],
-  });
-
-  const filteredData = containDeletedMember
-    ? membersRes?.memberList
-    : membersRes?.memberList.filter((member) => member.is_deleted !== true);
-
-  return { data: filteredData };
+const makeMemberFilter = (containDeletedMember:boolean) => (member: MemberTableHead) => {
+  // is_deleted가 false라면, containDeletedMember값에 따라 필터링합니다.
+  return containDeletedMember || !member.is_deleted;
 };
 
 function MemberList() {
   const [currentTrack, setTrack] = useState<Track>('FrontEnd');
+  const { data: membersRes } = useGetMemberListQuery({
+    page: 1,
+    track: TRACK_MAPPER[currentTrack],
+  });
   const {
     value: containDeletedMember,
     changeValue: toggleContainDeletedMember,
   } = useBooleanState(false);
-  const { data: memberList } = useMemberList(currentTrack, containDeletedMember);
 
   return (
     <div>
@@ -71,11 +62,14 @@ function MemberList() {
         />
       </S.SwitchWrapper>
 
-      {memberList && (
+      {membersRes && (
         <S.CardList>
-          {getSortedMemberList(memberList).map((member) => (
-            <MemberCard member={member} key={member.id} />
-          ))}
+          {membersRes.memberList
+            .filter(makeMemberFilter(containDeletedMember))
+            .sort(comparePosition)
+            .map((member) => (
+              <MemberCard member={member} key={member.id} />
+            ))}
         </S.CardList>
       )}
     </div>

@@ -1,5 +1,5 @@
 import { TRACK_LIST, TRACK_MAPPER } from 'constant/member';
-import { MemberTableHead, Track } from 'model/member.model';
+import { Track } from 'model/member.model';
 import { useState } from 'react';
 import { useGetMemberListQuery } from 'store/api/member';
 import useBooleanState from 'utils/hooks/useBoolean';
@@ -11,15 +11,6 @@ const POSITION_SCORE = {
   Mentor: 3,
   Regular: 2,
   Beginner: 1,
-};
-
-const comparePosition = (a: MemberTableHead, b:MemberTableHead) => {
-  return POSITION_SCORE[b.position] - POSITION_SCORE[a.position];
-};
-
-const makeMemberFilter = (containDeletedMember:boolean) => (member: MemberTableHead) => {
-  // is_deleted가 false라면, containDeletedMember값에 따라 필터링합니다.
-  return containDeletedMember || !member.is_deleted;
 };
 
 function MemberList() {
@@ -48,7 +39,6 @@ function MemberList() {
             selected={track === currentTrack}
           >
             {track}
-
           </S.Tab>
         ))}
       </S.Tabs>
@@ -65,8 +55,8 @@ function MemberList() {
       {membersRes && (
         <S.CardList>
           {membersRes.memberList
-            .filter(makeMemberFilter(containDeletedMember))
-            .sort(comparePosition)
+            .filter((member) => containDeletedMember || !member.is_deleted)
+            .sort((a, b) => POSITION_SCORE[b.position] - POSITION_SCORE[a.position])
             .map((member) => (
               <MemberCard member={member} key={member.id} />
             ))}

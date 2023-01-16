@@ -1,16 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
-
-interface Upload {
-  domain: string;
-  body: string;
-}
-
-interface Uploads {
-  domain: string;
-  body: string[];
-}
+import { Upload, Uploads } from 'model/upload.model';
 
 export const uploadApi = createApi({
   reducerPath: 'file',
@@ -26,9 +17,8 @@ export const uploadApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    uploadfiles: builder.mutation<Uploads, Partial<Uploads>>({
-      query(data) {
-        const { domain, ...body } = data;
+    uploadfiles: builder.mutation<void, Pick<Uploads, 'domain'> & Partial<Uploads>>({
+      query({ domain, ...body }) {
         return {
           url: `${domain}/upload/files`,
           method: 'POST',
@@ -38,9 +28,8 @@ export const uploadApi = createApi({
       invalidatesTags: [{ type: 'files', id: 'LIST' }],
     }),
 
-    uploadfile: builder.mutation<Upload, Partial<Upload>>({
-      query(data) {
-        const { domain, ...body } = data;
+    uploadfile: builder.mutation<void, Pick<Upload, 'domain'> & Partial<Upload>>({
+      query({ domain, ...body }) {
         return {
           url: `${domain}/upload/file`,
           method: 'POST',

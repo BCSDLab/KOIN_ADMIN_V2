@@ -61,7 +61,8 @@
     }],
     "no-param-reassign": "off",
     "import/no-cycle": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "arrow-body-style": "off"
   },
   "settings": {
     "import/resolver": {

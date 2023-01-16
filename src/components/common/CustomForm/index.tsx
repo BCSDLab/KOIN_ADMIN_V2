@@ -1,13 +1,13 @@
-import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import {
   Button, Checkbox, Form,
   Input, InputNumberProps, InputProps,
-  Modal, ModalProps, Select, Switch, SwitchProps, Upload,
+  Modal, ModalProps, Select, Switch, SwitchProps,
 } from 'antd';
 import React, { ReactNode } from 'react';
-import type { UploadFile } from 'antd/es/upload/interface';
 import { Rule } from 'antd/lib/form';
 import * as S from './CustomForm.style';
+import CustomUpload from './CustomUpload';
 
 interface GridProps {
   children: ReactNode;
@@ -76,19 +76,6 @@ function CustomCheckbox({
         {children}
       </Checkbox>
     </S.FormItemCheckbox>
-  );
-}
-
-function CustomUpload({ defaultFileList: fileList }: { defaultFileList: UploadFile[] }) {
-  return (
-    <Upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      listType="picture"
-      defaultFileList={[...fileList]}
-      className="upload-list-inline"
-    >
-      <Button icon={<UploadOutlined />}>Upload</Button>
-    </Upload>
   );
 }
 

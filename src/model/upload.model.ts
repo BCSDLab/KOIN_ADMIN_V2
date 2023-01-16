@@ -2,10 +2,10 @@ export type Domain = 'items' | 'lands' | 'circles' | 'market' | 'shops' | 'membe
 
 export interface Uploads {
   domain: Domain;
-  body: FormData[];
+  multipartFile: FormData[];
 }
 
 export interface Upload {
   domain: Domain;
-  body: FormData;
+  multipartFile: FormData;
 }

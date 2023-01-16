@@ -2,19 +2,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
 
-interface Image {
+interface Upload {
   domain: string;
   body: string;
 }
 
-interface Images {
+interface Uploads {
   domain: string;
   body: string[];
 }
 
-export const imageApi = createApi({
-  reducerPath: 'image',
-  tagTypes: ['images', 'image'],
+export const uploadApi = createApi({
+  reducerPath: 'file',
+  tagTypes: ['files', 'file'],
   baseQuery: fetchBaseQuery({
     baseUrl: `${API_PATH}`,
     prepareHeaders: (headers, { getState }) => {
@@ -26,7 +26,7 @@ export const imageApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    addImages: builder.mutation<Images, Partial<Images>>({
+    uploadfiles: builder.mutation<Uploads, Partial<Uploads>>({
       query(data) {
         const { domain, ...body } = data;
         return {
@@ -35,10 +35,10 @@ export const imageApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: 'images', id: 'LIST' }],
+      invalidatesTags: [{ type: 'files', id: 'LIST' }],
     }),
 
-    addImage: builder.mutation<Image, Partial<Image>>({
+    uploadfile: builder.mutation<Upload, Partial<Upload>>({
       query(data) {
         const { domain, ...body } = data;
         return {
@@ -47,9 +47,9 @@ export const imageApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: 'image', id: 'LIST' }],
+      invalidatesTags: [{ type: 'file', id: 'LIST' }],
     }),
   }),
 });
 
-export const { useAddImagesMutation, useAddImageMutation } = imageApi;
+export const { useUploadfileMutation, useUploadfilesMutation } = uploadApi;

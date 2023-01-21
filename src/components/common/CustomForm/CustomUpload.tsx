@@ -1,65 +1,72 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
-import FormItem from 'antd/es/form/FormItem';
+import {
+  Button, Upload, message,
+} from 'antd';
 import { Domain } from 'model/upload.model';
-import React from 'react';
+import React, { useState } from 'react';
 import { useUploadfileMutation } from 'store/api/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
+import { FormInstance } from 'antd/es/form/Form';
+import CustomForm from '.';
 
 interface Props {
+  form: FormInstance;
   domain: Domain;
   name: string;
-  fileList?: UploadFile[] | undefined ;
 }
 
-export default function CustomUpload({ domain, name, fileList }: Props) {
+const useConvertFile = (fileUrl: string, index: number): UploadFile => {
+  return {
+    uid: `${-(index + 1)}`,
+    name: fileUrl,
+    status: 'done',
+    url: fileUrl,
+  };
+};
+
+export default function CustomUpload({
+  form, domain, name,
+}: Props) {
   const [uploadFile] = useUploadfileMutation();
+  const [uploadFileList, setUploadFileList] = useState<string[]>(form?.getFieldValue(name) || []);
 
-  const handleFileUpload = async (options: any) => {
-    const { onSuccess, onError, file } = options;
+  const convertedfileList: UploadFile[] = uploadFileList?.map(
+    (res, index) => (
+      useConvertFile(res, index)
+    ),
+  ) || [];
 
+  const handleUpload = (file: any) => {
     const image = new FormData();
     image.append('multipartFile', file);
 
-    await uploadFile({ domain, ...image })
+    uploadFile({ domain, image }).unwrap()
       .then((value) => {
-        onSuccess(value);
-        console.log(value);
-      }).catch((error) => {
-        onError(error);
+        setUploadFileList([...uploadFileList, `https://${value.file_url}`]);
+        console.log([...uploadFileList, `https://${value.file_url}`]);
+        form?.setFieldValue(name, [...uploadFileList, `https://${value.file_url}`]);
+        message.success('upload successfully.');
+        return true;
+      })
+      .catch(() => {
+        message.error('upload failed.');
       });
   };
 
   return (
-    <FormItem
-      name={name}
-      valuePropName="fileList"
-      getValueFromEvent={(e: any) => {
-        if (e?.fileList[0].response) {
-          return [
-            {
-              thumbUrl: e.fileList[0].response,
-              url: e.fileList[0].response,
-              name: e.fileList[0].response,
-              uid: '-1',
-            },
-          ];
-        }
-        return e?.fileList;
-      }}
-    >
+    <CustomForm.Item name={name}>
       <Upload
-        customRequest={handleFileUpload}
         listType="picture"
         className="upload-list-inline"
-        defaultFileList={fileList}
         showUploadList={{
           showRemoveIcon: false,
         }}
+        beforeUpload={handleUpload}
+        fileList={convertedfileList}
       >
         <Button icon={<UploadOutlined />}>Upload</Button>
       </Upload>
-    </FormItem>
+    </CustomForm.Item>
   );
 }

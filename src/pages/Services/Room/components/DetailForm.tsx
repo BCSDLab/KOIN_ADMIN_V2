@@ -3,20 +3,11 @@ import CustomForm from 'components/common/CustomForm';
 import React from 'react';
 import ROOM_OPTION from 'constant/roomOption';
 import { Divider } from 'antd';
-import { RoomResponse } from 'model/room.model';
-import type { UploadFile } from 'antd/es/upload/interface';
+import { FormInstance } from 'antd/es/form/Form';
 import * as S from '../RoomDetail.style';
 
-export default function DetailForm({ roomRes }: { roomRes?: RoomResponse }) {
-  const fileList: UploadFile[] | undefined = roomRes?.image_urls?.map(
-    (res, index) => ({
-      uid: `${-(index + 1)}`,
-      name: res,
-      status: 'done',
-      url: res,
-    }),
-  );
-
+export default function DetailForm({ form }:
+{ form: FormInstance }) {
   return (
     <>
       <CustomForm.Input label="방이름" name="name" />
@@ -66,7 +57,7 @@ export default function DetailForm({ roomRes }: { roomRes?: RoomResponse }) {
 
       <Divider orientation="left">사진</Divider>
       <S.UploadWrap>
-        <CustomForm.Upload domain="lands" name="lands" fileList={fileList} />
+        <CustomForm.Upload domain="lands" name="image_urls" form={form} />
       </S.UploadWrap>
     </>
   );

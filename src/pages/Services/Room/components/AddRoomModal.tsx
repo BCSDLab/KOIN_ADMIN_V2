@@ -22,7 +22,7 @@ export default function AddRoomModal({ onCancel }: { onCancel: () => void }) {
       form={form}
     >
       <S.DetailFormWrap>
-        <DetailForm />
+        <DetailForm form={form} />
         <S.SubmitButtonWrap>
           <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
             완료

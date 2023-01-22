@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { UploadOutlined } from '@ant-design/icons';
 import {
-  Button, Upload, message,
+  Button, Form, Upload, message,
 } from 'antd';
 import { Domain } from 'model/upload.model';
 import React, { useState } from 'react';
 import { useUploadfileMutation } from 'store/api/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/es/form/Form';
-import CustomForm from '.';
 
 interface Props {
   form: FormInstance;
@@ -25,13 +24,11 @@ const useConvertFile = (fileUrl: string, index: number): UploadFile => {
   };
 };
 
-export default function CustomUpload({
-  form, domain, name,
-}: Props) {
+export default function CustomUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
   const [uploadFileList, setUploadFileList] = useState<string[]>(form?.getFieldValue(name) || []);
 
-  const convertedfileList: UploadFile[] = uploadFileList?.map(
+  const convertedFileList: UploadFile[] = uploadFileList?.map(
     (res, index) => (
       useConvertFile(res, index)
     ),
@@ -44,18 +41,17 @@ export default function CustomUpload({
     uploadFile({ domain, image }).unwrap()
       .then((value) => {
         setUploadFileList([...uploadFileList, `https://${value.file_url}`]);
-        console.log([...uploadFileList, `https://${value.file_url}`]);
-        form?.setFieldValue(name, [...uploadFileList, `https://${value.file_url}`]);
-        message.success('upload successfully.');
+        form.setFieldValue(name, [...uploadFileList, `https://${value.file_url}`]);
+        message.success('업로드에 성공했습니다.');
         return true;
       })
       .catch(() => {
-        message.error('upload failed.');
+        message.error('업로드에 실패했습니다.');
       });
   };
 
   return (
-    <CustomForm.Item name={name}>
+    <Form.Item name={name}>
       <Upload
         listType="picture"
         className="upload-list-inline"
@@ -63,10 +59,10 @@ export default function CustomUpload({
           showRemoveIcon: false,
         }}
         beforeUpload={handleUpload}
-        fileList={convertedfileList}
+        fileList={convertedFileList}
       >
         <Button icon={<UploadOutlined />}>Upload</Button>
       </Upload>
-    </CustomForm.Item>
+    </Form.Item>
   );
 }

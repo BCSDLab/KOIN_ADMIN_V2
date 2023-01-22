@@ -18,11 +18,11 @@ export const uploadApi = createApi({
   }),
   endpoints: (builder) => ({
     uploadfiles: builder.mutation<void, Pick<Uploads, 'domain'> & Partial<Uploads>>({
-      query({ domain, ...body }) {
+      query({ domain, images }) {
         return {
           url: `${domain}/upload/files`,
           method: 'POST',
-          body,
+          body: images,
         };
       },
       invalidatesTags: [{ type: 'files', id: 'LIST' }],

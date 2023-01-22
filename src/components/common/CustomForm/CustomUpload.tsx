@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { useUploadfileMutation } from 'store/api/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/es/form/Form';
+import { RcFile } from 'antd/lib/upload';
 
 interface Props {
   form: FormInstance;
@@ -34,7 +35,7 @@ export default function CustomUpload({ form, domain, name }: Props) {
     ),
   ) || [];
 
-  const handleUpload = (file: any) => {
+  const handleUpload = (file:RcFile) => {
     const image = new FormData();
     image.append('multipartFile', file);
 

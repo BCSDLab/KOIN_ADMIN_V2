@@ -26,7 +26,7 @@ const useConvertFile = (fileUrl: string, index: number): UploadFile => {
 
 export default function CustomUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
-  const [uploadFileList, setUploadFileList] = useState<string[]>(form?.getFieldValue(name) || []);
+  const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
 
   const convertedFileList: UploadFile[] = uploadFileList?.map(
     (res, index) => (

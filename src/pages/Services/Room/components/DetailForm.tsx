@@ -6,8 +6,7 @@ import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import * as S from '../RoomDetail.style';
 
-export default function DetailForm({ form }:
-{ form: FormInstance }) {
+export default function DetailForm({ form }: { form: FormInstance }) {
   return (
     <>
       <CustomForm.Input label="방이름" name="name" />

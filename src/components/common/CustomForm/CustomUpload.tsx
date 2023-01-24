@@ -58,6 +58,7 @@ export default function CustomUpload({ form, domain, name }: Props) {
         }}
         beforeUpload={handleUpload}
         fileList={convertedFileList}
+        customRequest={() => {}}
       >
         <Button icon={<UploadOutlined />}>Upload</Button>
       </Upload>

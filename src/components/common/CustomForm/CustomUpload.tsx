@@ -29,13 +29,9 @@ export default function CustomUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
   const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
 
-  const convertedFileList: UploadFile[] = uploadFileList?.map(
-    (res, index) => (
-      useConvertFile(res, index)
-    ),
-  ) || [];
+  const convertedFileList: UploadFile[] = uploadFileList?.map(useConvertFile);
 
-  const handleUpload = (file:RcFile) => {
+  const handleUpload = (file: RcFile) => {
     const image = new FormData();
     image.append('multipartFile', file);
 
@@ -48,6 +44,7 @@ export default function CustomUpload({ form, domain, name }: Props) {
       })
       .catch(() => {
         message.error('업로드에 실패했습니다.');
+        return false;
       });
   };
 

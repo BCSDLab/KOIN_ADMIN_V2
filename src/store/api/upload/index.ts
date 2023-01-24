@@ -28,7 +28,7 @@ export const uploadApi = createApi({
       invalidatesTags: [{ type: 'files', id: 'LIST' }],
     }),
 
-    uploadfile: builder.mutation<UploadResponse, Pick<Upload, 'domain'> & Partial<Upload>>({
+    uploadfile: builder.mutation<UploadResponse, Upload>({
       query({ domain, image }) {
         return {
           url: `${domain}/upload/file`,

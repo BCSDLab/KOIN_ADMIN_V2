@@ -16,7 +16,7 @@ interface Props {
   name: string;
 }
 
-const useConvertFile = (fileUrl: string, index: number): UploadFile => {
+const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
   return {
     uid: `${-(index + 1)}`,
     name: fileUrl,
@@ -29,13 +29,9 @@ export default function CustomUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
   const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
 
-  const convertedFileList: UploadFile[] = uploadFileList?.map(
-    (res, index) => (
-      useConvertFile(res, index)
-    ),
-  ) || [];
+  const convertedFileList: UploadFile[] = uploadFileList?.map(convertUploadFile);
 
-  const handleUpload = (file:RcFile) => {
+  const handleUpload = (file: RcFile) => {
     const image = new FormData();
     image.append('multipartFile', file);
 

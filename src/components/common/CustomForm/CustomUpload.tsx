@@ -44,6 +44,7 @@ export default function CustomUpload({ form, domain, name }: Props) {
       })
       .catch(() => {
         message.error('업로드에 실패했습니다.');
+        return false;
       });
   };
 

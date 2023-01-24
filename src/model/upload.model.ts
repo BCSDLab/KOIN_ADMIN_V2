@@ -13,3 +13,7 @@ export interface Upload {
 export interface UploadResponse {
   file_url: string;
 }
+
+export interface UploadsResponse {
+  file_url: string[];
+}

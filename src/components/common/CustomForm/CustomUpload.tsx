@@ -40,12 +40,11 @@ export default function CustomUpload({ form, domain, name }: Props) {
         setUploadFileList([...uploadFileList, `https://${value.file_url}`]);
         form.setFieldValue(name, [...uploadFileList, `https://${value.file_url}`]);
         message.success('업로드에 성공했습니다.');
-        return true;
       })
       .catch(() => {
         message.error('업로드에 실패했습니다.');
-        return false;
       });
+    return true;
   };
 
   return (

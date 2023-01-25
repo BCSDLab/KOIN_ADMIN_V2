@@ -27,7 +27,6 @@ export const uploadApi = createApi({
           body: images,
         };
       },
-      invalidatesTags: [{ type: 'files', id: 'LIST' }],
     }),
 
     uploadfile: builder.mutation<UploadResponse, Upload>({
@@ -38,7 +37,6 @@ export const uploadApi = createApi({
           body: image,
         };
       },
-      invalidatesTags: [{ type: 'file', id: 'LIST' }],
     }),
   }),
 });

@@ -47,17 +47,27 @@ export default function CustomUpload({ form, domain, name }: Props) {
     return true;
   };
 
+  const removeUpload = (file: UploadFile) => {
+    const index = uploadFileList.indexOf(file.url ?? '');
+    const newFileList = uploadFileList.slice();
+    newFileList.splice(index, 1);
+    setUploadFileList(newFileList);
+    form.setFieldValue(name, newFileList);
+    return false;
+  };
+
   return (
     <Form.Item name={name}>
       <Upload
         listType="picture"
         className="upload-list-inline"
         showUploadList={{
-          showRemoveIcon: false,
+          showRemoveIcon: true,
         }}
         beforeUpload={handleUpload}
+        customRequest={() => { }}
+        onRemove={removeUpload}
         fileList={convertedFileList}
-        customRequest={() => {}}
       >
         <Button icon={<UploadOutlined />}>Upload</Button>
       </Upload>

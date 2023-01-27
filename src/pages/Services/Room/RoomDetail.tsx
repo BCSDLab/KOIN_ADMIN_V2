@@ -7,7 +7,7 @@ import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import useRoomMutation from './useRoomMutation';
-import DetailForm from './DetailForm';
+import DetailForm from './components/DetailForm';
 import * as S from './RoomDetail.style';
 
 export default function RoomDetail() {
@@ -22,24 +22,24 @@ export default function RoomDetail() {
       <S.BreadCrumb>Home / Room / RoomDetail</S.BreadCrumb>
       <S.FormWrap>
         {roomRes
-          && (
-          <CustomForm
-            onFinish={updateRoom}
-            form={form}
-            initialValues={roomRes}
-          >
-            <Divider orientation="left">기본 정보</Divider>
-            <DetailForm roomRes={roomRes} />
-            <S.ButtonWrap>
-              <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
-                완료
-              </CustomForm.Button>
-              <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteRoom}>
-                삭제
-              </CustomForm.Button>
-            </S.ButtonWrap>
-          </CustomForm>
-          )}
+        && (
+        <CustomForm
+          onFinish={updateRoom}
+          form={form}
+          initialValues={roomRes}
+        >
+          <Divider orientation="left">기본 정보</Divider>
+          <DetailForm form={form} />
+          <S.ButtonWrap>
+            <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
+              완료
+            </CustomForm.Button>
+            <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteRoom}>
+              삭제
+            </CustomForm.Button>
+          </S.ButtonWrap>
+        </CustomForm>
+        )}
       </S.FormWrap>
     </S.Container>
   );

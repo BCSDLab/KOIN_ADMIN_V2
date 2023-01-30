@@ -67,7 +67,6 @@ export const roomApi = createApi({
       }),
       invalidatesTags: [{ type: 'rooms', id: 'LIST' }],
     }),
-
   }),
 });
 

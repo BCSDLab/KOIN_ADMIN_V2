@@ -5,7 +5,7 @@ import { useGetMemberListQuery } from 'store/api/member';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
 import * as S from './MemberList.style';
-import MemberCard from './component/MemberCard';
+import MemberCard from './components/MemberCard';
 
 const POSITION_SCORE = {
   Mentor: 3,

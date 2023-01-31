@@ -11,7 +11,7 @@ function MemberDetail() {
   const { id } = useParams();
   const { data: memberData } = useGetMemberQuery(Number(id));
   const [form] = CustomForm.useForm();
-  const { updateMember } = useMemberMutation();
+  const { updateMember, deleteMember } = useMemberMutation(Number(id));
 
   return (
     <S.Container>
@@ -47,7 +47,7 @@ function MemberDetail() {
                 <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                   정보 수정
                 </CustomForm.Button>
-                <CustomForm.Button danger icon={<DeleteOutlined />}>
+                <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteMember}>
                   유저 삭제
                 </CustomForm.Button>
               </S.ButtonWrap>

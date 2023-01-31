@@ -32,10 +32,12 @@ export const memberApi = createApi({
         totalPage: membersResponse.total_page,
       }),
     }),
+
     getMember: builder.query<Member, number>({
       query: (id) => `admin/members/${id}`,
       providesTags: (result, error, id) => [{ type: 'member', id }],
     }),
+
     updateMember: builder.mutation<void, Pick<Member, 'id'> & Partial<Member>>({
       query(data) {
         const { id, ...body } = data;
@@ -47,7 +49,22 @@ export const memberApi = createApi({
       },
       invalidatesTags: (result, error, { id }) => [{ type: 'member', id }],
     }),
+
+    deleteMember: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `admin/members/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ((result, error, id) => [
+        { type: 'member', id }, { type: 'members', id: 'LIST' },
+      ]),
+    }),
   }),
 });
 
-export const { useGetMemberListQuery, useGetMemberQuery, useUpdateMemberMutation } = memberApi;
+export const {
+  useGetMemberListQuery, useGetMemberQuery,
+  useUpdateMemberMutation, useDeleteMemberMutation,
+} = memberApi;

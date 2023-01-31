@@ -4,7 +4,7 @@ import {
   Button, Form, Upload, message,
 } from 'antd';
 import { Domain } from 'model/upload.model';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useUploadfileMutation } from 'store/api/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/es/form/Form';
@@ -17,29 +17,46 @@ interface Props {
 }
 
 const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
-  return {
+  return ({
     uid: `${-(index + 1)}`,
     name: fileUrl,
     status: 'done',
     url: fileUrl,
-  };
+  });
 };
 
 export default function CustomUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
-  const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
+  const isArr = Array.isArray(form.getFieldValue(name));
+  let convertedFileList: UploadFile[] = [];
+  const [uploadFileList, setUploadFileList] = useState<string[]>(
+    isArr
+      ? form.getFieldValue(name)
+      : [form.getFieldValue(name)],
+  );
 
-  const convertedFileList: UploadFile[] = uploadFileList?.map(convertUploadFile);
+  if (uploadFileList[0] !== null) {
+    convertedFileList = uploadFileList?.map(convertUploadFile);
+  }
 
   const handleUpload = (file: RcFile) => {
     const image = new FormData();
     image.append('multipartFile', file);
 
-    uploadFile({ domain, image }).unwrap()
+    uploadFile({ domain, image })
+      .unwrap()
       .then((value) => {
-        setUploadFileList([...uploadFileList, `https://${value.file_url}`]);
-        form.setFieldValue(name, [...uploadFileList, `https://${value.file_url}`]);
-        message.success('업로드에 성공했습니다.');
+        if (isArr) {
+          setUploadFileList([...uploadFileList, `https://${value.file_url}`]);
+          form.setFieldValue(name, [
+            ...uploadFileList,
+            `https://${value.file_url}`,
+          ]);
+          message.success('업로드에 성공했습니다.');
+        } else {
+          setUploadFileList([`https://${value.file_url}`]);
+          form.setFieldValue(name, `https://${value.file_url}`);
+        }
       })
       .catch(() => {
         message.error('업로드에 실패했습니다.');
@@ -52,7 +69,11 @@ export default function CustomUpload({ form, domain, name }: Props) {
     const newFileList = uploadFileList.slice();
     newFileList.splice(index, 1);
     setUploadFileList(newFileList);
-    form.setFieldValue(name, newFileList);
+
+    if (isArr) {
+      form.setFieldValue(name, newFileList);
+    } else { form.setFieldValue(name, newFileList[0]); }
+
     return false;
   };
 
@@ -65,7 +86,7 @@ export default function CustomUpload({ form, domain, name }: Props) {
           showRemoveIcon: true,
         }}
         beforeUpload={handleUpload}
-        customRequest={() => { }}
+        customRequest={() => {}}
         onRemove={removeUpload}
         fileList={convertedFileList}
       >

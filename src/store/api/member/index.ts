@@ -36,7 +36,7 @@ export const memberApi = createApi({
       query: (id) => `admin/members/${id}`,
       providesTags: (result, error, id) => [{ type: 'member', id }],
     }),
-    updateUser: builder.mutation<void, Pick<Member, 'id'> & Partial<Member>>({
+    updateMember: builder.mutation<void, Pick<Member, 'id'> & Partial<Member>>({
       query(data) {
         const { id, ...body } = data;
         return {
@@ -50,4 +50,4 @@ export const memberApi = createApi({
   }),
 });
 
-export const { useGetMemberListQuery, useGetMemberQuery, useUpdateUserMutation } = memberApi;
+export const { useGetMemberListQuery, useGetMemberQuery, useUpdateMemberMutation } = memberApi;

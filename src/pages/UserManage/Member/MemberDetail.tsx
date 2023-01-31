@@ -5,12 +5,13 @@ import { useParams } from 'react-router-dom';
 import DetailHeading from 'components/common/DetailHeading';
 import { useGetMemberQuery } from 'store/api/member';
 import * as S from './MemberDetail.style';
+import useMemberMutation from './useMemberMutation';
 
-function UserDetail() {
+function MemberDetail() {
   const { id } = useParams();
   const { data: memberData } = useGetMemberQuery(Number(id));
   const [form] = CustomForm.useForm();
-  // const { updateUser } = useUserMutation();
+  const { updateMember } = useMemberMutation();
 
   return (
     <S.Container>
@@ -25,7 +26,7 @@ function UserDetail() {
             <CustomForm
               form={form}
               initialValues={memberData}
-              // onFinish={updateUser}
+              onFinish={updateMember}
             >
               <Divider orientation="left">기본 정보</Divider>
               <CustomForm.InputNumber label="ID" name="id" disabled />
@@ -53,4 +54,4 @@ function UserDetail() {
   );
 }
 
-export default UserDetail;
+export default MemberDetail;

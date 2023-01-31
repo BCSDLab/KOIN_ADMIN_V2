@@ -14,21 +14,21 @@ function useLogin() {
   const idRef = useRef<InputRef>(null);
   const passwordRef = useRef<InputRef>(null);
   const secondPasswordRef = useRef<InputRef>(null);
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { token } = useSelector((state: RootState) => state.auth);
   const [loginMutation] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) navigate('/');
-  }, [user, navigate]);
+    if (token) navigate('/');
+  }, [token, navigate]);
 
   const login = async (e: SyntheticEvent) => {
     e.preventDefault();
     const refList = [idRef.current, passwordRef.current, secondPasswordRef.current];
+
     if (refList.some((current) => (current?.input?.value === ''))) message.warning('필수 입력값을 입력해주세요.');
     else if (refList[2]?.input?.value !== SECOND_PASSWORD) message.error('올바른 계정이 아닙니다.');
-
     else {
       const res = await loginMutation({
         portal_account: refList[0]?.input?.value!,
@@ -38,7 +38,6 @@ function useLogin() {
       if ('data' in res) {
         const credentials = res.data;
         dispatch(setCredentials(credentials));
-
         sessionStorage.setItem('token', credentials.token);
       } else if ('error' in res) {
         message.error('올바른 계정이 아닙니다.');

@@ -29,3 +29,13 @@ export const ButtonWrap = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+export const UploadWrap = styled.div`
+  margin-top: 40px;
+  margin-left: 30px;
+  .upload-list-inline .ant-upload-list-item {
+    float: left;
+    width: 700px;
+    margin: 15px 0 0 10px;
+  }
+`;

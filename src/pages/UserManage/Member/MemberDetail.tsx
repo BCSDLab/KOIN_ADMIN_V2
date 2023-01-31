@@ -38,6 +38,11 @@ function MemberDetail() {
               <CustomForm.Input label="이메일" name="email" />
               <CustomForm.Input label="학번" name="student_number" />
 
+              <Divider orientation="left">사진</Divider>
+              <S.UploadWrap>
+                <CustomForm.Upload domain="lands" name="image_urls" form={form} />
+              </S.UploadWrap>
+
               <S.ButtonWrap>
                 <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                   정보 수정

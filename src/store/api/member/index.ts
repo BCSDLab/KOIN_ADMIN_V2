@@ -39,4 +39,4 @@ export const memberApi = createApi({
   }),
 });
 
-export const { useGetMemberListQuery } = memberApi;
+export const { useGetMemberListQuery, useGetMemberQuery } = memberApi;

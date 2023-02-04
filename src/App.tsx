@@ -17,12 +17,11 @@ import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
 import MemberDetail from 'pages/UserManage/Member/MemberDetail';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store';
+import { useToken } from 'store/slice/auth';
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const location = useLocation();
-  const { token } = useSelector((state: RootState) => state.auth);
+  const token = useToken();
 
   if (token === null) {
     return <Navigate to="/login" state={{ from: location }} replace />;

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { LoginState } from 'model/auth.model';
+import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
 const authSlice = createSlice({
@@ -21,4 +22,7 @@ export const { setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const selectCurrentToken = (state: RootState) => state.auth.token;
+export const useToken = () => {
+  const { token } = useSelector((state: RootState) => state.auth);
+  return token;
+};

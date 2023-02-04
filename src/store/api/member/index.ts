@@ -47,7 +47,7 @@ export const memberApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result, error, { id }) => [{ type: 'member', id }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'member', id }, { type: 'members', id: 'LIST' }],
     }),
 
     deleteMember: builder.mutation<{ success: boolean; id: number }, number>({

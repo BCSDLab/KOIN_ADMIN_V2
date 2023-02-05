@@ -6,3 +6,10 @@ export const TRACK_MAPPER = {
   Game: 'GAME',
   'UI/UX': 'UI_UX',
 } as const;
+
+export const SELECT_OPTIONS = {
+  track: {
+    Android: 'Android', BackEnd: 'BackEnd', FrontEnd: 'FrontEnd', Game: 'Game', 'UI/UX': 'UI/UX',
+  },
+  position: { Mentor: 'Mentor', Regular: 'Regular' },
+};

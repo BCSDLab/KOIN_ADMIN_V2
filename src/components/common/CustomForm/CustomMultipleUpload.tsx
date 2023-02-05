@@ -4,7 +4,7 @@ import {
   Button, Form, Upload, message,
 } from 'antd';
 import { Domain } from 'model/upload.model';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useUploadfileMutation } from 'store/api/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/es/form/Form';
@@ -17,28 +17,32 @@ interface Props {
 }
 
 const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
-  return {
+  return ({
     uid: `${-(index + 1)}`,
     name: fileUrl,
     status: 'done',
     url: fileUrl,
-  };
+  });
 };
 
-export default function CustomUpload({ form, domain, name }: Props) {
+export default function CustomMultipleUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
-  const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
-
-  const convertedFileList: UploadFile[] = uploadFileList?.map(convertUploadFile);
+  const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name));
+  let convertedFileList: UploadFile[] = [];
+  convertedFileList = uploadFileList?.map(convertUploadFile);
 
   const handleUpload = (file: RcFile) => {
     const image = new FormData();
     image.append('multipartFile', file);
 
-    uploadFile({ domain, image }).unwrap()
+    uploadFile({ domain, image })
+      .unwrap()
       .then((value) => {
         setUploadFileList([...uploadFileList, `https://${value.file_url}`]);
-        form.setFieldValue(name, [...uploadFileList, `https://${value.file_url}`]);
+        form.setFieldValue(name, [
+          ...uploadFileList,
+          `https://${value.file_url}`,
+        ]);
         message.success('업로드에 성공했습니다.');
       })
       .catch(() => {
@@ -65,7 +69,7 @@ export default function CustomUpload({ form, domain, name }: Props) {
           showRemoveIcon: true,
         }}
         beforeUpload={handleUpload}
-        customRequest={() => { }}
+        customRequest={() => {}}
         onRemove={removeUpload}
         fileList={convertedFileList}
       >

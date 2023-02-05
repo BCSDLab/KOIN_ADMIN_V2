@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
-import { MemberTableHead, MembersParam, MembersResponse } from 'model/member.model';
+import {
+  MemberTableHead, MembersParam, MembersResponse, Member,
+} from 'model/member.model';
 
 export const memberApi = createApi({
   reducerPath: 'member',
@@ -30,7 +32,39 @@ export const memberApi = createApi({
         totalPage: membersResponse.total_page,
       }),
     }),
+
+    getMember: builder.query<Member, number>({
+      query: (id) => `admin/members/${id}`,
+      providesTags: (result, error, id) => [{ type: 'member', id }],
+    }),
+
+    updateMember: builder.mutation<void, Pick<Member, 'id'> & Partial<Member>>({
+      query(data) {
+        const { id, ...body } = data;
+        return {
+          url: `admin/members/${id}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: (result, error, { id }) => [{ type: 'member', id }, { type: 'members', id: 'LIST' }],
+    }),
+
+    deleteMember: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `admin/members/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ((result, error, id) => [
+        { type: 'member', id }, { type: 'members', id: 'LIST' },
+      ]),
+    }),
   }),
 });
 
-export const { useGetMemberListQuery } = memberApi;
+export const {
+  useGetMemberListQuery, useGetMemberQuery,
+  useUpdateMemberMutation, useDeleteMemberMutation,
+} = memberApi;

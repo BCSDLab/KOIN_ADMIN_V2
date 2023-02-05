@@ -7,7 +7,8 @@ import {
 import React, { ReactNode } from 'react';
 import { Rule } from 'antd/lib/form';
 import * as S from './CustomForm.style';
-import CustomUpload from './CustomUpload';
+import CustomMultipleUpload from './CustomMultipleUpload';
+import CustomSingleUpload from './CustomSingleUpload';
 
 interface GridProps {
   children: ReactNode;
@@ -172,7 +173,8 @@ const CustomForm = Object.assign(Form, {
   Input: CustomInput,
   InputNumber: CustomInputNumber,
   TextArea: CusctomTextArea,
-  Upload: CustomUpload,
+  MultipleUpload: CustomMultipleUpload,
+  SingleUpload: CustomSingleUpload,
   Checkbox: CustomCheckbox,
   Select: CustomSelect,
   Switch: CustomSwitch,

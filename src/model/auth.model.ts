@@ -17,12 +17,10 @@ export interface User {
 }
 
 export interface LoginResponse {
-  user: User;
   token: string;
 }
 
 export interface LoginState {
-  user: User | null;
   token: string | null;
 }
 

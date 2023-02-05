@@ -56,7 +56,7 @@ export default function DetailForm({ form }: { form: FormInstance }) {
 
       <Divider orientation="left">사진</Divider>
       <S.UploadWrap>
-        <CustomForm.Upload domain="lands" name="image_urls" form={form} />
+        <CustomForm.MultipleUpload domain="lands" name="image_urls" form={form} />
       </S.UploadWrap>
     </>
   );

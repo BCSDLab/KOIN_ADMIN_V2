@@ -28,9 +28,8 @@ const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
 export default function CustomMultipleUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
   const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name));
-
-  const convertedFileList: UploadFile[] = uploadFileList[0] !== null
-    ? uploadFileList?.map(convertUploadFile) : [];
+  let convertedFileList: UploadFile[] = [];
+  convertedFileList = uploadFileList?.map(convertUploadFile);
 
   const handleUpload = (file: RcFile) => {
     const image = new FormData();
@@ -58,7 +57,6 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
     newFileList.splice(index, 1);
     setUploadFileList(newFileList);
     form.setFieldValue(name, newFileList);
-
     return false;
   };
 

@@ -41,7 +41,7 @@ function MemberDetail() {
 
               <Divider orientation="left">사진</Divider>
               <S.UploadWrap>
-                <CustomForm.Upload domain="members" name="image_url" form={form} />
+                <CustomForm.SingleUpload domain="members" name="image_url" form={form} />
               </S.UploadWrap>
 
               <S.ButtonWrap>

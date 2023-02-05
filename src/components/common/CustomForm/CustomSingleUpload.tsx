@@ -25,15 +25,10 @@ const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
   });
 };
 
-export default function CustomUpload({ form, domain, name }: Props) {
+export default function CustomSingleUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
-  const isArr = Array.isArray(form.getFieldValue(name));
+  const [uploadFileList, setUploadFileList] = useState<string[]>([form.getFieldValue(name)]);
   let convertedFileList: UploadFile[] = [];
-  const [uploadFileList, setUploadFileList] = useState<string[]>(
-    isArr
-      ? form.getFieldValue(name)
-      : [form.getFieldValue(name)],
-  );
 
   if (uploadFileList[0] !== null) {
     convertedFileList = uploadFileList?.map(convertUploadFile);
@@ -46,17 +41,9 @@ export default function CustomUpload({ form, domain, name }: Props) {
     uploadFile({ domain, image })
       .unwrap()
       .then((value) => {
-        if (isArr) {
-          setUploadFileList([...uploadFileList, `https://${value.file_url}`]);
-          form.setFieldValue(name, [
-            ...uploadFileList,
-            `https://${value.file_url}`,
-          ]);
-          message.success('업로드에 성공했습니다.');
-        } else {
-          setUploadFileList([`https://${value.file_url}`]);
-          form.setFieldValue(name, `https://${value.file_url}`);
-        }
+        setUploadFileList([`https://${value.file_url}`]);
+        form.setFieldValue(name, `https://${value.file_url}`);
+        message.success('업로드에 성공했습니다.');
       })
       .catch(() => {
         message.error('업로드에 실패했습니다.');
@@ -69,10 +56,7 @@ export default function CustomUpload({ form, domain, name }: Props) {
     const newFileList = uploadFileList.slice();
     newFileList.splice(index, 1);
     setUploadFileList(newFileList);
-
-    if (isArr) {
-      form.setFieldValue(name, newFileList);
-    } else { form.setFieldValue(name, newFileList[0]); }
+    form.setFieldValue(name, newFileList[0]);
 
     return false;
   };

@@ -61,10 +61,19 @@ export const memberApi = createApi({
         { type: 'member', id }, { type: 'members', id: 'LIST' },
       ]),
     }),
+
+    addMember: builder.mutation<Member, Partial<Member>>({
+      query: (body) => ({
+        url: 'admin/members',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'members', id: 'LIST' }],
+    }),
   }),
 });
 
 export const {
   useGetMemberListQuery, useGetMemberQuery,
-  useUpdateMemberMutation, useDeleteMemberMutation,
+  useUpdateMemberMutation, useDeleteMemberMutation, useAddMemberMutation,
 } = memberApi;

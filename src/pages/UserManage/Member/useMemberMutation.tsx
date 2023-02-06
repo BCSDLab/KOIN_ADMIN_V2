@@ -1,12 +1,15 @@
 import { message } from 'antd';
 import { Member } from 'model/member.model';
 import { useNavigate } from 'react-router-dom';
-import { useAddMemberMutation, useDeleteMemberMutation, useUpdateMemberMutation } from 'store/api/member';
+import {
+  useAddMemberMutation, useDeleteMemberMutation, useUnDeleteMemberMutation, useUpdateMemberMutation,
+} from 'store/api/member';
 
 export default function useMemberMutation(id: number) {
   const [updateMemberMutation] = useUpdateMemberMutation();
   const [deleteMemberMutation] = useDeleteMemberMutation();
   const [addMemberMutation] = useAddMemberMutation();
+  const [unDeleteMemberMutation] = useUnDeleteMemberMutation();
   const navigate = useNavigate();
 
   const updateMember = (formData: Partial<Member>) => {
@@ -47,5 +50,18 @@ export default function useMemberMutation(id: number) {
     }
   }
 
-  return { updateMember, deleteMember, addMember };
+  function unDeleteMember() {
+    unDeleteMemberMutation(id)
+      .unwrap()
+      .then(() => {
+        message.success('복구되었습니다..');
+        navigate(-1);
+      }).catch((({ data }) => {
+        message.error(data.error.message);
+      }));
+  }
+
+  return {
+    updateMember, deleteMember, addMember, unDeleteMember,
+  };
 }

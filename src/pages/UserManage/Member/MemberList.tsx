@@ -9,6 +9,12 @@ import * as S from './MemberList.style';
 import MemberCard from './components/MemberCard';
 import AddMemberModal from './components/AddMemberModal';
 
+const POSITION_SCORE = {
+  Mentor: 2,
+  Regular: 1,
+  Beginner: 0,
+};
+
 function MemberList() {
   const [currentTrack, setTrack] = useState<Track>('FrontEnd');
   const { value: isDeleted, changeValue: handleDeleted } = useBooleanState(false);
@@ -63,6 +69,8 @@ function MemberList() {
       {membersRes && (
         <S.CardList>
           {membersRes?.memberList
+            .slice()
+            .sort((a, b) => POSITION_SCORE[b.position] - POSITION_SCORE[a.position])
             .map((member) => (
               <MemberCard member={member} key={member.id} />
             ))}

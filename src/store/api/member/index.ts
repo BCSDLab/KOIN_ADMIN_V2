@@ -71,7 +71,7 @@ export const memberApi = createApi({
       invalidatesTags: [{ type: 'members', id: 'LIST' }],
     }),
 
-    unDeleteMember: builder.mutation<void, number>({
+    undeleteMember: builder.mutation<void, number>({
       query: (id) => {
         return {
           url: `admin/members/${id}/undelete`,
@@ -84,6 +84,6 @@ export const memberApi = createApi({
 });
 
 export const {
-  useGetMemberListQuery, useGetMemberQuery, useUnDeleteMemberMutation,
+  useGetMemberListQuery, useGetMemberQuery, useUndeleteMemberMutation,
   useUpdateMemberMutation, useDeleteMemberMutation, useAddMemberMutation,
 } = memberApi;

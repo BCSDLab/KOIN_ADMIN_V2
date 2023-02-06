@@ -12,7 +12,7 @@ function MemberDetail() {
   const { id } = useParams();
   const { data: memberData } = useGetMemberQuery(Number(id));
   const [form] = CustomForm.useForm();
-  const { updateMember, deleteMember, unDeleteMember } = useMemberMutation(Number(id));
+  const { updateMember, deleteMember, undeleteMember } = useMemberMutation(Number(id));
 
   return (
     <S.Container>
@@ -36,7 +36,7 @@ function MemberDetail() {
                 </CustomForm.Button>
                 {memberData.is_deleted
                   ? (
-                    <CustomForm.Button danger icon={<ReloadOutlined />} onClick={unDeleteMember}>
+                    <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteMember}>
                       유저 복구
                     </CustomForm.Button>
                   )

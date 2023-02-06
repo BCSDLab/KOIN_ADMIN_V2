@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { useGetMemberListQuery } from 'store/api/member';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
+import CustomForm from 'components/common/CustomForm';
 import * as S from './MemberList.style';
 import MemberCard from './components/MemberCard';
+import AddMemberModal from './components/AddMemberModal';
 
 const POSITION_SCORE = {
   Mentor: 3,
@@ -24,11 +26,26 @@ function MemberList() {
     changeValue: toggleContainDeletedMember,
   } = useBooleanState(false);
 
+  const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
+
   return (
     <div>
       <h1>
         Member
       </h1>
+      <S.ModalWrap>
+        <CustomForm.Modal
+          buttonText="생성"
+          title="등록하기"
+          width={900}
+          footer={null}
+          open={isModalOpen}
+          onCancel={closeModal}
+          onClick={openModal}
+        >
+          <AddMemberModal onCancel={closeModal} />
+        </CustomForm.Modal>
+      </S.ModalWrap>
 
       <S.Tabs>
         {TRACK_LIST.map((track) => (

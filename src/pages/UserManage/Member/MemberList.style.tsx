@@ -34,7 +34,6 @@ export const Tabs = styled.div`
 `;
 
 export const CardList = styled.div`
-  padding: 20px 30px;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -43,4 +42,22 @@ export const CardList = styled.div`
 
 export const SwitchWrapper = styled.div`
   margin: 40px 40px 0;
+`;
+
+export const DetailFormWrap = styled.div`
+  padding: 0 40px;
+`;
+
+export const SubmitButtonWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 100px;
+`;
+
+export const ModalWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+  margin-right: 70px;
+
 `;

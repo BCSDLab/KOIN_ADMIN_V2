@@ -59,5 +59,4 @@ export const ModalWrap = styled.div`
   justify-content: flex-end;
   margin-bottom: 30px;
   margin-right: 70px;
-
 `;

@@ -70,10 +70,20 @@ export const memberApi = createApi({
       }),
       invalidatesTags: [{ type: 'members', id: 'LIST' }],
     }),
+
+    unDeleteMember: builder.mutation<void, number>({
+      query: (id) => {
+        return {
+          url: `admin/members/${id}/undelete`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'member', id }, { type: 'members', id: 'LIST' }],
+    }),
   }),
 });
 
 export const {
-  useGetMemberListQuery, useGetMemberQuery,
+  useGetMemberListQuery, useGetMemberQuery, useUnDeleteMemberMutation,
   useUpdateMemberMutation, useDeleteMemberMutation, useAddMemberMutation,
 } = memberApi;

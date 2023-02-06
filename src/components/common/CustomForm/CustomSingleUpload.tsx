@@ -30,7 +30,7 @@ export default function CustomSingleUpload({ form, domain, name }: Props) {
   const [uploadFileList, setUploadFileList] = useState<string[]>([form.getFieldValue(name)]);
   let convertedFileList: UploadFile[] = [];
 
-  if (uploadFileList[0] !== null) {
+  if (uploadFileList[0]) {
     convertedFileList = uploadFileList?.map(convertUploadFile);
   }
 

@@ -16,7 +16,7 @@ export default function DetailForm({ form }: { form: FormInstance }) {
         <CustomForm.Select label="직책" name="position" options={SELECT_OPTIONS.position} />
       </CustomForm.GridRow>
       <CustomForm.Input label="이메일" name="email" />
-      <CustomForm.Input label="학번" name="student_number" />
+      <CustomForm.InputNumber label="학번" name="student_number" />
 
       <Divider orientation="left">사진</Divider>
       <S.UploadWrap>

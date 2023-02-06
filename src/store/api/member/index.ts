@@ -23,7 +23,7 @@ export const memberApi = createApi({
       memberList: MemberTableHead[],
       totalPage: number
     }, MembersParam>({
-      query: ({ page, track }) => `admin/members/?page=${page}&track=${track}&limit=50`,
+      query: ({ page, track, is_deleted }) => `admin/members/?page=${page}&track=${track}&limit=50&is_deleted=${is_deleted}`,
       providesTags: (result) => (result
         ? [...result.memberList.map((member) => ({ type: 'member' as const, id: member.id })), { type: 'members', id: 'LIST' }]
         : [{ type: 'members', id: 'LIST' }]),

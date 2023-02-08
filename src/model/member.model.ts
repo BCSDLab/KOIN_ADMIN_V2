@@ -22,6 +22,7 @@ export interface MembersResponse extends ListPagination {
 export interface MembersParam {
   page: number;
   track: TrackForParam;
+  is_deleted: boolean;
 }
 
 export interface MemberTableHead {

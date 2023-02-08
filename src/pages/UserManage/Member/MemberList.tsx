@@ -4,31 +4,45 @@ import { useState } from 'react';
 import { useGetMemberListQuery } from 'store/api/member';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
+import CustomForm from 'components/common/CustomForm';
 import * as S from './MemberList.style';
 import MemberCard from './components/MemberCard';
+import AddMemberModal from './components/AddMemberModal';
 
 const POSITION_SCORE = {
-  Mentor: 3,
-  Regular: 2,
-  Beginner: 1,
+  Mentor: 2,
+  Regular: 1,
+  Beginner: 0,
 };
 
 function MemberList() {
   const [currentTrack, setTrack] = useState<Track>('FrontEnd');
+  const { value: isDeleted, changeValue: handleDeleted } = useBooleanState(false);
   const { data: membersRes } = useGetMemberListQuery({
     page: 1,
     track: TRACK_MAPPER[currentTrack],
+    is_deleted: isDeleted,
   });
-  const {
-    value: containDeletedMember,
-    changeValue: toggleContainDeletedMember,
-  } = useBooleanState(false);
+  const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
 
   return (
     <div>
       <h1>
         Member
       </h1>
+      <S.ModalWrap>
+        <CustomForm.Modal
+          buttonText="생성"
+          title="등록하기"
+          width={900}
+          footer={null}
+          open={isModalOpen}
+          onCancel={closeModal}
+          onClick={openModal}
+        >
+          <AddMemberModal onCancel={closeModal} />
+        </CustomForm.Modal>
+      </S.ModalWrap>
 
       <S.Tabs>
         {TRACK_LIST.map((track) => (
@@ -45,17 +59,17 @@ function MemberList() {
 
       <S.SwitchWrapper>
         <Switch
-          onClick={toggleContainDeletedMember}
-          checked={containDeletedMember}
-          checkedChildren="탈퇴 인원 포함"
-          unCheckedChildren="탈퇴 인원 포함"
+          onClick={handleDeleted}
+          checked={isDeleted}
+          checkedChildren="탈퇴 인원"
+          unCheckedChildren="현재 인원"
         />
       </S.SwitchWrapper>
 
       {membersRes && (
         <S.CardList>
-          {membersRes.memberList
-            .filter((member) => containDeletedMember || !member.is_deleted)
+          {membersRes?.memberList
+            .slice()
             .sort((a, b) => POSITION_SCORE[b.position] - POSITION_SCORE[a.position])
             .map((member) => (
               <MemberCard member={member} key={member.id} />

@@ -23,7 +23,7 @@ export const memberApi = createApi({
       memberList: MemberTableHead[],
       totalPage: number
     }, MembersParam>({
-      query: ({ page, track }) => `admin/members/?page=${page}&track=${track}&limit=50`,
+      query: ({ page, track, is_deleted }) => `admin/members/?page=${page}&track=${track}&limit=50&is_deleted=${is_deleted}`,
       providesTags: (result) => (result
         ? [...result.memberList.map((member) => ({ type: 'member' as const, id: member.id })), { type: 'members', id: 'LIST' }]
         : [{ type: 'members', id: 'LIST' }]),
@@ -61,10 +61,29 @@ export const memberApi = createApi({
         { type: 'member', id }, { type: 'members', id: 'LIST' },
       ]),
     }),
+
+    addMember: builder.mutation<Member, Partial<Member>>({
+      query: (body) => ({
+        url: 'admin/members',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'members', id: 'LIST' }],
+    }),
+
+    undeleteMember: builder.mutation<void, number>({
+      query: (id) => {
+        return {
+          url: `admin/members/${id}/undelete`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'member', id }, { type: 'members', id: 'LIST' }],
+    }),
   }),
 });
 
 export const {
-  useGetMemberListQuery, useGetMemberQuery,
-  useUpdateMemberMutation, useDeleteMemberMutation,
+  useGetMemberListQuery, useGetMemberQuery, useUndeleteMemberMutation,
+  useUpdateMemberMutation, useDeleteMemberMutation, useAddMemberMutation,
 } = memberApi;

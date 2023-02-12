@@ -15,6 +15,8 @@ export default function DetailForm({ form }: { form: FormInstance }) {
         name="name"
         rules={[{
           required: true,
+          message: '이름을 입력해주세요',
+        }, {
           max: 20,
           message: '최대 20자 이내로 입력해주세요',
         }]}

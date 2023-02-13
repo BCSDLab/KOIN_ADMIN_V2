@@ -1,4 +1,4 @@
-export const ROOM_OPTION = [
+const ROOM_OPTION = [
   {
     name: '냉장고',
     data: 'opt_refrigerator',
@@ -65,10 +65,4 @@ export const ROOM_OPTION = [
   },
 ] as const;
 
-export const ROOM_RULE = {
-  name: [
-    { required: true, message: '이름은 필수입니다.' },
-    { max: 225, message: '최대 225자 내외로 입력해주세요.' },
-  ],
-  room_type: [{ max: 20, message: '최대 20자 내외로 입력해주세요' }],
-};
+export default ROOM_OPTION;

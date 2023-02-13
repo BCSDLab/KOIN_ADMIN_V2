@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-imports */
 import CustomForm from 'components/common/CustomForm';
 import React from 'react';
-import { ROOM_OPTION, ROOM_RULE } from 'constant/roomOption';
+import { ROOM_OPTION } from 'constant/roomOption';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import * as S from '../RoomDetail.style';
@@ -9,7 +9,7 @@ import * as S from '../RoomDetail.style';
 export default function DetailForm({ form }: { form: FormInstance }) {
   return (
     <>
-      <CustomForm.Input label="방이름" name="name" rules={ROOM_RULE.name} />
+      <CustomForm.Input label="방이름" name="name" />
       <CustomForm.GridRow gridColumns="1fr 1fr">
         <CustomForm.Input label="방종류" name="room_type" />
         <CustomForm.InputNumber label="방크기" name="size" />

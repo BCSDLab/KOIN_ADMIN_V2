@@ -16,20 +16,20 @@ export default function DetailForm({ form }: { form: FormInstance }) {
       <CustomForm.Input
         label="이름"
         name="name"
-        rules={[Required('이름'), Max(20)]}
+        rules={[Required(), Max(20)]}
       />
       <CustomForm.GridRow gridColumns="1fr 1fr">
         <CustomForm.Select
           label="트랙"
           name="track"
           options={SELECT_OPTIONS.track}
-          rules={[Required('트랙')]}
+          rules={[Required()]}
         />
         <CustomForm.Select
           label="직책"
           name="position"
           options={SELECT_OPTIONS.position}
-          rules={[Required('직책')]}
+          rules={[Required()]}
         />
       </CustomForm.GridRow>
       <CustomForm.Input

@@ -11,9 +11,12 @@ export default function AddRoomModal({ onCancel }: { onCancel: () => void }) {
   const { addRoom } = useRoomMutation(1);
 
   const createRoom = (values: Partial<RoomResponse>) => {
-    addRoom(values);
-    onCancel();
-    form.resetFields();
+    addRoom(values)
+      .then(() => {
+        onCancel();
+        form.resetFields();
+      })
+      .catch();
   };
 
   return (

@@ -4,22 +4,25 @@ import React from 'react';
 import ROOM_OPTION from 'constant/roomOption';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
+import useValidate from 'utils/hooks/useValidate';
 import * as S from '../RoomDetail.style';
 
 export default function DetailForm({ form }: { form: FormInstance }) {
+  const { Required, Max, Pattern } = useValidate();
+
   return (
     <>
-      <CustomForm.Input label="방이름" name="name" />
+      <CustomForm.Input label="방이름" name="name" rules={[Required(), Max(225)]} />
       <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.Input label="방종류" name="room_type" />
+        <CustomForm.Input label="방종류" name="room_type" rules={[Max(20)]} />
         <CustomForm.InputNumber label="방크기" name="size" />
       </CustomForm.GridRow>
 
-      <CustomForm.Input label="월세" name="monthly_fee" />
-      <CustomForm.Input label="전세" name="charter_fee" />
+      <CustomForm.Input label="월세" name="monthly_fee" rules={[Max(225)]} />
+      <CustomForm.Input label="전세" name="charter_fee" rules={[Max(20)]} />
       <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.Input label="관리비" name="management_fee" />
-        <CustomForm.Input label="보증금" name="deposit" />
+        <CustomForm.Input label="관리비" name="management_fee" rules={[Max(225)]} />
+        <CustomForm.Input label="보증금" name="deposit" rules={[Max(225)]} />
       </CustomForm.GridRow>
 
       <CustomForm.GridRow gridColumns="1fr 1fr">
@@ -28,10 +31,17 @@ export default function DetailForm({ form }: { form: FormInstance }) {
       </CustomForm.GridRow>
 
       <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.InputNumber label="층수" name="floor" />
-        <CustomForm.Input label="전화번호" name="phone" />
+        <CustomForm.InputNumber
+          label="층수"
+          name="floor"
+          rules={[Pattern(/^(0|[1-9]+[0-9]*)$/, '층수가 올바르지않습니다.')]}
+        />
+        <CustomForm.Input
+          label="전화번호"
+          name="phone"
+        />
       </CustomForm.GridRow>
-      <CustomForm.Input label="주소" name="address" />
+      <CustomForm.Input label="주소" name="address" rules={[Max(65535)]} />
       <CustomForm.TextArea
         label="설명"
         name="description"

@@ -1,14 +1,14 @@
 export default function useValidate() {
-  const Required = (name: string) => {
-    return { required: true, message: `${name}은 필수입니다` };
+  const Required = () => {
+    return { required: true, message: '필수 항목입니다' };
   };
 
-  const Max = (number: number) => {
-    return { max: number, message: `최대 ${number}자 이내로 입력해주세요` };
+  const Max = (maxNum: number) => {
+    return { max: maxNum, message: `최대 ${maxNum}자 이내로 입력해주세요` };
   };
 
-  const Min = (number: number) => {
-    return { min: number, message: `최소 ${number}자 이내로 입력해주세요` };
+  const Min = (minNum: number) => {
+    return { min: minNum, message: `최소 ${minNum}자 이내로 입력해주세요` };
   };
 
   const Pattern = (pattern: RegExp, message: string) => {

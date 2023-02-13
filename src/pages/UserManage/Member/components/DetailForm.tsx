@@ -3,9 +3,12 @@ import { Divider } from 'antd';
 import CustomForm from 'components/common/CustomForm';
 import { SELECT_OPTIONS } from 'constant/member';
 import { FormInstance } from 'antd/es/form/Form';
+import useValidate from 'utils/hooks/useValidate';
 import * as S from '../MemberDetail.style';
 
 export default function DetailForm({ form }: { form: FormInstance }) {
+  const { Required, Max, Pattern } = useValidate();
+
   return (
     <>
       <Divider orientation="left">기본 정보</Divider>
@@ -13,54 +16,31 @@ export default function DetailForm({ form }: { form: FormInstance }) {
       <CustomForm.Input
         label="이름"
         name="name"
-        rules={[{
-          required: true,
-          message: '이름을 입력해주세요',
-        }, {
-          max: 20,
-          message: '최대 20자 이내로 입력해주세요',
-        }]}
+        rules={[Required('이름'), Max(20)]}
       />
       <CustomForm.GridRow gridColumns="1fr 1fr">
         <CustomForm.Select
           label="트랙"
           name="track"
           options={SELECT_OPTIONS.track}
-          rules={[{
-            required: true,
-            message: '트랙을 선택해주세요',
-          }]}
+          rules={[Required('트랙')]}
         />
         <CustomForm.Select
           label="직책"
           name="position"
           options={SELECT_OPTIONS.position}
-          rules={[{
-            required: true,
-            message: '직책을 선택해주세요',
-          }]}
+          rules={[Required('직책')]}
         />
       </CustomForm.GridRow>
       <CustomForm.Input
         label="이메일"
         name="email"
-        rules={[{
-          max: 100,
-          message: '최대 100자 이내로 입력해주세요',
-        }]}
+        rules={[Max(100)]}
       />
       <CustomForm.Input
         label="학번"
         name="student_number"
-        rules={[
-          {
-            pattern: /^[0-9]+$/,
-            message: '숫자만 입력 가능합니다',
-          },
-          {
-            max: 10,
-            message: '최대 10자 이내로 입력해주세요',
-          }]}
+        rules={[Pattern(/^[0-9]+$/, '숫자만 입력 가능합니다'), Max(10)]}
       />
 
       <Divider orientation="left">사진</Divider>

@@ -3,13 +3,15 @@ import { useState } from 'react';
 import { useGetRoomListQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
+import { Switch } from 'antd';
 import * as S from './RoomList.style';
 import AddRoomModal from './components/AddRoomModal';
 
 function RoomList() {
   const [page, setPage] = useState(1);
-  const { data: roomRes } = useGetRoomListQuery(page);
   const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
+  const { value: isDeleted, changeValue: handleDeleted } = useBooleanState(false);
+  const { data: roomRes } = useGetRoomListQuery(page);
 
   return (
     <S.Container>
@@ -27,6 +29,14 @@ function RoomList() {
           <AddRoomModal onCancel={closeModal} />
         </CustomForm.Modal>
       </S.ModalWrap>
+      <S.SwitchWrapper>
+        <Switch
+          onClick={handleDeleted}
+          checked={isDeleted}
+          checkedChildren="삭제"
+          unCheckedChildren="삭제"
+        />
+      </S.SwitchWrapper>
       {roomRes && (
         <CustomTable
           data={roomRes.roomList}

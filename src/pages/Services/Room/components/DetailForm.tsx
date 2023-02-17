@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-imports */
 import CustomForm from 'components/common/CustomForm';
 import React from 'react';
-import { ROOM_OPTION } from 'constant/roomOption';
+import ROOM_OPTION from 'constant/roomOption';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import * as S from '../RoomDetail.style';

@@ -4,11 +4,10 @@ import React from 'react';
 import ROOM_OPTION from 'constant/roomOption';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
-import useValidate from 'utils/hooks/useValidate';
 import * as S from '../RoomDetail.style';
 
 export default function DetailForm({ form }: { form: FormInstance }) {
-  const { Required, Max, Pattern } = useValidate();
+  const { Required, Max, Pattern } = CustomForm.useValidate();
 
   return (
     <>

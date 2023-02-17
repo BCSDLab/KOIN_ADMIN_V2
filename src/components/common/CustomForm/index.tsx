@@ -6,6 +6,7 @@ import {
 } from 'antd';
 import React, { ReactNode } from 'react';
 import { Rule } from 'antd/lib/form';
+import useValidate from 'utils/hooks/useValidate';
 import * as S from './CustomForm.style';
 import CustomMultipleUpload from './CustomMultipleUpload';
 import CustomSingleUpload from './CustomSingleUpload';
@@ -179,6 +180,7 @@ const CustomForm = Object.assign(Form, {
   Select: CustomSelect,
   Switch: CustomSwitch,
   Modal: CustomModal,
+  useValidate,
 });
 
 export default CustomForm;

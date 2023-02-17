@@ -3,11 +3,10 @@ import { Divider } from 'antd';
 import CustomForm from 'components/common/CustomForm';
 import { SELECT_OPTIONS } from 'constant/member';
 import { FormInstance } from 'antd/es/form/Form';
-import useValidate from 'utils/hooks/useValidate';
 import * as S from '../MemberDetail.style';
 
 export default function DetailForm({ form }: { form: FormInstance }) {
-  const { Required, Max, Pattern } = useValidate();
+  const { Required, Max, Pattern } = CustomForm.useValidate();
 
   return (
     <>

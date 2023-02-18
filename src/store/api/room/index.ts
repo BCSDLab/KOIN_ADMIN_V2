@@ -72,7 +72,7 @@ export const roomApi = createApi({
     undeleteRoom: builder.mutation<void, number>({
       query: (id) => {
         return {
-          url: `admin/members/${id}/undelete`,
+          url: `admin/lands/${id}/undelete`,
           method: 'POST',
         };
       },

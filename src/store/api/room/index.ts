@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 import {
+  RoomParams,
   RoomResponse, RoomsResponse, RoomTableHead,
 } from 'model/room.model';
 import { RootState } from 'store';
@@ -21,8 +22,8 @@ export const roomApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getRoomList: builder.query<{ roomList: RoomTableHead[], totalPage: number }, number>({
-      query: (page) => ({ url: `admin/lands?page=${page}` }),
+    getRoomList: builder.query<{ roomList: RoomTableHead[], totalPage: number }, RoomParams>({
+      query: ({ page, is_deleted }) => ({ url: `admin/lands?page=${page}&is_deleted=${is_deleted}` }),
       providesTags: (result) => (result
         ? [...result.roomList.map((room) => ({ type: 'room' as const, id: room.id })), { type: 'rooms', id: 'LIST' }]
         : [{ type: 'rooms', id: 'LIST' }]),

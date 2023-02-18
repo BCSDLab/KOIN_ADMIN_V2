@@ -36,8 +36,8 @@ function RoomList() {
         <Switch
           onClick={handleDeleted}
           checked={isDeleted}
-          checkedChildren="삭제"
-          unCheckedChildren="삭제"
+          checkedChildren="trash"
+          unCheckedChildren="trash"
         />
       </S.SwitchWrapper>
       {roomRes && (

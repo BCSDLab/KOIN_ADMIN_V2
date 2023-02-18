@@ -36,19 +36,18 @@ export default function useRoomMutation(id: number) {
       });
   }
 
-  function addRoom(formData: Partial<RoomResponse>) {
-    return new Promise((resolve, reject) => {
-      addRoomMutation({ ...formData })
-        .unwrap()
-        .then(() => {
-          message.success('정보 추가가 완료되었습니다.');
-          resolve('성공');
-        })
-        .catch(({ data }) => {
-          message.error(data.message);
-          reject();
-        });
-    });
+  function addRoom(formData: Partial<RoomResponse>, {
+    onSuccess,
+    onError,
+  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) {
+    return addRoomMutation({ ...formData })
+      .unwrap()
+      .then(() => {
+        onSuccess?.();
+      })
+      .catch(({ data }) => {
+        onError?.(data.message);
+      });
   }
 
   function undeleteRoom() {

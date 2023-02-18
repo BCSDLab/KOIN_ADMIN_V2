@@ -11,7 +11,10 @@ function RoomList() {
   const [page, setPage] = useState(1);
   const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
   const { value: isDeleted, changeValue: handleDeleted } = useBooleanState(false);
-  const { data: roomRes } = useGetRoomListQuery(page);
+  const { data: roomRes } = useGetRoomListQuery({
+    page,
+    is_deleted: isDeleted,
+  });
 
   return (
     <S.Container>

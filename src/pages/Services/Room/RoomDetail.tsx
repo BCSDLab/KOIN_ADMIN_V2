@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 // import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
 import { useGetRoomQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
-import { DeleteOutlined, ReloadOutlined } from '@ant-design/icons';
+import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import useRoomMutation from './useRoomMutation';
@@ -33,6 +33,9 @@ export default function RoomDetail() {
             <Divider orientation="left">기본 정보</Divider>
             <DetailForm form={form} />
             <S.ButtonWrap>
+              <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
+                완료
+              </CustomForm.Button>
               {roomData.is_deleted
                 ? (
                   <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteRoom}>

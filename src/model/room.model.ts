@@ -53,3 +53,8 @@ export interface FileList {
   status: string;
   url: string;
 }
+
+export interface RoomParams {
+  page: number,
+  is_deleted: boolean,
+}

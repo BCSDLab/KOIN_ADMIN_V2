@@ -6,7 +6,7 @@ export const SECOND_PASSWORD = process.env.REACT_APP_SECOND_PASSWORD;
 export const TITLE_MAPPER: Record<string, string> = {
   id: 'ID',
   name: '이름',
-  portal_account: '아우누리 ID',
+  email: '이메일',
   identity: '유저 구분',
   nickname: '닉네임',
   monthly_fee: '월세',

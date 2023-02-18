@@ -17,10 +17,13 @@ export const authApi = createApi({
   }),
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
-      query: (credentials) => ({
+      query: ({ email, password }) => ({
         url: '/user/login',
         method: 'POST',
-        body: credentials,
+        body: {
+          email: `${email}@koreatech.ac.kr`,
+          password,
+        },
       }),
     }),
     // 요청 예시

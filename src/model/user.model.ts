@@ -7,7 +7,7 @@ import { ListPagination } from './common.model';
  */
 export interface UserDetail {
   id: number;
-  portal_account: string;
+  email: string;
   nickname: string | null;
   name: string | null;
   student_number: string | null;
@@ -42,7 +42,7 @@ export interface UserDetail {
  */
 export interface UserTableHead {
   id: number;
-  portal_account: string;
+  email: string;
   nickname: string;
   name: string | null;
   major: string | null;
@@ -55,7 +55,7 @@ export interface UsersResponse extends ListPagination {
 
 export interface UserListData {
   id: number;
-  portal_account: string;
+  email: string;
   nickname: string;
   name: string | null;
   major: string | null;

@@ -39,12 +39,12 @@ export default function RoomDetail() {
               {roomData.is_deleted
                 ? (
                   <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteRoom}>
-                    유저 복구
+                    삭제 복구
                   </CustomForm.Button>
                 )
                 : (
                   <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteRoom}>
-                    유저 삭제
+                    삭제
                   </CustomForm.Button>
                 )}
             </S.ButtonWrap>

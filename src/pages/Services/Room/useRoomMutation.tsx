@@ -1,14 +1,15 @@
 import { message } from 'antd';
 import { RoomResponse } from 'model/room.model';
 import { useNavigate } from 'react-router-dom';
-import { useUndeleteMemberMutation } from 'store/api/member';
-import { useAddRoomMutation, useDeleteRoomMutation, useUpdateRoomMutation } from 'store/api/room';
+import {
+  useAddRoomMutation, useDeleteRoomMutation, useUndeleteRoomMutation, useUpdateRoomMutation,
+} from 'store/api/room';
 
 export default function useRoomMutation(id: number) {
   const [updateRoomMutation] = useUpdateRoomMutation();
   const [deleteRoomMutation] = useDeleteRoomMutation();
   const [addRoomMutation] = useAddRoomMutation();
-  const [undeleteRoomMutation] = useUndeleteMemberMutation();
+  const [undeleteRoomMutation] = useUndeleteRoomMutation();
   const navigate = useNavigate();
 
   function deleteRoom() {

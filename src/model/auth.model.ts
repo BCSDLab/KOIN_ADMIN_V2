@@ -4,7 +4,7 @@ export interface User {
   is_graduated: boolean;
   enabled: true,
   anonymous_nickname: string;
-  portal_account: string;
+  email: string;
   identity: number;
   name: string;
   nickname: string;
@@ -25,6 +25,6 @@ export interface LoginState {
 }
 
 export interface LoginRequest {
-  portal_account: string
+  email: string
   password: string
 }

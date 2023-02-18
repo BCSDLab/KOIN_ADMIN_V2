@@ -30,7 +30,7 @@ function useLogin() {
     else if (refList[2]?.input?.value !== SECOND_PASSWORD) message.error('올바른 계정이 아닙니다.');
     else {
       const res = await loginMutation({
-        portal_account: refList[0]?.input?.value!,
+        email: refList[0]?.input?.value!,
         password: sha256(refList[1]?.input?.value!),
       });
 

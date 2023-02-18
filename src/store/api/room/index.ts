@@ -67,10 +67,20 @@ export const roomApi = createApi({
       }),
       invalidatesTags: [{ type: 'rooms', id: 'LIST' }],
     }),
+
+    undeleteRoom: builder.mutation<void, number>({
+      query: (id) => {
+        return {
+          url: `admin/members/${id}/undelete`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'room', id }, { type: 'rooms', id: 'LIST' }],
+    }),
   }),
 });
 
 export const {
-  useGetRoomListQuery, useGetRoomQuery,
+  useGetRoomListQuery, useGetRoomQuery, useUndeleteRoomMutation,
   useUpdateRoomMutation, useDeleteRoomMutation, useAddRoomMutation,
 } = roomApi;

@@ -1,12 +1,14 @@
 import { message } from 'antd';
 import { RoomResponse } from 'model/room.model';
 import { useNavigate } from 'react-router-dom';
+import { useUndeleteMemberMutation } from 'store/api/member';
 import { useAddRoomMutation, useDeleteRoomMutation, useUpdateRoomMutation } from 'store/api/room';
 
 export default function useRoomMutation(id: number) {
   const [updateRoomMutation] = useUpdateRoomMutation();
   const [deleteRoomMutation] = useDeleteRoomMutation();
   const [addRoomMutation] = useAddRoomMutation();
+  const [undeleteRoomMutation] = useUndeleteMemberMutation();
   const navigate = useNavigate();
 
   function deleteRoom() {
@@ -48,5 +50,18 @@ export default function useRoomMutation(id: number) {
     });
   }
 
-  return { updateRoom, deleteRoom, addRoom } as const;
+  function undeleteRoom() {
+    undeleteRoomMutation(id)
+      .unwrap()
+      .then(() => {
+        message.success('복구되었습니다.');
+        navigate(-1);
+      }).catch((({ data }) => {
+        message.error(data.message);
+      }));
+  }
+
+  return {
+    updateRoom, deleteRoom, addRoom, undeleteRoom,
+  } as const;
 }

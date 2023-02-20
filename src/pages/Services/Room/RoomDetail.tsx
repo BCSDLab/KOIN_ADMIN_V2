@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 // import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
 import { useGetRoomQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
-import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
+import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import useRoomMutation from './useRoomMutation';
@@ -13,7 +13,7 @@ import * as S from './RoomDetail.style';
 export default function RoomDetail() {
   const { id } = useParams();
   const { data: roomData } = useGetRoomQuery(Number(id));
-  const { updateRoom, deleteRoom } = useRoomMutation(Number(id));
+  const { updateRoom, deleteRoom, undeleteRoom } = useRoomMutation(Number(id));
   const [form] = CustomForm.useForm();
 
   return (
@@ -36,9 +36,17 @@ export default function RoomDetail() {
               <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                 완료
               </CustomForm.Button>
-              <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteRoom}>
-                삭제
-              </CustomForm.Button>
+              {roomData.is_deleted
+                ? (
+                  <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteRoom}>
+                    복구
+                  </CustomForm.Button>
+                )
+                : (
+                  <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteRoom}>
+                    삭제
+                  </CustomForm.Button>
+                )}
             </S.ButtonWrap>
           </CustomForm>
         </S.FormWrap>

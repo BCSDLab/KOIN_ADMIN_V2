@@ -18,3 +18,7 @@ export const SubmitButtonWrap = styled.div`
   justify-content: flex-end;
   margin-top: 100px;
 `;
+
+export const SwitchWrapper = styled.div`
+  margin: 0 10px;
+`;

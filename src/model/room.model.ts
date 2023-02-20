@@ -32,6 +32,7 @@ export interface RoomResponse {
   phone: string | number;
   room_type: string;
   size: number;
+  is_deleted: boolean;
 }
 
 export interface RoomTableHead {
@@ -51,4 +52,9 @@ export interface FileList {
   name: string;
   status: string;
   url: string;
+}
+
+export interface RoomParams {
+  page: number,
+  is_deleted: boolean,
 }

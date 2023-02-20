@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 import {
+  RoomParams,
   RoomResponse, RoomsResponse, RoomTableHead,
 } from 'model/room.model';
 import { RootState } from 'store';
@@ -21,8 +22,8 @@ export const roomApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getRoomList: builder.query<{ roomList: RoomTableHead[], totalPage: number }, number>({
-      query: (page) => ({ url: `admin/lands?page=${page}` }),
+    getRoomList: builder.query<{ roomList: RoomTableHead[], totalPage: number }, RoomParams>({
+      query: ({ page, is_deleted }) => ({ url: `admin/lands?page=${page}&is_deleted=${is_deleted}` }),
       providesTags: (result) => (result
         ? [...result.roomList.map((room) => ({ type: 'room' as const, id: room.id })), { type: 'rooms', id: 'LIST' }]
         : [{ type: 'rooms', id: 'LIST' }]),
@@ -67,10 +68,20 @@ export const roomApi = createApi({
       }),
       invalidatesTags: [{ type: 'rooms', id: 'LIST' }],
     }),
+
+    undeleteRoom: builder.mutation<void, number>({
+      query: (id) => {
+        return {
+          url: `admin/lands/${id}/undelete`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'room', id }, { type: 'rooms', id: 'LIST' }],
+    }),
   }),
 });
 
 export const {
-  useGetRoomListQuery, useGetRoomQuery,
+  useGetRoomListQuery, useGetRoomQuery, useUndeleteRoomMutation,
   useUpdateRoomMutation, useDeleteRoomMutation, useAddRoomMutation,
 } = roomApi;

@@ -58,4 +58,5 @@ export const ButtonWrap = styled.div`
   margin-top: 70px;
   margin-left: 15px;
   display: flex;
+  justify-content: flex-end;
 `;

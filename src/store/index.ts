@@ -6,6 +6,7 @@ import { userApi } from './api/user';
 import { roomApi } from './api/room';
 import { memberApi } from './api/member';
 import { uploadApi } from './api/upload';
+import { storeApi } from './api/store';
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     [roomApi.reducerPath]: roomApi.reducer,
     [memberApi.reducerPath]: memberApi.reducer,
     [uploadApi.reducerPath]: uploadApi.reducer,
+    [storeApi.reducerPath]: storeApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
     .concat(
@@ -24,6 +26,7 @@ const store = configureStore({
       roomApi.middleware,
       memberApi.middleware,
       uploadApi.middleware,
+      storeApi.middleware,
     ),
 });
 

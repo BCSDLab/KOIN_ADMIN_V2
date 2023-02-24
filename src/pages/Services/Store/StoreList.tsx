@@ -1,6 +1,6 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
-import { useGetStoreListQuery } from 'store/api/Store';
+import { useGetStoreListQuery } from 'store/api/store';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
@@ -28,7 +28,7 @@ function StoreList() {
           onCancel={closeModal}
           onClick={openModal}
         >
-          <AddStoreModal onCancel={closeModal} />
+          {/* <AddStoreModal onCancel={closeModal} /> */}
         </CustomForm.Modal>
       </S.ModalWrap>
       <S.SwitchWrapper>
@@ -41,11 +41,11 @@ function StoreList() {
       </S.SwitchWrapper>
       {StoreRes && (
         <CustomTable
-          data={StoreRes.StoreList}
+          data={StoreRes.shops}
           pagination={{
             current: page,
             onChange: setPage,
-            total: StoreRes.totalPage,
+            total: StoreRes.total_page,
           }}
           columnSize={[10, 20, 15, 35, 10]}
         />

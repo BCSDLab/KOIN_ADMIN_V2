@@ -7,7 +7,7 @@ import Login from 'pages/Login';
 import Manager from 'pages/UserManage/Manager';
 import ManagerRequest from 'pages/UserManage/ManagerRequest';
 import MemberList from 'pages/UserManage/Member/MemberList';
-import Store from 'pages/Services/Store';
+import Store from 'pages/Services/Store/StoreList';
 import UserList from 'pages/UserManage/User/UserList';
 import { ReactNode } from 'react';
 import {

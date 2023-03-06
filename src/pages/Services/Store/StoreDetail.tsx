@@ -1,11 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-// import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
-import { useGetStoreQuery } from 'store/api/Store';
 import CustomForm from 'components/common/CustomForm';
 import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
+import { useGetStoreQuery } from 'store/api/store';
 import useStoreMutation from './useStoreMutation';
 import DetailForm from './components/DetailForm';
 import * as S from './StoreDetail.style';

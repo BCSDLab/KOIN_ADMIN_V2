@@ -3,43 +3,23 @@ import CustomForm from 'components/common/CustomForm';
 import React from 'react';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
+import STORE_OPTION from 'constant/store';
 import * as S from '../StoreDetail.style';
 
 export default function DetailForm({ form }: { form: FormInstance }) {
-  const { required, max, pattern } = CustomForm.useValidate();
+  const { required, max } = CustomForm.useValidate();
 
   return (
     <>
-      <CustomForm.Input label="uid" name="uid" disabled />
-      <CustomForm.GridRow gridColumns="1fr 1fr">
+      <CustomForm.Input label="id" name="id" disabled />
+      <CustomForm.GridRow gridColumns="1fr 0.7fr">
         <CustomForm.Input label="이름" name="name" rules={[required()]} />
-        <CustomForm.InputNumber label="카테고리" name="category" />
+        <CustomForm.Input label="전화번호" name="phone" rules={[max(225)]} />
       </CustomForm.GridRow>
-
-      <CustomForm.Input label="월세" name="monthly_fee" rules={[max(225)]} />
-      <CustomForm.Input label="전세" name="charter_fee" rules={[max(20)]} />
-      <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.Input label="관리비" name="management_fee" rules={[max(225)]} />
-        <CustomForm.Input label="보증금" name="deposit" rules={[max(225)]} />
+      <CustomForm.GridRow gridColumns="1fr 0.7fr">
+        <CustomForm.Input label="주소" name="address" rules={[max(65535)]} />
+        <CustomForm.InputNumber label="배달비" name="delivery_price" />
       </CustomForm.GridRow>
-
-      <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.InputNumber label="위도" name="latitude" />
-        <CustomForm.InputNumber label="경도" name="longitude" />
-      </CustomForm.GridRow>
-
-      <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.InputNumber
-          label="층수"
-          name="floor"
-          rules={[pattern(/^(0|[1-9]+[0-9]*)$/, '층수가 올바르지않습니다.')]}
-        />
-        <CustomForm.Input
-          label="전화번호"
-          name="phone"
-        />
-      </CustomForm.GridRow>
-      <CustomForm.Input label="주소" name="address" rules={[max(65535)]} />
       <CustomForm.TextArea
         label="설명"
         name="description"
@@ -50,7 +30,7 @@ export default function DetailForm({ form }: { form: FormInstance }) {
         옵션
       </Divider>
       <S.CheckboxWrap>
-        {Store_OPTION.map(
+        {STORE_OPTION.map(
           (optionData) => (
             <CustomForm.Checkbox
               key={optionData.name}

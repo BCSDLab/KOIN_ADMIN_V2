@@ -47,7 +47,7 @@ function StoreList() {
             onChange: setPage,
             total: StoreRes.total_page,
           }}
-          columnSize={[10, 20, 15, 35, 10]}
+          columnSize={[10, 20, 20, 20, 10]}
         />
       )}
     </S.Container>

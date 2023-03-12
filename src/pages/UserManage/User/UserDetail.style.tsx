@@ -21,17 +21,6 @@ export const FormWrapper = styled.div`
     font-weight: 600;
     color: #2c3e50;
   }
-
-  .ant-checkbox + span {
-    padding: 10px 39px 10px 10px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #2c3e50;
-  }
-
-  .ant-checkbox-wrapper + .ant-checkbox-wrapper {
-    margin-left: 0;
-  }
 `;
 
 export const ButtonWrap = styled.div`

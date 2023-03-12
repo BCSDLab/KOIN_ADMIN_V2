@@ -19,16 +19,6 @@ export const FormWrap = styled.div`
     color: #2c3e50;
   }
 
-  .ant-checkbox + span {
-    padding: 10px 39px 10px 10px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #2c3e50;
-  }
-
-  .ant-checkbox-wrapper + .ant-checkbox-wrapper {
-    margin-left: 0;
-  }
 `;
 
 export const FormItem = styled(Form.Item)`
@@ -44,15 +34,7 @@ export const CheckboxWrap = styled.div`
   flex-wrap: wrap;
 `;
 
-export const UploadWrap = styled.div`
-  margin-top: 40px;
-  margin-left: 30px;
-  .upload-list-inline .ant-upload-list-item {
-    float: left;
-    width: 700px;
-    margin: 15px 0 0 10px;
-  }
-`;
+export const UploadWrap = styled.div``;
 
 export const ButtonWrap = styled.div`
   margin-top: 70px;

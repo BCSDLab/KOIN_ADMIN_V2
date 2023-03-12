@@ -11,23 +11,23 @@ import * as S from './StoreDetail.style';
 
 export default function StoreDetail() {
   const { id } = useParams();
-  const { data: StoreData } = useGetStoreQuery(Number(id));
+  const { data: storeData } = useGetStoreQuery(Number(id));
   const { updateStore, deleteStore, undeleteStore } = useStoreMutation(Number(id));
   const [form] = CustomForm.useForm();
 
   return (
     <S.Container>
-      {StoreData && (
+      {storeData && (
       <>
         <DetailHeading>Store Detail</DetailHeading>
         <S.BreadCrumb>
-          {`Store Management / Store Detail / ${StoreData.name}`}
+          {`Store Management / Store Detail / ${storeData.name}`}
         </S.BreadCrumb>
         <S.FormWrap>
           <CustomForm
             onFinish={updateStore}
             form={form}
-            initialValues={StoreData}
+            initialValues={storeData}
           >
             <Divider orientation="left">기본 정보</Divider>
             <DetailForm form={form} />
@@ -35,7 +35,7 @@ export default function StoreDetail() {
               <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                 완료
               </CustomForm.Button>
-              {StoreData.is_deleted
+              {storeData.is_deleted
                 ? (
                   <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteStore}>
                     복구

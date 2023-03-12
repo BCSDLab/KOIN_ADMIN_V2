@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 import {
-  StoreParams, StoreResponse, StoresResponse,
+  StoreParams, StoreResponse, StoreTransFormResponse, StoresResponse,
 } from 'model/store.model';
 import { RootState } from 'store';
 
@@ -21,11 +21,18 @@ export const storeApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getStoreList: builder.query<StoresResponse, StoreParams>({
+    getStoreList: builder.query<StoreTransFormResponse, StoreParams>({
       query: ({ page, is_deleted }) => ({ url: `admin/shops?page=${page}&is_deleted=${is_deleted}` }),
       providesTags: (result) => (result
         ? [...result.shops.map((store) => ({ type: 'store' as const, id: store.id })), { type: 'stores', id: 'LIST' }]
         : [{ type: 'stores', id: 'LIST' }]),
+      transformResponse: (response: StoresResponse) => ({
+        ...response,
+        shops: response.shops.map((store) => ({
+          ...store,
+          category_names: store.category_names.join(', '),
+        })),
+      }),
     }),
 
     getStore: builder.query<StoreResponse, number>({

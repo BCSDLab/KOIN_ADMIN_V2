@@ -42,10 +42,26 @@ export interface StoreTableHead {
   phone: number;
 }
 
+export interface StoreTransFormHead {
+  category_names: string;
+  id: number;
+  is_deleted: boolean;
+  name: string;
+  phone: number;
+}
+
 export interface StoresResponse {
   current_count: number;
   current_page: number;
   shops: StoreTableHead[],
+  total_count: number;
+  total_page: number;
+}
+
+export interface StoreTransFormResponse {
+  current_count: number;
+  current_page: number;
+  shops: StoreTransFormHead[],
   total_count: number;
   total_page: number;
 }

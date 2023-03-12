@@ -8,16 +8,18 @@ import { memberApi } from './api/member';
 import { uploadApi } from './api/upload';
 import { storeApi } from './api/store';
 
+const reducer = {
+  auth: authReducer,
+  [authApi.reducerPath]: authApi.reducer,
+  [userApi.reducerPath]: userApi.reducer,
+  [roomApi.reducerPath]: roomApi.reducer,
+  [memberApi.reducerPath]: memberApi.reducer,
+  [uploadApi.reducerPath]: uploadApi.reducer,
+  [storeApi.reducerPath]: storeApi.reducer,
+};
+
 const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    [authApi.reducerPath]: authApi.reducer,
-    [userApi.reducerPath]: userApi.reducer,
-    [roomApi.reducerPath]: roomApi.reducer,
-    [memberApi.reducerPath]: memberApi.reducer,
-    [uploadApi.reducerPath]: uploadApi.reducer,
-    [storeApi.reducerPath]: storeApi.reducer,
-  },
+  reducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware()
     .concat(
       logger,

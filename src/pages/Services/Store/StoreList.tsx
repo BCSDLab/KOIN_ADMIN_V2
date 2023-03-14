@@ -9,10 +9,10 @@ import * as S from './StoreList.style';
 function StoreList() {
   const [page, setPage] = useState(1);
   const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
-  const { value: isDeleted, changeValue: handleDeleted } = useBooleanState(false);
+  const { value: isDeletedStore, changeValue: containIsDeletedStore } = useBooleanState(false);
   const { data: StoreRes } = useGetStoreListQuery({
     page,
-    is_deleted: isDeleted,
+    is_deleted: isDeletedStore,
   });
 
   return (
@@ -33,8 +33,8 @@ function StoreList() {
       </S.ModalWrap>
       <S.SwitchWrapper>
         <Switch
-          onClick={handleDeleted}
-          checked={isDeleted}
+          onClick={containIsDeletedStore}
+          checked={isDeletedStore}
           checkedChildren="trash"
           unCheckedChildren="trash"
         />

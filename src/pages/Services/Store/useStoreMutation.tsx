@@ -62,5 +62,5 @@ export default function useStoreMutation(id: number) {
 
   return {
     updateStore, deleteStore, addStore, undeleteStore,
-  } as const;
+  };
 }

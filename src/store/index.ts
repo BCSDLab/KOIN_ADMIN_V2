@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { Middleware, configureStore } from '@reduxjs/toolkit';
 import authReducer from 'store/slice/auth';
 import logger from 'redux-logger';
 import { authApi } from './api/auth';
@@ -18,18 +18,20 @@ const reducer = {
   [storeApi.reducerPath]: storeApi.reducer,
 };
 
+export const middleware = (getDefaultMiddleware: () => Middleware[]) => getDefaultMiddleware()
+  .concat([
+    logger,
+    authApi.middleware,
+    userApi.middleware,
+    roomApi.middleware,
+    memberApi.middleware,
+    uploadApi.middleware,
+    storeApi.middleware,
+  ]);
+
 const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-    .concat(
-      logger,
-      authApi.middleware,
-      userApi.middleware,
-      roomApi.middleware,
-      memberApi.middleware,
-      uploadApi.middleware,
-      storeApi.middleware,
-    ),
+  middleware,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

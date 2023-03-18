@@ -16,4 +16,6 @@ export const TITLE_MAPPER: Record<string, string> = {
   size: '평수',
   major: '학과',
   student_number: '학번',
+  category_names: '카테고리',
+  phone: '번호',
 };

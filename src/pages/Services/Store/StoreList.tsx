@@ -4,7 +4,7 @@ import { useGetStoreListQuery } from 'store/api/store';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
-import * as S from './StoreList.style';
+import * as S from 'styles/List.style';
 
 function StoreList() {
   const [page, setPage] = useState(1);
@@ -17,7 +17,7 @@ function StoreList() {
 
   return (
     <S.Container>
-      <S.Heading>Store</S.Heading>
+      <S.Heading>주변 상점 목록</S.Heading>
       <S.ModalWrap>
         <CustomForm.Modal
           buttonText="생성"

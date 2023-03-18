@@ -1,7 +1,7 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { useGetUserListQuery } from 'store/api/user';
-import * as S from './UserList.style';
+import * as S from 'styles/List.style';
 
 function UserList() {
   const [page, setPage] = useState(1);
@@ -9,7 +9,7 @@ function UserList() {
 
   return (
     <S.Container>
-      <S.Heading>User</S.Heading>
+      <S.Heading>코인 회원 목록</S.Heading>
       {usersRes && (
         <CustomTable
           data={usersRes.userList}

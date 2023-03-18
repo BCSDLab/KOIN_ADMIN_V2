@@ -4,7 +4,7 @@ import { useGetRoomListQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
-import * as S from './RoomList.style';
+import * as S from 'styles/List.style';
 import AddRoomModal from './components/AddRoomModal';
 
 function RoomList() {
@@ -18,7 +18,7 @@ function RoomList() {
 
   return (
     <S.Container>
-      <S.Heading>Room</S.Heading>
+      <S.Heading>복덕방 목록</S.Heading>
       <S.ModalWrap>
         <CustomForm.Modal
           buttonText="생성"

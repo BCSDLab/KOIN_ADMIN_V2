@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { Middleware, configureStore } from '@reduxjs/toolkit';
 import authReducer from 'store/slice/auth';
 import logger from 'redux-logger';
 import { authApi } from './api/auth';
@@ -8,20 +8,23 @@ import { memberApi } from './api/member';
 import { uploadApi } from './api/upload';
 import { storeApi } from './api/store';
 
-const apiMiddleware = [authApi, userApi, roomApi, memberApi, uploadApi, storeApi]
-  .map((api) => api.middleware);
+const apiList = [authApi, userApi, roomApi, memberApi, uploadApi, storeApi];
+
+const apiMiddleware = apiList.map((api) => api.middleware);
+
+const apiReducer = apiList.reduce((acc, api) => {
+  acc[api.reducerPath] = api.reducer;
+  return acc;
+}, {} as { [key: string]: any });
 
 const reducer = {
   auth: authReducer,
-  [authApi.reducerPath]: authApi.reducer,
-  [userApi.reducerPath]: userApi.reducer,
-  [roomApi.reducerPath]: roomApi.reducer,
-  [memberApi.reducerPath]: memberApi.reducer,
-  [uploadApi.reducerPath]: uploadApi.reducer,
-  [storeApi.reducerPath]: storeApi.reducer,
-} as const;
+  ...apiReducer,
+};
 
-const middleware = [...getDefaultMiddleware(), ...apiMiddleware, logger];
+const middleware = (getDefaultMiddleware: () => Middleware[]) => [
+  ...getDefaultMiddleware(), ...apiMiddleware, logger,
+];
 
 const store = configureStore({
   reducer,

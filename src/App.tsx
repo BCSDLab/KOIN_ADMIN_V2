@@ -9,9 +9,8 @@ import ManagerRequest from 'pages/UserManage/ManagerRequest';
 import MemberList from 'pages/UserManage/Member/MemberList';
 import Store from 'pages/Services/Store/StoreList';
 import UserList from 'pages/UserManage/User/UserList';
-import { ReactNode } from 'react';
 import {
-  Navigate, Route, Routes, useLocation,
+  Navigate, Outlet, Route, Routes, useLocation,
 } from 'react-router-dom';
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
@@ -20,7 +19,7 @@ import MemberDetail from 'pages/UserManage/Member/MemberDetail';
 import { useToken } from 'store/slice/auth';
 import StoreDetail from 'pages/Services/Store/StoreDetail';
 
-function RequireAuth({ children }: { children: ReactNode }) {
+function RequireAuth() {
   const location = useLocation();
   const token = useToken();
 
@@ -28,15 +27,18 @@ function RequireAuth({ children }: { children: ReactNode }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{ children }</>;
+  return (
+    <DefaultLayout>
+      <Outlet />
+    </DefaultLayout>
+  );
 }
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<RequireAuth><DefaultLayout /></RequireAuth>}>
+      <Route path="/" element={<RequireAuth />}>
         <Route index element={<Dashboard />} />
         <Route path="/store" element={<Store />} />
         <Route path="/store/:id" element={<StoreDetail />} />

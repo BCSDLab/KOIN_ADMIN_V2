@@ -1,7 +1,7 @@
 import DefaultLayout from 'layout/defaultLayout';
 import Bus from 'pages/Services/Bus';
 import Cafeteria from 'pages/Services/Cafeteria';
-import Category from 'pages/Services/Category/CategoryList';
+import CategoryList from 'pages/Services/Category/CategoryList';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import Manager from 'pages/UserManage/Manager';
@@ -18,6 +18,7 @@ import RoomDetail from 'pages/Services/Room/RoomDetail';
 import MemberDetail from 'pages/UserManage/Member/MemberDetail';
 import { useToken } from 'store/slice/auth';
 import StoreDetail from 'pages/Services/Store/StoreDetail';
+import CategoryDetail from 'pages/Services/Category/CategoryDetail';
 
 function RequireAuth() {
   const location = useLocation();
@@ -42,7 +43,8 @@ function App() {
         <Route index element={<Dashboard />} />
         <Route path="/store" element={<Store />} />
         <Route path="/store/:id" element={<StoreDetail />} />
-        <Route path="/category" element={<Category />} />
+        <Route path="/category" element={<CategoryList />} />
+        <Route path="/category/:id" element={<CategoryDetail />} />
         <Route path="/cafeteria" element={<Cafeteria />} />
         <Route path="/bus" element={<Bus />} />
         <Route path="/room" element={<RoomList />} />

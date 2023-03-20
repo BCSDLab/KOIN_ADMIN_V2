@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
-import { CategoriesResponse } from 'model/category.model';
+import { CategoriesResponse, Category } from 'model/category.model';
 import { RootState } from 'store';
 
 export const categoryApi = createApi({
@@ -25,7 +25,21 @@ export const categoryApi = createApi({
         ? [...result.categories.map((category) => ({ type: 'category' as const, id: category.id })), { type: 'categories', id: 'LIST' }]
         : [{ type: 'categories', id: 'LIST' }]),
     }),
+
+    getCategory: builder.query<Category, number>({
+      query: (id) => ({ url: `admin/shops/categories/${id}` }),
+      providesTags: (result, error, id) => [{ type: 'category', id }],
+    }),
+
+    addCategory: builder.mutation<Category, Partial<Category>>({
+      query: (body) => ({
+        url: 'admin/shops/categories',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'categories', id: 'LIST' }],
+    }),
   }),
 });
 
-export const { useGetCategoryListQuery } = categoryApi;
+export const { useGetCategoryListQuery, useGetCategoryQuery, useAddCategoryMutation } = categoryApi;

@@ -4,7 +4,7 @@ import { useGetStoreListQuery } from 'store/api/store';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
-import * as S from 'styles/List.style';
+import * as S from './StoreList.style';
 
 function StoreList() {
   const [page, setPage] = useState(1);

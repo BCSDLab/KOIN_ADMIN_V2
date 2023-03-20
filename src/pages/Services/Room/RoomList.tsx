@@ -4,7 +4,7 @@ import { useGetRoomListQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
-import * as S from 'styles/List.style';
+import * as S from './RoomList.style';
 import AddRoomModal from './components/AddRoomModal';
 
 function RoomList() {

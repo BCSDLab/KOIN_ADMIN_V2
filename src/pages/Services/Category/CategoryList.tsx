@@ -1,7 +1,7 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { useGetCategoryListQuery } from 'store/api/category';
-import * as S from 'styles/List.style';
+import * as S from './CategoryList.style';
 
 function Category() {
   const [page, setPage] = useState(1);

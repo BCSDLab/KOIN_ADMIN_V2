@@ -2,6 +2,7 @@ import CustomForm from 'components/common/CustomForm';
 import { useParams } from 'react-router-dom';
 import { useGetCategoryQuery } from 'store/api/category';
 import * as S from './CategoryDetail.style';
+import DetailForm from './components/DetailForm';
 
 export default function CategoryDetail() {
   const { id } = useParams();
@@ -20,9 +21,7 @@ export default function CategoryDetail() {
             form={form}
             initialValues={categoryData}
           >
-            <CustomForm.Input name="id" label="ID" disabled />
-            <CustomForm.Input name="name" label="카테고리명" />
-            <CustomForm.SingleUpload name="image_url" domain="shops" form={form} />
+            <DetailForm form={form} />
           </CustomForm>
         </>
       )}

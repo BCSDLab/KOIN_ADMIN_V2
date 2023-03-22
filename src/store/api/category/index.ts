@@ -39,7 +39,27 @@ export const categoryApi = createApi({
       }),
       invalidatesTags: [{ type: 'categories', id: 'LIST' }],
     }),
+
+    updateCategory: builder.mutation<Category, Partial<Category>>({
+      query: ({ id, ...body }) => ({
+        url: `admin/shops/categories/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'categories', id: 'LIST' }, { type: 'category', id: Number(id) }],
+    }),
+
+    deleteCategory: builder.mutation<Category, number>({
+      query: (id) => ({
+        url: `admin/shops/categories/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'categories', id: 'LIST' }, { type: 'category', id }],
+    }),
   }),
 });
 
-export const { useGetCategoryListQuery, useGetCategoryQuery, useAddCategoryMutation } = categoryApi;
+export const {
+  useGetCategoryListQuery, useGetCategoryQuery, useAddCategoryMutation,
+  useUpdateCategoryMutation, useDeleteCategoryMutation,
+} = categoryApi;

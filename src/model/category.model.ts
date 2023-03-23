@@ -1,7 +1,7 @@
 import { ListPagination } from './common.model';
 
 export interface Category {
-  id: 0;
+  id: number;
   image_url: string;
   name: string;
 }

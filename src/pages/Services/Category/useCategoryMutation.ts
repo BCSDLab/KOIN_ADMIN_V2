@@ -37,6 +37,7 @@ const useCategoryMutation = () => {
       .catch(({ data }) => {
         onError?.(data.message);
         message.error(data.message);
+        navigate(-1);
       });
   };
 

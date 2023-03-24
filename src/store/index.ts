@@ -7,8 +7,9 @@ import { roomApi } from './api/room';
 import { memberApi } from './api/member';
 import { uploadApi } from './api/upload';
 import { storeApi } from './api/store';
+import { categoryApi } from './api/category';
 
-const apiList = [authApi, userApi, roomApi, memberApi, uploadApi, storeApi];
+const apiList = [authApi, userApi, roomApi, memberApi, uploadApi, storeApi, categoryApi];
 
 const apiMiddleware = apiList.map((api) => api.middleware);
 

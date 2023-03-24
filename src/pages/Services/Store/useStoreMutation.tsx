@@ -37,16 +37,14 @@ export default function useStoreMutation(id: number) {
   }
 
   function addStore(formData: Partial<StoreResponse>) {
-    if (FormData) {
-      addStoreMutation(formData)
-        .unwrap()
-        .then(() => {
-          message.success('추가되었습니다.');
-        })
-        .catch(({ data }) => {
-          message.error(data.error.message);
-        });
-    }
+    addStoreMutation(formData)
+      .unwrap()
+      .then(() => {
+        message.success('추가되었습니다.');
+      })
+      .catch(({ data }) => {
+        message.error(data.error.message);
+      });
   }
 
   function undeleteStore() {

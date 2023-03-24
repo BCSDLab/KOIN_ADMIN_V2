@@ -9,7 +9,7 @@ function UserList() {
 
   return (
     <S.Container>
-      <S.Heading>User</S.Heading>
+      <S.Heading>코인 회원 목록</S.Heading>
       {usersRes && (
         <CustomTable
           data={usersRes.userList}

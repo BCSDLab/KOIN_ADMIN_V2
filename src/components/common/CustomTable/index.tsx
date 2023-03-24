@@ -22,6 +22,14 @@ const TableContainer = styled.div`
   }
 `;
 
+const TableItemImage = styled.img`
+  height: 45px;
+  width: auto;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+`;
+
 interface DefaultTableData {
   id: string | number;
 }
@@ -49,6 +57,22 @@ function CustomTable<TableData extends DefaultTableData>(
       dataIndex: key,
       key,
       width: columnSize && columnSize[idx] ? `${columnSize[idx]}%` : 'auto',
+      render: (value: string | number | boolean) => {
+        if (typeof value === 'boolean') {
+          return value ? 'True' : 'False';
+        }
+
+        if (typeof value === 'number') {
+          return value || '-';
+        }
+
+        if (typeof value === 'string') {
+          if (value.startsWith('https://')) {
+            return <TableItemImage src={value} alt="icon" />;
+          }
+        }
+        return value;
+      },
     }));
   };
 

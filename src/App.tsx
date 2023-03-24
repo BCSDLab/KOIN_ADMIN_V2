@@ -1,7 +1,7 @@
 import DefaultLayout from 'layout/defaultLayout';
 import Bus from 'pages/Services/Bus';
 import Cafeteria from 'pages/Services/Cafeteria';
-import Category from 'pages/Services/Category';
+import CategoryList from 'pages/Services/Category/CategoryList';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import Manager from 'pages/UserManage/Manager';
@@ -9,9 +9,8 @@ import ManagerRequest from 'pages/UserManage/ManagerRequest';
 import MemberList from 'pages/UserManage/Member/MemberList';
 import Store from 'pages/Services/Store/StoreList';
 import UserList from 'pages/UserManage/User/UserList';
-import { ReactNode } from 'react';
 import {
-  Navigate, Route, Routes, useLocation,
+  Navigate, Outlet, Route, Routes, useLocation,
 } from 'react-router-dom';
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
@@ -19,8 +18,9 @@ import RoomDetail from 'pages/Services/Room/RoomDetail';
 import MemberDetail from 'pages/UserManage/Member/MemberDetail';
 import { useToken } from 'store/slice/auth';
 import StoreDetail from 'pages/Services/Store/StoreDetail';
+import CategoryDetail from 'pages/Services/Category/CategoryDetail';
 
-function RequireAuth({ children }: { children: ReactNode }) {
+function RequireAuth() {
   const location = useLocation();
   const token = useToken();
 
@@ -28,19 +28,23 @@ function RequireAuth({ children }: { children: ReactNode }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{ children }</>;
+  return (
+    <DefaultLayout>
+      <Outlet />
+    </DefaultLayout>
+  );
 }
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<RequireAuth><DefaultLayout /></RequireAuth>}>
+      <Route path="/" element={<RequireAuth />}>
         <Route index element={<Dashboard />} />
         <Route path="/store" element={<Store />} />
         <Route path="/store/:id" element={<StoreDetail />} />
-        <Route path="/category" element={<Category />} />
+        <Route path="/category" element={<CategoryList />} />
+        <Route path="/category/:id" element={<CategoryDetail />} />
         <Route path="/cafeteria" element={<Cafeteria />} />
         <Route path="/bus" element={<Bus />} />
         <Route path="/room" element={<RoomList />} />

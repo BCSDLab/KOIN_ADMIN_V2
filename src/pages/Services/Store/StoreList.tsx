@@ -17,7 +17,7 @@ function StoreList() {
 
   return (
     <S.Container>
-      <S.Heading>Store</S.Heading>
+      <S.Heading>주변 상점 목록</S.Heading>
       <S.ModalWrap>
         <CustomForm.Modal
           buttonText="생성"

@@ -18,4 +18,5 @@ export const TITLE_MAPPER: Record<string, string> = {
   student_number: '학번',
   category_names: '카테고리',
   phone: '번호',
+  image_url: '이미지',
 };

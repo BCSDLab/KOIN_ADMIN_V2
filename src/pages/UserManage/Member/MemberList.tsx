@@ -27,9 +27,7 @@ function MemberList() {
 
   return (
     <div>
-      <h1>
-        Member
-      </h1>
+      <S.Heading>BCSD Lab 회원 목록</S.Heading>
       <S.ModalWrap>
         <CustomForm.Modal
           buttonText="생성"

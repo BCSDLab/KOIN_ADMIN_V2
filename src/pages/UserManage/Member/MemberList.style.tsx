@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export { Heading } from 'styles/List.style';
+
 export const Tab = styled.button<{ selected: boolean }>`
   appearance: none;
   background: none;

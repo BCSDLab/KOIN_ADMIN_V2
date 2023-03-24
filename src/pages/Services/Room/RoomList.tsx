@@ -18,7 +18,7 @@ function RoomList() {
 
   return (
     <S.Container>
-      <S.Heading>Room</S.Heading>
+      <S.Heading>복덕방 목록</S.Heading>
       <S.ModalWrap>
         <CustomForm.Modal
           buttonText="생성"

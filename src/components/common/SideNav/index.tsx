@@ -84,7 +84,6 @@ function SideNav() {
         onClick={onClick}
         selectedKeys={[pathname]}
         defaultOpenKeys={['service', 'user']}
-        style={{ height: '100%' }}
         mode="inline"
         items={items}
       />

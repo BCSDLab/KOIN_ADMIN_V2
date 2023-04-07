@@ -7,6 +7,7 @@ import {
 import React, { ReactNode } from 'react';
 import { Rule } from 'antd/lib/form';
 import useValidate from 'utils/hooks/useValidate';
+import { NamePath } from 'antd/lib/form/interface';
 import * as S from './CustomForm.style';
 import CustomMultipleUpload from './CustomMultipleUpload';
 import CustomSingleUpload from './CustomSingleUpload';
@@ -22,14 +23,14 @@ function GridRow({ children, gridColumns }: GridProps) {
 
 interface FormItemProps {
   label: string;
-  name: string;
+  name: NamePath;
   disabled?: boolean;
   rules?: Rule[];
 }
 
 function CustomInput({
   label, name, rules, disabled, ...args
-}: FormItemProps & InputProps) {
+}: FormItemProps & Omit<InputProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <S.StyledInput disabled={disabled} {...args} />

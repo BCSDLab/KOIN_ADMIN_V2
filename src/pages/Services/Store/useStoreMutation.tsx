@@ -25,7 +25,11 @@ export default function useStoreMutation(id: number) {
   }
 
   function updateStore(formData: Partial<StoreResponse>) {
-    updateStoreMutation({ id, ...formData })
+    updateStoreMutation({
+      id,
+      category_ids: formData.shop_categories?.map((category) => category.id) || [],
+      ...formData,
+    })
       .unwrap()
       .then(() => {
         message.success('정보 수정이 완료되었습니다.');

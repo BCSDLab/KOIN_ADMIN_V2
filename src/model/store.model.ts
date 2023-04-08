@@ -70,3 +70,7 @@ export interface StoreParams {
   page: number;
   is_deleted: boolean;
 }
+
+export interface UpdateStore extends StoreResponse {
+  category_ids: number[];
+}

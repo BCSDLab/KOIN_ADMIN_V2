@@ -40,7 +40,7 @@ function CustomInput({
 
 function CustomInputNumber({
   label, name, rules, disabled, ...args
-}: FormItemProps & InputNumberProps) {
+}: FormItemProps & Omit<InputNumberProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <S.StyledInputNumber controls={false} disabled={disabled} {...args} />

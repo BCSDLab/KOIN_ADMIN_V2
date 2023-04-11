@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 import {
-  StoreParams, StoreResponse, StoreTransFormResponse, StoresResponse, UpdateStore,
+  StoreDetailForm,
+  StoreParams, StoreResponse, StoreTransformResponse, StoresResponse, UpdateStore,
 } from 'model/store.model';
 import { RootState } from 'store';
 
@@ -21,7 +22,7 @@ export const storeApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getStoreList: builder.query<StoreTransFormResponse, StoreParams>({
+    getStoreList: builder.query<StoreTransformResponse, StoreParams>({
       query: ({ page, is_deleted }) => ({ url: `admin/shops?page=${page}&is_deleted=${is_deleted}` }),
       providesTags: (result) => (result
         ? [...result.shops.map((store) => ({ type: 'store' as const, id: store.id })), { type: 'stores', id: 'LIST' }]
@@ -35,9 +36,13 @@ export const storeApi = createApi({
       }),
     }),
 
-    getStore: builder.query<StoreResponse, number>({
+    getStore: builder.query<StoreDetailForm, number>({
       query: (id) => ({ url: `admin/shops/${id}` }),
       providesTags: (result, error, id) => [{ type: 'store', id }],
+      transformResponse: (response: StoreResponse) => ({
+        ...response,
+        category_ids: response.shop_categories.map((category) => category.id),
+      }),
     }),
 
     updateStore: builder.mutation<void, Pick<StoreResponse, 'id'> & Partial<UpdateStore>>({

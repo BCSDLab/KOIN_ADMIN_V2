@@ -8,7 +8,7 @@ import * as S from '../StoreDetail.style';
 
 export default function StoreCategory({ form } : { form: FormInstance }) {
   const [page] = useState(1);
-  const { data: categoryList } = useGetCategoryListQuery(page);
+  const { data: categoryList } = useGetCategoryListQuery({ page, size: 100 });
   const selectedCategory: ShopCategoriesModel[] = form.getFieldValue('shop_categories');
 
   return (

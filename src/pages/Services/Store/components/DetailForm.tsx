@@ -22,6 +22,7 @@ export default function DetailForm({ form }: { form: FormInstance }) {
         <CustomForm.InputNumber label="배달비" name="delivery_price" />
       </CustomForm.GridRow>
       <CustomForm.TextArea label="설명" name="description" maxLength={200} />
+      <CustomForm.Input label="카테고리 목록" name="category_ids" disabled />
 
       <StoreCategory form={form} />
 

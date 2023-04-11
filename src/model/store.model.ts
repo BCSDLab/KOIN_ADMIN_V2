@@ -34,6 +34,10 @@ export interface StoreResponse {
   shop_categories: ShopCategoriesModel[];
 }
 
+export interface StoreDetailForm extends StoreResponse {
+  category_ids: number[];
+}
+
 export interface StoreTableHead {
   category_names: string[];
   id: number;
@@ -42,7 +46,7 @@ export interface StoreTableHead {
   phone: number;
 }
 
-export interface StoreTransFormHead {
+export interface StoreTransformHead {
   category_names: string;
   id: number;
   is_deleted: boolean;
@@ -58,10 +62,10 @@ export interface StoresResponse {
   total_page: number;
 }
 
-export interface StoreTransFormResponse {
+export interface StoreTransformResponse {
   current_count: number;
   current_page: number;
-  shops: StoreTransFormHead[],
+  shops: StoreTransformHead[],
   total_count: number;
   total_page: number;
 }

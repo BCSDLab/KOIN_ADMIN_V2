@@ -31,6 +31,7 @@ export const CategoryItem = styled.div<{ selected: boolean }>`
   padding: 10px 0;
   margin: 0 5px;
   border-radius: 7px;
+  transition: .1s;
 `;
 
 export const OpenTimeTable = styled.div`

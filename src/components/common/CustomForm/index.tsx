@@ -1,6 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import {
-  Button, Checkbox, Form,
+  Button, Checkbox, CheckboxProps, Form,
   Input, InputNumberProps, InputProps,
   Modal, ModalProps, Select, Switch, SwitchProps,
 } from 'antd';
@@ -62,7 +62,7 @@ function CusctomTextArea({
   );
 }
 
-interface CheckboxProps {
+interface CustomCheckboxProps {
   name: NamePath;
   children?: ReactNode;
   disabled?: boolean;
@@ -72,10 +72,11 @@ function CustomCheckbox({
   name,
   children,
   disabled,
-}: CheckboxProps) {
+  onChange,
+}: CustomCheckboxProps & Omit<CheckboxProps, 'name'>) {
   return (
     <S.FormItemCheckbox name={name} valuePropName="checked">
-      <Checkbox disabled={disabled}>
+      <Checkbox disabled={disabled} onChange={onChange}>
         {children}
       </Checkbox>
     </S.FormItemCheckbox>

@@ -54,15 +54,23 @@ export const FormItem = styled(Form.Item)`
 `;
 
 export const FormItemCheckbox = styled(Form.Item)`
- .ant-checkbox + span {
+  margin-bottom: 0;
+  
+  .ant-checkbox {
+    align-self: center;
+    transform: none;
+  }
+
+  .ant-checkbox + span {
     padding: 10px 39px 10px 10px;
     font-size: 15px;
     font-weight: 500;
     color: #2c3e50;
   }
 
-  .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+  .ant-checkbox-wrapper {
     margin-left: 0;
+    align-items: center;
   }
 
 `;

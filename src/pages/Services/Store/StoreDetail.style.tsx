@@ -43,6 +43,8 @@ export const OpenTimeTable = styled.div`
 export const OpenTimeRow = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+  margin: 5px 0;
 `;
 
 export const OpenTimeColHead = styled.div`
@@ -51,14 +53,16 @@ export const OpenTimeColHead = styled.div`
   justify-content: center;
   font-weight: 600;
   font-size: 20px;
-  padding: 10px;
+  padding: 5px 10px;
   border-right: 2px solid #e8e8e8;
 `;
 
-export const TableData = styled.div`
+export const TableData = styled.div<{ colSize: number }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-column: span ${({ colSize: colLength }) => colLength};
+  border: 2px solid ${({ colSize: colLength }) => (colLength === 1 ? 'none' : '#add1ff')};
 `;
 
 export const OpenTableHead = styled.div`
@@ -69,6 +73,14 @@ export const OpenTableHead = styled.div`
   font-size: 22px;
   padding: 10px 0;
   border-bottom: 2px solid #e8e8e8;
+
+  &:nth-child(7) {
+    color: #504dff;
+  }
+
+  &:nth-child(8) {
+    color: #ff4d4d;
+  }
 `;
 
 export const OpenTimeItem = styled.div`

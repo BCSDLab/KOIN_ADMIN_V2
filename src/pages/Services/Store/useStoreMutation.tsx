@@ -33,7 +33,6 @@ export default function useStoreMutation(id: number) {
 
     updateStoreMutation({
       id,
-      category_ids: formData.shop_categories?.map((category) => category.id) || [],
       ...copyFormData,
     })
       .unwrap()

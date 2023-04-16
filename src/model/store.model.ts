@@ -5,7 +5,7 @@ export interface MenuCatefotiesModel {
   name: string;
 }
 
-export interface OpenModel {
+export interface StoreOpen {
   close_time: string;
   closed: boolean;
   day_of_week: DayOfWeek;
@@ -27,7 +27,7 @@ export interface StoreResponse {
   is_deleted: false;
   menu_categories: MenuCatefotiesModel[];
   name: string;
-  open: OpenModel[];
+  open: StoreOpen[];
   pay_bank: boolean;
   pay_card: boolean;
   phone: string;

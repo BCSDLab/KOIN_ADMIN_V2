@@ -32,3 +32,54 @@ export const CategoryItem = styled.div<{ selected: boolean }>`
   margin: 0 5px;
   border-radius: 7px;
 `;
+
+export const OpenTimeTable = styled.div`
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px solid #7d7d7d;
+  border-radius: 8px;
+`;
+
+export const OpenTimeRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+`;
+
+export const OpenTimeColHead = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 10px;
+  border-right: 2px solid #e8e8e8;
+`;
+
+export const TableData = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const OpenTableHead = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 22px;
+  padding: 10px 0;
+  border-bottom: 2px solid #e8e8e8;
+`;
+
+export const OpenTimeItem = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const OpenDay = styled.div`
+  font-weight: 600;
+  font-size: 22px;
+  padding-right: 15px;
+  margin: 10px 0;
+  border-right: 2px solid #7d7d7d;
+`;

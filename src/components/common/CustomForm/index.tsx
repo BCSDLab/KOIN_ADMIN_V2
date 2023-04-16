@@ -63,8 +63,8 @@ function CusctomTextArea({
 }
 
 interface CheckboxProps {
-  name: string;
-  children: ReactNode;
+  name: NamePath;
+  children?: ReactNode;
   disabled?: boolean;
 }
 
@@ -86,7 +86,7 @@ interface ButtonProps {
   children: string;
   danger?: boolean;
   icon?: ReactNode;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: () => void;
   htmlType?: 'button' | 'submit' | 'reset';
 }
 

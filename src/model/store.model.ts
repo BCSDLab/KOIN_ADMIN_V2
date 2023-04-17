@@ -1,6 +1,6 @@
 export type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 
-export interface MenuCatefotiesModel {
+export interface MenuCategoriesModel {
   id: number;
   name: string;
 }
@@ -25,7 +25,7 @@ export interface StoreResponse {
   id: number;
   image_urls: string[];
   is_deleted: false;
-  menu_categories: MenuCatefotiesModel[];
+  menu_categories: MenuCategoriesModel[];
   name: string;
   open: StoreOpen[];
   pay_bank: boolean;
@@ -73,8 +73,4 @@ export interface StoreTransformResponse {
 export interface StoreParams {
   page: number;
   is_deleted: boolean;
-}
-
-export interface UpdateStore extends StoreResponse {
-  category_ids: number[];
 }

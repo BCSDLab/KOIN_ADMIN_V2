@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 import {
   StoreDetailForm,
-  StoreParams, StoreResponse, StoreTransformResponse, StoresResponse, UpdateStore,
+  StoreParams, StoreResponse, StoreTransformResponse, StoresResponse,
 } from 'model/store.model';
 import { RootState } from 'store';
 
@@ -45,7 +45,7 @@ export const storeApi = createApi({
       }),
     }),
 
-    updateStore: builder.mutation<void, Pick<StoreResponse, 'id'> & Partial<UpdateStore>>({
+    updateStore: builder.mutation<void, Pick<StoreResponse, 'id'> & Partial<StoreDetailForm>>({
       query(data) {
         const { id, ...body } = data;
         return {

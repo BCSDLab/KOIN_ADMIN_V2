@@ -25,7 +25,7 @@ const TABLE_TYPES = {
 
 function OpenTimeForm({ form } : { form: FormInstance }) {
   const openTimeInfo: StoreOpen[] = form.getFieldValue('open');
-  const [selectType, setSelectType] = useState<'직접 지정' | '평일/휴일' | '모든 요일'>('직접 지정');
+  const [selectType, setSelectType] = useState<keyof typeof TABLE_TYPES>('직접 지정');
 
   const handleTimeFormChange = (index: number, key: keyof StoreOpen, value: string | boolean) => {
     const selected = TABLE_TYPES[selectType];
@@ -54,9 +54,9 @@ function OpenTimeForm({ form } : { form: FormInstance }) {
 
         <S.OpenTimeRow>
           <S.OpenTimeColHead>휴무 여부</S.OpenTimeColHead>
-          {TABLE_TYPES[selectType].dateList.map((date, index) => (
-            <S.TableData key={date} colSize={TABLE_TYPES[selectType].colSize[index]}>
-              <CustomForm.Checkbox name={['open', date, 'closed']} onChange={(e) => handleTimeFormChange(index, 'closed', e.target.checked)} />
+          {openTimeInfo.map((info, index) => (
+            <S.TableData key={info.day_of_week} colSize={1}>
+              <CustomForm.Checkbox name={['open', index, 'closed']} onChange={(e) => form.setFieldValue(['open', index, 'closed'], e.target.checked)} />
             </S.TableData>
           ))}
         </S.OpenTimeRow>

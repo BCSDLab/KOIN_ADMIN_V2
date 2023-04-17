@@ -21,7 +21,7 @@ function GridRow({ children, gridColumns }: GridProps) {
   return <S.GridWrap gridColumns={gridColumns}>{children}</S.GridWrap>;
 }
 
-interface FormItemProps {
+interface CustomFormItemProps {
   label: string;
   name: NamePath;
   disabled?: boolean;
@@ -30,7 +30,7 @@ interface FormItemProps {
 
 function CustomInput({
   label, name, rules, disabled, ...args
-}: FormItemProps & Omit<InputProps, 'name'>) {
+}: CustomFormItemProps & Omit<InputProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <S.StyledInput disabled={disabled} {...args} />
@@ -40,7 +40,7 @@ function CustomInput({
 
 function CustomInputNumber({
   label, name, rules, disabled, ...args
-}: FormItemProps & Omit<InputNumberProps, 'name'>) {
+}: CustomFormItemProps & Omit<InputNumberProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <S.StyledInputNumber controls={false} disabled={disabled} {...args} />
@@ -48,13 +48,13 @@ function CustomInputNumber({
   );
 }
 
-interface TextAreaProps {
+interface CustomTextAreaProps {
   maxLength?: number;
 }
 
 function CusctomTextArea({
   label, name, maxLength, disabled, rules,
-}: FormItemProps & TextAreaProps) {
+}: CustomFormItemProps & CustomTextAreaProps) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <Input.TextArea showCount maxLength={maxLength} disabled={disabled} />
@@ -83,7 +83,7 @@ function CustomCheckbox({
   );
 }
 
-interface ButtonProps {
+interface CustomButtonProps {
   children: string;
   danger?: boolean;
   icon?: ReactNode;
@@ -97,7 +97,7 @@ function CustomButton({
   icon,
   onClick,
   htmlType,
-}: ButtonProps) {
+}: CustomButtonProps) {
   return (
     <S.FormItem>
       <S.StyledButton
@@ -115,7 +115,7 @@ function CustomButton({
 
 function CustomSelect({
   options, label, name, rules, disabled,
-}: FormItemProps & {
+}: CustomFormItemProps & {
   options: Record<string, string>
 }) {
   return (
@@ -133,7 +133,7 @@ function CustomSelect({
 
 function CustomSwitch({
   name, checkedChildren, unCheckedChildren, label, ...args
-}: FormItemProps & SwitchProps) {
+}: CustomFormItemProps & SwitchProps) {
   return (
     <S.SwitchWrap>
       {`${label} `}

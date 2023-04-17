@@ -53,8 +53,8 @@ export const OpenTimeColHead = styled.div`
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 20px;
-  padding: 5px 10px;
+  font-size: 16px;
+  padding: 5px 0;
   border-right: 2px solid #e8e8e8;
 `;
 

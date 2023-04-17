@@ -2,7 +2,7 @@ import { Form } from 'antd';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  font-family: 'Avenir', 'Helvetica', 'Arial', 'sans-serif';
+  font-family: "Noto Sans KR", "Avenir", "Helvetica", "Arial", "sans-serif";
 `;
 
 export const BreadCrumb = styled.div`
@@ -17,13 +17,12 @@ export const Heading = styled.div`
 
 export const FormWrap = styled.div`
   padding: 20px 120px 60px 20px;
-  
+
   .ant-divider-with-text {
     font-size: 15px;
     font-weight: 600;
     color: #2c3e50;
   }
-
 `;
 
 export const FormItem = styled(Form.Item)`

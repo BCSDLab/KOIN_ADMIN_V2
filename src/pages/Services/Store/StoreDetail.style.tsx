@@ -71,7 +71,7 @@ export const OpenTableHead = styled.div`
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 16px;
   padding: 10px 0;
   border-bottom: 2px solid #e8e8e8;
 

@@ -32,6 +32,7 @@ export default function StoreDetail() {
             onFinish={() => updateStore(form.getFieldsValue(true))}
             form={form}
             initialValues={storeData}
+            style={{ fontFamily: 'Noto Sans KR' }}
           >
             <Divider orientation="left">기본 정보</Divider>
             <DetailForm form={form} />

@@ -19,8 +19,8 @@ export const categoryApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getCategoryList: builder.query<CategoriesResponse, number>({
-      query: (page) => ({ url: `admin/shops/categories?page=${page}` }),
+    getCategoryList: builder.query<CategoriesResponse, { page: number, size?: number }>({
+      query: ({ page, size = 10 }) => ({ url: `admin/shops/categories?page=${page}&limit=${size}` }),
       providesTags: (result) => (result
         ? [...result.categories.map((category) => ({ type: 'category' as const, id: category.id })), { type: 'categories', id: 'LIST' }]
         : [{ type: 'categories', id: 'LIST' }]),

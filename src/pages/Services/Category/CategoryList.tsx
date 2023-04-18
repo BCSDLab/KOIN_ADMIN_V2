@@ -8,7 +8,7 @@ import AddCategoryModal from './components/AddCategoryModal';
 
 function CategoryList() {
   const [page, setPage] = useState(1);
-  const { data: categoryData } = useGetCategoryListQuery(page);
+  const { data: categoryData } = useGetCategoryListQuery({ page });
   const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState();
 
   return (

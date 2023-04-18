@@ -25,9 +25,14 @@ export default function StoreDetail() {
         </S.BreadCrumb>
         <S.FormWrap>
           <CustomForm
-            onFinish={updateStore}
+            // 해당 폼은 dayjs 라이브러리를 사용하여 변환된 데이터가 폼에 포함되어 있기 때문에,
+            // <FormItem>을 통해 값을 직접 변경하지 않고, get/setFieldValue로 읽고 수정한다.
+            // form.getFieldsValue(true)는, <FormItem>에 포함된 값뿐만 아닌, form.setFieldValue로 설정된 값도 포함한다.
+            // 기본 onFinish callback의 인자는 <FormItem>에 포함된 값만을 가지고 있다.
+            onFinish={() => updateStore(form.getFieldsValue(true))}
             form={form}
             initialValues={storeData}
+            style={{ fontFamily: 'Noto Sans KR' }}
           >
             <Divider orientation="left">기본 정보</Divider>
             <DetailForm form={form} />

@@ -1,11 +1,11 @@
 export type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 
-export interface MenuCatefotiesModel {
+export interface MenuCategoriesModel {
   id: number;
   name: string;
 }
 
-export interface OpenModel {
+export interface StoreOpen {
   close_time: string;
   closed: boolean;
   day_of_week: DayOfWeek;
@@ -25,13 +25,17 @@ export interface StoreResponse {
   id: number;
   image_urls: string[];
   is_deleted: false;
-  menu_categories: MenuCatefotiesModel[];
+  menu_categories: MenuCategoriesModel[];
   name: string;
-  open: OpenModel[];
+  open: StoreOpen[];
   pay_bank: boolean;
   pay_card: boolean;
   phone: string;
   shop_categories: ShopCategoriesModel[];
+}
+
+export interface StoreDetailForm extends StoreResponse {
+  category_ids: number[];
 }
 
 export interface StoreTableHead {
@@ -42,7 +46,7 @@ export interface StoreTableHead {
   phone: number;
 }
 
-export interface StoreTransFormHead {
+export interface StoreTransformHead {
   category_names: string;
   id: number;
   is_deleted: boolean;
@@ -58,10 +62,10 @@ export interface StoresResponse {
   total_page: number;
 }
 
-export interface StoreTransFormResponse {
+export interface StoreTransformResponse {
   current_count: number;
   current_page: number;
-  shops: StoreTransFormHead[],
+  shops: StoreTransformHead[],
   total_count: number;
   total_page: number;
 }

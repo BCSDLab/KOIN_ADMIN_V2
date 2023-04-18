@@ -1,12 +1,13 @@
 import { PlusOutlined } from '@ant-design/icons';
 import {
-  Button, Checkbox, Form,
+  Button, Checkbox, CheckboxProps, Form,
   Input, InputNumberProps, InputProps,
   Modal, ModalProps, Select, Switch, SwitchProps,
 } from 'antd';
 import React, { ReactNode } from 'react';
 import { Rule } from 'antd/lib/form';
 import useValidate from 'utils/hooks/useValidate';
+import { NamePath } from 'antd/lib/form/interface';
 import * as S from './CustomForm.style';
 import CustomMultipleUpload from './CustomMultipleUpload';
 import CustomSingleUpload from './CustomSingleUpload';
@@ -20,16 +21,16 @@ function GridRow({ children, gridColumns }: GridProps) {
   return <S.GridWrap gridColumns={gridColumns}>{children}</S.GridWrap>;
 }
 
-interface FormItemProps {
+interface CustomFormItemProps {
   label: string;
-  name: string;
+  name: NamePath;
   disabled?: boolean;
   rules?: Rule[];
 }
 
 function CustomInput({
   label, name, rules, disabled, ...args
-}: FormItemProps & InputProps) {
+}: CustomFormItemProps & Omit<InputProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <S.StyledInput disabled={disabled} {...args} />
@@ -39,7 +40,7 @@ function CustomInput({
 
 function CustomInputNumber({
   label, name, rules, disabled, ...args
-}: FormItemProps & InputNumberProps) {
+}: CustomFormItemProps & Omit<InputNumberProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <S.StyledInputNumber controls={false} disabled={disabled} {...args} />
@@ -47,13 +48,13 @@ function CustomInputNumber({
   );
 }
 
-interface TextAreaProps {
+interface CustomTextAreaProps {
   maxLength?: number;
 }
 
 function CusctomTextArea({
   label, name, maxLength, disabled, rules,
-}: FormItemProps & TextAreaProps) {
+}: CustomFormItemProps & CustomTextAreaProps) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
       <Input.TextArea showCount maxLength={maxLength} disabled={disabled} />
@@ -61,9 +62,9 @@ function CusctomTextArea({
   );
 }
 
-interface CheckboxProps {
-  name: string;
-  children: ReactNode;
+interface CustomCheckboxProps {
+  name: NamePath;
+  children?: ReactNode;
   disabled?: boolean;
 }
 
@@ -71,21 +72,22 @@ function CustomCheckbox({
   name,
   children,
   disabled,
-}: CheckboxProps) {
+  onChange,
+}: CustomCheckboxProps & Omit<CheckboxProps, 'name'>) {
   return (
     <S.FormItemCheckbox name={name} valuePropName="checked">
-      <Checkbox disabled={disabled}>
+      <Checkbox disabled={disabled} onChange={onChange}>
         {children}
       </Checkbox>
     </S.FormItemCheckbox>
   );
 }
 
-interface ButtonProps {
+interface CustomButtonProps {
   children: string;
   danger?: boolean;
   icon?: ReactNode;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: () => void;
   htmlType?: 'button' | 'submit' | 'reset';
 }
 
@@ -95,7 +97,7 @@ function CustomButton({
   icon,
   onClick,
   htmlType,
-}: ButtonProps) {
+}: CustomButtonProps) {
   return (
     <S.FormItem>
       <S.StyledButton
@@ -113,7 +115,7 @@ function CustomButton({
 
 function CustomSelect({
   options, label, name, rules, disabled,
-}: FormItemProps & {
+}: CustomFormItemProps & {
   options: Record<string, string>
 }) {
   return (
@@ -131,7 +133,7 @@ function CustomSelect({
 
 function CustomSwitch({
   name, checkedChildren, unCheckedChildren, label, ...args
-}: FormItemProps & SwitchProps) {
+}: CustomFormItemProps & SwitchProps) {
   return (
     <S.SwitchWrap>
       {`${label} `}

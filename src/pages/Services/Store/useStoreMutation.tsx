@@ -25,7 +25,16 @@ export default function useStoreMutation(id: number) {
   }
 
   function updateStore(formData: Partial<StoreResponse>) {
-    updateStoreMutation({ id, ...formData })
+    // 불필요한 프로퍼티가 포함될 경우, 400에러가 발생하는 이슈로 업데이트에 직접적으로 필요하지 않은 프로퍼티는 삭제.
+    const copyFormData = { ...formData };
+    delete copyFormData.menu_categories;
+    delete copyFormData.shop_categories;
+    delete copyFormData.is_deleted;
+
+    updateStoreMutation({
+      id,
+      ...copyFormData,
+    })
       .unwrap()
       .then(() => {
         message.success('정보 수정이 완료되었습니다.');

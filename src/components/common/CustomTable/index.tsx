@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 const TableContainer = styled.div`
   padding: 24px 0;
-  width: 100%
+  width: 100%;
   display: flex;
   flex-direction: column;
   .ant-table-thead {

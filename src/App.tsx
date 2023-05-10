@@ -5,7 +5,7 @@ import CategoryList from 'pages/Services/Category/CategoryList';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import Manager from 'pages/UserManage/Manager';
-import ManagerRequest from 'pages/UserManage/ManagerRequest';
+import ManagerRequest from 'pages/UserManage/ManagerRequest/OwnerList';
 import MemberList from 'pages/UserManage/Member/MemberList';
 import Store from 'pages/Services/Store/StoreList';
 import UserList from 'pages/UserManage/User/UserList';

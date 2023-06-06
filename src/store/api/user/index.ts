@@ -41,9 +41,17 @@ export const userApi = createApi({
       query(data) {
         const { id, ...body } = data;
         return {
-          url: `admin/students/${id}`,
+          url: `admin/users/student/${id}`,
           method: 'PUT',
-          body,
+          body: {
+            email: body.email,
+            gender: body.gender,
+            major: body.major,
+            name: body.name,
+            nickname: body.nickname,
+            phone_number: body.phone_number,
+            student_number: body.student_number,
+          },
         };
       },
       invalidatesTags: (result, error, { id }) => [{ type: 'user', id }],

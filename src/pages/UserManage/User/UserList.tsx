@@ -12,7 +12,7 @@ function UserList() {
       <S.Heading>코인 회원 목록</S.Heading>
       {usersRes && (
         <CustomTable
-          data={usersRes.userList}
+          data={usersRes.students}
           pagination={{
             current: page,
             onChange: setPage,

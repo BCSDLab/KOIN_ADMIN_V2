@@ -17,31 +17,31 @@ export const userApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getUserList: builder.query<{ userList: UserTableHead[], totalPage: number }, number>({
-      query: (page) => `admin/users/?page=${page}`,
+    getUserList: builder.query<{ students: UserTableHead[]; totalPage: number }, number>({
+      query: (page) => `admin/students?page=${page}`,
       providesTags: (result) => (result
-        ? [...result.userList.map((user) => ({ type: 'user' as const, id: user.id })), { type: 'users', id: 'LIST' }]
+        ? [...result.students.map((user) => ({ type: 'user' as const, id: user.id })), { type: 'users', id: 'LIST' }]
         : [{ type: 'users', id: 'LIST' }]),
       transformResponse: (usersResponse: UsersResponse) => ({
-        userList: usersResponse.users,
+        students: usersResponse.students,
         totalPage: usersResponse.total_page,
       }),
     }),
 
     getUser: builder.query<UserDetail, number>({
-      query: (id) => `admin/users/${id}`,
+      query: (id) => `admin/users/student/${id}`,
       providesTags: (result, error, id) => [{ type: 'user', id }],
     }),
 
     getNicknameCheck: builder.mutation<{ success: string }, string>({
-      query: (nickname) => `user/check/nickname/${nickname}`,
+      query: (nickname) => `user/check/nickname?nickname=${nickname}`,
     }),
 
     updateUser: builder.mutation<void, Pick<UserDetail, 'id'> & Partial<UserDetail>>({
       query(data) {
         const { id, ...body } = data;
         return {
-          url: `admin/users/${id}`,
+          url: `admin/students/${id}`,
           method: 'PUT',
           body,
         };

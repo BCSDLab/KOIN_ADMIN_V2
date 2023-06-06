@@ -50,7 +50,7 @@ export interface UserTableHead {
 }
 
 export interface UsersResponse extends ListPagination {
-  users: UserListData[];
+  students: UserListData[];
 }
 
 export interface UserListData {

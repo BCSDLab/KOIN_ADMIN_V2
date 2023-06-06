@@ -49,7 +49,6 @@ function UserDetail() {
               </CustomForm.GridRow>
               <CustomForm.Select label="성별" name="gender" options={SELECT_OPTIONS.gender} />
               <CustomForm.Input label="전화번호" name="phone_number" />
-              <CustomForm.Select label="구분" name="identity" options={SELECT_OPTIONS.identity} />
 
               <S.ButtonWrap>
                 <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">

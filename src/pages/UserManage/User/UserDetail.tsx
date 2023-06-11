@@ -5,6 +5,7 @@ import SELECT_OPTIONS from 'constant/user';
 import { useParams } from 'react-router-dom';
 import { useGetUserQuery } from 'store/api/user';
 import DetailHeading from 'components/common/DetailHeading';
+import useValidate from 'utils/hooks/useValidate';
 import useNicknameCheck from './hooks/useNicknameCheck';
 import useUserMutation from './hooks/useUserMutation';
 import * as S from './UserDetail.style';
@@ -15,6 +16,7 @@ function UserDetail() {
   const [form] = CustomForm.useForm();
   const { handleNicknameChange, checkDuplicateNickname, validator } = useNicknameCheck(form);
   const { updateUser } = useUserMutation();
+  const { pattern } = useValidate();
 
   return (
     <S.Container>
@@ -44,11 +46,25 @@ function UserDetail() {
                 <CustomForm.Button onClick={checkDuplicateNickname}>중복확인</CustomForm.Button>
               </CustomForm.GridRow>
               <CustomForm.GridRow gridColumns="1fr 1fr">
-                <CustomForm.Input label="학번" name="student_number" />
+                <CustomForm.Input
+                  label="학번"
+                  name="student_number"
+                  rules={[pattern(
+                    /^(19|20)\d{2}(1|2)(20|80|35|36|40|85|51|74|61|72|00)\d{3}$/,
+                    '학번 형식이 올바르지 않습니다.',
+                  )]}
+                />
                 <CustomForm.Input label="전공" name="major" disabled />
               </CustomForm.GridRow>
               <CustomForm.Select label="성별" name="gender" options={SELECT_OPTIONS.gender} />
-              <CustomForm.Input label="전화번호" name="phone_number" />
+              <CustomForm.Input
+                label="전화번호"
+                name="phone_number"
+                rules={[pattern(
+                  /^(\d{2,3})-?(\d{3,4})-?(\d{4})$/,
+                  '전화번호 형식이 올바르지 않습니다.(- 포함)',
+                )]}
+              />
 
               <S.ButtonWrap>
                 <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">

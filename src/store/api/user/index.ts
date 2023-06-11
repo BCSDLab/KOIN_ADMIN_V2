@@ -43,15 +43,7 @@ export const userApi = createApi({
         return {
           url: `admin/users/student/${id}`,
           method: 'PUT',
-          body: {
-            email: body.email,
-            gender: body.gender,
-            major: body.major,
-            name: body.name,
-            nickname: body.nickname,
-            phone_number: body.phone_number,
-            student_number: body.student_number,
-          },
+          body,
         };
       },
       invalidatesTags: (result, error, { id }) => [{ type: 'user', id }],

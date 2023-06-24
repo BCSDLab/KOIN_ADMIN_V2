@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
 import {
-  OwnersResponse, OwnerTableHead, OwnersParam,
+  OwnersResponse, OwnerTableHead, OwnersParam, OwnerResponse,
 } from 'model/owner.model';
 
 export const ownerApi = createApi({
@@ -32,7 +32,21 @@ export const ownerApi = createApi({
         totalPage: ownersResponse.total_page,
       }),
     }),
+    getOwner: builder.query<OwnerResponse, number>({
+      query: (id) => ({ url: `admin/users/owner/${id}` }),
+      providesTags: (result, error, id) => [{ type: 'owner', id }],
+    }),
+
+    updateOwner: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `admin/owner/${id}/authed`,
+          method: 'PUT',
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+    }),
   }),
 });
 
-export const { useGetOwnerListQuery } = ownerApi;
+export const { useGetOwnerListQuery, useGetOwnerQuery, useUpdateOwnerMutation } = ownerApi;

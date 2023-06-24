@@ -29,12 +29,18 @@ export interface OwnerTableHead {
   name: string;
 }
 
+enum UserType {
+  OWNER = 'OWNER',
+  STUDENT = 'STUDENT',
+  USER = 'USER',
+}
+
 export interface OwnerResponse {
   id: number;
   nickname: string | null;
   name: string;
   phone_number: string | null;
-  user_type: string;
+  user_type: UserType;
   email: string;
   gender: string | null;
   is_authed: boolean;

@@ -17,7 +17,7 @@ function ManagerRequest() {
           onChange: setPage,
           total: ownersRes.totalPage,
         }}
-        columnSize={[10, 20, 10, 30]}
+        columnSize={[20, 40, 20, 20]}
       />
       )}
     </S.Container>

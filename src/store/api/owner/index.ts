@@ -4,6 +4,7 @@ import { API_PATH } from 'constant';
 import {
   OwnersResponse, OwnerTableHead, OwnersParam, OwnerResponse,
 } from 'model/owner.model';
+import { UserDetail } from 'model/user.model';
 
 export const ownerApi = createApi({
   reducerPath: 'owner',
@@ -46,7 +47,37 @@ export const ownerApi = createApi({
       },
       invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
     }),
+
+    // is_Deleted속성을 사용하기 위해 해당 속성이 있는 api를 호출
+    getUserOwner: builder.query<UserDetail, number>({
+      query: (id) => ({ url: `admin/users/${id}` }),
+      providesTags: (result, error, id) => [{ type: 'owner', id }],
+    }),
+
+    // 아래 부분 수정하기. api연결하고 모델 정의하고.
+    deleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `admin/users/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+    }),
+
+    undeleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `admin/users/${id}/undelete`,
+          method: 'POST',
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+    }),
   }),
 });
 
-export const { useGetOwnerListQuery, useGetOwnerQuery, useUpdateOwnerMutation } = ownerApi;
+export const {
+  useGetOwnerListQuery, useGetOwnerQuery, useUpdateOwnerMutation, useGetUserOwnerQuery,
+  useDeleteOwnerMutation, useUndeleteOwnerMutation,
+} = ownerApi;

@@ -16,6 +16,7 @@ export interface UserDetail {
   identity: number;
   gender: 0 | 1;
   is_authed: boolean;
+  is_deleted: boolean;
   last_logged_at: string;
 
   // 없어져야 할 프로퍼티들

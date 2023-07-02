@@ -65,19 +65,20 @@ export const ownerApi = createApi({
       invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
     }),
 
-    undeleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
-      query(id) {
-        return {
-          url: `admin/users/${id}/undelete`,
-          method: 'POST',
-        };
-      },
-      invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
-    }),
+    // undeleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
+    //   query(id) {
+    //     return {
+    //       url: `admin/users/${id}/undelete`,
+    //       method: 'POST',
+    //     };
+    //   },
+    //   invalidatesTags: (result, error, id) => [{
+    // type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+    // }),
   }),
 });
 
 export const {
   useGetOwnerListQuery, useGetOwnerQuery, useUpdateOwnerMutation, useGetUserOwnerQuery,
-  useDeleteOwnerMutation, useUndeleteOwnerMutation,
+  useDeleteOwnerMutation,
 } = ownerApi;

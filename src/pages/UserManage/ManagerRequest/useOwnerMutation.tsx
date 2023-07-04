@@ -5,7 +5,6 @@ import { useUpdateOwnerMutation, useDeleteOwnerMutation } from 'store/api/owner'
 export default function useOwnerMutation(id: number) {
   const [updateOwnerMutation] = useUpdateOwnerMutation();
   const [deleteOwnerMutation] = useDeleteOwnerMutation();
-  // const [undeleteOwnerMutation] = useUndeleteOwnerMutation();
   const navigate = useNavigate();
 
   const updateOwner = () => {
@@ -32,16 +31,5 @@ export default function useOwnerMutation(id: number) {
       });
   };
 
-  // const undeleteOwner = () => {
-  //   undeleteOwnerMutation(id)
-  //     .unwrap()
-  //     .then(() => {
-  //       message.success('복구되었습니다.');
-  //       navigate(-1);
-  //     })
-  //     .catch(({ data }) => {
-  //       message.error(data.message);
-  //     });
-  // };
   return { updateOwner, deleteOwner };
 }

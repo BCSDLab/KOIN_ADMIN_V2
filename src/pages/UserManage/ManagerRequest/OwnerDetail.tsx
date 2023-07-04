@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetOwnerQuery, useGetUserOwnerQuery } from 'store/api/owner';
+import { useGetOwnerQuery } from 'store/api/owner';
 import { Divider } from 'antd';
 import {
   UploadOutlined, DeleteOutlined,
@@ -15,13 +15,12 @@ import * as S from './OwnerDetail.style';
 export default function OwnerDetail() {
   const { id } = useParams();
   const { data: ownerData } = useGetOwnerQuery(Number(id));
-  const { data: ownerUserData } = useGetUserOwnerQuery(Number(id));
   const { updateOwner, deleteOwner } = useOwnerMutation(Number(id));
   const [form] = CustomForm.useForm();
 
   return (
     <S.Container>
-      {ownerData && ownerUserData && (
+      {ownerData && (
         <>
           <DetailHeading>Owner Detail</DetailHeading>
           <S.BreadCrumb>

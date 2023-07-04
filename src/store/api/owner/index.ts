@@ -23,7 +23,7 @@ export const ownerApi = createApi({
       ownerList: OwnerTableHead[],
       totalPage: number
     }, OwnersParam>({
-      query: ({ page }) => `admin/new-owners/?page=${page}`,
+      query: ({ page }) => `admin/users/new-owners/?page=${page}`,
       providesTags: (result) => (result
         ? [...result.ownerList.map((owner) => ({ type: 'owner' as const, id: owner.id })), { type: 'owners', id: 'LIST' }]
         : [{ type: 'owners', id: 'LIST' }]),

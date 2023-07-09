@@ -1,21 +1,17 @@
 import { ListPagination } from './common.model';
 
-export interface Owner {
-  id: number;
-  created_at: string;
-  email: string;
-  name: string;
-}
+// export interface Owner {
+//   id: number;
+//   created_at: string;
+//   email: string;
+//   name: string;
+// }
 
 export interface OwnerDetailForm extends OwnerResponse {
   category_ids: number[];
 }
 export interface OwnersResponse extends ListPagination {
-  total_count: number;
-  current_count: number;
-  total_page: number;
-  current_page: number;
-  owners: Owner[];
+  owners: OwnerTableHead[];
 }
 
 export interface OwnersParam {
@@ -23,10 +19,13 @@ export interface OwnersParam {
 }
 
 export interface OwnerTableHead {
-  id: number;
   created_at: string;
   email: string;
+  id: number;
   name: string;
+  phone_number: string;
+  shop_id: number;
+  shop_name: string;
 }
 
 enum UserType {

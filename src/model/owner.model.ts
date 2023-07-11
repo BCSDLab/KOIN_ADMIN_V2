@@ -1,12 +1,5 @@
 import { ListPagination } from './common.model';
 
-// export interface Owner {
-//   id: number;
-//   created_at: string;
-//   email: string;
-//   name: string;
-// }
-
 export interface OwnerDetailForm extends OwnerResponse {
   category_ids: number[];
 }

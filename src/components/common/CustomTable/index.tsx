@@ -44,10 +44,17 @@ interface Props<TableData> {
   columnSize?: number[];
 }
 
+const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+
 function CustomTable<TableData extends DefaultTableData>(
   { data, pagination, columnSize }: Props<TableData>,
 ) {
   const navigate = useNavigate();
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+  };
 
   const getColumns = (): ColumnsType<TableData> => {
     const columnKeys = Object.keys(data[0]);
@@ -69,6 +76,10 @@ function CustomTable<TableData extends DefaultTableData>(
         if (typeof value === 'string') {
           if (value.startsWith('https://')) {
             return <TableItemImage src={value} alt="icon" />;
+          }
+
+          if (dateRegex.test(value)) {
+            return formatDate(value);
           }
         }
         return value;

@@ -4,14 +4,14 @@ export interface OwnerDetailForm extends OwnerResponse {
   category_ids: number[];
 }
 export interface OwnersResponse extends ListPagination {
-  owners: OwnerTableHead[];
+  owners: Owner[];
 }
 
 export interface OwnersParam {
   page: number;
 }
 
-export interface OwnerTableHead {
+export interface Owner {
   created_at: string;
   email: string;
   id: number;
@@ -19,6 +19,19 @@ export interface OwnerTableHead {
   phone_number: string;
   shop_id: number;
   shop_name: string;
+}
+
+export interface OwnerTableHeader {
+  id: number;
+  email: string;
+  name: string;
+  created_at: string;
+  shop_name: string;
+}
+
+export interface OwnerListResponse {
+  ownerList: OwnerTableHeader[];
+  totalPage: number;
 }
 
 enum UserType {

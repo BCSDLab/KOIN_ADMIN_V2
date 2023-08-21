@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Empty, Table } from 'antd';
 import Pagination from 'antd/es/pagination';
 import type { ColumnsType } from 'antd/es/table';
 import { TITLE_MAPPER } from 'constant';
@@ -42,6 +42,7 @@ interface Props<TableData> {
     onChange: (idx: number) => void;
   };
   columnSize?: number[];
+
 }
 
 const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
@@ -86,30 +87,38 @@ function CustomTable<TableData extends DefaultTableData>(
       },
     }));
   };
+  // const hasData = data.length > 0;
 
   return (
     <TableContainer>
-      <Table
-        columns={getColumns()}
-        dataSource={data}
-        rowKey={(record) => record.id}
-        onRow={(record) => ({
-          onClick: () => {
-            navigate(`${record.id}`);
-          },
-        })}
-        pagination={pagination ? false : { position: ['bottomRight'] }}
-      />
-      {pagination && (
-        <Pagination
-          current={pagination.current}
-          total={pagination.total * 10}
-          onChange={pagination.onChange}
-          showSizeChanger={false}
-          showQuickJumper
-        />
+      {data.length === 0 ? (
+        <Empty description="값이 없습니다." />
+      ) : (
+        <>
+          <Table
+            columns={getColumns()}
+            dataSource={data}
+            rowKey={(record) => record.id}
+            onRow={(record) => ({
+              onClick: () => {
+                navigate(`${record.id}`);
+              },
+            })}
+            pagination={pagination ? false : { position: ['bottomRight'] }}
+          />
+          {pagination && (
+          <Pagination
+            current={pagination.current}
+            total={pagination.total * 10}
+            onChange={pagination.onChange}
+            showSizeChanger={false}
+            showQuickJumper
+          />
+          )}
+        </>
       )}
     </TableContainer>
+
   );
 }
 

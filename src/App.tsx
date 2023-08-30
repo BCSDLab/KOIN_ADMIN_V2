@@ -5,7 +5,7 @@ import CategoryList from 'pages/Services/Category/CategoryList';
 import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import Manager from 'pages/UserManage/Manager';
-import ManagerRequest from 'pages/UserManage/ManagerRequest';
+import ManagerRequest from 'pages/UserManage/ManagerRequest/OwnerList';
 import MemberList from 'pages/UserManage/Member/MemberList';
 import Store from 'pages/Services/Store/StoreList';
 import UserList from 'pages/UserManage/User/UserList';
@@ -19,6 +19,7 @@ import MemberDetail from 'pages/UserManage/Member/MemberDetail';
 import { useToken } from 'store/slice/auth';
 import StoreDetail from 'pages/Services/Store/StoreDetail';
 import CategoryDetail from 'pages/Services/Category/CategoryDetail';
+import OwnerDetail from 'pages/UserManage/ManagerRequest/OwnerDetail';
 
 function RequireAuth() {
   const location = useLocation();
@@ -53,6 +54,7 @@ function App() {
         <Route path="/user/:id" element={<UserDetail />} />
         <Route path="/manager" element={<Manager />} />
         <Route path="/manager-request" element={<ManagerRequest />} />
+        <Route path="/manager-request/:id" element={<OwnerDetail />} />
         <Route path="/member" element={<MemberList />} />
         <Route path="/member/:id" element={<MemberDetail />} />
         <Route path="*" element={<h1>404</h1>} />

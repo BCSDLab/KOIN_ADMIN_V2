@@ -14,6 +14,7 @@ export interface UserDetail {
   phone_number: string | null;
   gender: 0 | 1;
   is_authed: boolean;
+  is_deleted: boolean;
   last_logged_at: string;
   user_type: 'STUDENT' | 'OWNER' | 'ADMIN';
   created_at: string;

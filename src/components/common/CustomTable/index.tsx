@@ -4,6 +4,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { TITLE_MAPPER } from 'constant';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { longDateRegExp, toDateStringFormat } from 'utils/ts/date';
 
 const TableContainer = styled.div`
   padding: 24px 0;
@@ -42,20 +43,12 @@ interface Props<TableData> {
     onChange: (idx: number) => void;
   };
   columnSize?: number[];
-
 }
-
-const dateRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
 function CustomTable<TableData extends DefaultTableData>(
   { data, pagination, columnSize }: Props<TableData>,
 ) {
   const navigate = useNavigate();
-
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-  };
 
   const getColumns = (): ColumnsType<TableData> => {
     const columnKeys = Object.keys(data[0]);
@@ -79,8 +72,8 @@ function CustomTable<TableData extends DefaultTableData>(
             return <TableItemImage src={value} alt="icon" />;
           }
 
-          if (dateRegex.test(value)) {
-            return formatDate(value);
+          if (longDateRegExp.test(value)) {
+            return toDateStringFormat(value);
           }
         }
         return value;
@@ -107,18 +100,17 @@ function CustomTable<TableData extends DefaultTableData>(
             pagination={pagination ? false : { position: ['bottomRight'] }}
           />
           {pagination && (
-          <Pagination
-            current={pagination.current}
-            total={pagination.total * 10}
-            onChange={pagination.onChange}
-            showSizeChanger={false}
-            showQuickJumper
-          />
+            <Pagination
+              current={pagination.current}
+              total={pagination.total * 10}
+              onChange={pagination.onChange}
+              showSizeChanger={false}
+              showQuickJumper
+            />
           )}
         </>
       )}
     </TableContainer>
-
   );
 }
 

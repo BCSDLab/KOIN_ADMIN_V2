@@ -35,7 +35,7 @@ export default function StoreDetail() {
             style={{ fontFamily: 'Noto Sans KR' }}
           >
             <Divider orientation="left">기본 정보</Divider>
-            <DetailForm form={form} />
+            <DetailForm form={form} id={Number(id)} />
             <S.ButtonWrap>
               <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                 완료

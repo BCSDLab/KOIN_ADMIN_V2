@@ -1,15 +1,29 @@
 /* eslint-disable no-restricted-imports */
 import CustomForm from 'components/common/CustomForm';
-import React, { Fragment } from 'react';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import STORE_OPTION from 'constant/store';
+import CustomProList from 'components/common/CustomForm/CustomProList';
+import { useGetStoreListQuery } from 'store/api/storeMenus';
 import * as S from '../StoreDetail.style';
 import StoreCategory from './StoreCategory';
 import OpenTimeForm from './OpenTimeForm';
 
-export default function DetailForm({ form }: { form: FormInstance }) {
+export default function DetailForm({ form, id }: { form: FormInstance, id : number }) {
   const { required, max } = CustomForm.useValidate();
+  const { data: storeMenusData } = useGetStoreListQuery({ id });
+  const menusData = storeMenusData
+    ?.menu_categories.flatMap((category) => category?.menus?.map((menu) => ({
+      name: menu.name,
+      ...(menu.is_single
+        ? { singlePrice: menu.single_price }
+        : {
+          optionPrices: menu.option_prices.map((optionPrice) => ({
+            option: optionPrice.option,
+            price: optionPrice.price,
+          })),
+        }),
+    }))) || [];
 
   return (
     <>
@@ -44,6 +58,9 @@ export default function DetailForm({ form }: { form: FormInstance }) {
       <S.UploadWrap>
         <CustomForm.MultipleUpload domain="lands" name="image_urls" form={form} />
       </S.UploadWrap>
+      {menusData
+        ? <CustomProList menus={menusData} />
+        : <p>메뉴 정보를 불러오는 중...</p>}
     </>
   );
 }

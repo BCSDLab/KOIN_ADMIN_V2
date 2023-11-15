@@ -1,13 +1,14 @@
-import { Table } from 'antd';
+import { Empty, Table } from 'antd';
 import Pagination from 'antd/es/pagination';
 import type { ColumnsType } from 'antd/es/table';
 import { TITLE_MAPPER } from 'constant';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { longDateRegExp, toDateStringFormat } from 'utils/ts/date';
 
 const TableContainer = styled.div`
   padding: 24px 0;
-  width: 100%
+  width: 100%;
   display: flex;
   flex-direction: column;
   .ant-table-thead {
@@ -70,33 +71,44 @@ function CustomTable<TableData extends DefaultTableData>(
           if (value.startsWith('https://')) {
             return <TableItemImage src={value} alt="icon" />;
           }
+
+          if (longDateRegExp.test(value)) {
+            return toDateStringFormat(value);
+          }
         }
         return value;
       },
     }));
   };
+  // const hasData = data.length > 0;
 
   return (
     <TableContainer>
-      <Table
-        columns={getColumns()}
-        dataSource={data}
-        rowKey={(record) => record.id}
-        onRow={(record) => ({
-          onClick: () => {
-            navigate(`${record.id}`);
-          },
-        })}
-        pagination={pagination ? false : { position: ['bottomRight'] }}
-      />
-      {pagination && (
-        <Pagination
-          current={pagination.current}
-          total={pagination.total * 10}
-          onChange={pagination.onChange}
-          showSizeChanger={false}
-          showQuickJumper
-        />
+      {data.length === 0 ? (
+        <Empty description="값이 없습니다." />
+      ) : (
+        <>
+          <Table
+            columns={getColumns()}
+            dataSource={data}
+            rowKey={(record) => record.id}
+            onRow={(record) => ({
+              onClick: () => {
+                navigate(`${record.id}`);
+              },
+            })}
+            pagination={pagination ? false : { position: ['bottomRight'] }}
+          />
+          {pagination && (
+            <Pagination
+              current={pagination.current}
+              total={pagination.total * 10}
+              onChange={pagination.onChange}
+              showSizeChanger={false}
+              showQuickJumper
+            />
+          )}
+        </>
       )}
     </TableContainer>
   );

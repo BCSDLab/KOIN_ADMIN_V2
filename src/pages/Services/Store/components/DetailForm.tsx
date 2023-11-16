@@ -4,7 +4,7 @@ import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import STORE_OPTION from 'constant/store';
 import CustomProList from 'components/common/CustomForm/CustomProList';
-import { useGetStoreListQuery } from 'store/api/storeMenus';
+import { useGetStoreListQuery } from 'store/api/storeMenu';
 import * as S from '../StoreDetail.style';
 import StoreCategory from './StoreCategory';
 import OpenTimeForm from './OpenTimeForm';

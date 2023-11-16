@@ -6,7 +6,7 @@ import {
 } from 'model/menus.model';
 import { RootState } from 'store';
 
-export const storeMenusApi = createApi({
+export const storeMenuApi = createApi({
   reducerPath: 'storeMenusApi',
   tagTypes: ['storeMenus', 'storeMenu'],
 
@@ -38,4 +38,4 @@ export const storeMenusApi = createApi({
 
 export const {
   useGetStoreListQuery,
-} = storeMenusApi;
+} = storeMenuApi;

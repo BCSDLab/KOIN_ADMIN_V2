@@ -1,4 +1,4 @@
-export interface StoreMenusParams {
+export interface MenusParams {
   id: number;
 }
 

@@ -5,19 +5,27 @@ import {
 } from '@ant-design/pro-components';
 import * as S from './CustomForm.style';
 
+interface CustomProListProps {
+  menus: MenuData[];
+}
+
+type MenuData = SingleMenuData | OptionMenuData;
+
+interface SingleMenuData {
+  name: string;
+  singlePrice: number;
+  optionPrices?: undefined;
+}
+
+interface OptionMenuData {
+  name: string;
+  optionPrices: OptionPrice[];
+  singlePrice?: undefined;
+}
+
 interface OptionPrice {
   option: string;
   price: number;
-}
-
-interface MenuData {
-  name: string;
-  singlePrice?: number;
-  optionPrices?: OptionPrice[];
-}
-
-interface CustomProListProps {
-  menus: MenuData[];
 }
 
 export default function CustomProList({ menus }: CustomProListProps) {

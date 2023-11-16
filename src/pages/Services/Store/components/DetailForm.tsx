@@ -58,9 +58,7 @@ export default function DetailForm({ form, id }: { form: FormInstance, id : numb
       <S.UploadWrap>
         <CustomForm.MultipleUpload domain="lands" name="image_urls" form={form} />
       </S.UploadWrap>
-      {menusData
-        ? <CustomProList menus={menusData} />
-        : <p>메뉴 정보를 불러오는 중...</p>}
+      <CustomProList menus={menusData} />
     </>
   );
 }

@@ -84,12 +84,12 @@ export default function CustomProList({ menus }: CustomProListProps) {
         >
           <S.ProFormTextWrap>
             <ProFormText
-              placeholder="menuName"
+              placeholder="메뉴 이름"
               width="md"
               name="name"
             />
             <ProFormText
-              placeholder="singlePrice"
+              placeholder="단일 메뉴 가격"
               width="xs"
               name="singlePrice"
             />
@@ -116,12 +116,12 @@ export default function CustomProList({ menus }: CustomProListProps) {
                     <ProFormText
                       name={['option']}
                       width="xs"
-                      placeholder="option"
+                      placeholder="옵션"
                     />
                     <ProFormText
                       name={['price']}
                       width="md"
-                      placeholder="price"
+                      placeholder="가격"
                     />
                   </S.TextWrap>
                 </ProFormList>

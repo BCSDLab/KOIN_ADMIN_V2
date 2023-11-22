@@ -2,7 +2,7 @@ export interface MenusParams {
   id: number;
 }
 
-interface OptionPrice {
+export interface OptionPrice {
   option: string;
   price: number;
 }
@@ -18,7 +18,7 @@ interface Menu {
   single_price: number;
 }
 
-interface MenuCategory {
+export interface MenuCategory {
   id: number;
   menus: Menu[];
   name: string;

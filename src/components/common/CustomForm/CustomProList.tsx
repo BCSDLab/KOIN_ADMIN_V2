@@ -3,24 +3,24 @@ import {
   ProForm,
   ProFormList,
 } from '@ant-design/pro-components';
+import { FormInstance } from 'antd/es/form/Form';
 import * as S from './CustomForm.style';
 
-interface CustomProListProps {
-  menus: MenuData[];
+interface WholeMenuData {
+  id: number;
+  menus: MenusData[];
+  name: string;
 }
 
-type MenuData = SingleMenuData | OptionMenuData;
-
-interface SingleMenuData {
+interface MenusData {
+  description?: string;
+  id: number;
+  image_urls: string[];
+  ishidden: boolean;
+  isSingle: boolean;
   name: string;
-  singlePrice: number;
-  optionPrices?: undefined;
-}
-
-interface OptionMenuData {
-  name: string;
-  optionPrices: OptionPrice[];
-  singlePrice?: undefined;
+  option_prices?: OptionPrice[];
+  single_price?: number;
 }
 
 interface OptionPrice {
@@ -28,7 +28,8 @@ interface OptionPrice {
   price: number;
 }
 
-export default function CustomProList({ menus }: CustomProListProps) {
+export default function CustomProList({ form }: { form: FormInstance }) {
+  const menus: WholeMenuData [] = form.getFieldValue('menu_categories');
   return (
     <ProForm
       style={{
@@ -53,7 +54,6 @@ export default function CustomProList({ menus }: CustomProListProps) {
       }}
     >
       <S.ProFormListWrap>
-        {menus.length !== 0 && (
         <ProFormList
           name="menus"
           creatorButtonProps={{
@@ -61,7 +61,7 @@ export default function CustomProList({ menus }: CustomProListProps) {
             style: { width: 'sm' },
           }}
           min={1}
-          initialValue={menus}
+          initialValue={menus[0].menus}
           creatorRecord={{ name: '', singlePrice: '', optionPrices: [{ option: '', price: '' }] }}
           deleteIconProps={{ tooltipText: '삭제' }}
           copyIconProps={false}
@@ -91,12 +91,12 @@ export default function CustomProList({ menus }: CustomProListProps) {
             <ProFormText
               placeholder="단일 메뉴 가격"
               width="xs"
-              name="singlePrice"
+              name="single_price"
             />
             <S.CardsWrap>
               <S.TextsWrap>
                 <ProFormList
-                  name="optionPrices"
+                  name="option_prices"
                   creatorButtonProps={{
                     creatorButtonText: '사이즈 추가',
                     style: { width: 'xs' },
@@ -129,7 +129,6 @@ export default function CustomProList({ menus }: CustomProListProps) {
             </S.CardsWrap>
           </S.ProFormTextWrap>
         </ProFormList>
-        )}
       </S.ProFormListWrap>
     </ProForm>
   );

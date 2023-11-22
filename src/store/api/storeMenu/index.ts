@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 
 import {
-  MenusResponse, MenusParams,
+  MenusResponse,
 } from 'model/menus.model';
 import { RootState } from 'store';
 
@@ -22,8 +22,8 @@ export const storeMenuApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getStoreList: builder.query<MenusResponse, MenusParams>({
-      query: ({ id }) => ({ url: `/admin/shops/${id}/menus` }),
+    getMenusList: builder.query<MenusResponse, number>({
+      query: (id) => ({ url: `/admin/shops/${id}/menus` }),
       providesTags: (result) => (
         result
           ? [
@@ -37,5 +37,5 @@ export const storeMenuApi = createApi({
 });
 
 export const {
-  useGetStoreListQuery,
+  useGetMenusListQuery,
 } = storeMenuApi;

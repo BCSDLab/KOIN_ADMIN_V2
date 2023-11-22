@@ -28,3 +28,21 @@ export interface MenusResponse {
   count: number;
   menu_categories: MenuCategory[];
 }
+
+// 형식 변환
+export interface WholeMenuData {
+  id: number;
+  menus: MenusData[];
+  name: string;
+}
+
+interface MenusData {
+  description?: string;
+  id: number;
+  image_urls: string[];
+  ishidden: boolean;
+  isSingle: boolean;
+  name: string;
+  option_prices?: OptionPrice[];
+  single_price?: number;
+}

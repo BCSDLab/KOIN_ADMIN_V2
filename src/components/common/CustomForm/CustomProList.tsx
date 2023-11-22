@@ -4,29 +4,8 @@ import {
   ProFormList,
 } from '@ant-design/pro-components';
 import { FormInstance } from 'antd/es/form/Form';
+import { WholeMenuData } from 'model/menus.model';
 import * as S from './CustomForm.style';
-
-interface WholeMenuData {
-  id: number;
-  menus: MenusData[];
-  name: string;
-}
-
-interface MenusData {
-  description?: string;
-  id: number;
-  image_urls: string[];
-  ishidden: boolean;
-  isSingle: boolean;
-  name: string;
-  option_prices?: OptionPrice[];
-  single_price?: number;
-}
-
-interface OptionPrice {
-  option: string;
-  price: number;
-}
 
 export default function CustomProList({ form }: { form: FormInstance }) {
   const menus: WholeMenuData [] = form.getFieldValue('menu_categories');

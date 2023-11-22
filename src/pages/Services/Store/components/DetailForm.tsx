@@ -30,7 +30,7 @@ export default function DetailForm({ form }: { form: FormInstance }) {
         옵션
       </Divider>
       <S.CheckboxWrap>
-        {STORE_OPTION?.map((optionData) => (
+        {STORE_OPTION.map((optionData) => (
           <CustomForm.Checkbox key={optionData.name} name={optionData.data}>
             {optionData.name}
           </CustomForm.Checkbox>

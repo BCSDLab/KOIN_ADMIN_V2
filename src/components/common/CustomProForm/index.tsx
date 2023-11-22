@@ -1,10 +1,11 @@
 import { ProFormText, ProForm } from '@ant-design/pro-components';
 import { ReactNode } from 'react';
+import { NamePath } from 'antd/lib/form/interface';
 import * as S from './CustomProForm.style';
 
 interface CustomProFormTextProps {
-  name: string | string[];
-  width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs' | undefined;
+  name: NamePath;
+  width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs';
   placeholder: string;
 }
 

@@ -5,6 +5,7 @@ import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import { useGetStoreQuery } from 'store/api/store';
 import { useGetMenusListQuery } from 'store/api/storeMenu';
+import useMergeObjects from 'utils/hooks/useMergeObjects';
 import useStoreMutation from './useStoreMutation';
 import DetailForm from './components/DetailForm';
 import * as S from './StoreDetail.style';
@@ -15,8 +16,7 @@ export default function StoreDetail() {
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const { updateStore, deleteStore, undeleteStore } = useStoreMutation(Number(id));
   const [form] = CustomForm.useForm();
-  const copyStoreData = { ...storeData };
-  const copyStoreMenusData = { ...storeMenusData };
+  const mergedData = useMergeObjects(storeData, storeMenusData);
 
   return (
     <S.Container>
@@ -34,7 +34,7 @@ export default function StoreDetail() {
             // 기본 onFinish callback의 인자는 <FormItem>에 포함된 값만을 가지고 있다.
             onFinish={() => updateStore(form.getFieldsValue(true))}
             form={form}
-            initialValues={Object.assign(copyStoreData, copyStoreMenusData)}
+            initialValues={mergedData}
             style={{ fontFamily: 'Noto Sans KR' }}
           >
             <Divider orientation="left">기본 정보</Divider>

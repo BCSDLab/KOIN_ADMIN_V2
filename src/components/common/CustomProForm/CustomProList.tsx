@@ -1,11 +1,11 @@
 import {
-  ProFormText,
   ProForm,
   ProFormList,
 } from '@ant-design/pro-components';
 import { FormInstance } from 'antd/es/form/Form';
 import { WholeMenuData } from 'model/menus.model';
-import * as S from './CustomForm.style';
+import CustomProForm from 'components/common/CustomProForm';
+import * as S from './CustomProForm.style';
 
 export default function CustomProList({ form }: { form: FormInstance }) {
   const menus: WholeMenuData [] = form.getFieldValue('menu_categories');
@@ -62,50 +62,32 @@ export default function CustomProList({ form }: { form: FormInstance }) {
           )}
         >
           <S.ProFormTextWrap>
-            <ProFormText
-              placeholder="메뉴 이름"
-              width="md"
-              name="name"
-            />
-            <ProFormText
-              placeholder="단일 메뉴 가격"
-              width="xs"
-              name="single_price"
-            />
-            <S.CardsWrap>
-              <S.TextsWrap>
-                <ProFormList
-                  name="option_prices"
-                  creatorButtonProps={{
-                    creatorButtonText: '사이즈 추가',
-                    style: { width: 'xs' },
-                  }}
-                  min={1}
-                  deleteIconProps={{ tooltipText: '삭제' }}
-                  copyIconProps={false}
+            <CustomProForm.Text placeholder="메뉴 이름" width="md" name="name" />
+            <CustomProForm.Text placeholder="단일 메뉴 가격" width="xs" name="single_price" />
+            <CustomProForm.CardsWrap>
+              <ProFormList
+                name="option_prices"
+                creatorButtonProps={{
+                  creatorButtonText: '사이즈 추가',
+                  style: { width: 'xs' },
+                }}
+                min={1}
+                deleteIconProps={{ tooltipText: '삭제' }}
+                copyIconProps={false}
                     // eslint-disable-next-line react/no-unstable-nested-components
-                  itemRender={({ listDom, action }) => (
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                      <div>{listDom}</div>
-                      <div style={{ display: 'flex', alignItems: 'center' }}>{action}</div>
-                    </div>
-                  )}
-                >
-                  <S.TextWrap>
-                    <ProFormText
-                      name={['option']}
-                      width="xs"
-                      placeholder="옵션"
-                    />
-                    <ProFormText
-                      name={['price']}
-                      width="md"
-                      placeholder="가격"
-                    />
-                  </S.TextWrap>
-                </ProFormList>
-              </S.TextsWrap>
-            </S.CardsWrap>
+                itemRender={({ listDom, action }) => (
+                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <div>{listDom}</div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>{action}</div>
+                  </div>
+                )}
+              >
+                <CustomProForm.TextWrap>
+                  <CustomProForm.Text placeholder="옵션" width="xs" name={['option']} />
+                  <CustomProForm.Text placeholder="가격" width="md" name={['price']} />
+                </CustomProForm.TextWrap>
+              </ProFormList>
+            </CustomProForm.CardsWrap>
           </S.ProFormTextWrap>
         </ProFormList>
       </S.ProFormListWrap>

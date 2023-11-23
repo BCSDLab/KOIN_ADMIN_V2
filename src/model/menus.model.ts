@@ -46,7 +46,3 @@ export interface MenusData {
   option_prices?: OptionPrice[];
   single_price?: number;
 }
-
-// export interface InitialMenusData {
-//   menus: MenusData[];
-// }

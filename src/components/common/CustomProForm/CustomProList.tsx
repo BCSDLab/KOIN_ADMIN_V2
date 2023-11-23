@@ -4,7 +4,8 @@ import CustomProForm from 'components/common/CustomProForm';
 import * as S from './CustomProForm.style';
 
 export default function CustomProList({ form }: { form: FormInstance }) {
-  const menus: WholeMenuData [] = form.getFieldValue('menu_categories');
+  const menus: WholeMenuData[] = form.getFieldValue('menu_categories');
+  console.log(menus[0]);
   return (
     <CustomProForm.Wrap
       layout="horizontal"

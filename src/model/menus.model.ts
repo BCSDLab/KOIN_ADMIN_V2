@@ -36,7 +36,7 @@ export interface WholeMenuData {
   name: string;
 }
 
-interface MenusData {
+export interface MenusData {
   description?: string;
   id: number;
   image_urls: string[];
@@ -46,3 +46,7 @@ interface MenusData {
   option_prices?: OptionPrice[];
   single_price?: number;
 }
+
+// export interface InitialMenusData {
+//   menus: MenusData[];
+// }

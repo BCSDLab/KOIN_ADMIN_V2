@@ -3,6 +3,7 @@ import {
 } from '@ant-design/pro-components';
 import { ReactNode } from 'react';
 import { NamePath } from 'antd/lib/form/interface';
+import { MenusData } from 'model/menus.model';
 import * as S from './CustomProForm.style';
 
 interface CustomProFormWrapProps {
@@ -31,7 +32,7 @@ interface CustomProFormListProps {
     style: { width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs' },
   };
   min: number;
-  initialValue?: any[];
+  initialValue?: MenusData[] | undefined;
   creatorRecord?:
   {
     name: string,

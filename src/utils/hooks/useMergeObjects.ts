@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 
-export default function useMergeObjects<T, U>(firstObject: T, secondObject: U): T & U {
+export default function useMergeObjects(...objects: (object | undefined)[]): object {
   const mergedObject = useMemo(() => {
-    const copyFirstObject = { ...firstObject };
-    const copySecondObject = { ...secondObject };
-    return { ...copyFirstObject, ...copySecondObject };
-  }, [firstObject, secondObject]);
+    const deepCopiedObjects = objects.map((obj) => (obj ? JSON.parse(JSON.stringify(obj)) : {}));
+    return Object.assign({}, ...deepCopiedObjects);
+  }, [objects]);
 
   return mergedObject;
 }

@@ -7,7 +7,7 @@ export interface OptionPrice {
   price: number;
 }
 
-interface Menu {
+export interface Menu {
   description: string;
   id: number;
   image_urls: string[];
@@ -24,25 +24,9 @@ export interface MenuCategory {
   name: string;
 }
 
+// API 응답
+
 export interface MenusResponse {
   count: number;
   menu_categories: MenuCategory[];
-}
-
-// 형식 변환
-export interface WholeMenuData {
-  id: number;
-  menus: MenusData[];
-  name: string;
-}
-
-export interface MenusData {
-  description?: string;
-  id: number;
-  image_urls: string[];
-  ishidden: boolean;
-  isSingle: boolean;
-  name: string;
-  option_prices?: OptionPrice[];
-  single_price?: number;
 }

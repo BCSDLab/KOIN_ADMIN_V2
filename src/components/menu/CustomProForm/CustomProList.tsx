@@ -1,6 +1,6 @@
 import { FormInstance } from 'antd/es/form/Form';
 import { MenuCategory } from 'model/menus.model';
-import CustomProForm from 'components/common/CustomProForm';
+import CustomProForm from 'components/menu/CustomProForm';
 import * as S from './CustomProForm.style';
 
 export default function CustomProList({ form }: { form: FormInstance }) {
@@ -54,10 +54,10 @@ export default function CustomProList({ form }: { form: FormInstance }) {
                     </S.FoodSizeItemsWrap>
                   )}
                 >
-                  <CustomProForm.TextWrap>
+                  <S.TextWrap>
                     <CustomProForm.Text placeholder="옵션" width="xs" name={['option']} />
                     <CustomProForm.Text placeholder="가격" width="md" name={['price']} />
-                  </CustomProForm.TextWrap>
+                  </S.TextWrap>
                 </CustomProForm.List>
               </S.TextsWrap>
             </S.CardsWrap>

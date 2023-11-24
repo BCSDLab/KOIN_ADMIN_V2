@@ -25,12 +25,12 @@ export default function CustomProList({ form }: { form: FormInstance }) {
           copyIconProps={false}
             // eslint-disable-next-line react/no-unstable-nested-components
           itemRender={({ listDom, action }) => (
-            <S.FoodItemsWrap>
+            <S.MenuItemsWrap>
               {listDom}
-              <S.ResetFoodListButtonWrap>
+              <S.ResetMenuListButtonWrap>
                 {action}
-              </S.ResetFoodListButtonWrap>
-            </S.FoodItemsWrap>
+              </S.ResetMenuListButtonWrap>
+            </S.MenuItemsWrap>
           )}
         >
           <S.ProFormTextWrap>
@@ -46,12 +46,12 @@ export default function CustomProList({ form }: { form: FormInstance }) {
                   copyIconProps={false}
                     // eslint-disable-next-line react/no-unstable-nested-components
                   itemRender={({ listDom, action }) => (
-                    <S.FoodSizeItemsWrap>
+                    <S.MenuSizeItemsWrap>
                       {listDom}
-                      <S.ResetFoodSizeButtonWrap>
+                      <S.ResetMenuSizeButtonWrap>
                         {action}
-                      </S.ResetFoodSizeButtonWrap>
-                    </S.FoodSizeItemsWrap>
+                      </S.ResetMenuSizeButtonWrap>
+                    </S.MenuSizeItemsWrap>
                   )}
                 >
                   <S.TextWrap>

@@ -12,18 +12,18 @@ export const ProFormListWrap = styled.div`
   padding: 35px;
 `;
 
-export const FoodItemsWrap = styled.div`
+export const MenuItemsWrap = styled.div`
   display: flex;
   width: 100%;
 `;
 
-export const FoodSizeItemsWrap = styled.div`
+export const MenuSizeItemsWrap = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-export const ResetFoodListButtonWrap = styled.div`
+export const ResetMenuListButtonWrap = styled.div`
   display: flex;
   borderRadius: 5px;
   margin: 0 auto auto 15px;
@@ -31,7 +31,7 @@ export const ResetFoodListButtonWrap = styled.div`
   height: 40px;
 `;
 
-export const ResetFoodSizeButtonWrap = styled.div`
+export const ResetMenuSizeButtonWrap = styled.div`
   display: flex;
   align-items: center;
 `;

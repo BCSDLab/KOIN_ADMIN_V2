@@ -1,7 +1,7 @@
 import { FormInstance } from 'antd/es/form/Form';
 import { MenuCategory } from 'model/menus.model';
-import CustomProForm from 'components/menu/CustomProForm';
-import * as S from './CustomProForm.style';
+import CustomProForm from 'components/common/CustomProForm';
+import * as S from './StoreMenus.style';
 
 export default function CustomProList({ form }: { form: FormInstance }) {
   const menus: MenuCategory[] = form.getFieldValue('menu_categories');

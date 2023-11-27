@@ -33,12 +33,7 @@ interface CustomProFormListProps {
   };
   min: number;
   initialValue?: Menu[] | undefined;
-  creatorRecord?:
-  {
-    name: string,
-    singlePrice: string,
-    optionPrices: [{ option: string, price: string }]
-  };
+  creatorRecord?: Record<string, any>;
   deleteIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false
   copyIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false;
   itemRender?: (props: { listDom: ReactNode; action: ReactNode }) => ReactNode;

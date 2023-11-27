@@ -1,9 +1,4 @@
-import { ProForm } from '@ant-design/pro-components';
 import styled from 'styled-components';
-
-export const ProFormWrap = styled(ProForm)`
-  flex-direction: column;
-  `;
 
 export const ProFormListWrap = styled.div` 
   width: fit-content;

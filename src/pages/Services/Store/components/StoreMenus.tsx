@@ -6,7 +6,7 @@ import * as S from './StoreMenus.style';
 export default function CustomProList({ form }: { form: FormInstance }) {
   const menus: MenuCategory[] = form.getFieldValue('menu_categories');
   return (
-    <CustomProForm.Wrap
+    <CustomProForm
       layout="horizontal"
       submitter={{
         searchConfig: { resetText: '저장', submitText: '초기화' },
@@ -64,6 +64,6 @@ export default function CustomProList({ form }: { form: FormInstance }) {
           </S.ProFormTextWrap>
         </CustomProForm.List>
       </S.ProFormListWrap>
-    </CustomProForm.Wrap>
+    </CustomProForm>
   );
 }

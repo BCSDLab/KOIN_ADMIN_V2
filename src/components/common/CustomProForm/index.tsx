@@ -1,29 +1,29 @@
 import {
-  ProFormText, ProForm, SubmitterProps, ProFormList,
+  ProFormText, ProForm, ProFormList,
 } from '@ant-design/pro-components';
+// SubmitterProps,
 import { ReactNode } from 'react';
 import { NamePath } from 'antd/lib/form/interface';
 import { Menu } from 'model/menus.model';
-import * as S from './CustomProForm.style';
 
-interface CustomProFormWrapProps {
-  layout?: 'horizontal' | 'vertical' | 'inline';
-  submitter?: SubmitterProps;
-  children: ReactNode;
-}
+// interface CustomProFormWrapProps {
+//   layout?: 'horizontal' | 'vertical' | 'inline';
+//   submitter?: SubmitterProps;
+//   children: ReactNode;
+// }
 
-function CustomProFormWrap({
-  layout, submitter, children,
-}: CustomProFormWrapProps) {
-  return (
-    <S.ProFormWrap
-      layout={layout}
-      submitter={submitter}
-    >
-      {children}
-    </S.ProFormWrap>
-  );
-}
+// function CustomProForm({
+//   layout, submitter, children,
+// }: CustomProFormWrapProps) {
+//   return (
+//     <ProForm
+//       layout={layout}
+//       submitter={submitter}
+//     >
+//       {children}
+//     </ProForm>
+//   );
+// }
 
 interface CustomProFormListProps {
   name: string;
@@ -85,7 +85,6 @@ function CustomProFormText({ name, width, placeholder }: CustomProFormTextProps)
 
 const CustomProForm = Object.assign(ProForm, {
   Text: CustomProFormText,
-  Wrap: CustomProFormWrap,
   List: CustomProFormList,
 });
 

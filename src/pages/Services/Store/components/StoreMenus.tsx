@@ -3,7 +3,7 @@ import { MenuCategory } from 'model/menus.model';
 import CustomProForm from 'components/common/CustomProForm';
 import * as S from './StoreMenus.style';
 
-export default function CustomProList({ form }: { form: FormInstance }) {
+export default function StoreMenus({ form }: { form: FormInstance }) {
   const menus: MenuCategory[] = form.getFieldValue('menu_categories');
   return (
     <CustomProForm

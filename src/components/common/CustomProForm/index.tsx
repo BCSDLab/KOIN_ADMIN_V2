@@ -3,7 +3,6 @@ import {
 } from '@ant-design/pro-components';
 import { ReactNode } from 'react';
 import { NamePath } from 'antd/lib/form/interface';
-import { Menu } from 'model/menus.model';
 
 interface CustomProFormListProps {
   name: string;
@@ -12,9 +11,9 @@ interface CustomProFormListProps {
     style: { width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs' },
   };
   min: number;
-  initialValue?: Menu[] | undefined;
+  initialValue?: any[];
   creatorRecord?: Record<string, any>;
-  deleteIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false
+  deleteIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false;
   copyIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false;
   itemRender?: (props: { listDom: ReactNode; action: ReactNode }) => ReactNode;
   children: ReactNode;

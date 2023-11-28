@@ -23,7 +23,6 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
           creatorRecord={{ name: '', singlePrice: '', optionPrices: [{ option: '', price: '' }] }}
           deleteIconProps={{ tooltipText: '메뉴 삭제' }}
           copyIconProps={false}
-            // eslint-disable-next-line react/no-unstable-nested-components
           itemRender={({ listDom, action }) => (
             <S.MenuItemsWrap>
               {listDom}
@@ -44,7 +43,6 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
                   min={1}
                   deleteIconProps={{ tooltipText: '사이즈 삭제' }}
                   copyIconProps={false}
-                    // eslint-disable-next-line react/no-unstable-nested-components
                   itemRender={({ listDom, action }) => (
                     <S.MenuSizeItemsWrap>
                       {listDom}

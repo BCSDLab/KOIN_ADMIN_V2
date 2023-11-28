@@ -39,7 +39,6 @@ function CustomProFormList({
       creatorRecord={creatorRecord}
       deleteIconProps={deleteIconProps}
       copyIconProps={copyIconProps}
-      // eslint-disable-next-line react/no-unstable-nested-components
       itemRender={itemRender}
     >
       {children}

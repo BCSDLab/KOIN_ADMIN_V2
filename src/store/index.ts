@@ -8,9 +8,18 @@ import { memberApi } from './api/member';
 import { uploadApi } from './api/upload';
 import { storeApi } from './api/store';
 import { categoryApi } from './api/category';
-import { ownerApi } from './api/owner';
+import { storeMenuApi } from './api/storeMenu';
 
-const apiList = [authApi, userApi, roomApi, memberApi, uploadApi, storeApi, categoryApi, ownerApi];
+const apiList = [
+  authApi,
+  userApi,
+  roomApi,
+  memberApi,
+  uploadApi,
+  storeApi,
+  categoryApi,
+  storeMenuApi,
+];
 
 const apiMiddleware = apiList.map((api) => api.middleware);
 

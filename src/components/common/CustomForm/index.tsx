@@ -4,7 +4,7 @@ import {
   Input, InputNumberProps, InputProps,
   Modal, ModalProps, Select, Switch, SwitchProps,
 } from 'antd';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Rule } from 'antd/lib/form';
 import useValidate from 'utils/hooks/useValidate';
 import { NamePath } from 'antd/lib/form/interface';

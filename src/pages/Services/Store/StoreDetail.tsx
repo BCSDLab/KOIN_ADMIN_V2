@@ -1,10 +1,11 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import CustomForm from 'components/common/CustomForm';
 import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import { useGetStoreQuery } from 'store/api/store';
+import { useGetMenusListQuery } from 'store/api/storeMenu';
+import useMergeObjects from 'utils/hooks/useMergeObjects';
 import useStoreMutation from './useStoreMutation';
 import DetailForm from './components/DetailForm';
 import * as S from './StoreDetail.style';
@@ -12,16 +13,18 @@ import * as S from './StoreDetail.style';
 export default function StoreDetail() {
   const { id } = useParams();
   const { data: storeData } = useGetStoreQuery(Number(id));
+  const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const { updateStore, deleteStore, undeleteStore } = useStoreMutation(Number(id));
   const [form] = CustomForm.useForm();
+  const mergedData = useMergeObjects(storeData, storeMenusData);
 
   return (
     <S.Container>
-      {storeData && (
+      {storeData && storeMenusData && (
       <>
         <DetailHeading>Store Detail</DetailHeading>
         <S.BreadCrumb>
-          {`Store Management / Store Detail / ${storeData.name}`}
+          {`Store Management / Store Detail / ${storeData?.name}`}
         </S.BreadCrumb>
         <S.FormWrap>
           <CustomForm
@@ -31,7 +34,7 @@ export default function StoreDetail() {
             // 기본 onFinish callback의 인자는 <FormItem>에 포함된 값만을 가지고 있다.
             onFinish={() => updateStore(form.getFieldsValue(true))}
             form={form}
-            initialValues={storeData}
+            initialValues={mergedData}
             style={{ fontFamily: 'Noto Sans KR' }}
           >
             <Divider orientation="left">기본 정보</Divider>
@@ -40,7 +43,7 @@ export default function StoreDetail() {
               <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                 완료
               </CustomForm.Button>
-              {storeData.is_deleted
+              {storeData?.is_deleted
                 ? (
                   <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteStore}>
                     복구

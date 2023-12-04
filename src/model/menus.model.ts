@@ -30,3 +30,28 @@ export interface MenusResponse {
   count: number;
   menu_categories: MenuCategory[];
 }
+
+// API 요청 (add)
+export interface AddMenusArgs {
+  id: number;
+  body: MenusResponse;
+}
+
+// API 요청 (update, delete)
+
+export interface MutationMenuArgs {
+  id: number;
+  menuId: Menu["id"];
+  body: MenuBody[];
+}
+
+// API body
+export interface MenuBody {
+  category_ids: number[];
+  description: string;
+  image_urls: string[];
+  is_single: boolean;
+  name: string;
+  option_prices: OptionPrice[];
+  single_price: number;
+}

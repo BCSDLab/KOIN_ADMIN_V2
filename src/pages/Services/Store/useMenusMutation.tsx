@@ -2,10 +2,10 @@ import { message } from 'antd';
 import { MenuBody } from 'model/menus.model';
 import { useNavigate } from 'react-router-dom';
 import {
-  useAddMenuMutation, useDeleteMenuMutation, useUpdataMenuMutation
+  useAddMenuMutation, useDeleteMenuMutation, useUpdataMenuMutation,
 } from 'store/api/storeMenu';
 
-export default function useMenusMutation(id:number) { 
+export default function useMenusMutation(id:number) {
   const [updateMenuMutation] = useUpdataMenuMutation();
   const [deleteMenuMutation] = useDeleteMenuMutation();
   const [addMenuMutation] = useAddMenuMutation();
@@ -24,7 +24,7 @@ export default function useMenusMutation(id:number) {
   }
 
   function updateMenu(menuId: number, body: MenuBody[]) {
-    updateMenuMutation({id, menuId, body,})
+    updateMenuMutation({ id, menuId, body })
       .unwrap()
       .then(() => {
         message.success('정보 수정이 완료되었습니다.');
@@ -48,6 +48,5 @@ export default function useMenusMutation(id:number) {
 
   return {
     updateMenu, deleteMenu, addMenu,
-  }
-
+  };
 }

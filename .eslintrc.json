@@ -68,9 +68,5 @@
     "import/resolver": {
       "typescript": {}
     }
-  },
-  "react/no-unstable-nested-components": [
-    "error",
-  { "allowAsProps" : false }
-]
+  }
 }

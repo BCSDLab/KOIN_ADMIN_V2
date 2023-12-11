@@ -20,7 +20,6 @@ export default function AddMenuModal({ menuId }: { menuId: number | null }) {
       form.resetFields();
     }
   }, [form, storeMenuDetailData]);
-  console.log('storeMenuDetailData', storeMenuDetailData);
 
   return (
     <S.Container>

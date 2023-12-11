@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 
 import {
-  MenusResponse, AddMenusArgs, MutationMenuArgs, MenuBody
+  MenusResponse, MenuResponse, AddMenusArgs, MutationMenuArgs,
 } from 'model/menus.model';
 import { RootState } from 'store';
 
@@ -34,6 +34,14 @@ export const storeMenuApi = createApi({
       ),
     }),
 
+    getMenuList: builder.query<MenuResponse, MutationMenuArgs>({
+      query: ({ id: shopId, menuId }) => ({
+        url: `/admin/shops/${shopId}/menus/${menuId}`,
+        method: 'GET',
+      }),
+      providesTags: (result, error, { id }) => [{ type: 'storeMenu', id }],
+    }),
+
     updataMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
       query: ({ id: shopId, menuId, body }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
@@ -43,17 +51,16 @@ export const storeMenuApi = createApi({
       invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
-    deleteMenu: builder.mutation < MenusResponse, Pick<MutationMenuArgs,'id' | 'menuId' >>({
-      query: ({ id:shopId, menuId }) => ({
+    deleteMenu: builder.mutation < MenusResponse, Pick<MutationMenuArgs, 'id' | 'menuId' >>({
+      query: ({ id: shopId, menuId }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'DELETE',
       }),
       invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
-    //개별 메뉴 추가
     addMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
-      query: ({ id:shopId, menuId, body }) => ({
+      query: ({ id: shopId, menuId, body }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'POST',
         body,
@@ -61,7 +68,6 @@ export const storeMenuApi = createApi({
       invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
-    //전체 메뉴 추가
     addMenus: builder.mutation<MenusResponse, AddMenusArgs>({
       query: ({ id, body }) => ({
         url: `/admin/shops/${id}/menus`,
@@ -71,10 +77,10 @@ export const storeMenuApi = createApi({
       invalidatesTags: [{ type: 'storeMenus', id: 'LIST' }],
     }),
 
-    }),
+  }),
 });
 
 export const {
-  useGetMenusListQuery, useUpdataMenuMutation, useDeleteMenuMutation,
+  useGetMenusListQuery, useGetMenuListQuery, useUpdataMenuMutation, useDeleteMenuMutation,
   useAddMenuMutation, useAddMenusMutation,
 } = storeMenuApi;

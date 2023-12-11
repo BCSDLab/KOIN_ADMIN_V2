@@ -31,6 +31,19 @@ export interface MenusResponse {
   menu_categories: MenuCategory[];
 }
 
+export interface MenuResponse {
+  id: number;
+  shop_id: number;
+  name: string;
+  is_hidden: boolean;
+  is_single: boolean;
+  single_price: number;
+  option_prices: null | OptionPrice[];
+  description: null | string;
+  category_ids: number[];
+  image_urls: string[];
+}
+
 // API 요청 (add)
 export interface AddMenusArgs {
   id: number;
@@ -41,8 +54,8 @@ export interface AddMenusArgs {
 
 export interface MutationMenuArgs {
   id: number;
-  menuId: Menu["id"];
-  body: MenuBody[];
+  menuId: Menu['id'];
+  body?: MenuBody[];
 }
 
 // API body

@@ -1,10 +1,20 @@
-import { FormInstance } from 'antd/es/form/Form';
 import { MenuCategory } from 'model/menus.model';
 import CustomProForm from 'components/common/CustomProForm';
+import CustomForm from 'components/common/CustomForm';
+import useBooleanState from 'utils/hooks/useBoolean';
+import { useState } from 'react';
 import * as S from './StoreMenus.style';
+import AddMenuModal from './AddMenuModal';
 
-export default function StoreMenus({ form }: { form: FormInstance }) {
-  const menus: MenuCategory[] = form.getFieldValue('menu_categories');
+export default function StoreMenus({ menus }: { menus: MenuCategory[] }) {
+  const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
+  const [selectedMenuId, setSelectedMenuId] = useState<number | null>(null);
+
+  const onClick = (index: number) => {
+    setSelectedMenuId(index);
+    openModal();
+  };
+
   return (
     <CustomProForm
       layout="horizontal"
@@ -17,32 +27,45 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
       <S.ProFormListWrap>
         <CustomProForm.List
           name="menus"
-          creatorButtonProps={{ creatorButtonText: '메뉴추가', style: { width: 'sm' } }}
+          creatorButtonProps={false}
           min={1}
           initialValue={menus[0].menus}
-          creatorRecord={{ name: '', singlePrice: '', optionPrices: [{ option: '', price: '' }] }}
-          deleteIconProps={{ tooltipText: '메뉴 삭제' }}
+          creatorRecord={{ useMode: 'none' }}
+          deleteIconProps={false}
           copyIconProps={false}
-          itemRender={({ listDom, action }) => (
+          // eslint-disable-next-line react/no-unstable-nested-components
+          itemRender={({ listDom, action }, index) => (
             <S.MenuItemsWrap>
               {listDom}
               <S.ResetMenuListButtonWrap>
                 {action}
+                <CustomForm.Modal
+                  buttonText="상세보기"
+                  title="상세보기"
+                  width={900}
+                  footer={null}
+                  open={isModalOpen}
+                  onCancel={closeModal}
+                  onClick={() => onClick(index.record.id)}
+                >
+                  <AddMenuModal menuId={selectedMenuId} />
+                </CustomForm.Modal>
               </S.ResetMenuListButtonWrap>
             </S.MenuItemsWrap>
           )}
         >
           <S.ProFormTextWrap>
-            <CustomProForm.Text placeholder="메뉴 이름" width="md" name="name" />
-            <CustomProForm.Text placeholder="단일 메뉴 가격" width="xs" name="single_price" />
+            <CustomProForm.Text placeholder="메뉴 이름" width="md" name="name" key="name" disabled />
+            <CustomProForm.Text placeholder="단일 메뉴 가격" width="xs" name="single_price" key="single_price" disabled />
             <S.CardsWrap>
               <S.TextsWrap>
                 <CustomProForm.List
                   name="option_prices"
-                  creatorButtonProps={{ creatorButtonText: '사이즈 추가', style: { width: 'xs' } }}
+                  creatorButtonProps={false}
                   min={1}
-                  deleteIconProps={{ tooltipText: '사이즈 삭제' }}
+                  deleteIconProps={false}
                   copyIconProps={false}
+                  // eslint-disable-next-line react/no-unstable-nested-components
                   itemRender={({ listDom, action }) => (
                     <S.MenuSizeItemsWrap>
                       {listDom}
@@ -53,8 +76,8 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
                   )}
                 >
                   <S.TextWrap>
-                    <CustomProForm.Text placeholder="옵션" width="xs" name={['option']} />
-                    <CustomProForm.Text placeholder="가격" width="md" name={['price']} />
+                    <CustomProForm.Text placeholder="옵션" width="xs" name={['option']} key="option" disabled />
+                    <CustomProForm.Text placeholder="가격" width="md" name={['price']} key="price" disabled />
                   </S.TextWrap>
                 </CustomProForm.List>
               </S.TextsWrap>

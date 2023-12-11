@@ -40,7 +40,7 @@ export default function DetailForm({ form }: { form: FormInstance }) {
       <S.UploadWrap>
         <CustomForm.MultipleUpload domain="lands" name="image_urls" form={form} />
       </S.UploadWrap>
-      <CustomProList form={form} />
+      <CustomProList menus={form.getFieldValue('menu_categories')} />
     </>
   );
 }

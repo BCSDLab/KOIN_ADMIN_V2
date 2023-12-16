@@ -47,7 +47,7 @@ export interface MenuResponse {
 // API 요청 (add)
 export interface AddMenusArgs {
   id: number;
-  body: MenusResponse;
+  menusData: MenusResponse;
 }
 
 // API 요청 (update, delete)

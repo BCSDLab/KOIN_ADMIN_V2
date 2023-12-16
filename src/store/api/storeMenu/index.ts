@@ -69,7 +69,7 @@ export const storeMenuApi = createApi({
     }),
 
     addMenus: builder.mutation<MenusResponse, AddMenusArgs>({
-      query: ({ id, body }) => ({
+      query: ({ id, menusData: body }) => ({
         url: `/admin/shops/${id}/menus`,
         method: 'POST',
         body,

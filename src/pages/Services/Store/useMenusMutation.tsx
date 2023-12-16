@@ -2,11 +2,11 @@ import { message } from 'antd';
 import { MenuBody } from 'model/menus.model';
 import { useNavigate } from 'react-router-dom';
 import {
-  useAddMenuMutation, useDeleteMenuMutation, useUpdataMenuMutation,
+  useAddMenuMutation, useDeleteMenuMutation, useUpdateMenuMutation,
 } from 'store/api/storeMenu';
 
 export default function useMenusMutation(id:number) {
-  const [updateMenuMutation] = useUpdataMenuMutation();
+  const [updateMenuMutation] = useUpdateMenuMutation();
   const [deleteMenuMutation] = useDeleteMenuMutation();
   const [addMenuMutation] = useAddMenuMutation();
   const navigate = useNavigate();

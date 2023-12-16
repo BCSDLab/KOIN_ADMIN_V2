@@ -42,7 +42,7 @@ export const storeMenuApi = createApi({
       providesTags: (result, error, { id }) => [{ type: 'storeMenu', id }],
     }),
 
-    updataMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
+    updateMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
       query: ({ id: shopId, menuId, body }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'PUT',
@@ -81,6 +81,6 @@ export const storeMenuApi = createApi({
 });
 
 export const {
-  useGetMenusListQuery, useGetMenuListQuery, useUpdataMenuMutation, useDeleteMenuMutation,
+  useGetMenusListQuery, useGetMenuListQuery, useUpdateMenuMutation, useDeleteMenuMutation,
   useAddMenuMutation, useAddMenusMutation,
 } = storeMenuApi;

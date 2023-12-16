@@ -57,7 +57,6 @@ export const TextWrap = styled.div`
   gap: 10px;
 `;
 
-//= =
 export const Container = styled.div``;
 
 export const Heading = styled.h1`

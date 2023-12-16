@@ -55,7 +55,7 @@ export interface AddMenusArgs {
 export interface MutationMenuArgs {
   id: number;
   menuId: Menu['id'];
-  body?: MenuBody[];
+  menuData?: MenuBody[];
 }
 
 // API body

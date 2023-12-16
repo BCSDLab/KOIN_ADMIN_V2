@@ -2,13 +2,15 @@ import { MenuCategory } from 'model/menus.model';
 import CustomProForm from 'components/common/CustomProForm';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
+import { FormInstance } from 'antd/es/form/Form';
 import { useState } from 'react';
 import * as S from './StoreMenus.style';
 import AddMenuModal from './AddMenuModal';
 
-export default function StoreMenus({ menus }: { menus: MenuCategory[] }) {
+export default function StoreMenus({ form }: { form: FormInstance }) {
   const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
   const [selectedMenuId, setSelectedMenuId] = useState<number | null>(null);
+  const menus: MenuCategory[] = form.getFieldValue('menu_categories');
 
   const onClick = (index: number) => {
     setSelectedMenuId(index);
@@ -55,8 +57,8 @@ export default function StoreMenus({ menus }: { menus: MenuCategory[] }) {
           )}
         >
           <S.ProFormTextWrap>
-            <CustomProForm.Text placeholder="메뉴 이름" width="md" name="name" key="name" disabled />
-            <CustomProForm.Text placeholder="단일 메뉴 가격" width="xs" name="single_price" key="single_price" disabled />
+            <CustomProForm.Text placeholder="메뉴 이름" width="md" name="name" disabled />
+            <CustomProForm.Text placeholder="단일 메뉴 가격" width="xs" name="single_price" disabled />
             <S.CardsWrap>
               <S.TextsWrap>
                 <CustomProForm.List
@@ -76,8 +78,8 @@ export default function StoreMenus({ menus }: { menus: MenuCategory[] }) {
                   )}
                 >
                   <S.TextWrap>
-                    <CustomProForm.Text placeholder="옵션" width="xs" name={['option']} key="option" disabled />
-                    <CustomProForm.Text placeholder="가격" width="md" name={['price']} key="price" disabled />
+                    <CustomProForm.Text placeholder="옵션" width="xs" name={['option']} disabled />
+                    <CustomProForm.Text placeholder="가격" width="md" name={['price']} disabled />
                   </S.TextWrap>
                 </CustomProForm.List>
               </S.TextsWrap>

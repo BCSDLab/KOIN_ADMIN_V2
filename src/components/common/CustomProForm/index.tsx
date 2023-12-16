@@ -46,7 +46,7 @@ function CustomProFormList({
   );
 }
 interface CustomProFormTextProps {
-  name?: NamePath;
+  name: NamePath;
   width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs';
   placeholder: string | any;
   disabled?: boolean;

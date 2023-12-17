@@ -12,7 +12,7 @@ export default function useMenusMutation(id:number) {
   const navigate = useNavigate();
 
   function deleteMenu(menuId: number) {
-    deleteMenuMutation({ id, menuId })
+    return deleteMenuMutation({ id, menuId })
       .unwrap()
       .then(() => {
         message.success('삭제되었습니다.');
@@ -24,7 +24,7 @@ export default function useMenusMutation(id:number) {
   }
 
   function updateMenu(menuId: number, body: MenuBody[]) {
-    updateMenuMutation({ id, menuId, menuData: body })
+    return updateMenuMutation({ id, menuId, menuData: body })
       .unwrap()
       .then(() => {
         message.success('정보 수정이 완료되었습니다.');
@@ -36,7 +36,7 @@ export default function useMenusMutation(id:number) {
   }
 
   function addMenu(menuId: number, body: MenuBody[]) {
-    addMenuMutation({ id, menuId, menuData: body })
+    return addMenuMutation({ id, menuId, menuData: body })
       .unwrap()
       .then(() => {
         message.success('추가되었습니다.');

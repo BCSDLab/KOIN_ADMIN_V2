@@ -3,18 +3,20 @@ import {
 } from '@ant-design/pro-components';
 import { ReactNode } from 'react';
 import { NamePath } from 'antd/lib/form/interface';
+import { Width } from 'model/menus.model';
 
+type IconProps = { Icon?: React.FC<any>; tooltipText?: string; };
 interface CustomProFormListProps {
   name: string | (string | number)[];
   creatorButtonProps: {
     creatorButtonText: string,
-    style: { width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs' },
+    style: { width: Width },
   } | false;
   min: number;
   initialValue?: any[];
   creatorRecord?: Record<string, any>;
-  deleteIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false;
-  copyIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false;
+  deleteIconProps: IconProps | false;
+  copyIconProps: IconProps | false;
   itemRender: (props: { listDom: ReactNode; action: ReactNode }, index: any) => ReactNode;
   children: ReactNode;
 }
@@ -47,7 +49,7 @@ function CustomProFormList({
 }
 interface CustomProFormTextProps {
   name: NamePath;
-  width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs';
+  width: Width;
   placeholder: string | any;
   disabled?: boolean;
   initialValue?: string;
@@ -64,7 +66,6 @@ function CustomProFormText({
         placeholder={placeholder}
         disabled={disabled}
         initialValue={initialValue}
-
       />
     </div>
   );

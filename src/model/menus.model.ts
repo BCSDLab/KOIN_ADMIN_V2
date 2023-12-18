@@ -1,3 +1,5 @@
+export type Width = number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs';
+
 export interface MenusParams {
   id: number;
 }

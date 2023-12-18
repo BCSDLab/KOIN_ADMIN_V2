@@ -5,7 +5,7 @@ import useBooleanState from 'utils/hooks/useBoolean';
 import { FormInstance } from 'antd/es/form/Form';
 import { useState } from 'react';
 import * as S from './StoreMenus.style';
-import AddMenuModal from './AddMenuModal';
+import AddMenuModal from './EditMenuModal';
 
 export default function StoreMenus({ form }: { form: FormInstance }) {
   const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
@@ -50,7 +50,9 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
                   onCancel={closeModal}
                   onClick={() => onClick(index.record.id)}
                 >
-                  <AddMenuModal menuId={selectedMenuId} />
+                  {
+                    selectedMenuId !== null && <AddMenuModal menuId={selectedMenuId} />
+                  }
                 </CustomForm.Modal>
               </S.ResetMenuListButtonWrap>
             </S.MenuItemsWrap>

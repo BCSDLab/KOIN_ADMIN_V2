@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import MenuDetailForm from './MenuDetailForm';
 import * as S from './StoreMenus.style';
 
-export default function AddMenuModal({ menuId }: { menuId: number | null }) {
+export default function EditMenuModal({ menuId }: { menuId: number }) {
   const [form] = CustomForm.useForm();
   const { id } = useParams();
   const { data: storeMenuDetailData } = useGetMenuListQuery({

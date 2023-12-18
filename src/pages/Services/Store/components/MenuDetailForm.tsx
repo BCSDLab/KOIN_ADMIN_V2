@@ -49,7 +49,7 @@ export default function MenuDetailForm({ form }: { form: FormInstance }) {
       </S.ProFormTextDetailWrap>
       <Divider orientation="left">사진</Divider>
       <S.UploadWrap>
-        <CustomForm.MultipleUpload domain="lands" name="image_urls" form={form} />
+        <CustomForm.MultipleUpload domain="shops" name="image_urls" form={form} />
       </S.UploadWrap>
       <S.SubmitButtonWrap>
         <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">

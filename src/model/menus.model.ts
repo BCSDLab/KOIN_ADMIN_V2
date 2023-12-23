@@ -1,3 +1,5 @@
+export type Width = number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs';
+
 export interface MenusParams {
   id: number;
 }
@@ -29,4 +31,42 @@ export interface MenuCategory {
 export interface MenusResponse {
   count: number;
   menu_categories: MenuCategory[];
+}
+
+export interface MenuResponse {
+  id: number;
+  shop_id: number;
+  name: string;
+  is_hidden: boolean;
+  is_single: boolean;
+  single_price: number;
+  option_prices: null | OptionPrice[];
+  description: null | string;
+  category_ids: number[];
+  image_urls: string[];
+}
+
+// API 요청 (add)
+export interface AddMenusArgs {
+  id: number;
+  menusData: MenusResponse;
+}
+
+// API 요청 (update, delete)
+
+export interface MutationMenuArgs {
+  id: number;
+  menuId: Menu['id'];
+  menuData?: MenuBody[];
+}
+
+// API body
+export interface MenuBody {
+  category_ids: number[];
+  description: string;
+  image_urls: string[];
+  is_single: boolean;
+  name: string;
+  option_prices: OptionPrice[];
+  single_price: number;
 }

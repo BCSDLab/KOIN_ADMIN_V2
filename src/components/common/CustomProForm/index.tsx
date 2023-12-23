@@ -3,19 +3,21 @@ import {
 } from '@ant-design/pro-components';
 import { ReactNode } from 'react';
 import { NamePath } from 'antd/lib/form/interface';
+import { Width } from 'model/menus.model';
 
+type IconProps = { Icon?: React.FC<any>; tooltipText?: string; };
 interface CustomProFormListProps {
-  name: string;
+  name: string | (string | number)[];
   creatorButtonProps: {
     creatorButtonText: string,
-    style: { width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs' },
-  };
+    style: { width: Width },
+  } | false;
   min: number;
   initialValue?: any[];
   creatorRecord?: Record<string, any>;
-  deleteIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false;
-  copyIconProps: { Icon?: React.FC<any>; tooltipText?: string; } | false;
-  itemRender?: (props: { listDom: ReactNode; action: ReactNode }) => ReactNode;
+  deleteIconProps: IconProps | false;
+  copyIconProps: IconProps | false;
+  itemRender: (props: { listDom: ReactNode; action: ReactNode }, index: any) => ReactNode;
   children: ReactNode;
 }
 
@@ -47,23 +49,31 @@ function CustomProFormList({
 }
 interface CustomProFormTextProps {
   name: NamePath;
-  width: number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs';
-  placeholder: string;
+  width: Width;
+  placeholder: string | any;
+  disabled?: boolean;
+  initialValue?: string;
 }
 
-function CustomProFormText({ name, width, placeholder }: CustomProFormTextProps) {
+function CustomProFormText({
+  name, width, placeholder, disabled, initialValue,
+}: CustomProFormTextProps) {
   return (
-    <ProFormText
-      name={name}
-      width={width}
-      placeholder={placeholder}
-    />
+    <div style={{ display: 'flex' }}>
+      <ProFormText
+        name={name}
+        width={width}
+        placeholder={placeholder}
+        disabled={disabled}
+        initialValue={initialValue}
+      />
+    </div>
   );
 }
 
 const CustomProForm = Object.assign(ProForm, {
-  Text: CustomProFormText,
   List: CustomProFormList,
+  Text: CustomProFormText,
 });
 
 export default CustomProForm;

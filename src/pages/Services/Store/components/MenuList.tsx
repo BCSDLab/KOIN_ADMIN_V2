@@ -6,7 +6,7 @@ import { FormInstance } from 'antd/lib/form';
 import { MenuCategory } from 'model/menus.model';
 import { useState } from 'react';
 import EditMenuModal from './MenuDetailForm';
-// import * as S from './StoreMenus.style';
+import * as S from './MenuList.style';
 
 export default function StoreMenus({ form }: { form: FormInstance }) {
   const menus: MenuCategory[] = form.getFieldValue('menu_categories');
@@ -23,42 +23,42 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
   };
 
   return (
-    <CustomForm
-      labelCol={{ span: 6 }}
-      wrapperCol={{ span: 18 }}
-      form={form}
-      onFinish={onFinish}
-      style={{ maxWidth: '746px' }}
-      autoComplete="off"
-      initialValues={{ items: menus[0].menus }}
-    >
-      <CustomForm.List name="items">
-        {(fields, { add, remove }) => (
-          <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
-            {fields.map((field) => (
-              <>
-                <DeleteOutlined onClick={() => { remove(field.name); }} />
-                <Card
-                  size="small"
-                  title={menus[0].menus[field.name].name}
-                  key={field.key}
-                  extra={(
-                    <PlusCircleOutlined onClick={() => onClick(menus[0].menus[field.name].id)} />
+    <S.Wrap>
+      <CustomForm
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
+        form={form}
+        onFinish={onFinish}
+        autoComplete="off"
+        initialValues={{ items: menus[0].menus }}
+      >
+        <CustomForm.List name="items">
+          {(fields, { add, remove }) => (
+            <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
+              {fields.map((field) => (
+                <S.CardWrap $id={menus[0].menus[field.name].id} $menuId={menuId}>
+                  <Card
+                    size="small"
+                    title={menus[0].menus[field.name].name}
+                    key={field.key}
+                    extra={(
+                      <PlusCircleOutlined onClick={() => onClick(menus[0].menus[field.name].id)} />
                 )}
-                >
-                  {menus[0].menus[field.name].id === menuId
-                    ? <EditMenuModal menuId={menuId} /> : null}
-                </Card>
+                  >
+                    {menus[0].menus[field.name].id === menuId
+                      ? <EditMenuModal menuId={menuId} /> : null}
+                  </Card>
+                  <DeleteOutlined onClick={() => { remove(field.name); }} />
+                </S.CardWrap>
+              ))}
 
-              </>
-            ))}
-
-            <CustomForm.Button type="dashed" onClick={() => add()} block>
-              + 메뉴 추가
-            </CustomForm.Button>
-          </div>
-        )}
-      </CustomForm.List>
-    </CustomForm>
+              <CustomForm.Button type="dashed" onClick={() => add()} block>
+                + 메뉴 추가
+              </CustomForm.Button>
+            </div>
+          )}
+        </CustomForm.List>
+      </CustomForm>
+    </S.Wrap>
   );
 }

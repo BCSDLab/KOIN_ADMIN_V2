@@ -5,7 +5,7 @@ import {
   Button, Divider, Form, Input, Space,
 } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import * as S from './MenuList.style';
+// import * as S from './MenuList.style';
 
 export default function MenuDetailForm({ menuId }:{ menuId: number }) {
   const [form] = CustomForm.useForm();
@@ -17,7 +17,7 @@ export default function MenuDetailForm({ menuId }:{ menuId: number }) {
   console.log(storeMenu);
 
   return (
-    <S.Container>
+    <div>
       {storeMenu && (
         <CustomForm
           form={form}
@@ -67,6 +67,6 @@ export default function MenuDetailForm({ menuId }:{ menuId: number }) {
 
         </CustomForm>
       )}
-    </S.Container>
+    </div>
   );
 }

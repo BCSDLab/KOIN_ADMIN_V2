@@ -89,6 +89,8 @@ interface CustomButtonProps {
   icon?: ReactNode;
   onClick?: () => void;
   htmlType?: 'button' | 'submit' | 'reset';
+  type?: 'link' | 'text' | 'default' | 'dashed' | 'ghost' | 'primary';
+  block?: boolean;
 }
 
 function CustomButton({
@@ -97,15 +99,18 @@ function CustomButton({
   icon,
   onClick,
   htmlType,
+  type,
+  block,
 }: CustomButtonProps) {
   return (
     <S.FormItem>
       <S.StyledButton
         htmlType={htmlType}
-        type="primary"
+        type={type}
         danger={danger}
         icon={icon}
         onClick={onClick}
+        block={block}
       >
         {children}
       </S.StyledButton>

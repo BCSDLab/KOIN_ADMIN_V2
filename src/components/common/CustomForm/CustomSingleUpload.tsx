@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { UploadOutlined } from '@ant-design/icons';
 import {
-  Button, Form, Upload, message,
+  Button, Upload, message,
 } from 'antd';
 import { Domain } from 'model/upload.model';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import { useUploadfileMutation } from 'store/api/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/es/form/Form';
 import { RcFile } from 'antd/lib/upload';
+import * as S from './CustomForm.style';
 
 interface Props {
   form: FormInstance;
@@ -62,7 +63,7 @@ export default function CustomSingleUpload({ form, domain, name }: Props) {
   };
 
   return (
-    <Form.Item name={name}>
+    <S.UploadWrap name={name}>
       <Upload
         listType="picture"
         className="upload-list-inline"
@@ -76,6 +77,6 @@ export default function CustomSingleUpload({ form, domain, name }: Props) {
       >
         <Button icon={<UploadOutlined />}>Upload</Button>
       </Upload>
-    </Form.Item>
+    </S.UploadWrap>
   );
 }

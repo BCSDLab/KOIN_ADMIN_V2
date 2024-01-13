@@ -3,8 +3,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
 import { RoomResponse } from 'model/room.model';
 import { message } from 'antd';
+import * as S from 'styles/List.style';
 import DetailForm from './DetailForm';
-import * as S from '../RoomList.style';
 import useRoomMutation from '../useRoomMutation';
 
 export default function AddRoomModal({ onCancel }: { onCancel: () => void }) {

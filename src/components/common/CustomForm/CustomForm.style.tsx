@@ -53,7 +53,27 @@ export const FormItem = styled(Form.Item)`
   }
 `;
 
-export const FormItemCheckbox = styled(Form.Item)``;
+export const FormItemCheckbox = styled(Form.Item)`
+  margin-bottom: 0;
+  
+  .ant-checkbox {
+    align-self: center;
+    transform: none;
+  }
+
+  .ant-checkbox + span {
+    padding: 10px 39px 10px 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #2c3e50;
+  }
+
+  .ant-checkbox-wrapper {
+    margin-left: 0;
+    align-items: center;
+  }
+
+`;
 
 export const StyledInput = styled(Input)`
   border: rgb(217, 217, 217) solid;
@@ -80,4 +100,14 @@ export const SwitchWrap = styled.h4`
   display: flex;
   gap: 5px;
   margin: 5px 0;
+`;
+
+export const UploadWrap = styled(Form.Item)`
+  margin-top: 40px;
+  margin-left: 30px;
+  .upload-list-inline .ant-upload-list-item {
+    float: left;
+    width: 700px;
+    margin: 15px 0 0 10px;
+  }
 `;

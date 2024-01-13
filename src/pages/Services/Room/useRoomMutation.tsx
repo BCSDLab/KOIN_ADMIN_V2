@@ -12,7 +12,7 @@ export default function useRoomMutation(id: number) {
   const [undeleteRoomMutation] = useUndeleteRoomMutation();
   const navigate = useNavigate();
 
-  function deleteRoom() {
+  const deleteRoom = () => {
     deleteRoomMutation(id)
       .unwrap()
       .then(() => {
@@ -22,9 +22,9 @@ export default function useRoomMutation(id: number) {
       .catch(({ data }) => {
         message.error(data.message);
       });
-  }
+  };
 
-  function updateRoom(formData: Partial<RoomResponse>) {
+  const updateRoom = (formData: Partial<RoomResponse>) => {
     updateRoomMutation({ id, ...formData })
       .unwrap()
       .then(() => {
@@ -34,13 +34,13 @@ export default function useRoomMutation(id: number) {
       .catch(({ data }) => {
         message.error(data.message);
       });
-  }
+  };
 
-  function addRoom(formData: Partial<RoomResponse>, {
+  const addRoom = (formData: Partial<RoomResponse>, {
     onSuccess,
     onError,
-  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) {
-    return addRoomMutation({ ...formData })
+  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
+    addRoomMutation({ ...formData })
       .unwrap()
       .then(() => {
         onSuccess?.();
@@ -48,7 +48,7 @@ export default function useRoomMutation(id: number) {
       .catch(({ data }) => {
         onError?.(data.message);
       });
-  }
+  };
 
   function undeleteRoom() {
     undeleteRoomMutation(id)

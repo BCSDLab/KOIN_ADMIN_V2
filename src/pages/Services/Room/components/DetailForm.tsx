@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-imports */
 import CustomForm from 'components/common/CustomForm';
 import React from 'react';
-import ROOM_OPTION from 'constant/roomOption';
+import ROOM_OPTION from 'constant/room';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import * as S from '../RoomDetail.style';
@@ -65,7 +65,7 @@ export default function DetailForm({ form }: { form: FormInstance }) {
 
       <Divider orientation="left">사진</Divider>
       <S.UploadWrap>
-        <CustomForm.MultipleUpload domain="lands" name="image_urls" form={form} />
+        <CustomForm.SingleUpload domain="lands" name="image_urls" form={form} />
       </S.UploadWrap>
     </>
   );

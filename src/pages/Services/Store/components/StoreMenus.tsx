@@ -42,17 +42,15 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
               <S.ResetMenuListButtonWrap>
                 {action}
                 <CustomForm.Modal
-                  buttonText="상세보기"
-                  title="상세보기"
+                  buttonText="메뉴 상세보기"
+                  title="메뉴 상세보기"
                   width={900}
                   footer={null}
                   open={isModalOpen}
                   onCancel={closeModal}
                   onClick={() => onClick(index.record.id)}
                 >
-                  {
-                    selectedMenuId !== null && <EditAddMenuModal menuId={selectedMenuId} />
-                  }
+                  {selectedMenuId !== null && <EditAddMenuModal menuId={selectedMenuId} />}
                 </CustomForm.Modal>
               </S.ResetMenuListButtonWrap>
             </S.MenuItemsWrap>
@@ -60,32 +58,7 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
         >
           <S.ProFormTextWrap>
             <CustomProForm.Text placeholder="메뉴 이름" width="md" name="name" disabled />
-            <CustomProForm.Text placeholder="단일 메뉴 가격" width="xs" name="single_price" disabled />
-            <S.CardsWrap>
-              <S.TextsWrap>
-                <CustomProForm.List
-                  name="option_prices"
-                  creatorButtonProps={false}
-                  min={1}
-                  deleteIconProps={false}
-                  copyIconProps={false}
-                  // eslint-disable-next-line react/no-unstable-nested-components
-                  itemRender={({ listDom, action }) => (
-                    <S.MenuSizeItemsWrap>
-                      {listDom}
-                      <S.ResetMenuSizeButtonWrap>
-                        {action}
-                      </S.ResetMenuSizeButtonWrap>
-                    </S.MenuSizeItemsWrap>
-                  )}
-                >
-                  <S.TextWrap>
-                    <CustomProForm.Text placeholder="옵션" width="xs" name={['option']} disabled />
-                    <CustomProForm.Text placeholder="가격" width="md" name={['price']} disabled />
-                  </S.TextWrap>
-                </CustomProForm.List>
-              </S.TextsWrap>
-            </S.CardsWrap>
+            <CustomProForm.Text placeholder="단일 메뉴 가격" width="sm" name="single_price" disabled />
           </S.ProFormTextWrap>
         </CustomProForm.List>
       </S.ProFormListWrap>

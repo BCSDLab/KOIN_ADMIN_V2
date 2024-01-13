@@ -33,8 +33,12 @@ export const ProFormTextWrap = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
-`;
 
+  .ant-input[disabled]{
+    font-size: 16px;
+    color: black;
+  }
+`;
 export const ProFormTextDetailWrap = styled.div`
   display: flex;
   flex-direction: column;

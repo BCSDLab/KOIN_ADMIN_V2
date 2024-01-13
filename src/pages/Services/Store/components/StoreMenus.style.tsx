@@ -18,7 +18,7 @@ export const MenuSizeItemsWrap = styled.div`
 
 export const ResetMenuListButtonWrap = styled.div`
   display: flex;
-  borderRadius: 5px;
+  border-radius: 5px;
   margin: 0 auto auto 15px;
   width: 30px;
   height: 40px;

@@ -3,7 +3,6 @@ import CustomForm from 'components/common/CustomForm';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import STORE_OPTION from 'constant/store';
-import MenuList from 'pages/Services/Store/components/MenuList';
 import * as S from '../StoreDetail.style';
 import StoreCategory from './StoreCategory';
 import OpenTimeForm from './OpenTimeForm';
@@ -36,12 +35,10 @@ export default function StoreDetailForm({ form }: { form: FormInstance }) {
           </CustomForm.Checkbox>
         ))}
       </S.CheckboxWrap>
-      <Divider orientation="left">사진</Divider>
+      <Divider orientation="left" style={{ marginTop: '40px' }}>사진</Divider>
       <S.UploadWrap>
         <CustomForm.MultipleUpload domain="lands" name="image_urls" form={form} />
       </S.UploadWrap>
-      <Divider orientation="left">메뉴</Divider>
-      <MenuList form={form} />
     </>
   );
 }

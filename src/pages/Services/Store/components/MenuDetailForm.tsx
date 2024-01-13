@@ -14,7 +14,7 @@ export default function MenuDetailForm({ menuId }:{ menuId: number }) {
     id: Number(id), menuId: Number(menuId),
   });
 
-  console.log(storeMenu);
+  // console.log('storeMenu : ', storeMenu);
 
   return (
     <div>

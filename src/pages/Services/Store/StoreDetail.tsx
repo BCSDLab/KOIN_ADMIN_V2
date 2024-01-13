@@ -17,8 +17,18 @@ export default function StoreDetail() {
   const [menuForm] = CustomForm.useForm();
 
   const onFinish = (values: any) => {
-    console.log('Received values of form:', values);
-    updateStore(values);
+    const updatedValues = { ...values };
+
+    // open만 업데이트 되지않아 재할당함
+    updatedValues.open = storeForm.getFieldValue('open');
+
+    // TODO: 상점 메뉴 수정 로직 추가
+    // console.log('store data', updatedValues);
+    // console.log('menu data', menuForm.getFieldsValue());
+
+    console.log(updatedValues);
+
+    updateStore(updatedValues);
   };
 
   return (

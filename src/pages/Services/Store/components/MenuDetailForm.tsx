@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import {
   Button, Divider, Form, Input, Space,
 } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import * as S from './MenuList.style';
 
 export default function MenuDetailForm({ menuId }:{ menuId: number }) {
@@ -44,7 +44,7 @@ export default function MenuDetailForm({ menuId }:{ menuId: number }) {
                       <Form.Item name={[field.name, 'price']} label="가격">
                         <Input name="price" />
                       </Form.Item>
-                      <CloseOutlined
+                      <DeleteOutlined
                         onClick={() => {
                           remove(field.name);
                         }}
@@ -52,7 +52,7 @@ export default function MenuDetailForm({ menuId }:{ menuId: number }) {
                     </Space>
                   ))}
                   <Button type="dashed" onClick={() => add()} block>
-                    + Add Item
+                    + 옵션 가격 추가
                   </Button>
                 </div>
               )}

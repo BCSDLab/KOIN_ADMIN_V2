@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import CustomForm from 'components/common/CustomForm';
 import { Card } from 'antd';
-import { CloseOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 import { MenuCategory } from 'model/menus.model';
 import { useState } from 'react';
@@ -37,7 +37,7 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
           <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
             {fields.map((field) => (
               <>
-                <CloseOutlined onClick={() => { remove(field.name); }} />
+                <DeleteOutlined onClick={() => { remove(field.name); }} />
                 <Card
                   size="small"
                   title={menus[0].menus[field.name].name}
@@ -54,7 +54,7 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
             ))}
 
             <CustomForm.Button type="dashed" onClick={() => add()} block>
-              + Add Item
+              + 메뉴 추가
             </CustomForm.Button>
           </div>
         )}

@@ -3,49 +3,50 @@ import CustomForm from 'components/common/CustomForm';
 import { Card } from 'antd';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
-import { MenuCategory } from 'model/menus.model';
+import { useParams } from 'react-router-dom';
+import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
-import EditMenuModal from './MenuDetailForm';
 import * as S from './MenuList.style';
+import EditMenuModal from './MenuDetailForm';
 
-export default function StoreMenus({ form }: { form: FormInstance }) {
-  const menus: MenuCategory[] = form.getFieldValue('menu_categories');
+export default function MenuList({ form }: { form: FormInstance }) {
+  const { id } = useParams();
+  const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
+  const menuList = storeMenusData?.menu_categories[0];
 
-  console.log(menus);
+  // const onFinish = (values: any) => {
+  //   console.log('Received values of form:212', values);
+  // };
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form:', values);
-  };
-
-  const onClick = (id: number) => {
-    setMenuId(id);
+  const onClick = (clickMenuId: number) => {
+    setMenuId(clickMenuId);
   };
 
   return (
     <S.Wrap>
+      { menuList && (
       <CustomForm
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
         form={form}
-        onFinish={onFinish}
         autoComplete="off"
-        initialValues={{ items: menus[0].menus }}
+        initialValues={menuList}
       >
-        <CustomForm.List name="items">
+        <CustomForm.List name="menus">
           {(fields, { add, remove }) => (
             <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
               {fields.map((field) => (
-                <S.CardWrap $id={menus[0].menus[field.name].id} $menuId={menuId}>
+                <S.CardWrap $id={menuList.menus[field.name].id} $menuId={menuId}>
                   <Card
                     size="small"
-                    title={menus[0].menus[field.name].name}
+                    title={menuList.menus[field.name].name}
                     key={field.key}
                     extra={(
-                      <PlusCircleOutlined onClick={() => onClick(menus[0].menus[field.name].id)} />
+                      <PlusCircleOutlined onClick={() => onClick(menuList.menus[field.name].id)} />
                 )}
                   >
-                    {menus[0].menus[field.name].id === menuId
+                    {menuList.menus[field.name].id === menuId
                       ? <EditMenuModal menuId={menuId} /> : null}
                   </Card>
                   <DeleteOutlined onClick={() => { remove(field.name); }} />
@@ -59,6 +60,7 @@ export default function StoreMenus({ form }: { form: FormInstance }) {
           )}
         </CustomForm.List>
       </CustomForm>
+      )}
     </S.Wrap>
   );
 }

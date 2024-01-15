@@ -1,61 +1,72 @@
-import CustomProForm from 'components/common/CustomProForm';
-import { Divider, FormInstance } from 'antd';
+import { useGetMenuListQuery } from 'store/api/storeMenu';
 import CustomForm from 'components/common/CustomForm';
-import { UploadOutlined } from '@ant-design/icons';
-import * as S from './StoreMenus.style';
+import { useParams } from 'react-router-dom';
+import {
+  Button, Divider, Form, Input, Space,
+} from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+// import * as S from './MenuList.style';
 
-export default function MenuDetailForm({ form }: { form: FormInstance }) {
+export default function MenuDetailForm({ menuId }:{ menuId: number }) {
+  const [form] = CustomForm.useForm();
+  const { id } = useParams();
+  const { data: storeMenu } = useGetMenuListQuery({
+    id: Number(id), menuId: Number(menuId),
+  });
+
+  // console.log('storeMenu : ', storeMenu);
+
   return (
-    <>
-      <S.ProFormTextDetailWrap>
-        <CustomProForm.Text placeholder="메뉴 이름" width="md" name="name" key="name" />
-        <CustomProForm.Text placeholder="단일 메뉴 가격" width="xs" name="single_price" key="single_price" />
-        <S.CardsWrap>
-          <S.TextsWrap>
-            <CustomProForm.List
-              name="option_prices"
-              creatorButtonProps={{ creatorButtonText: '사이즈 추가', style: { width: 'xs' } }}
-              min={1}
-              deleteIconProps={{ tooltipText: '사이즈 삭제' }}
-              copyIconProps={false}
-                  // eslint-disable-next-line react/no-unstable-nested-components
-              itemRender={({ listDom, action }) => (
-                <S.MenuSizeItemsWrap>
-                  {listDom}
-                  <S.ResetMenuSizeButtonWrap>
-                    {action}
-                  </S.ResetMenuSizeButtonWrap>
-                </S.MenuSizeItemsWrap>
+    <div>
+      {storeMenu && (
+        <CustomForm
+          form={form}
+          initialValues={storeMenu}
+          name="storeMenuDetail"
+        >
+          <Form.Item label="메뉴 이름" name="name">
+            <Input name="name" />
+          </Form.Item>
+          <Form.Item label="단일 메뉴 가격" name="single_price">
+            <Input name="single_price" />
+          </Form.Item>
+
+          {/* 옵션 가격 수정 */}
+          <Form.Item label="옵션 가격">
+            <Form.List name="option_prices">
+              {(fields, { add, remove }) => (
+                <div style={{ display: 'flex', flexDirection: 'column', rowGap: 16 }}>
+                  {fields.map((field) => (
+                    <Space key={field.key}>
+                      <Form.Item name={[field.name, 'option']} label="옵션">
+                        <Input name="option" />
+                      </Form.Item>
+                      <Form.Item name={[field.name, 'price']} label="가격">
+                        <Input name="price" />
+                      </Form.Item>
+                      <DeleteOutlined
+                        onClick={() => {
+                          remove(field.name);
+                        }}
+                      />
+                    </Space>
+                  ))}
+                  <Button type="dashed" onClick={() => add()} block>
+                    + 옵션 가격 추가
+                  </Button>
+                </div>
               )}
-            >
-              <S.TextWrap>
-                <CustomProForm.Text
-                  placeholder="옵션"
-                  width="xs"
-                  name={['option']}
-                  disabled={false}
-                />
-                <CustomProForm.Text
-                  placeholder="가격"
-                  width="md"
-                  name={['price']}
-                  disabled={false}
-                />
-              </S.TextWrap>
-            </CustomProForm.List>
-          </S.TextsWrap>
-        </S.CardsWrap>
-        <CustomProForm.Text placeholder="설명" width="xs" name="description" key="description" />
-      </S.ProFormTextDetailWrap>
-      <Divider orientation="left">사진</Divider>
-      <S.UploadWrap>
-        <CustomForm.MultipleUpload domain="shops" name="image_urls" form={form} />
-      </S.UploadWrap>
-      <S.SubmitButtonWrap>
-        <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
-          완료
-        </CustomForm.Button>
-      </S.SubmitButtonWrap>
-    </>
+            </Form.List>
+          </Form.Item>
+          <Form.Item label="설명" name="description">
+            <Input.TextArea name="description" />
+          </Form.Item>
+
+          <Divider orientation="left">사진</Divider>
+          <CustomForm.MultipleUpload domain="shops" name="image_urls" form={form} />
+
+        </CustomForm>
+      )}
+    </div>
   );
 }

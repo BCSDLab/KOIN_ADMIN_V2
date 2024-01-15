@@ -89,7 +89,7 @@ interface CustomButtonProps {
   icon?: ReactNode;
   onClick?: () => void;
   htmlType?: 'button' | 'submit' | 'reset';
-  type?: 'link' | 'text' | 'default' | 'dashed' | 'ghost' | 'primary';
+  type?: 'link' | 'text' | 'default' | 'dashed' | 'primary';
   block?: boolean;
 }
 

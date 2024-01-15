@@ -23,11 +23,6 @@ export default function StoreDetail() {
     updatedValues.open = storeForm.getFieldValue('open');
 
     // TODO: 상점 메뉴 수정 로직 추가
-    // console.log('store data', updatedValues);
-    // console.log('menu data', menuForm.getFieldsValue());
-
-    console.log(updatedValues);
-
     updateStore(updatedValues);
   };
 

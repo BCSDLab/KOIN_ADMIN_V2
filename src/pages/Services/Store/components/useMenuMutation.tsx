@@ -1,6 +1,5 @@
 import { message } from 'antd';
 import { MenuBody } from 'model/menus.model';
-import { useNavigate } from 'react-router-dom';
 import {
   useAddMenuMutation, useDeleteMenuMutation, useUpdateMenuMutation,
 } from 'store/api/storeMenu';
@@ -9,7 +8,6 @@ export default function useMenuMutation(id:number) {
   const [updateMenuMutation] = useUpdateMenuMutation();
   const [deleteMenuMutation] = useDeleteMenuMutation();
   const [addMenuMutation] = useAddMenuMutation();
-  const navigate = useNavigate();
 
   function deleteMenu(menuId: number) {
     return deleteMenuMutation({ id, menuId })
@@ -25,10 +23,7 @@ export default function useMenuMutation(id:number) {
   function updateMenu(menuId: number, body: MenuBody[]) {
     return updateMenuMutation({ id, menuId, menuData: body })
       .unwrap()
-      .then(() => {
-        message.success('정보 수정이 완료되었습니다.');
-        navigate(-1);
-      })
+      .then(() => {})
       .catch(({ data }) => {
         message.error(data.message);
       });

@@ -20,7 +20,7 @@ export default function useMenuMutation(id:number) {
       });
   }
 
-  function updateMenu(menuId: number, body: MenuBody[]) {
+  function updateMenu(menuId: number, body: MenuBody) {
     return updateMenuMutation({ id, menuId, menuData: body })
       .unwrap()
       .then(() => {})
@@ -29,7 +29,7 @@ export default function useMenuMutation(id:number) {
       });
   }
 
-  function addMenu(menuId: number, body: MenuBody[]) {
+  function addMenu(menuId: number, body: MenuBody) {
     return addMenuMutation({ id, menuId, menuData: body })
       .unwrap()
       .then(() => {

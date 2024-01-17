@@ -16,13 +16,18 @@ export default function MenuList({ form }: { form: FormInstance }) {
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
   const menuList = storeMenusData?.menu_categories[0];
-  const { deleteMenu } = useMenuMutation(Number(id));
+  const { deleteMenu, updateMenu } = useMenuMutation(Number(id));
+  const [menuForm] = CustomForm.useForm();
 
   // const onFinish = (values: any) => {
   //   console.log('Received values of form:212', values);
   // };
 
   const onClick = (selectedMenuId: number) => {
+    if (menuId && selectedMenuId !== menuId) {
+      // 서버 500에러로 테스트 불가
+      updateMenu(menuId, menuForm?.getFieldsValue());
+    }
     setMenuId(selectedMenuId);
   };
 
@@ -37,22 +42,22 @@ export default function MenuList({ form }: { form: FormInstance }) {
         initialValues={menuList}
       >
         <CustomForm.List name="menus">
-          {(fields, { add, remove }) => (
+          {(fields, { remove }) => (
             <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
               {fields.map((field) => (
-                <S.CardWrap $id={menuList.menus[field.name].id} $menuId={menuId}>
+                <S.CardWrap $id={menuList.menus[field.name]?.id} $menuId={menuId}>
                   <Card
                     size="small"
                     title={menuList.menus[field.name].name}
                     key={field.key}
                     extra={(
                       <PlusCircleOutlined
-                        onClick={() => onClick(menuList.menus[field.name].id)}
+                        onClick={() => onClick(menuList.menus[field.name]?.id)}
                       />
                       )}
                   >
                     {menuList.menus[field.name].id === menuId
-                      ? <MenuDetailForm menuId={menuId} /> : null}
+                      && <MenuDetailForm menuId={menuId} form={menuForm} /> }
                   </Card>
                   <DeleteOutlined onClick={() => {
                     remove(field.name);
@@ -61,15 +66,44 @@ export default function MenuList({ form }: { form: FormInstance }) {
                   />
                 </S.CardWrap>
               ))}
-
-              <CustomForm.Button type="dashed" onClick={() => add()} block>
-                + 메뉴 추가
-              </CustomForm.Button>
             </div>
           )}
         </CustomForm.List>
       </CustomForm>
       )}
+      {/* 새로운 메뉴 리스트 */}
+      {/* <CustomForm.List name="new_menu">
+        {(fields, { remove, add }) => (
+          <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
+            {fields.map((field) => (
+              <>
+                <S.CardWrap $id={field.key} $menuId={menuId}>
+                  <Card
+                    size="small"
+                    key={field.key}
+                    extra={(
+                      <PlusCircleOutlined
+                        onClick={() => onClick(field.key)}
+                      />
+                      )}
+                  >
+                    <MenuDetailForm />
+                  </Card>
+                  <DeleteOutlined onClick={() => {
+                    remove(field.name);
+                  }}
+                  />
+                </S.CardWrap>
+                <Form.Item>
+                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                    Add field
+                  </Button>
+                </Form.Item>
+              </>
+            ))}
+          </div>
+        )}
+      </CustomForm.List> */}
     </S.Wrap>
   );
 }

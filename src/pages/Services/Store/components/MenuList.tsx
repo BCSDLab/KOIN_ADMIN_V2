@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 /* eslint-disable react-hooks/rules-of-hooks */
 import CustomForm from 'components/common/CustomForm';
 import { Card } from 'antd';
@@ -7,20 +8,22 @@ import { useParams } from 'react-router-dom';
 import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
 import * as S from './MenuList.style';
-import EditMenuModal from './MenuDetailForm';
+import MenuDetailForm from './MenuDetailForm';
+import useMenuMutation from './useMenuMutation';
 
 export default function MenuList({ form }: { form: FormInstance }) {
   const { id } = useParams();
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
   const menuList = storeMenusData?.menu_categories[0];
+  const { deleteMenu } = useMenuMutation(Number(id));
 
   // const onFinish = (values: any) => {
   //   console.log('Received values of form:212', values);
   // };
 
-  const onClick = (clickMenuId: number) => {
-    setMenuId(clickMenuId);
+  const onClick = (selectedMenuId: number) => {
+    setMenuId(selectedMenuId);
   };
 
   return (
@@ -43,13 +46,19 @@ export default function MenuList({ form }: { form: FormInstance }) {
                     title={menuList.menus[field.name].name}
                     key={field.key}
                     extra={(
-                      <PlusCircleOutlined onClick={() => onClick(menuList.menus[field.name].id)} />
-                )}
+                      <PlusCircleOutlined
+                        onClick={() => onClick(menuList.menus[field.name].id)}
+                      />
+                      )}
                   >
                     {menuList.menus[field.name].id === menuId
-                      ? <EditMenuModal menuId={menuId} /> : null}
+                      ? <MenuDetailForm menuId={menuId} /> : null}
                   </Card>
-                  <DeleteOutlined onClick={() => { remove(field.name); }} />
+                  <DeleteOutlined onClick={() => {
+                    remove(field.name);
+                    deleteMenu(menuList.menus[field.name].id);
+                  }}
+                  />
                 </S.CardWrap>
               ))}
 

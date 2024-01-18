@@ -35,7 +35,6 @@ export const ownerApi = createApi({
           };
         });
         const totalPage = ownersResponse.total_page;
-        console.log(tableHeaders);
         return { owners: tableHeaders, totalPage };
       },
     }),

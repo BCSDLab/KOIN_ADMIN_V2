@@ -2,16 +2,21 @@ import { useGetMenuListQuery } from 'store/api/storeMenu';
 import CustomForm from 'components/common/CustomForm';
 import { useParams } from 'react-router-dom';
 import {
-  Button, Divider, Form, Input, Space,
+  Button, Checkbox, Divider, Form, Input, Space,
 } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { FormInstance } from 'antd/lib/form';
+import { useLayoutEffect } from 'react';
 // import * as S from './MenuList.style';
 
-export default function MenuDetailForm({ menuId }:{ menuId: number }) {
-  const [form] = CustomForm.useForm();
+export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: FormInstance }) {
   const { id } = useParams();
   const { data: storeMenu } = useGetMenuListQuery({
-    id: Number(id), menuId: Number(menuId),
+    id: Number(id), menuId,
+  });
+
+  useLayoutEffect(() => {
+    form.setFieldsValue(storeMenu);
   });
 
   // console.log('storeMenu : ', storeMenu);
@@ -24,8 +29,12 @@ export default function MenuDetailForm({ menuId }:{ menuId: number }) {
           initialValues={storeMenu}
           name="storeMenuDetail"
         >
+          <Form.Item label="카테고리 id" name="category_ids" />
           <Form.Item label="메뉴 이름" name="name">
             <Input name="name" />
+          </Form.Item>
+          <Form.Item name="is_single">
+            <Checkbox>단일 메뉴</Checkbox>
           </Form.Item>
           <Form.Item label="단일 메뉴 가격" name="single_price">
             <Input name="single_price" />

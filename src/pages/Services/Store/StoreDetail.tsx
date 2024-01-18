@@ -4,7 +4,7 @@ import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icon
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import { useGetStoreQuery } from 'store/api/store';
-import useStoreMutation from './useStoreMutation';
+import useStoreMutation from './components/useStoreMutation';
 import * as S from './StoreDetail.style';
 import StoreDetailForm from './components/StoreDetailForm';
 import MenuList from './components/MenuList';

@@ -34,7 +34,7 @@ export const storeMenuApi = createApi({
       ),
     }),
 
-    getMenuList: builder.query<MenuResponse, MutationMenuArgs>({
+    getMenuList: builder.query<MenuResponse, { id: number; menuId: number }>({
       query: ({ id: shopId, menuId }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'GET',

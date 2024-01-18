@@ -59,9 +59,9 @@ export default function MenuList({ form }: { form: FormInstance }) {
                     {menuList.menus[field.name].id === menuId
                       && <MenuDetailForm menuId={menuId} form={menuForm} /> }
                   </Card>
-                  <DeleteOutlined onClick={() => {
+                  <DeleteOutlined onClick={async () => {
+                    await deleteMenu(menuList.menus[field.name].id);
                     remove(field.name);
-                    deleteMenu(menuList.menus[field.name].id);
                   }}
                   />
                 </S.CardWrap>

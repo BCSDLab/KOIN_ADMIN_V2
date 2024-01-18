@@ -30,7 +30,7 @@ export interface OwnerTableHeader {
 }
 
 export interface OwnerListResponse {
-  ownerList: OwnerTableHeader[];
+  owners: OwnerTableHeader[];
   totalPage: number;
 }
 

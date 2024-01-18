@@ -6,13 +6,13 @@ import * as S from './OwnerList.style';
 function ManagerRequest() {
   const [page, setPage] = useState(1);
   const { data: ownersRes } = useGetOwnerListQuery({ page });
-  // console.log(ownersRes);
+
   return (
     <S.Container>
       <S.Heading>사장님 권한 요청 목록</S.Heading>
       {ownersRes && (
       <CustomTable
-        data={ownersRes.ownerList}
+        data={ownersRes.owners}
         pagination={{
           current: page,
           onChange: setPage,

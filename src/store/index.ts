@@ -9,6 +9,7 @@ import { uploadApi } from './api/upload';
 import { storeApi } from './api/store';
 import { categoryApi } from './api/category';
 import { storeMenuApi } from './api/storeMenu';
+import { ownerApi } from './api/owner';
 
 const apiList = [
   authApi,
@@ -19,6 +20,7 @@ const apiList = [
   storeApi,
   categoryApi,
   storeMenuApi,
+  ownerApi,
 ];
 
 const apiMiddleware = apiList.map((api) => api.middleware);

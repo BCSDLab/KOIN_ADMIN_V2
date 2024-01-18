@@ -9,7 +9,7 @@ export default function DetailForm() {
         <CustomForm.Input label="회원 유형" name="user_type" disabled />
         <CustomForm.Input label="별명" name="nickname" disabled />
         <CustomForm.Input label="성별" name="gender" disabled />
-        <CustomForm.Input label="전화번호" name="phone" disabled />
+        <CustomForm.Input label="전화번호" name="phone_number" disabled />
         <CustomForm.Input label="이메일" name="email" disabled />
       </CustomForm.GridRow>
       <CustomForm.Input label="사업자 등록 번호" name="company_registration_number" disabled />

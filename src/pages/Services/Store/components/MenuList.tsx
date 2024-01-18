@@ -23,7 +23,7 @@ export default function MenuList({ form }: { form: FormInstance }) {
   //   console.log('Received values of form:212', values);
   // };
 
-  const onClick = (selectedMenuId: number) => {
+  const handleClick = (selectedMenuId: number) => {
     if (menuId && selectedMenuId !== menuId) {
       // 서버 500에러로 테스트 불가
       updateMenu(menuId, menuForm?.getFieldsValue());
@@ -52,7 +52,7 @@ export default function MenuList({ form }: { form: FormInstance }) {
                     key={field.key}
                     extra={(
                       <PlusCircleOutlined
-                        onClick={() => onClick(menuList.menus[field.name]?.id)}
+                        onClick={() => handleClick(menuList.menus[field.name]?.id)}
                       />
                       )}
                   >

@@ -47,9 +47,6 @@ export default function StoreDetail() {
             <Divider orientation="left" style={{ marginTop: '40px', marginBottom: '40px' }}>메뉴</Divider>
             <MenuList form={menuForm} />
             <S.ButtonWrap>
-              <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
-                완료
-              </CustomForm.Button>
               {storeData?.is_deleted
                 ? (
                   <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteStore}>
@@ -61,6 +58,9 @@ export default function StoreDetail() {
                     삭제
                   </CustomForm.Button>
                 )}
+              <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
+                완료
+              </CustomForm.Button>
             </S.ButtonWrap>
           </CustomForm>
         </S.FormWrap>

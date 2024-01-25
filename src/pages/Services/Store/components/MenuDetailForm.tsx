@@ -34,7 +34,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: 
           initialValues={storeMenu}
           name="storeMenuDetail"
         >
-          <Form.Item label="카테고리 id" name="category_ids">
+          <Form.Item label="카테고리" name="category_ids">
             <Checkbox.Group
               options={options}
               defaultValue={storeMenu.category_ids}

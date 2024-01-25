@@ -23,7 +23,6 @@ export default function MenuList({ form }: { form: FormInstance }) {
     if (menuId && selectedMenuId !== menuId) {
       // 서버 500에러로 테스트 불가
       updateMenu(menuId, menuForm?.getFieldsValue());
-      console.log(menuForm?.getFieldsValue());
     }
     setMenuId(selectedMenuId);
   };

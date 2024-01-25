@@ -46,7 +46,7 @@ export const storeMenuApi = createApi({
       query: ({ id: shopId, menuId, menuData: body }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'PUT',
-        ...body,
+        body,
       }),
       invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
     }),

@@ -22,7 +22,7 @@ export const ownerApi = createApi({
     getOwnerList: builder.query<OwnerListResponse, OwnersParam>({
       query: ({ page }) => `admin/users/new-owners/?page=${page}`,
       providesTags: (result) => (result
-        ? [...result.ownerList.map((owner) => ({ type: 'owner' as const, id: owner.id })), { type: 'owners', id: 'LIST' }]
+        ? [...result.owners.map((owner) => ({ type: 'owner' as const, id: owner.id })), { type: 'owners', id: 'LIST' }]
         : [{ type: 'owners', id: 'LIST' }]),
       transformResponse: (ownersResponse: OwnersResponse):OwnerListResponse => {
         const tableHeaders = ownersResponse.owners.map((owner) => {
@@ -35,7 +35,7 @@ export const ownerApi = createApi({
           };
         });
         const totalPage = ownersResponse.total_page;
-        return { ownerList: tableHeaders, totalPage };
+        return { owners: tableHeaders, totalPage };
       },
     }),
 

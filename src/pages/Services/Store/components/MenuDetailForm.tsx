@@ -26,8 +26,6 @@ export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: 
     value: category.id,
   }));
 
-  console.log('Options : ', options);
-
   return (
     <div>
       {storeMenu && (
@@ -39,7 +37,6 @@ export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: 
           <Form.Item label="카테고리 id" name="category_ids">
             <Checkbox.Group
               options={options}
-              disabled
               defaultValue={storeMenu.category_ids}
             />
           </Form.Item>

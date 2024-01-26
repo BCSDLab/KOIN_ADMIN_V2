@@ -3,6 +3,7 @@ import { Divider, Select, TimePicker } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import { StoreOpen } from 'model/store.model';
 import { useState } from 'react';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import CustomForm from 'components/common/CustomForm';
 import dayjs from 'dayjs';
 import * as S from '../StoreDetail.style';
@@ -23,10 +24,11 @@ const TABLE_TYPES = {
   },
 };
 
+dayjs.extend(customParseFormat);
+
 function OpenTimeForm({ form } : { form: FormInstance }) {
   const openTimeInfo: StoreOpen[] = form.getFieldValue('open');
   const [selectType, setSelectType] = useState<keyof typeof TABLE_TYPES>('직접 지정');
-
   const handleTimeFormChange = (index: number, key: keyof StoreOpen, value: string | boolean) => {
     const selected = TABLE_TYPES[selectType];
     for (let i = 0; i < selected.colSize[index]; i += 1) {

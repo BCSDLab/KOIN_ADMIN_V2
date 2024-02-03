@@ -82,8 +82,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: 
           </Form.Item>
 
           <Divider orientation="left">사진</Divider>
-          <CustomForm.MultipleUpload domain="shops" name="image_urls" form={form} />
-
+          <CustomForm.MultipleUpload domain="market" name="image_urls" form={form} />
         </CustomForm>
       )}
     </div>

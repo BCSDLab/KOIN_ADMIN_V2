@@ -6,7 +6,6 @@ import {
 } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
-import { useLayoutEffect } from 'react';
 import { useGetMenuCategoriesQuery } from 'store/api/storeMenu/category';
 import { MenuCategory } from 'model/menuCategory';
 
@@ -16,10 +15,9 @@ export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: 
     id: Number(id), menuId,
   });
   const { data: menuCategories } = useGetMenuCategoriesQuery(Number(id));
-
-  useLayoutEffect(() => {
-    form.setFieldsValue(storeMenu);
-  });
+  // form 초기화
+  form.setFieldsValue(storeMenu);
+  form.setFieldValue('image_urls', storeMenu?.image_urls);
 
   const options = menuCategories?.menu_categories.map((category: MenuCategory) => ({
     label: category.name,
@@ -82,8 +80,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: 
           </Form.Item>
 
           <Divider orientation="left">사진</Divider>
-          <CustomForm.MultipleUpload domain="shops" name="image_urls" form={form} />
-
+          <CustomForm.MultipleUpload domain="market" name="image_urls" form={form} />
         </CustomForm>
       )}
     </div>

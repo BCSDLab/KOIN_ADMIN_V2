@@ -24,8 +24,8 @@ export default function useMenuMutation(id:number) {
     return updateMenuMutation({ id, menuId, menuData: body })
       .unwrap()
       .then(() => {})
-      .catch(({ data }) => {
-        message.error(data.message);
+      .catch(() => {
+        message.error('메뉴 수정에 실패했습니다.');
       });
   }
 

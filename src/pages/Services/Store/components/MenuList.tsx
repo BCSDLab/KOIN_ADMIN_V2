@@ -3,7 +3,6 @@
 import CustomForm from 'components/common/CustomForm';
 import { Card } from 'antd';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { FormInstance } from 'antd/lib/form';
 import { useParams } from 'react-router-dom';
 import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
@@ -11,7 +10,7 @@ import * as S from './MenuList.style';
 import MenuDetailForm from './MenuDetailForm';
 import useMenuMutation from './useMenuMutation';
 
-export default function MenuList({ form }: { form: FormInstance }) {
+export default function MenuList() {
   const { id } = useParams();
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
@@ -21,7 +20,6 @@ export default function MenuList({ form }: { form: FormInstance }) {
 
   const handleClick = (selectedMenuId: number) => {
     if (menuId && selectedMenuId) {
-      // 서버 500에러로 테스트 불가
       updateMenu(menuId, menuForm?.getFieldsValue());
     }
     if (selectedMenuId === menuId) {
@@ -37,7 +35,6 @@ export default function MenuList({ form }: { form: FormInstance }) {
       <CustomForm
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
-        form={form}
         autoComplete="off"
         initialValues={menuList}
       >

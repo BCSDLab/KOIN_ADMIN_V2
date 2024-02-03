@@ -1,6 +1,7 @@
+import { FormInstance } from 'antd';
 import CustomForm from 'components/common/CustomForm';
 
-export default function DetailForm() {
+export default function DetailForm({ form }: { form: FormInstance }) {
   return (
     <>
       <CustomForm.Input label="id" name="id" disabled />
@@ -14,7 +15,7 @@ export default function DetailForm() {
       </CustomForm.GridRow>
       <CustomForm.Input label="사업자 등록 번호" name="company_registration_number" disabled />
       <CustomForm.Input label="가게 정보" name="shops_id" disabled />
-      <CustomForm.Input label="첨부자료" name="attachments_id" disabled />
+      <CustomForm.MultipleUpload name="attachments_url" domain="owners" form={form} />
     </>
   );
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { UploadOutlined } from '@ant-design/icons';
 import {
-  Button, Upload, message,
+  Button, Modal, Upload, message,
 } from 'antd';
 import { Domain } from 'model/upload.model';
 import { useState } from 'react';
@@ -27,10 +27,30 @@ const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
 };
 
 export default function CustomMultipleUpload({ form, domain, name }: Props) {
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
   const [uploadFile] = useUploadfileMutation();
   const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name));
   let convertedFileList: UploadFile[] = [];
   convertedFileList = uploadFileList?.map(convertUploadFile);
+
+  const getBase64 = (file: any): Promise<string> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+
+  const handleCancel = () => setPreviewOpen(false);
+
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewOpen(true);
+  };
 
   const handleUpload = (file: RcFile) => {
     const image = new FormData();
@@ -73,9 +93,13 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
         customRequest={() => {}}
         onRemove={removeUpload}
         fileList={convertedFileList}
+        onPreview={handlePreview}
       >
         <Button icon={<UploadOutlined />}>Upload</Button>
       </Upload>
+      <Modal open={previewOpen} footer={null} onCancel={handleCancel}>
+        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+      </Modal>
     </S.UploadWrap>
   );
 }

@@ -33,7 +33,7 @@ export default function OwnerDetail() {
               initialValues={ownerData}
             >
               <Divider orientation="left">기본 정보</Divider>
-              <DetailForm />
+              <DetailForm form={form} />
               <S.ButtonWrap>
                 <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                   승인

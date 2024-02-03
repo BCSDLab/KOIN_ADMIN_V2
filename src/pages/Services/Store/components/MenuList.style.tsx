@@ -28,4 +28,8 @@ export const CardWrap = styled.div<{ $id: number; $menuId?: number; }>`
       padding: 38px;
       display: ${(props) => (props.$id === props.$menuId ? 'block' : 'none')}
     }
+
+    .upload-list-inline .ant-upload-list-item {
+      width: 100%;
+    }
 `;

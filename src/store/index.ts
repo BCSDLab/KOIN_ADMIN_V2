@@ -9,6 +9,7 @@ import { uploadApi } from './api/upload';
 import { storeApi } from './api/store';
 import { categoryApi } from './api/category';
 import { storeMenuApi } from './api/storeMenu';
+import { menuCategoriesApi } from './api/storeMenu/category';
 import { ownerApi } from './api/owner';
 
 const apiList = [
@@ -20,6 +21,7 @@ const apiList = [
   storeApi,
   categoryApi,
   storeMenuApi,
+  menuCategoriesApi,
   ownerApi,
 ];
 

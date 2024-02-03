@@ -7,19 +7,24 @@ import {
 import { DeleteOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 import { useLayoutEffect } from 'react';
-// import * as S from './MenuList.style';
+import { useGetMenuCategoriesQuery } from 'store/api/storeMenu/category';
+import { MenuCategory } from 'model/menuCategory';
 
 export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: FormInstance }) {
   const { id } = useParams();
   const { data: storeMenu } = useGetMenuListQuery({
     id: Number(id), menuId,
   });
+  const { data: menuCategories } = useGetMenuCategoriesQuery(Number(id));
 
   useLayoutEffect(() => {
     form.setFieldsValue(storeMenu);
   });
 
-  // console.log('storeMenu : ', storeMenu);
+  const options = menuCategories?.menu_categories.map((category: MenuCategory) => ({
+    label: category.name,
+    value: category.id,
+  }));
 
   return (
     <div>
@@ -29,11 +34,16 @@ export default function MenuDetailForm({ menuId, form }:{ menuId: number, form: 
           initialValues={storeMenu}
           name="storeMenuDetail"
         >
-          <Form.Item label="카테고리 id" name="category_ids" />
+          <Form.Item label="카테고리" name="category_ids">
+            <Checkbox.Group
+              options={options}
+              defaultValue={storeMenu.category_ids}
+            />
+          </Form.Item>
           <Form.Item label="메뉴 이름" name="name">
             <Input name="name" />
           </Form.Item>
-          <Form.Item name="is_single">
+          <Form.Item name="is_single" valuePropName="checked">
             <Checkbox>단일 메뉴</Checkbox>
           </Form.Item>
           <Form.Item label="단일 메뉴 가격" name="single_price">

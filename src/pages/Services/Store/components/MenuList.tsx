@@ -20,10 +20,13 @@ export default function MenuList({ form }: { form: FormInstance }) {
   const [menuForm] = CustomForm.useForm();
 
   const handleClick = (selectedMenuId: number) => {
-    if (menuId && selectedMenuId !== menuId) {
+    if (menuId && selectedMenuId) {
       // 서버 500에러로 테스트 불가
       updateMenu(menuId, menuForm?.getFieldsValue());
-      console.log(menuForm?.getFieldsValue());
+    }
+    if (selectedMenuId === menuId) {
+      setMenuId(undefined);
+      return;
     }
     setMenuId(selectedMenuId);
   };
@@ -56,10 +59,12 @@ export default function MenuList({ form }: { form: FormInstance }) {
                     {menuList.menus[field.name].id === menuId
                       && <MenuDetailForm menuId={menuId} form={menuForm} /> }
                   </Card>
-                  <DeleteOutlined onClick={async () => {
-                    await deleteMenu(menuList.menus[field.name].id);
-                    remove(field.name);
-                  }}
+                  <DeleteOutlined
+                    onClick={async () => {
+                      await deleteMenu(menuList.menus[field.name].id);
+                      remove(field.name);
+                    }}
+                    style={{ marginTop: 12 }}
                   />
                 </S.CardWrap>
               ))}

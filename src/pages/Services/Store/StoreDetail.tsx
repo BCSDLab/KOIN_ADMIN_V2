@@ -14,7 +14,6 @@ export default function StoreDetail() {
   const { data: storeData } = useGetStoreQuery(Number(id));
   const { updateStore, deleteStore, undeleteStore } = useStoreMutation(Number(id));
   const [storeForm] = CustomForm.useForm();
-  const [menuForm] = CustomForm.useForm();
 
   const onFinish = (values: any) => {
     const updatedValues = { ...values };
@@ -45,7 +44,7 @@ export default function StoreDetail() {
             <StoreDetailForm form={storeForm} />
 
             <Divider orientation="left" style={{ marginTop: '40px', marginBottom: '40px' }}>메뉴</Divider>
-            <MenuList form={menuForm} />
+            <MenuList />
             <S.ButtonWrap>
               {storeData?.is_deleted
                 ? (

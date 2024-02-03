@@ -110,4 +110,10 @@ export const UploadWrap = styled(Form.Item)`
     width: 700px;
     margin: 15px 0 0 10px;
   }
+
+
+  .ant-modal .ant-modal-content{
+    width: 50vw;
+    right: 10vw;
+  }
 `;

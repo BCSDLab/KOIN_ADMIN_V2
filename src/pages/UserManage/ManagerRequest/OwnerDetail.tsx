@@ -19,7 +19,7 @@ export default function OwnerDetail() {
   const [form] = CustomForm.useForm();
 
   return (
-    <S.Container>
+    <S.Wrap>
       {ownerData && (
         <>
           <DetailHeading>Owner Detail</DetailHeading>
@@ -33,7 +33,7 @@ export default function OwnerDetail() {
               initialValues={ownerData}
             >
               <Divider orientation="left">기본 정보</Divider>
-              <DetailForm />
+              <DetailForm form={form} />
               <S.ButtonWrap>
                 <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
                   승인
@@ -47,7 +47,7 @@ export default function OwnerDetail() {
           </S.FormWrap>
         </>
       )}
-    </S.Container>
+    </S.Wrap>
 
   );
 }

@@ -19,7 +19,7 @@ export default function OwnerDetail() {
   const [form] = CustomForm.useForm();
 
   return (
-    <S.Container>
+    <S.Wrap>
       {ownerData && (
         <>
           <DetailHeading>Owner Detail</DetailHeading>
@@ -47,7 +47,7 @@ export default function OwnerDetail() {
           </S.FormWrap>
         </>
       )}
-    </S.Container>
+    </S.Wrap>
 
   );
 }

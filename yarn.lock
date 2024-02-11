@@ -3287,15 +3287,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/redux-logger@npm:^3.0.9":
-  version: 3.0.13
-  resolution: "@types/redux-logger@npm:3.0.13"
-  dependencies:
-    redux: ^5.0.0
-  checksum: fb8386c6a0940a3b3864039b5ceb420c5f75186e9ad2b166820e27201b3b0ca6a387bcb766d778343f69b1af768c624911e62e6bca19392e9d5b89c524ef176c
-  languageName: node
-  linkType: hard
-
 "@types/resolve@npm:1.17.1":
   version: 1.17.1
   resolution: "@types/resolve@npm:1.17.1"
@@ -5641,13 +5632,6 @@ __metadata:
   version: 0.7.0
   resolution: "dedent@npm:0.7.0"
   checksum: 87de191050d9a40dd70cad01159a0bcf05ecb59750951242070b6abf9569088684880d00ba92a955b4058804f16eeaf91d604f283929b4f614d181cd7ae633d2
-  languageName: node
-  linkType: hard
-
-"deep-diff@npm:^0.3.5":
-  version: 0.3.8
-  resolution: "deep-diff@npm:0.3.8"
-  checksum: 8a0fb6cbe468e50211836f8daa1c14798b2d7436bfbcb7d8eb0902e0d61bf1dfd48d5b9edd46a10596182b90ad25f87461b8e55111ff9257b6067ad0676f79c9
   languageName: node
   linkType: hard
 
@@ -9284,7 +9268,6 @@ __metadata:
     "@types/node": ^16.7.13
     "@types/react": ^18.0.0
     "@types/react-dom": ^18.0.0
-    "@types/redux-logger": ^3.0.9
     "@types/sha256": ^0.2.0
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.37.0
@@ -9307,7 +9290,6 @@ __metadata:
     react-router-dom: ^6.4.0
     react-scripts: 5.0.1
     redux: ^4.2.0
-    redux-logger: ^3.0.6
     sha256: ^0.2.0
     styled-components: ^6.1.8
     typescript: ^4.4.2
@@ -12392,15 +12374,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-logger@npm:^3.0.6":
-  version: 3.0.6
-  resolution: "redux-logger@npm:3.0.6"
-  dependencies:
-    deep-diff: ^0.3.5
-  checksum: c40f63c44c6475cf6374ae0eaa810d913f142614cb80692a0beacaf135c5dc3eb3e2cdd4296f01446ba48cb69b82e81363b84d829f1f6659382c991022a814ac
-  languageName: node
-  linkType: hard
-
 "redux-thunk@npm:^2.4.2":
   version: 2.4.2
   resolution: "redux-thunk@npm:2.4.2"
@@ -12416,13 +12389,6 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.9.2
   checksum: f63b9060c3a1d930ae775252bb6e579b42415aee7a23c4114e21a0b4ba7ec12f0ec76936c00f546893f06e139819f0e2855e0d55ebfce34ca9c026241a6950dd
-  languageName: node
-  linkType: hard
-
-"redux@npm:^5.0.0":
-  version: 5.0.1
-  resolution: "redux@npm:5.0.1"
-  checksum: e74affa9009dd5d994878b9a1ce30d6569d986117175056edb003de2651c05b10fe7819d6fa94aea1a94de9a82f252f986547f007a2fbeb35c317a2e5f5ecf2c
   languageName: node
   linkType: hard
 

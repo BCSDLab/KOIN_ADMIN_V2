@@ -3560,7 +3560,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:5.62.0, @typescript-eslint/utils@npm:^5.58.0":
+"@typescript-eslint/utils@npm:5.62.0, @typescript-eslint/utils@npm:^5.10.0, @typescript-eslint/utils@npm:^5.58.0":
   version: 5.62.0
   resolution: "@typescript-eslint/utils@npm:5.62.0"
   dependencies:
@@ -6489,6 +6489,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-jest@npm:^27.6.3":
+  version: 27.6.3
+  resolution: "eslint-plugin-jest@npm:27.6.3"
+  dependencies:
+    "@typescript-eslint/utils": ^5.10.0
+  peerDependencies:
+    "@typescript-eslint/eslint-plugin": ^5.0.0 || ^6.0.0
+    eslint: ^7.0.0 || ^8.0.0
+    jest: "*"
+  peerDependenciesMeta:
+    "@typescript-eslint/eslint-plugin":
+      optional: true
+    jest:
+      optional: true
+  checksum: e22e8dbd941b34bb95958f035ffabb94114506b294e74d6e411bc85bc9dc57888ffd3ebb5c28316a8b7cc9d391cca35557acc64bf815f48d1dcc5ea3d28fa43a
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-jsx-a11y@npm:^6.5.1, eslint-plugin-jsx-a11y@npm:^6.6.1":
   version: 6.8.0
   resolution: "eslint-plugin-jsx-a11y@npm:6.8.0"
@@ -9279,6 +9297,7 @@ __metadata:
     eslint-config-airbnb-typescript: ^17.0.0
     eslint-import-resolver-typescript: ^3.5.1
     eslint-plugin-import: ^2.26.0
+    eslint-plugin-jest: ^27.6.3
     eslint-plugin-jsx-a11y: ^6.6.1
     eslint-plugin-react: ^7.31.8
     eslint-plugin-react-hooks: ^4.6.0

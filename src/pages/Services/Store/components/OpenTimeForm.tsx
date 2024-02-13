@@ -3,8 +3,8 @@ import { Divider, Select, TimePicker } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import { StoreOpen } from 'model/store.model';
 import { useState } from 'react';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import CustomForm from 'components/common/CustomForm';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 import * as S from '../StoreDetail.style';
 
@@ -26,7 +26,7 @@ const TABLE_TYPES = {
 
 dayjs.extend(customParseFormat);
 
-function OpenTimeForm({ form } : { form: FormInstance }) {
+function OpenTimeForm({ form } : { form: FormInstance | any }) {
   const openTimeInfo: StoreOpen[] = form.getFieldValue('open');
   const [selectType, setSelectType] = useState<keyof typeof TABLE_TYPES>('직접 지정');
   const handleTimeFormChange = (index: number, key: keyof StoreOpen, value: string | string[]) => {
@@ -49,16 +49,19 @@ function OpenTimeForm({ form } : { form: FormInstance }) {
       <S.OpenTimeTable>
         <S.OpenTimeRow>
           <S.OpenTableHead>구분</S.OpenTableHead>
-          {openTimeInfo.map((info, index) => (
+          {openTimeInfo?.map((info, index) => (
             <S.OpenTableHead key={info.day_of_week}>{DAYS[index]}</S.OpenTableHead>
           ))}
         </S.OpenTimeRow>
 
         <S.OpenTimeRow>
           <S.OpenTimeColHead>휴무 여부</S.OpenTimeColHead>
-          {openTimeInfo.map((info, index) => (
+          {openTimeInfo?.map((info, index) => (
             <S.TableData key={info.day_of_week} colSize={1}>
-              <CustomForm.Checkbox name={['open', index, 'closed']} onChange={(e) => form.setFieldValue(['open', index, 'closed'], e.target.checked)} />
+              <CustomForm.Checkbox
+                name={['open', index, 'closed']}
+                onChange={(e) => form.setFieldValue(['open', index, 'closed'], e.target.checked)}
+              />
             </S.TableData>
           ))}
         </S.OpenTimeRow>
@@ -82,7 +85,7 @@ function OpenTimeForm({ form } : { form: FormInstance }) {
 
         <S.OpenTimeRow>
           <S.OpenTimeColHead>마감 시간</S.OpenTimeColHead>
-          {TABLE_TYPES[selectType].dateList.map((date, index) => (
+          {TABLE_TYPES[selectType]?.dateList?.map((date, index) => (
             <S.TableData key={date} colSize={TABLE_TYPES[selectType].colSize[index]}>
               <TimePicker
                 minuteStep={10}

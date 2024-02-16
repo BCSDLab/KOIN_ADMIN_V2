@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-imports */
 import { Divider, Select, TimePicker } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
-import { StoreOpen } from 'model/store.model';
+import { DAY, StoreOpen } from 'model/store.model';
 import { useState } from 'react';
 import CustomForm from 'components/common/CustomForm';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -24,10 +24,20 @@ const TABLE_TYPES = {
   },
 };
 
+const defaultTimeInfo = DAYS.map((day, index) => {
+  return (
+    {
+      close_time: '00:00',
+      closed: false,
+      day_of_week: DAY[index],
+      open_time: '00:00',
+    });
+});
+
 dayjs.extend(customParseFormat);
 
 function OpenTimeForm({ form } : { form: FormInstance }) {
-  const openTimeInfo: StoreOpen[] = form.getFieldValue('open');
+  const openTimeInfo: StoreOpen[] = form.getFieldValue('open') ?? defaultTimeInfo;
   const [selectType, setSelectType] = useState<keyof typeof TABLE_TYPES>('직접 지정');
   const handleTimeFormChange = (index: number, key: keyof StoreOpen, value: string | string[]) => {
     const selected = TABLE_TYPES[selectType];
@@ -50,14 +60,14 @@ function OpenTimeForm({ form } : { form: FormInstance }) {
         <S.OpenTimeRow>
           <S.OpenTableHead>구분</S.OpenTableHead>
           {openTimeInfo?.map((info, index) => (
-            <S.OpenTableHead key={info.day_of_week}>{DAYS[index]}</S.OpenTableHead>
+            <S.OpenTableHead>{DAYS[index]}</S.OpenTableHead>
           ))}
         </S.OpenTimeRow>
 
         <S.OpenTimeRow>
           <S.OpenTimeColHead>휴무 여부</S.OpenTimeColHead>
           {openTimeInfo?.map((info, index) => (
-            <S.TableData key={info.day_of_week} colSize={1}>
+            <S.TableData colSize={1}>
               <CustomForm.Checkbox
                 name={['open', index, 'closed']}
                 onChange={(e) => form.setFieldValue(['open', index, 'closed'], e.target.checked)}

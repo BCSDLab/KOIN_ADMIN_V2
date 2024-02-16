@@ -15,7 +15,7 @@ export default function MenuList() {
   const { id } = useParams();
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
-  const menuList = storeMenusData?.menu_categories[0];
+  const defaultMenuList = storeMenusData?.menu_categories ?? [];
   const { deleteMenu, updateMenu } = useMenuMutation(Number(id));
   const [menuForm] = CustomForm.useForm();
 
@@ -30,47 +30,55 @@ export default function MenuList() {
     setMenuId(selectedMenuId);
   };
 
+  console.log(defaultMenuList);
+
   return (
     <S.Wrap>
-      { menuList && (
-      <CustomForm
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
-        autoComplete="off"
-        initialValues={menuList}
-      >
-        <CustomForm.List name="menus">
-          {(fields, { remove }) => (
-            <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
-              {fields.map((field) => (
-                <S.CardWrap $id={menuList.menus[field?.name].id} $menuId={menuId} key={field.key}>
-                  <Card
-                    size="small"
-                    title={menuList.menus[field.name].name}
-                    key={field.key}
-                    extra={(
-                      <PlusCircleOutlined
-                        onClick={() => handleClick(menuList.menus[field.name]?.id)}
+      {defaultMenuList.map((menuList: any) => {
+        return (
+          <CustomForm
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            autoComplete="off"
+            initialValues={menuList}
+          >
+            <CustomForm.List name="menus">
+              {(fields, { remove }) => (
+                <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
+                  {fields.map((field) => (
+                    <S.CardWrap
+                      $id={menuList.menus[field?.name].id}
+                      $menuId={menuId}
+                      key={field.key}
+                    >
+                      <Card
+                        size="small"
+                        title={menuList.menus[field.name].name}
+                        key={field.key}
+                        extra={(
+                          <PlusCircleOutlined
+                            onClick={() => handleClick(menuList.menus[field.name]?.id)}
+                          />
+                        )}
+                      >
+                        {menuList.menus[field?.name].id === menuId
+                          && <MenuDetailForm menuId={menuId} form={menuForm} />}
+                      </Card>
+                      <DeleteOutlined
+                        onClick={async () => {
+                          await deleteMenu(menuList?.menus[field.name].id);
+                          remove(field.name);
+                        }}
+                        style={{ marginTop: 12 }}
                       />
-                      )}
-                  >
-                    {menuList.menus[field?.name].id === menuId
-                    && <MenuDetailForm menuId={menuId} form={menuForm} />}
-                  </Card>
-                  <DeleteOutlined
-                    onClick={async () => {
-                      await deleteMenu(menuList?.menus[field.name].id);
-                      remove(field.name);
-                    }}
-                    style={{ marginTop: 12 }}
-                  />
-                </S.CardWrap>
-              ))}
-            </div>
-          )}
-        </CustomForm.List>
-      </CustomForm>
-      )}
+                    </S.CardWrap>
+                  ))}
+                </div>
+              )}
+            </CustomForm.List>
+          </CustomForm>
+        );
+      })}
       <S.NewMenuWrap visible>
         <AddMenuForm />
       </S.NewMenuWrap>

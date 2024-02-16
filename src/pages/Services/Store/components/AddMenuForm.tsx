@@ -1,7 +1,6 @@
 import { UploadOutlined } from '@ant-design/icons';
 import { Card, message } from 'antd';
 import CustomForm from 'components/common/CustomForm';
-import { Menu } from 'model/menus.model';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import MenuDetailForm from './MenuDetailForm';
@@ -11,7 +10,9 @@ export default function AddMenuForm() {
   const { id } = useParams();
   const [form] = CustomForm.useForm();
   const { addMenu } = useMenuMutation(Number(id));
-  const createMenu = (values: Menu) => {
+  const handleClick = () => {
+    const values = form.getFieldsValue();
+    console.log(values);
     addMenu(values, {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');
@@ -24,11 +25,16 @@ export default function AddMenuForm() {
   };
   return (
     <CustomForm
-      onFinish={createMenu}
+      form={form}
     >
       <Card size="small" title=" ">
         <MenuDetailForm form={form} />
-        <CustomForm.Button htmlType="submit" icon={<UploadOutlined />}>메뉴 생성</CustomForm.Button>
+        <CustomForm.Button
+          icon={<UploadOutlined />}
+          onClick={handleClick}
+        >
+          메뉴 생성
+        </CustomForm.Button>
       </Card>
     </CustomForm>
   );

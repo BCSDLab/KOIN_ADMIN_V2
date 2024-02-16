@@ -18,13 +18,15 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
   // form 초기화
   form.setFieldsValue(storeMenu);
   form.setFieldValue('image_urls', storeMenu?.image_urls);
-
   const options = menuCategories?.menu_categories.map((category: MenuCategory) => ({
     label: category.name,
     value: category.id,
   }));
-  const { value: isSingleMenu, setValue: setIsSingleMenu } = useBooleanState();
-  console.log(storeMenu?.is_single);
+  const { value: isSingleMenu, setValue: setIsSingleMenu } = useBooleanState(
+    storeMenu?.is_single,
+  );
+  form.setFieldValue('is_single', isSingleMenu);
+  console.log(isSingleMenu);
   return (
     <div>
       <CustomForm
@@ -42,6 +44,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
         </Form.Item>
         <Form.Item name="is_single" valuePropName="checked" rules={[required]}>
           <Checkbox
+            defaultChecked={isSingleMenu}
             checked={isSingleMenu}
             onChange={(e) => setIsSingleMenu(e.target.checked)}
           >
@@ -49,7 +52,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
           </Checkbox>
         </Form.Item>
         <Form.Item label="단일 메뉴 가격" name="single_price">
-          <Input name="single_price" disabled={isSingleMenu} />
+          <Input name="single_price" disabled={!isSingleMenu} />
         </Form.Item>
 
         {/* 옵션 가격 수정 */}
@@ -60,10 +63,10 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
                 {fields.map((field) => (
                   <Space key={field.key}>
                     <Form.Item name={[field.name, 'option']} label="옵션">
-                      <Input name="option" disabled={!isSingleMenu} />
+                      <Input name="option" disabled={isSingleMenu} />
                     </Form.Item>
                     <Form.Item name={[field.name, 'price']} label="가격">
-                      <Input name="price" disabled={!isSingleMenu} />
+                      <Input name="price" disabled={isSingleMenu} />
                     </Form.Item>
                     <DeleteOutlined
                       onClick={() => {

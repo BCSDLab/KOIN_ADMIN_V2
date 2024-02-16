@@ -6,8 +6,8 @@ import { message } from 'antd';
 import * as S from 'styles/List.style';
 import { StoreResponse } from 'model/store.model';
 import STORE_OPTION from 'constant/store';
-import useStoreMutation from './components/useStoreMutation';
-import StoreDetailForm from './components/StoreDetailForm';
+import useStoreMutation from './useStoreMutation';
+import StoreDetailForm from './StoreDetailForm';
 
 export default function AddStoreModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();

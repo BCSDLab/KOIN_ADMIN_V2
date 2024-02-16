@@ -47,13 +47,11 @@ function OpenTimeForm({ form }: { form: FormInstance }) {
       newOpenTimeInfo[newIndex] = { ...newOpenTimeInfo[newIndex], [key]: value };
     }
     form.setFieldValue('open', newOpenTimeInfo);
-    console.log('변경', form.getFieldValue('open'));
   };
 
   const handleClosedCheckChange = (index: number, e: any) => {
     newOpenTimeInfo[index] = { ...newOpenTimeInfo[index], closed: e.target.checked };
     form.setFieldValue('open', newOpenTimeInfo);
-    console.log('변경', form.getFieldValue('open'));
   };
 
   return (

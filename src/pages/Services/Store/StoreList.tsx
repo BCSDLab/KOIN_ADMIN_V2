@@ -5,7 +5,7 @@ import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
 import * as S from './StoreList.style';
-import AddStoreModal from './AddStoreModal';
+import AddStoreModal from './components/AddStoreModal';
 
 function StoreList() {
   const [page, setPage] = useState(1);

@@ -36,14 +36,24 @@ const defaultTimeInfo = DAYS.map((day, index) => {
 
 dayjs.extend(customParseFormat);
 
-function OpenTimeForm({ form } : { form: FormInstance }) {
-  const openTimeInfo: StoreOpen[] = form.getFieldValue('open') ?? defaultTimeInfo;
+function OpenTimeForm({ form }: { form: FormInstance }) {
+  const openTimeInfo: StoreOpen[] = form.getFieldValue('open') || defaultTimeInfo;
   const [selectType, setSelectType] = useState<keyof typeof TABLE_TYPES>('직접 지정');
+  const newOpenTimeInfo = [...openTimeInfo];
   const handleTimeFormChange = (index: number, key: keyof StoreOpen, value: string | string[]) => {
     const selected = TABLE_TYPES[selectType];
     for (let i = 0; i < selected.colSize[index]; i += 1) {
-      form.setFieldValue(['open', selected.dateList[index] + i, key], value);
+      const newIndex = selected.dateList[index] + i;
+      newOpenTimeInfo[newIndex] = { ...newOpenTimeInfo[newIndex], [key]: value };
     }
+    form.setFieldValue('open', newOpenTimeInfo);
+    console.log('변경', form.getFieldValue('open'));
+  };
+
+  const handleClosedCheckChange = (index: number, e: any) => {
+    newOpenTimeInfo[index] = { ...newOpenTimeInfo[index], closed: e.target.checked };
+    form.setFieldValue('open', newOpenTimeInfo);
+    console.log('변경', form.getFieldValue('open'));
   };
 
   return (
@@ -70,7 +80,7 @@ function OpenTimeForm({ form } : { form: FormInstance }) {
             <S.TableData colSize={1}>
               <CustomForm.Checkbox
                 name={['open', index, 'closed']}
-                onChange={(e) => form.setFieldValue(['open', index, 'closed'], e.target.checked)}
+                onChange={(e) => handleClosedCheckChange(index, e)}
               />
             </S.TableData>
           ))}

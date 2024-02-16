@@ -1,11 +1,11 @@
 export enum DAY {
-  SUNDAY,
   MONDAY,
   TUESDAY,
   WEDNESDAY,
   THURSDAY,
   FRIDAY,
   SATURDAY,
+  SUNDAY,
 }
 
 export interface MenuCategoriesModel {

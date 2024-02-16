@@ -13,6 +13,8 @@ export default function AddStoreModal({ onCancel }: { onCancel: () => void }) {
   const { addStore } = useStoreMutation(1);
 
   const createStore = (values: Partial<StoreResponse>) => {
+    // open 객체 데이터 fetching 되지않아 재할당
+    values.open = form.getFieldValue('open');
     addStore(values, {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');

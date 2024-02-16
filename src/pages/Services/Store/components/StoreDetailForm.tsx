@@ -5,7 +5,7 @@ import { FormInstance } from 'antd/es/form/Form';
 import STORE_OPTION from 'constant/store';
 import * as S from '../StoreDetail.style';
 import StoreCategory from './StoreCategory';
-import OpenTimeForm from './OpenTimeForm';
+// import OpenTimeForm from './OpenTimeForm';
 
 export default function StoreDetailForm({ form }: { form: FormInstance }) {
   const { required, max } = CustomForm.useValidate();
@@ -24,7 +24,7 @@ export default function StoreDetailForm({ form }: { form: FormInstance }) {
       <CustomForm.TextArea label="설명" name="description" maxLength={200} />
       <CustomForm.Input label="카테고리 목록" name="category_ids" disabled />
       <StoreCategory form={form} />
-      <OpenTimeForm form={form} />
+      {/* <OpenTimeForm form={form} /> */}
       <Divider orientation="left" style={{ marginTop: '40px' }}>
         옵션
       </Divider>

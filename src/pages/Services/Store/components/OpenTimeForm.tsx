@@ -26,7 +26,7 @@ const TABLE_TYPES = {
 
 dayjs.extend(customParseFormat);
 
-function OpenTimeForm({ form } : { form: FormInstance | any }) {
+function OpenTimeForm({ form } : { form: FormInstance }) {
   const openTimeInfo: StoreOpen[] = form.getFieldValue('open');
   const [selectType, setSelectType] = useState<keyof typeof TABLE_TYPES>('직접 지정');
   const handleTimeFormChange = (index: number, key: keyof StoreOpen, value: string | string[]) => {

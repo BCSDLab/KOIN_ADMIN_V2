@@ -1,6 +1,5 @@
 import { Middleware, configureStore } from '@reduxjs/toolkit';
 import authReducer from 'store/slice/auth';
-import logger from 'redux-logger';
 import { authApi } from './api/auth';
 import { userApi } from './api/user';
 import { roomApi } from './api/room';
@@ -38,7 +37,7 @@ const reducer = {
 };
 
 const middleware = (getDefaultMiddleware: () => Middleware[]) => [
-  ...getDefaultMiddleware(), ...apiMiddleware, logger,
+  ...getDefaultMiddleware(), ...apiMiddleware,
 ];
 
 const store = configureStore({

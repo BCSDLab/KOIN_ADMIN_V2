@@ -33,3 +33,36 @@ export const CardWrap = styled.div<{ $id: number; $menuId?: number; }>`
       width: 100%;
     }
 `;
+
+export const NewMenuWrap = styled.div<{ visible: boolean; }>`
+    margin-top: 30px;
+    justify-content: space-between;
+    align-items: start;
+    border-radius: none;
+    display: ${(props) => (props.visible ? 'block' : 'none')}
+
+    .ant-card{
+      width: 650px;
+    }
+
+    .ant-icon{
+      font-size: larger;
+      align-items: center;
+    }
+
+    .ant-card-head-title {
+      font-size: 15px;
+    }
+
+    .ant-card-body{
+      padding: 38px;
+    }
+
+    .upload-list-inline .ant-upload-list-item {
+      width: 100%;
+    }
+    
+    button{
+      float: right;
+    }
+`;

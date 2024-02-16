@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 
 import {
-  MenusResponse, MenuResponse, AddMenusArgs, MutationMenuArgs,
+  MenusResponse, MenuResponse, MutationMenuArgs, Menu,
 } from 'model/menus.model';
 import { RootState } from 'store';
 
@@ -34,7 +34,7 @@ export const storeMenuApi = createApi({
       ),
     }),
 
-    getMenuList: builder.query<MenuResponse, { id: number; menuId: number }>({
+    getMenuList: builder.query<MenuResponse, { id: number; menuId?: number }>({
       query: ({ id: shopId, menuId }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'GET',
@@ -59,22 +59,13 @@ export const storeMenuApi = createApi({
       invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
-    addMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
-      query: ({ id: shopId, menuId, menuData: body }) => ({
-        url: `/admin/shops/${shopId}/menus/${menuId}`,
+    addMenu: builder.mutation<Menu, { id: number; formData: Menu }>({
+      query: ({ id: shopId, formData }) => ({
+        url: `/admin/shops/${shopId}/menus`,
         method: 'POST',
-        body,
+        body: formData,
       }),
       invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
-    }),
-
-    addMenus: builder.mutation<MenusResponse, AddMenusArgs>({
-      query: ({ id, menusData: body }) => ({
-        url: `/admin/shops/${id}/menus`,
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: [{ type: 'storeMenus', id: 'LIST' }],
     }),
 
   }),
@@ -82,5 +73,5 @@ export const storeMenuApi = createApi({
 
 export const {
   useGetMenusListQuery, useGetMenuListQuery, useUpdateMenuMutation, useDeleteMenuMutation,
-  useAddMenuMutation, useAddMenusMutation,
+  useAddMenuMutation,
 } = storeMenuApi;

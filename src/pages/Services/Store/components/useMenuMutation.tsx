@@ -1,10 +1,10 @@
 import { message } from 'antd';
-import { MenuBody } from 'model/menus.model';
+import { Menu, MenuBody } from 'model/menus.model';
 import {
   useAddMenuMutation, useDeleteMenuMutation, useUpdateMenuMutation,
 } from 'store/api/storeMenu';
 
-export default function useMenuMutation(id:number) {
+export default function useMenuMutation(id: number) {
   const [updateMenuMutation] = useUpdateMenuMutation();
   const [deleteMenuMutation] = useDeleteMenuMutation();
   const [addMenuMutation] = useAddMenuMutation();
@@ -29,16 +29,19 @@ export default function useMenuMutation(id:number) {
       });
   }
 
-  function addMenu(menuId: number, body: MenuBody) {
-    return addMenuMutation({ id, menuId, menuData: body })
+  const addMenu = (formData: Menu, {
+    onSuccess,
+    onError,
+  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
+    addMenuMutation({ id, formData })
       .unwrap()
       .then(() => {
-        message.success('추가되었습니다.');
+        onSuccess?.();
       })
       .catch(({ data }) => {
-        message.error(data.error.message);
+        onError?.(data.message);
       });
-  }
+  };
 
   return {
     updateMenu, deleteMenu, addMenu,

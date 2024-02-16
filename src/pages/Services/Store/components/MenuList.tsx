@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable react-hooks/rules-of-hooks */
 import CustomForm from 'components/common/CustomForm';
-import { Card } from 'antd';
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Card, message } from 'antd';
+import { DeleteOutlined, PlusCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
 import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
+import { Menu } from 'model/menus.model';
 import * as S from './MenuList.style';
 import MenuDetailForm from './MenuDetailForm';
 import useMenuMutation from './useMenuMutation';
@@ -15,7 +16,7 @@ export default function MenuList() {
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
   const menuList = storeMenusData?.menu_categories[0];
-  const { deleteMenu, updateMenu } = useMenuMutation(Number(id));
+  const { deleteMenu, updateMenu, addMenu } = useMenuMutation(Number(id));
   const [menuForm] = CustomForm.useForm();
 
   const handleClick = (selectedMenuId: number) => {
@@ -27,6 +28,23 @@ export default function MenuList() {
       return;
     }
     setMenuId(selectedMenuId);
+  };
+
+  const createMenu = (values: Menu) => {
+    addMenu(values, {
+      onSuccess: () => {
+        message.success('정보 추가가 완료되었습니다.');
+        menuForm.resetFields();
+      },
+      onError: (errorMessage) => {
+        message.error(errorMessage);
+      },
+    });
+    // .then(() => {
+    //   onCancel();
+    //   form.resetFields();
+    // })
+    // .catch();
   };
 
   return (
@@ -42,7 +60,7 @@ export default function MenuList() {
           {(fields, { remove }) => (
             <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
               {fields.map((field) => (
-                <S.CardWrap $id={menuList.menus[field.name]?.id} $menuId={menuId}>
+                <S.CardWrap $id={menuList.menus[field?.name].id} $menuId={menuId}>
                   <Card
                     size="small"
                     title={menuList.menus[field.name].name}
@@ -53,12 +71,11 @@ export default function MenuList() {
                       />
                       )}
                   >
-                    {menuList.menus[field.name].id === menuId
-                      && <MenuDetailForm menuId={menuId} form={menuForm} /> }
+                    <MenuDetailForm menuId={menuId} form={menuForm} />
                   </Card>
                   <DeleteOutlined
                     onClick={async () => {
-                      await deleteMenu(menuList.menus[field.name].id);
+                      await deleteMenu(menuList?.menus[field.name].id);
                       remove(field.name);
                     }}
                     style={{ marginTop: 12 }}
@@ -70,39 +87,16 @@ export default function MenuList() {
         </CustomForm.List>
       </CustomForm>
       )}
-      {/* 새로운 메뉴 리스트 */}
-      {/* <CustomForm.List name="new_menu">
-        {(fields, { remove, add }) => (
-          <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
-            {fields.map((field) => (
-              <>
-                <S.CardWrap $id={field.key} $menuId={menuId}>
-                  <Card
-                    size="small"
-                    key={field.key}
-                    extra={(
-                      <PlusCircleOutlined
-                        onClick={() => onClick(field.key)}
-                      />
-                      )}
-                  >
-                    <MenuDetailForm />
-                  </Card>
-                  <DeleteOutlined onClick={() => {
-                    remove(field.name);
-                  }}
-                  />
-                </S.CardWrap>
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                    Add field
-                  </Button>
-                </Form.Item>
-              </>
-            ))}
-          </div>
-        )}
-      </CustomForm.List> */}
+      <S.NewMenuWrap visible>
+        <CustomForm
+          onFinish={createMenu}
+        >
+          <Card size="small" title=" ">
+            <MenuDetailForm form={menuForm} />
+            <CustomForm.Button htmlType="submit" icon={<UploadOutlined />}>메뉴 생성</CustomForm.Button>
+          </Card>
+        </CustomForm>
+      </S.NewMenuWrap>
     </S.Wrap>
   );
 }

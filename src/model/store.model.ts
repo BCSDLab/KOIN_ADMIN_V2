@@ -1,4 +1,12 @@
-export type DayOfWeek = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
+export enum DAY {
+  SUNDAY,
+  MONDAY,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAY,
+}
 
 export interface MenuCategoriesModel {
   id: number;
@@ -8,7 +16,7 @@ export interface MenuCategoriesModel {
 export interface StoreOpen {
   close_time: string;
   closed: boolean;
-  day_of_week: DayOfWeek;
+  day_of_week: typeof DAY;
   open_time: string;
 }
 

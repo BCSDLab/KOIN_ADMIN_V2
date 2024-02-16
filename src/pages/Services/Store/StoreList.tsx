@@ -29,7 +29,7 @@ function StoreList() {
           onCancel={closeModal}
           onClick={openModal}
         >
-          <AddStoreModal />
+          <AddStoreModal onCancel={closeModal} />
         </CustomForm.Modal>
       </S.ModalWrap>
       <S.SwitchWrapper>

@@ -18,7 +18,7 @@ export default function AddStoreModal({ onCancel }: { onCancel: () => void }) {
   ));
 
   const createStore = (values: Partial<StoreResponse>) => {
-    // open 객체 데이터 fetching 되지않아 재할당
+    // open 데이터 fetching 예외 처리
     values.open = form.getFieldValue('open');
     addStore(values, {
       onSuccess: () => {

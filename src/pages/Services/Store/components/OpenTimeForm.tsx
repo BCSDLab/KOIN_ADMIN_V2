@@ -74,7 +74,7 @@ function OpenTimeForm({ form }: { form: FormInstance }) {
 
         <S.OpenTimeRow>
           <S.OpenTimeColHead>휴무 여부</S.OpenTimeColHead>
-          {openTimeInfo?.map((info, index) => (
+          {openTimeInfo.map((info, index) => (
             <S.TableData colSize={1}>
               <CustomForm.Checkbox
                 name={['open', index, 'closed']}

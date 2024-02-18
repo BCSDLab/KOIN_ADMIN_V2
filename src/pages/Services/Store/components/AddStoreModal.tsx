@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import useStoreMutation from './useStoreMutation';
 import StoreDetailForm from './StoreDetailForm';
 
-export default function AddStoreModal({ onCancel }: { onCancel: () => void }) {
+export default function AddStoreModal({ closeModal }: { closeModal: () => void }) {
   const [form] = CustomForm.useForm();
   const { addStore } = useStoreMutation(1);
 
@@ -26,7 +26,7 @@ export default function AddStoreModal({ onCancel }: { onCancel: () => void }) {
     addStore(values, {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');
-        onCancel();
+        closeModal();
         form.resetFields();
       },
       onError: (errorMessage: any) => {
@@ -34,7 +34,7 @@ export default function AddStoreModal({ onCancel }: { onCancel: () => void }) {
       },
     });
     // .then(() => {
-    //   onCancel();
+    //   closeModal();
     //   form.resetFields();
     // })
     // .catch();

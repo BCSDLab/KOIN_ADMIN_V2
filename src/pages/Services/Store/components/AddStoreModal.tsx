@@ -6,6 +6,7 @@ import { message } from 'antd';
 import * as S from 'styles/List.style';
 import { StoreResponse } from 'model/store.model';
 import STORE_OPTION from 'constant/store';
+import { useEffect } from 'react';
 import useStoreMutation from './useStoreMutation';
 import StoreDetailForm from './StoreDetailForm';
 
@@ -13,9 +14,11 @@ export default function AddStoreModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();
   const { addStore } = useStoreMutation(1);
 
-  STORE_OPTION.map((optionData) => (
-    form.setFieldValue(optionData.data, false)
-  ));
+  useEffect(() => {
+    STORE_OPTION.map((optionData) => (
+      form.setFieldValue(optionData.data, false)
+    ));
+  }, [form]);
 
   const createStore = (values: Partial<StoreResponse>) => {
     // open 데이터 fetching 예외 처리

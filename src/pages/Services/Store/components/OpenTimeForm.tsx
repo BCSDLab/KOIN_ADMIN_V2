@@ -6,6 +6,7 @@ import { useState } from 'react';
 import CustomForm from 'components/common/CustomForm';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import * as S from '../StoreDetail.style';
 
 const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
@@ -49,7 +50,7 @@ function OpenTimeForm({ form }: { form: FormInstance }) {
     form.setFieldValue('open', newOpenTimeInfo);
   };
 
-  const handleClosedCheckChange = (index: number, e: any) => {
+  const handleClosedCheckChange = (index: number, e: CheckboxChangeEvent) => {
     newOpenTimeInfo[index] = { ...newOpenTimeInfo[index], closed: e.target.checked };
     form.setFieldValue('open', newOpenTimeInfo);
   };

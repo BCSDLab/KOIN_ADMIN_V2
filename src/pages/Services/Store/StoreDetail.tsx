@@ -4,6 +4,7 @@ import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icon
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import { useGetStoreQuery } from 'store/api/store';
+import { StoreResponse } from 'model/store.model';
 import useStoreMutation from './components/useStoreMutation';
 import * as S from './StoreDetail.style';
 import StoreDetailForm from './components/StoreDetailForm';
@@ -15,12 +16,10 @@ export default function StoreDetail() {
   const { updateStore, deleteStore, undeleteStore } = useStoreMutation(Number(id));
   const [storeForm] = CustomForm.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values : StoreResponse) => {
     const updatedValues = { ...values };
-
     // open만 업데이트 되지않아 재할당함
     updatedValues.open = storeForm.getFieldValue('open');
-
     // TODO: 상점 메뉴 수정 로직 추가
     updateStore(updatedValues);
   };

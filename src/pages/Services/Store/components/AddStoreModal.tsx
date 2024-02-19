@@ -29,7 +29,7 @@ export default function AddStoreModal({ closeModal }: { closeModal: () => void }
         closeModal();
         form.resetFields();
       },
-      onError: (errorMessage: any) => {
+      onError: (errorMessage) => {
         message.error(errorMessage);
       },
     });

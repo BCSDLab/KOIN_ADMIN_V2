@@ -10,7 +10,7 @@ export default function StoreCategory({ form } : { form: FormInstance }) {
   const [page] = useState(1);
   const { data: categoryList } = useGetCategoryListQuery({ page, size: 100 });
   // formData를 직접적으로 수정하면, 렌더링이 발생하지 않아 state를 따로 만들어서 관리
-  const [selectedCategory, setSelectedCategory] = useState<ShopCategoriesModel[]>(form.getFieldValue('shop_categories'));
+  const [selectedCategory, setSelectedCategory] = useState<ShopCategoriesModel[]>(form.getFieldValue('shop_categories') ?? []);
 
   const changeCategory = (category: Category) => {
     const categories = form.getFieldValue('shop_categories') as ShopCategoriesModel[];

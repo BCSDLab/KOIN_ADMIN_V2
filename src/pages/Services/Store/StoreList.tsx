@@ -5,6 +5,7 @@ import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
 import * as S from './StoreList.style';
+import AddStoreModal from './components/AddStoreModal';
 
 function StoreList() {
   const [page, setPage] = useState(1);
@@ -28,7 +29,7 @@ function StoreList() {
           onCancel={closeModal}
           onClick={openModal}
         >
-          {/* <AddStoreModal onCancel={closeModal} /> */}
+          <AddStoreModal closeModal={closeModal} />
         </CustomForm.Modal>
       </S.ModalWrap>
       <S.SwitchWrapper>

@@ -104,7 +104,7 @@ function OpenTimeForm({ form }: { form: FormInstance }) {
 
         <S.OpenTimeRow>
           <S.OpenTimeColHead>마감 시간</S.OpenTimeColHead>
-          {TABLE_TYPES[selectType]?.dateList?.map((date, index) => (
+          {TABLE_TYPES[selectType].dateList.map((date, index) => (
             <S.TableData key={date} colSize={TABLE_TYPES[selectType].colSize[index]}>
               <TimePicker
                 minuteStep={10}

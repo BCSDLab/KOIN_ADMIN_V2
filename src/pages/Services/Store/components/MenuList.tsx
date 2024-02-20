@@ -18,7 +18,7 @@ export default function MenuList() {
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
   const menuListCategories = storeMenusData?.menu_categories ?? [];
-  const { deleteMenu, updateMenu } = useMenuMutation(Number(id));
+  const { deleteMenu, updateMenu, isDeleting } = useMenuMutation(Number(id));
   const [menuForm] = CustomForm.useForm();
   const { value: isVisible, changeValue: chagneIsVisible } = useBooleanState();
 
@@ -69,8 +69,10 @@ export default function MenuList() {
                         </Card>
                         <DeleteOutlined
                           onClick={async () => {
-                            await deleteMenu(menuList?.menus[field.name].id);
-                            remove(field.name);
+                            if (!isDeleting) {
+                              await deleteMenu(menuList?.menus[field.name].id);
+                              remove(field.name);
+                            }
                           }}
                           style={{ marginTop: 12 }}
                         />

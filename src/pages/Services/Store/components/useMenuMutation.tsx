@@ -6,7 +6,7 @@ import {
 
 export default function useMenuMutation(id: number) {
   const [updateMenuMutation] = useUpdateMenuMutation();
-  const [deleteMenuMutation] = useDeleteMenuMutation();
+  const [deleteMenuMutation, { isLoading: isDeleting }] = useDeleteMenuMutation();
   const [addMenuMutation] = useAddMenuMutation();
 
   function deleteMenu(menuId: number) {
@@ -47,6 +47,6 @@ export default function useMenuMutation(id: number) {
   };
 
   return {
-    updateMenu, deleteMenu, addMenu,
+    updateMenu, deleteMenu, addMenu, isDeleting,
   };
 }

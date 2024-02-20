@@ -12,7 +12,6 @@ export default function AddMenuForm() {
   const { addMenu } = useMenuMutation(Number(id));
   const handleClick = () => {
     const values = form.getFieldsValue();
-    console.log(values);
     addMenu(values, {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');

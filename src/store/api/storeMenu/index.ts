@@ -24,22 +24,15 @@ export const storeMenuApi = createApi({
   endpoints: (builder) => ({
     getMenusList: builder.query<MenusResponse, number>({
       query: (id) => ({ url: `/admin/shops/${id}/menus` }),
-      providesTags: (result) => (
-        result
-          ? [
-            ...result.menu_categories.flatMap((category) => category.menus.map((menu) => ({ type: 'storeMenu' as const, id: menu.id }))),
-            { type: 'storeMenus', id: 'LIST' },
-          ]
-          : [{ type: 'storeMenus', id: 'LIST' }]
-      ),
+      providesTags: [{ type: 'storeMenus', id: 'LIST' }],
     }),
 
-    getMenuList: builder.query<MenuResponse, { id: number; menuId?: number }>({
+    getMenu: builder.query<MenuResponse, { id: number; menuId?: number }>({
       query: ({ id: shopId, menuId }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'GET',
       }),
-      providesTags: (result, error, { id }) => [{ type: 'storeMenu', id }],
+      providesTags: (result, error, { menuId }) => [{ type: 'storeMenu', menuId }],
     }),
 
     updateMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
@@ -48,7 +41,7 @@ export const storeMenuApi = createApi({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
+      invalidatesTags: (result, error, { menuId }) => [{ type: 'storeMenu', menuId }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
     deleteMenu: builder.mutation < MenusResponse, Pick<MutationMenuArgs, 'id' | 'menuId' >>({
@@ -56,7 +49,7 @@ export const storeMenuApi = createApi({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
+      invalidatesTags: (result, error, { menuId }) => [{ type: 'storeMenu', menuId }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
     addMenu: builder.mutation<Menu, { id: number; formData: Menu }>({
@@ -72,6 +65,6 @@ export const storeMenuApi = createApi({
 });
 
 export const {
-  useGetMenusListQuery, useGetMenuListQuery, useUpdateMenuMutation, useDeleteMenuMutation,
+  useGetMenusListQuery, useGetMenuQuery, useUpdateMenuMutation, useDeleteMenuMutation,
   useAddMenuMutation,
 } = storeMenuApi;

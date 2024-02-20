@@ -1,4 +1,3 @@
-import { useGetMenuListQuery } from 'store/api/storeMenu';
 import CustomForm from 'components/common/CustomForm';
 import { useParams } from 'react-router-dom';
 import {
@@ -9,10 +8,11 @@ import { FormInstance } from 'antd/lib/form';
 import { useGetMenuCategoriesQuery } from 'store/api/storeMenu/category';
 import { MenuCategory } from 'model/menuCategory';
 import useBooleanState from 'utils/hooks/useBoolean';
+import { useGetMenuQuery } from 'store/api/storeMenu';
 
 export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form: FormInstance }) {
   const { id } = useParams();
-  const { data: storeMenu } = useGetMenuListQuery({ id: Number(id), menuId });
+  const { data: storeMenu } = useGetMenuQuery({ id: Number(id), menuId });
   const { data: menuCategories } = useGetMenuCategoriesQuery(Number(id));
   const { required } = CustomForm.useValidate();
   // form 초기화

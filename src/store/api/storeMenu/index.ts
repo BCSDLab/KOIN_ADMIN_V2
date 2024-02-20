@@ -32,7 +32,7 @@ export const storeMenuApi = createApi({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'GET',
       }),
-      providesTags: (result, error, { menuId }) => [{ type: 'storeMenu', menuId }],
+      providesTags: (result, error, { id, menuId }) => [{ type: 'storeMenu', id, menuId }],
     }),
 
     updateMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
@@ -41,7 +41,7 @@ export const storeMenuApi = createApi({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: (result, error, { menuId }) => [{ type: 'storeMenu', menuId }, { type: 'storeMenus', id: 'LIST' }],
+      invalidatesTags: (result, error, { id, menuId }) => [{ type: 'storeMenu', id, menuId }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
     deleteMenu: builder.mutation < MenusResponse, Pick<MutationMenuArgs, 'id' | 'menuId' >>({
@@ -49,7 +49,7 @@ export const storeMenuApi = createApi({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, { menuId }) => [{ type: 'storeMenu', menuId }, { type: 'storeMenus', id: 'LIST' }],
+      invalidatesTags: (result, error, { id, menuId }) => [{ type: 'storeMenu', id, menuId }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
     addMenu: builder.mutation<Menu, { id: number; formData: Menu }>({

@@ -12,12 +12,15 @@ import { useGetMenuQuery } from 'store/api/storeMenu';
 
 export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form: FormInstance }) {
   const { id } = useParams();
-  const { data: storeMenu } = useGetMenuQuery({ id: Number(id), menuId });
+  const skip = menuId === undefined;
+  const { data: storeMenu } = useGetMenuQuery({ id: Number(id), menuId }, { skip });
   const { data: menuCategories } = useGetMenuCategoriesQuery(Number(id));
   const { required } = CustomForm.useValidate();
+
   // form 초기화
   form.setFieldsValue(storeMenu);
   form.setFieldValue('image_urls', storeMenu?.image_urls);
+
   const options = menuCategories?.menu_categories.map((category: MenuCategory) => ({
     label: category.name,
     value: category.id,
@@ -25,8 +28,9 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
   const { value: isSingleMenu, setValue: setIsSingleMenu } = useBooleanState(
     storeMenu?.is_single,
   );
-  form.setFieldValue('is_single', isSingleMenu);
-  // console.log(isSingleMenu);
+
+  console.log(isSingleMenu);
+
   return (
     <div>
       <CustomForm
@@ -35,16 +39,13 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
         name="storeMenuDetail"
       >
         <Form.Item label="카테고리" name="category_ids" rules={[required]}>
-          <Checkbox.Group
-            options={options}
-          />
+          <Checkbox.Group options={options} />
         </Form.Item>
         <Form.Item label="메뉴 이름" name="name" rules={[required]}>
           <Input name="name" />
         </Form.Item>
         <Form.Item name="is_single" valuePropName="checked" rules={[required]}>
           <Checkbox
-            defaultChecked={isSingleMenu}
             checked={isSingleMenu}
             onChange={(e) => setIsSingleMenu(e.target.checked)}
           >
@@ -52,7 +53,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
           </Checkbox>
         </Form.Item>
         <Form.Item label="단일 메뉴 가격" name="single_price">
-          <Input name="single_price" disabled={!isSingleMenu} />
+          <Input name="single_price" disabled={isSingleMenu} />
         </Form.Item>
 
         {/* 옵션 가격 수정 */}
@@ -63,10 +64,10 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
                 {fields.map((field) => (
                   <Space key={field.key}>
                     <Form.Item name={[field.name, 'option']} label="옵션">
-                      <Input name="option" disabled={isSingleMenu} />
+                      <Input name="option" disabled={!isSingleMenu} />
                     </Form.Item>
                     <Form.Item name={[field.name, 'price']} label="가격">
-                      <Input name="price" disabled={isSingleMenu} />
+                      <Input name="price" disabled={!isSingleMenu} />
                     </Form.Item>
                     <DeleteOutlined
                       onClick={() => {

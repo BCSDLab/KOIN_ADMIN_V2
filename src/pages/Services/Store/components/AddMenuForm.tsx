@@ -26,7 +26,7 @@ export default function AddMenuForm() {
     <CustomForm
       form={form}
     >
-      <Card size="small" title=" ">
+      <Card size="small">
         <MenuDetailForm form={form} />
         <CustomForm.Button
           icon={<UploadOutlined />}

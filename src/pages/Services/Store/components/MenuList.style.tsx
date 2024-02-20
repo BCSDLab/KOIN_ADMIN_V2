@@ -4,6 +4,11 @@ import styled from 'styled-components';
 export const Wrap = styled.div`
   width: 700px;
   margin-left: 40px;
+
+  .ant-divider {
+    margin-top: 50px;
+    margin-bottom: 30px;
+  }
 `;
 
 export const CardWrap = styled.div<{ $id: number; $menuId?: number; }>`
@@ -50,8 +55,8 @@ export const NewMenuWrap = styled.div<{ $isVisible: boolean; }>`
       align-items: center;
     }
 
-    .ant-card-head-title {
-      font-size: 15px;
+    .ant-card-head {
+      display: none;
     }
 
     .ant-card-body{

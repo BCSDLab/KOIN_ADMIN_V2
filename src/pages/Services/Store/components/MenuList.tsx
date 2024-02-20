@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import CustomForm from 'components/common/CustomForm';
 import { Card, Divider } from 'antd';
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
 import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
@@ -85,7 +85,7 @@ export default function MenuList() {
           </>
         );
       })}
-      <S.MenuAddButton onClick={() => chagneIsVisible()}>메뉴 추가</S.MenuAddButton>
+      <S.MenuAddButton onClick={() => chagneIsVisible()} type="dashed" icon={<PlusOutlined />}>메뉴 추가</S.MenuAddButton>
       <S.NewMenuWrap $isVisible={isVisible}>
         <AddMenuForm />
       </S.NewMenuWrap>

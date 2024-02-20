@@ -32,14 +32,17 @@ export default function useMenuMutation(id: number) {
   const addMenu = (formData: Menu, {
     onSuccess,
     onError,
-  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
+  }: {
+    onSuccess?: () => void, onError?: ({ message, violations }:
+    { message: string; violations: string[] }) => void
+  } = {}) => {
     addMenuMutation({ id, formData })
       .unwrap()
       .then(() => {
         onSuccess?.();
       })
-      .catch(({ data }) => {
-        onError?.(data.message);
+      .catch((error) => {
+        onError?.({ message: error.data.message, violations: error.data.violations });
       });
   };
 

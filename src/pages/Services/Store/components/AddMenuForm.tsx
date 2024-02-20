@@ -17,8 +17,9 @@ export default function AddMenuForm() {
         message.success('정보 추가가 완료되었습니다.');
         form.resetFields();
       },
-      onError: (errorMessage) => {
-        message.error(errorMessage);
+      onError: (error) => {
+        if (error?.violations) message.error(error.violations[0]);
+        else message.error(error.message);
       },
     });
   };

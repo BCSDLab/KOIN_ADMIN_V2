@@ -9,7 +9,7 @@ import { useState } from 'react';
 import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
 import useBooleanState from 'utils/hooks/useBoolean';
 import * as S from './MenuList.style';
-import MenuDetailForm from './MenuDetailForm';
+import MenuDetailForm from './MenuDetail';
 import useMenuMutation from './useMenuMutation';
 import AddMenuForm from './AddMenuForm';
 

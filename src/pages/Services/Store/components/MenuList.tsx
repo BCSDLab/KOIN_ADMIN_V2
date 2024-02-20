@@ -17,7 +17,7 @@ export default function MenuList() {
   const { id } = useParams();
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
-  const defaultMenuList = storeMenusData?.menu_categories ?? [];
+  const menuListCategories = storeMenusData?.menu_categories ?? [];
   const { deleteMenu, updateMenu } = useMenuMutation(Number(id));
   const [menuForm] = CustomForm.useForm();
   const { value: isVisible, changeValue: chagneIsVisible } = useBooleanState();
@@ -35,12 +35,10 @@ export default function MenuList() {
 
   return (
     <S.Wrap>
-      {defaultMenuList.map((menuList) => {
+      {menuListCategories.map((menuList) => {
         return (
           <>
-            <Divider>
-              {menuList.name}
-            </Divider>
+            <Divider>{menuList.name}</Divider>
             <CustomForm
               labelCol={{ span: 6 }}
               wrapperCol={{ span: 18 }}
@@ -67,7 +65,7 @@ export default function MenuList() {
                         )}
                         >
                           {menuList.menus[field?.name].id === menuId
-                          && <MenuDetailForm menuId={menuId} form={menuForm} />}
+                            && <MenuDetailForm menuId={menuId} form={menuForm} />}
                         </Card>
                         <DeleteOutlined
                           onClick={async () => {

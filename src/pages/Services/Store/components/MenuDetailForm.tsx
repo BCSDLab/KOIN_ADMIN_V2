@@ -7,8 +7,8 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 import { useGetMenuCategoriesQuery } from 'store/api/storeMenu/category';
 import { MenuCategory } from 'model/menuCategory';
-import useBooleanState from 'utils/hooks/useBoolean';
 import { useGetMenuQuery } from 'store/api/storeMenu';
+import useBooleanState from 'utils/hooks/useBoolean';
 
 export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form: FormInstance }) {
   const { id } = useParams();
@@ -16,6 +16,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
   const { data: storeMenu } = useGetMenuQuery({ id: Number(id), menuId }, { skip });
   const { data: menuCategories } = useGetMenuCategoriesQuery(Number(id));
   const { required } = CustomForm.useValidate();
+  const { value: isSingleMenu, changeValue: isSingleMenuChange } = useBooleanState();
 
   // form 초기화
   form.setFieldsValue(storeMenu);
@@ -25,14 +26,11 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
     label: category.name,
     value: category.id,
   }));
-  const { value: isSingleMenu, setValue: setIsSingleMenu } = useBooleanState(
-    storeMenu?.is_single,
-  );
-
-  console.log(isSingleMenu);
 
   return (
     <div>
+      {storeMenu
+      && (
       <CustomForm
         form={form}
         initialValues={storeMenu}
@@ -44,16 +42,16 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
         <Form.Item label="메뉴 이름" name="name" rules={[required]}>
           <Input name="name" />
         </Form.Item>
-        <Form.Item name="is_single" valuePropName="checked" rules={[required]}>
+        <Form.Item name="is_single">
           <Checkbox
             checked={isSingleMenu}
-            onChange={(e) => setIsSingleMenu(e.target.checked)}
+            onChange={() => isSingleMenuChange()}
           >
             단일 메뉴
           </Checkbox>
         </Form.Item>
         <Form.Item label="단일 메뉴 가격" name="single_price">
-          <Input name="single_price" disabled={isSingleMenu} />
+          <Input name="single_price" disabled={!isSingleMenu} />
         </Form.Item>
 
         {/* 옵션 가격 수정 */}
@@ -64,10 +62,10 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
                 {fields.map((field) => (
                   <Space key={field.key}>
                     <Form.Item name={[field.name, 'option']} label="옵션">
-                      <Input name="option" disabled={!isSingleMenu} />
+                      <Input name="option" disabled={isSingleMenu} />
                     </Form.Item>
                     <Form.Item name={[field.name, 'price']} label="가격">
-                      <Input name="price" disabled={!isSingleMenu} />
+                      <Input name="price" disabled={isSingleMenu} />
                     </Form.Item>
                     <DeleteOutlined
                       onClick={() => {
@@ -76,7 +74,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
                     />
                   </Space>
                 ))}
-                <Button type="dashed" onClick={() => add()} block disabled={!isSingleMenu}>
+                <Button type="dashed" onClick={() => add()} block disabled={isSingleMenu}>
                   + 옵션 가격 추가
                 </Button>
               </div>
@@ -90,6 +88,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
         <Divider orientation="left">사진</Divider>
         <CustomForm.MultipleUpload domain="market" name="image_urls" form={form} />
       </CustomForm>
+      )}
     </div>
   );
 }

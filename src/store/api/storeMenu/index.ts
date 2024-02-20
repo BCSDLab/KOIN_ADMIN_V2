@@ -27,7 +27,7 @@ export const storeMenuApi = createApi({
       providesTags: [{ type: 'storeMenus', id: 'LIST' }],
     }),
 
-    getMenu: builder.query<MenuResponse, { id: number; menuId?: number }>({
+    getMenu: builder.query<MenuResponse, { id: number; menuId: number }>({
       query: ({ id: shopId, menuId }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'GET',

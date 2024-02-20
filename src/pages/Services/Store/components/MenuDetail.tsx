@@ -6,7 +6,7 @@ import MenuDetailForm from './MenuDetailForm';
 export default function MenuDetail({ menuId, form }:{ menuId?: number, form: FormInstance }) {
   const { id } = useParams();
   const skip = menuId === undefined;
-  const { data: storeMenu } = useGetMenuQuery({ id: Number(id), menuId }, { skip });
+  const { data: storeMenu } = useGetMenuQuery({ id: Number(id), menuId: menuId! }, { skip });
 
   // form 초기화
   form.setFieldsValue(storeMenu);

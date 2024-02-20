@@ -19,7 +19,7 @@ function useLogin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token) navigate('/');
+    if (token) navigate('/store');
   }, [token, navigate]);
 
   const login = async (e: SyntheticEvent) => {

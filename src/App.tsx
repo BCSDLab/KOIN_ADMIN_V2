@@ -1,8 +1,6 @@
 import DefaultLayout from 'layout/defaultLayout';
 import Bus from 'pages/Services/Bus';
-import Cafeteria from 'pages/Services/Cafeteria';
 import CategoryList from 'pages/Services/Category/CategoryList';
-import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import Manager from 'pages/UserManage/Manager';
 import ManagerRequest from 'pages/UserManage/ManagerRequest/OwnerList';
@@ -41,12 +39,11 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<RequireAuth />}>
-        <Route index element={<Dashboard />} />
+        <Route index element={<Store />} />
         <Route path="/store" element={<Store />} />
         <Route path="/store/:id" element={<StoreDetail />} />
         <Route path="/category" element={<CategoryList />} />
         <Route path="/category/:id" element={<CategoryDetail />} />
-        <Route path="/cafeteria" element={<Cafeteria />} />
         <Route path="/bus" element={<Bus />} />
         <Route path="/room" element={<RoomList />} />
         <Route path="/room/:id" element={<RoomDetail />} />

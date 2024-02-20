@@ -30,7 +30,7 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [uploadFile] = useUploadfileMutation();
-  const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name));
+  const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
   let convertedFileList: UploadFile[] = [];
   convertedFileList = uploadFileList?.map(convertUploadFile);
 

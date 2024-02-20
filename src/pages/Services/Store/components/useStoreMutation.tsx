@@ -45,16 +45,19 @@ export default function useStoreMutation(id: number) {
       });
   }
 
-  function addStore(formData: Partial<StoreResponse>) {
-    addStoreMutation(formData)
+  const addStore = (formData: Partial<StoreResponse>, {
+    onSuccess,
+    onError,
+  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
+    addStoreMutation({ ...formData })
       .unwrap()
       .then(() => {
-        message.success('추가되었습니다.');
+        onSuccess?.();
       })
       .catch(({ data }) => {
-        message.error(data.error.message);
+        onError?.(data.message);
       });
-  }
+  };
 
   function undeleteStore() {
     undeleteStoreMutation(id)

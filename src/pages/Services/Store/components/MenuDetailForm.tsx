@@ -26,7 +26,7 @@ export default function MenuDetailForm({ menuId, form }:{ menuId?: number, form:
     storeMenu?.is_single,
   );
   form.setFieldValue('is_single', isSingleMenu);
-  console.log(isSingleMenu);
+  // console.log(isSingleMenu);
   return (
     <div>
       <CustomForm

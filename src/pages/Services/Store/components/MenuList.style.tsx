@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import styled from 'styled-components';
 
 export const Wrap = styled.div`
@@ -34,12 +35,11 @@ export const CardWrap = styled.div<{ $id: number; $menuId?: number; }>`
     }
 `;
 
-export const NewMenuWrap = styled.div<{ visible: boolean; }>`
+export const NewMenuWrap = styled.div<{ $isVisible: boolean; }>`
     margin-top: 30px;
-    justify-content: space-between;
     align-items: start;
     border-radius: none;
-    display: ${(props) => (props.visible ? 'block' : 'none')}
+    display: ${(props) => (props.$isVisible ? 'block' : 'none')};
 
     .ant-card{
       width: 650px;
@@ -65,4 +65,8 @@ export const NewMenuWrap = styled.div<{ visible: boolean; }>`
     button{
       float: right;
     }
+`;
+
+export const MenuAddButton = styled(Button)`
+  margin-top: 30px;
 `;

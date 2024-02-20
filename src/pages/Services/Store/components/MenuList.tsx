@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
 import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
+import useBooleanState from 'utils/hooks/useBoolean';
 import * as S from './MenuList.style';
 import MenuDetailForm from './MenuDetailForm';
 import useMenuMutation from './useMenuMutation';
@@ -19,6 +20,7 @@ export default function MenuList() {
   const defaultMenuList = storeMenusData?.menu_categories ?? [];
   const { deleteMenu, updateMenu } = useMenuMutation(Number(id));
   const [menuForm] = CustomForm.useForm();
+  const { value: isVisible, changeValue: chagneIsVisible } = useBooleanState();
 
   const handleClick = (selectedMenuId: number) => {
     if (menuId && selectedMenuId) {
@@ -83,7 +85,8 @@ export default function MenuList() {
           </>
         );
       })}
-      <S.NewMenuWrap visible>
+      <S.MenuAddButton onClick={() => chagneIsVisible()}>메뉴 추가</S.MenuAddButton>
+      <S.NewMenuWrap $isVisible={isVisible}>
         <AddMenuForm />
       </S.NewMenuWrap>
     </S.Wrap>

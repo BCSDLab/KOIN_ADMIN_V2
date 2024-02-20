@@ -1,21 +1,23 @@
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable react-hooks/rules-of-hooks */
 import CustomForm from 'components/common/CustomForm';
-import { Card } from 'antd';
+import { Card, Divider } from 'antd';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
 import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
+import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
 import * as S from './MenuList.style';
-import MenuDetailForm from './MenuDetailForm';
+import MenuDetailForm from './MenuDetail';
 import useMenuMutation from './useMenuMutation';
+import AddMenuForm from './AddMenuForm';
 
 export default function MenuList() {
   const { id } = useParams();
   const { data: storeMenusData } = useGetMenusListQuery(Number(id));
   const [menuId, setMenuId] = useState<number>();
-  const menuList = storeMenusData?.menu_categories[0];
-  const { deleteMenu, updateMenu } = useMenuMutation(Number(id));
+  const menuListCategories = storeMenusData?.menu_categories ?? [];
+  const { deleteMenu, updateMenu, isDeleting } = useMenuMutation(Number(id));
   const [menuForm] = CustomForm.useForm();
 
   const handleClick = (selectedMenuId: number) => {
@@ -31,78 +33,57 @@ export default function MenuList() {
 
   return (
     <S.Wrap>
-      { menuList && (
-      <CustomForm
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
-        autoComplete="off"
-        initialValues={menuList}
-      >
-        <CustomForm.List name="menus">
-          {(fields, { remove }) => (
-            <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
-              {fields.map((field) => (
-                <S.CardWrap $id={menuList.menus[field.name]?.id} $menuId={menuId}>
-                  <Card
-                    size="small"
-                    title={menuList.menus[field.name].name}
-                    key={field.key}
-                    extra={(
-                      <PlusCircleOutlined
-                        onClick={() => handleClick(menuList.menus[field.name]?.id)}
-                      />
-                      )}
-                  >
-                    {menuList.menus[field.name].id === menuId
-                      && <MenuDetailForm menuId={menuId} form={menuForm} /> }
-                  </Card>
-                  <DeleteOutlined
-                    onClick={async () => {
-                      await deleteMenu(menuList.menus[field.name].id);
-                      remove(field.name);
-                    }}
-                    style={{ marginTop: 12 }}
-                  />
-                </S.CardWrap>
-              ))}
-            </div>
-          )}
-        </CustomForm.List>
-      </CustomForm>
-      )}
-      {/* 새로운 메뉴 리스트 */}
-      {/* <CustomForm.List name="new_menu">
-        {(fields, { remove, add }) => (
-          <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
-            {fields.map((field) => (
-              <>
-                <S.CardWrap $id={field.key} $menuId={menuId}>
-                  <Card
-                    size="small"
-                    key={field.key}
-                    extra={(
-                      <PlusCircleOutlined
-                        onClick={() => onClick(field.key)}
-                      />
-                      )}
-                  >
-                    <MenuDetailForm />
-                  </Card>
-                  <DeleteOutlined onClick={() => {
-                    remove(field.name);
-                  }}
-                  />
-                </S.CardWrap>
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                    Add field
-                  </Button>
-                </Form.Item>
-              </>
-            ))}
-          </div>
-        )}
-      </CustomForm.List> */}
+      {menuListCategories.map((menuList) => {
+        return (
+          <>
+            <Divider>{menuList.name}</Divider>
+            <CustomForm
+              labelCol={{ span: 6 }}
+              wrapperCol={{ span: 18 }}
+              autoComplete="off"
+              fields={getDefaultValueArr(menuList)}
+            >
+              <CustomForm.List name="menus">
+                {(menus, { remove }) => (
+                  <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
+                    {menus.map((field) => (
+                      <S.CardWrap
+                        $id={menuList.menus[field?.name].id}
+                        $menuId={menuId}
+                        key={field.key}
+                      >
+                        <Card
+                          size="small"
+                          title={menuList.menus[field?.name].name}
+                          key={field.key}
+                          extra={(
+                            <PlusCircleOutlined
+                              onClick={() => handleClick(menuList.menus[field.name]?.id)}
+                            />
+                        )}
+                        >
+                          {menuList.menus[field?.name].id === menuId
+                            && <MenuDetailForm menuId={menuId} form={menuForm} />}
+                        </Card>
+                        <DeleteOutlined
+                          onClick={async () => {
+                            if (!isDeleting) {
+                              await deleteMenu(menuList?.menus[field.name].id);
+                              remove(field.name);
+                            }
+                          }}
+                          style={{ marginTop: 12 }}
+                        />
+                      </S.CardWrap>
+                    ))}
+                  </div>
+                )}
+              </CustomForm.List>
+            </CustomForm>
+          </>
+        );
+      })}
+      <AddMenuForm />
     </S.Wrap>
   );
 }

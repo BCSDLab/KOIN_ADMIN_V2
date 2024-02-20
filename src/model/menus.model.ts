@@ -1,5 +1,3 @@
-export type Width = number | 'sm' | 'md' | 'lg' | 'xl' | 'lg' | 'xs';
-
 export interface MenusParams {
   id: number;
 }
@@ -26,8 +24,6 @@ export interface MenuCategory {
   name: string;
 }
 
-// API 응답
-
 export interface MenusResponse {
   count: number;
   menu_categories: MenuCategory[];
@@ -44,12 +40,6 @@ export interface MenuResponse {
   description: null | string;
   category_ids: number[];
   image_urls: string[];
-}
-
-// API 요청 (add)
-export interface AddMenusArgs {
-  id: number;
-  menusData: MenusResponse;
 }
 
 // API 요청 (update, delete)

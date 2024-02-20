@@ -1,8 +1,8 @@
 import {
   AppstoreOutlined, UserOutlined, CarOutlined, ShopOutlined,
-  CoffeeOutlined, HomeOutlined, UserSwitchOutlined,
+  HomeOutlined, UserSwitchOutlined,
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
-  BarChartOutlined, UserAddOutlined, BoldOutlined,
+  UserAddOutlined, BoldOutlined,
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -27,14 +27,11 @@ function getItem(
 }
 
 const items: MenuProps['items'] = [
-  getItem('대시보드', '/', <BarChartOutlined />),
-
   getItem('코인 서비스', 'service', <AppstoreOutlined />, [
     getItem('주변상점', 'service-store', <ShopOutlined />, [
       getItem('상점 관리', '/store', <ControlOutlined />),
       getItem('카테고리', '/category', <FolderOpenOutlined />),
     ]),
-    getItem('학교식단', '/cafeteria', <CoffeeOutlined />),
     getItem('버스 정보', '/bus', <CarOutlined />),
     getItem('복덕방', '/room', <HomeOutlined />),
   ]),
@@ -83,7 +80,7 @@ function SideNav() {
       <Menu
         onClick={onClick}
         selectedKeys={[pathname]}
-        defaultOpenKeys={['service', 'user']}
+        defaultOpenKeys={['service', 'service-store', 'user']}
         mode="inline"
         items={items}
       />

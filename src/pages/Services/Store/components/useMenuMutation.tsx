@@ -1,12 +1,12 @@
 import { message } from 'antd';
-import { MenuBody } from 'model/menus.model';
+import { Menu, MenuBody } from 'model/menus.model';
 import {
   useAddMenuMutation, useDeleteMenuMutation, useUpdateMenuMutation,
 } from 'store/api/storeMenu';
 
-export default function useMenuMutation(id:number) {
+export default function useMenuMutation(id: number) {
   const [updateMenuMutation] = useUpdateMenuMutation();
-  const [deleteMenuMutation] = useDeleteMenuMutation();
+  const [deleteMenuMutation, { isLoading: isDeleting }] = useDeleteMenuMutation();
   const [addMenuMutation] = useAddMenuMutation();
 
   function deleteMenu(menuId: number) {
@@ -29,18 +29,24 @@ export default function useMenuMutation(id:number) {
       });
   }
 
-  function addMenu(menuId: number, body: MenuBody) {
-    return addMenuMutation({ id, menuId, menuData: body })
+  const addMenu = (formData: Menu, {
+    onSuccess,
+    onError,
+  }: {
+    onSuccess?: () => void, onError?: ({ message, violations }:
+    { message: string; violations: string[] }) => void
+  } = {}) => {
+    addMenuMutation({ id, formData })
       .unwrap()
       .then(() => {
-        message.success('추가되었습니다.');
+        onSuccess?.();
       })
-      .catch(({ data }) => {
-        message.error(data.error.message);
+      .catch((error) => {
+        onError?.({ message: error.data.message, violations: error.data.violations });
       });
-  }
+  };
 
   return {
-    updateMenu, deleteMenu, addMenu,
+    updateMenu, deleteMenu, addMenu, isDeleting,
   };
 }

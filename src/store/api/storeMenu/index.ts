@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_PATH } from 'constant';
 
 import {
-  MenusResponse, MenuResponse, AddMenusArgs, MutationMenuArgs,
+  MenusResponse, MenuResponse, MutationMenuArgs, Menu,
 } from 'model/menus.model';
 import { RootState } from 'store';
 
@@ -24,22 +24,15 @@ export const storeMenuApi = createApi({
   endpoints: (builder) => ({
     getMenusList: builder.query<MenusResponse, number>({
       query: (id) => ({ url: `/admin/shops/${id}/menus` }),
-      providesTags: (result) => (
-        result
-          ? [
-            ...result.menu_categories.flatMap((category) => category.menus.map((menu) => ({ type: 'storeMenu' as const, id: menu.id }))),
-            { type: 'storeMenus', id: 'LIST' },
-          ]
-          : [{ type: 'storeMenus', id: 'LIST' }]
-      ),
+      providesTags: [{ type: 'storeMenus', id: 'LIST' }],
     }),
 
-    getMenuList: builder.query<MenuResponse, { id: number; menuId: number }>({
+    getMenu: builder.query<MenuResponse, { id: number; menuId: number }>({
       query: ({ id: shopId, menuId }) => ({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'GET',
       }),
-      providesTags: (result, error, { id }) => [{ type: 'storeMenu', id }],
+      providesTags: (result, error, { id, menuId }) => [{ type: 'storeMenu', id, menuId }],
     }),
 
     updateMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
@@ -48,7 +41,7 @@ export const storeMenuApi = createApi({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
+      invalidatesTags: (result, error, { id, menuId }) => [{ type: 'storeMenu', id, menuId }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
     deleteMenu: builder.mutation < MenusResponse, Pick<MutationMenuArgs, 'id' | 'menuId' >>({
@@ -56,31 +49,22 @@ export const storeMenuApi = createApi({
         url: `/admin/shops/${shopId}/menus/${menuId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
+      invalidatesTags: (result, error, { id, menuId }) => [{ type: 'storeMenu', id, menuId }, { type: 'storeMenus', id: 'LIST' }],
     }),
 
-    addMenu: builder.mutation<MenusResponse, MutationMenuArgs>({
-      query: ({ id: shopId, menuId, menuData: body }) => ({
-        url: `/admin/shops/${shopId}/menus/${menuId}`,
+    addMenu: builder.mutation<Menu, { id: number; formData: Menu }>({
+      query: ({ id: shopId, formData }) => ({
+        url: `/admin/shops/${shopId}/menus`,
         method: 'POST',
-        body,
+        body: formData,
       }),
       invalidatesTags: (result, error, { id }) => [{ type: 'storeMenu', id }, { type: 'storeMenus', id: 'LIST' }],
-    }),
-
-    addMenus: builder.mutation<MenusResponse, AddMenusArgs>({
-      query: ({ id, menusData: body }) => ({
-        url: `/admin/shops/${id}/menus`,
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: [{ type: 'storeMenus', id: 'LIST' }],
     }),
 
   }),
 });
 
 export const {
-  useGetMenusListQuery, useGetMenuListQuery, useUpdateMenuMutation, useDeleteMenuMutation,
-  useAddMenuMutation, useAddMenusMutation,
+  useGetMenusListQuery, useGetMenuQuery, useUpdateMenuMutation, useDeleteMenuMutation,
+  useAddMenuMutation,
 } = storeMenuApi;

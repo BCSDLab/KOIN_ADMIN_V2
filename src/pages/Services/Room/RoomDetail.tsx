@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-// import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
 import { useGetRoomQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icons';

@@ -2,12 +2,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import CustomForm from 'components/common/CustomForm';
 import { Card, Divider } from 'antd';
-import { DeleteOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
 import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
 import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
-import useBooleanState from 'utils/hooks/useBoolean';
 import * as S from './MenuList.style';
 import MenuDetailForm from './MenuDetail';
 import useMenuMutation from './useMenuMutation';
@@ -20,7 +19,6 @@ export default function MenuList() {
   const menuListCategories = storeMenusData?.menu_categories ?? [];
   const { deleteMenu, updateMenu, isDeleting } = useMenuMutation(Number(id));
   const [menuForm] = CustomForm.useForm();
-  const { value: isVisible, changeValue: chagneIsVisible } = useBooleanState();
 
   const handleClick = (selectedMenuId: number) => {
     if (menuId && selectedMenuId) {
@@ -85,10 +83,7 @@ export default function MenuList() {
           </>
         );
       })}
-      <S.MenuAddButton onClick={() => chagneIsVisible()} type="dashed" icon={<PlusOutlined />}>메뉴 추가</S.MenuAddButton>
-      <S.NewMenuWrap $isVisible={isVisible}>
-        <AddMenuForm />
-      </S.NewMenuWrap>
+      <AddMenuForm />
     </S.Wrap>
   );
 }

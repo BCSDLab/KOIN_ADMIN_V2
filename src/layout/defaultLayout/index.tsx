@@ -1,13 +1,13 @@
 import SideNav from 'components/common/SideNav';
-import { Outlet } from 'react-router-dom';
+import { ReactNode } from 'react';
 import * as S from './defaultLayout.style';
 
-function DefaultLayout() {
+function DefaultLayout({ children }: { children: ReactNode }) {
   return (
     <S.LayoutContainer>
       <SideNav />
       <S.Main>
-        <Outlet />
+        {children}
       </S.Main>
     </S.LayoutContainer>
   );

@@ -1,52 +1,62 @@
-import Toast from 'components/common/Toast';
 import DefaultLayout from 'layout/defaultLayout';
-import Bus from 'pages/Bus';
-import Cafeteria from 'pages/Cafeteria';
-import Category from 'pages/Category';
-import Dashboard from 'pages/Dashboard';
+import Bus from 'pages/Services/Bus';
+import CategoryList from 'pages/Services/Category/CategoryList';
 import Login from 'pages/Login';
-import Manager from 'pages/Manager';
-import Room from 'pages/Room';
-import Store from 'pages/Store';
-import User from 'pages/User';
-import { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
+import Manager from 'pages/UserManage/Manager';
+import ManagerRequest from 'pages/UserManage/ManagerRequest/OwnerList';
+import MemberList from 'pages/UserManage/Member/MemberList';
+import Store from 'pages/Services/Store/StoreList';
+import UserList from 'pages/UserManage/User/UserList';
 import {
-  Navigate, Route, Routes, useLocation,
+  Navigate, Outlet, Route, Routes, useLocation,
 } from 'react-router-dom';
-import { RootState } from 'store';
+import UserDetail from 'pages/UserManage/User/UserDetail';
+import RoomList from 'pages/Services/Room/RoomList';
+import RoomDetail from 'pages/Services/Room/RoomDetail';
+import MemberDetail from 'pages/UserManage/Member/MemberDetail';
+import { useToken } from 'store/slice/auth';
+import StoreDetail from 'pages/Services/Store/StoreDetail';
+import CategoryDetail from 'pages/Services/Category/CategoryDetail';
+import OwnerDetail from 'pages/UserManage/ManagerRequest/OwnerDetail';
 
-function RequireAuth({ children }: { children: ReactNode }) {
-  const { token } = useSelector((state: RootState) => state.auth);
+function RequireAuth() {
   const location = useLocation();
+  const token = useToken();
 
-  if (!token) {
+  if (token === null) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{ children }</>;
+  return (
+    <DefaultLayout>
+      <Outlet />
+    </DefaultLayout>
+  );
 }
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<RequireAuth><DefaultLayout /></RequireAuth>}>
-          <Route index element={<Dashboard />} />
-          <Route path="/store" element={<Store />} />
-          <Route path="/category" element={<Category />} />
-          <Route path="/cafeteria" element={<Cafeteria />} />
-          <Route path="/bus" element={<Bus />} />
-          <Route path="/room" element={<Room />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/manager" element={<Manager />} />
-          <Route path="*" element={<h1>404</h1>} />
-        </Route>
-      </Routes>
-      <Toast />
-    </>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<RequireAuth />}>
+        <Route index element={<Store />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/store/:id" element={<StoreDetail />} />
+        <Route path="/category" element={<CategoryList />} />
+        <Route path="/category/:id" element={<CategoryDetail />} />
+        <Route path="/bus" element={<Bus />} />
+        <Route path="/room" element={<RoomList />} />
+        <Route path="/room/:id" element={<RoomDetail />} />
+        <Route path="/user" element={<UserList />} />
+        <Route path="/user/:id" element={<UserDetail />} />
+        <Route path="/manager" element={<Manager />} />
+        <Route path="/manager-request" element={<ManagerRequest />} />
+        <Route path="/manager-request/:id" element={<OwnerDetail />} />
+        <Route path="/member" element={<MemberList />} />
+        <Route path="/member/:id" element={<MemberDetail />} />
+        <Route path="*" element={<h1>404</h1>} />
+      </Route>
+    </Routes>
   );
 }
 

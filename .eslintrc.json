@@ -47,6 +47,8 @@
     "max-classes-per-file": "off",
     "class-methods-use-this": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "react/prop-types": "off",
     "jsx-a11y/label-has-associated-control": ["error", {
       "required": {
         "some": ["nesting", "id"]
@@ -59,7 +61,8 @@
     }],
     "no-param-reassign": "off",
     "import/no-cycle": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "arrow-body-style": "off"
   },
   "settings": {
     "import/resolver": {

@@ -41,7 +41,7 @@ export default function StoreDetailForm({ form }: { form: FormInstance }) {
       </S.CheckboxWrap>
       <Divider orientation="left" style={{ marginTop: '40px' }}>사진</Divider>
       <S.UploadWrap>
-        <CustomForm.MultipleUpload domain="lands" name="image_urls" form={form} />
+        <CustomForm.MultipleUpload domain="shops" name="image_urls" form={form} />
       </S.UploadWrap>
     </>
   );

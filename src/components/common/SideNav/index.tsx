@@ -39,7 +39,7 @@ const items: MenuProps['items'] = [
   getItem('회원 관리', 'user', <UserOutlined />, [
     getItem('학생 회원', '/user', <UsergroupDeleteOutlined />),
     getItem('사장님', '/owner', <UserSwitchOutlined />),
-    getItem('권한 요청', '/owner-request', <UserAddOutlined />),
+    getItem('사장님 권한 요청', '/owner-request', <UserAddOutlined />),
     getItem('BCSD Lab', '/member', <BoldOutlined />),
   ]),
 ];

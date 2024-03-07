@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
 import {
-  OwnersResponse, OwnerResponse, OwnerListResponse, OwnersParam,
+  OwnerResponse, OwnersParam, OwnerListResponse, OwnersResponse,
 } from 'model/owner.model';
 
 export const ownerApi = createApi({
@@ -20,7 +20,7 @@ export const ownerApi = createApi({
   }),
   endpoints: (builder) => ({
     getOwnerList: builder.query<OwnerListResponse, OwnersParam>({
-      query: ({ page }) => `admin/users/new-owners/?page=${page}`,
+      query: ({ page }) => `admin/users/owners/?page=${page}`,
       providesTags: (result) => (result
         ? [...result.owners.map((owner) => ({ type: 'owner' as const, id: owner.id })), { type: 'owners', id: 'LIST' }]
         : [{ type: 'owners', id: 'LIST' }]),
@@ -31,7 +31,7 @@ export const ownerApi = createApi({
             email: owner.email,
             name: owner.name,
             created_at: owner.created_at,
-            shop_name: owner.shop_name,
+            phone_number: owner.phone_number,
           };
         });
         const totalPage = ownersResponse.total_page;

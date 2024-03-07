@@ -44,14 +44,16 @@ export const ownerApi = createApi({
       providesTags: (result, error, id) => [{ type: 'owner', id }],
     }),
 
-    updateOwner: builder.mutation<{ success: boolean; id: number }, number>({
-      query(id) {
+    updateOwner: builder.mutation<void, Pick<OwnerResponse, 'id'> & Partial<OwnerResponse>>({
+      query(data) {
+        const { id, ...body } = data;
         return {
-          url: `admin/owner/${id}/authed`,
+          url: `admin/users/owner/${id}`,
           method: 'PUT',
+          body,
         };
       },
-      invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
     }),
 
     deleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
@@ -63,7 +65,6 @@ export const ownerApi = createApi({
       },
       invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
     }),
-
   }),
 });
 

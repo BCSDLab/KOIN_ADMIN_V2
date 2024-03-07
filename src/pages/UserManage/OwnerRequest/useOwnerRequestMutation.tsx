@@ -1,10 +1,9 @@
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useUpdateOwnerRequestMutation, useDeleteOwnerRequestMutation } from 'store/api/ownerRequest';
+import { useUpdateOwnerRequestMutation } from 'store/api/ownerRequest';
 
 export default function useOwnerRequestMutation(id: number) {
   const [updateOwnerMutation] = useUpdateOwnerRequestMutation();
-  const [deleteOwnerMutation] = useDeleteOwnerRequestMutation();
   const navigate = useNavigate();
 
   const updateOwnerRequest = () => {
@@ -19,17 +18,5 @@ export default function useOwnerRequestMutation(id: number) {
       });
   };
 
-  const deleteOwnerRequest = () => {
-    deleteOwnerMutation(id)
-      .unwrap()
-      .then(() => {
-        message.success('삭제되었습니다.');
-        navigate(-1);
-      })
-      .catch(({ data }) => {
-        message.error(data.message);
-      });
-  };
-
-  return { updateOwnerRequest, deleteOwnerRequest };
+  return { updateOwnerRequest };
 }

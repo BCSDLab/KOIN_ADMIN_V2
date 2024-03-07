@@ -91,6 +91,7 @@ interface CustomButtonProps {
   htmlType?: 'button' | 'submit' | 'reset';
   type?: 'link' | 'text' | 'default' | 'dashed' | 'primary';
   block?: boolean;
+  disabled?: boolean;
 }
 
 function CustomButton({
@@ -101,6 +102,7 @@ function CustomButton({
   htmlType,
   type,
   block,
+  disabled,
 }: CustomButtonProps) {
   return (
     <S.FormItem>
@@ -111,6 +113,7 @@ function CustomButton({
         icon={icon}
         onClick={onClick}
         block={block}
+        disabled={disabled}
       >
         {children}
       </S.StyledButton>

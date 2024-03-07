@@ -18,6 +18,7 @@ import CategoryDetail from 'pages/Services/Category/CategoryDetail';
 import OwnerList from 'pages/UserManage/Owner/OwnerList';
 import OwnerRequestList from 'pages/UserManage/OwnerRequest/OwnerRequestList';
 import OwnerRequestDetail from 'pages/UserManage/OwnerRequest/OwnerRequestDetail';
+import OwnerDetail from 'pages/UserManage/Owner/OwnerDetail';
 
 function RequireAuth() {
   const location = useLocation();
@@ -50,6 +51,7 @@ function App() {
         <Route path="/user" element={<UserList />} />
         <Route path="/user/:id" element={<UserDetail />} />
         <Route path="/owner" element={<OwnerList />} />
+        <Route path="/owner/:id" element={<OwnerDetail />} />
         <Route path="/owner-request" element={<OwnerRequestList />} />
         <Route path="/owner-request/:id" element={<OwnerRequestDetail />} />
         <Route path="/member" element={<MemberList />} />

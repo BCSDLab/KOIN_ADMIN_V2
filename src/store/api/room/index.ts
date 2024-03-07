@@ -7,7 +7,7 @@ import {
 import { RootState } from 'store';
 
 export const roomApi = createApi({
-  reducerPath: 'roomApi',
+  reducerPath: 'room',
   tagTypes: ['rooms', 'room'],
 
   baseQuery: fetchBaseQuery({

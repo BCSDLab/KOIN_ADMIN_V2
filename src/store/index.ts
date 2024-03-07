@@ -9,7 +9,8 @@ import { storeApi } from './api/store';
 import { categoryApi } from './api/category';
 import { storeMenuApi } from './api/storeMenu';
 import { menuCategoriesApi } from './api/storeMenu/category';
-import { ownerApi } from './api/ownerRequest';
+import { ownerRequestApi } from './api/ownerRequest';
+import { ownerApi } from './api/owner';
 
 const apiList = [
   authApi,
@@ -21,6 +22,7 @@ const apiList = [
   categoryApi,
   storeMenuApi,
   menuCategoriesApi,
+  ownerRequestApi,
   ownerApi,
 ];
 

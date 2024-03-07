@@ -1,13 +1,13 @@
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useUpdateOwnerMutation, useDeleteOwnerMutation } from 'store/api/ownerRequest';
+import { useUpdateOwnerRequestMutation, useDeleteOwnerRequestMutation } from 'store/api/ownerRequest';
 
-export default function useOwnerMutation(id: number) {
-  const [updateOwnerMutation] = useUpdateOwnerMutation();
-  const [deleteOwnerMutation] = useDeleteOwnerMutation();
+export default function useOwnerRequestMutation(id: number) {
+  const [updateOwnerMutation] = useUpdateOwnerRequestMutation();
+  const [deleteOwnerMutation] = useDeleteOwnerRequestMutation();
   const navigate = useNavigate();
 
-  const updateOwner = () => {
+  const updateOwnerRequest = () => {
     updateOwnerMutation(id)
       .unwrap()
       .then(() => {
@@ -19,7 +19,7 @@ export default function useOwnerMutation(id: number) {
       });
   };
 
-  const deleteOwner = () => {
+  const deleteOwnerRequest = () => {
     deleteOwnerMutation(id)
       .unwrap()
       .then(() => {
@@ -31,5 +31,5 @@ export default function useOwnerMutation(id: number) {
       });
   };
 
-  return { updateOwner, deleteOwner };
+  return { updateOwnerRequest, deleteOwnerRequest };
 }

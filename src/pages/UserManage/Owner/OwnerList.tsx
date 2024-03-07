@@ -1,11 +1,12 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
-import { useGetOwnerRequestListQuery } from 'store/api/ownerRequest';
+import { useGetOwnerListQuery } from 'store/api/owner';
+
 import * as S from './OwnerList.style';
 
 function OwnerList() {
   const [page, setPage] = useState(1);
-  const { data: ownersRes } = useGetOwnerRequestListQuery({ page });
+  const { data: ownersRes } = useGetOwnerListQuery({ page });
 
   return (
     <S.Container>

@@ -21,7 +21,7 @@ export interface Owner {
   shop_name: string;
 }
 
-export interface OwnerTableHeader {
+export interface OwnerRequestTableHeader {
   id: number;
   email: string;
   name: string;
@@ -30,6 +30,19 @@ export interface OwnerTableHeader {
 }
 
 export interface OwnerRequestListResponse {
+  owners: OwnerRequestTableHeader[];
+  totalPage: number;
+}
+
+export interface OwnerTableHeader {
+  created_at: string;
+  email: string;
+  id: number;
+  name: string;
+  phone_number: string;
+}
+
+export interface OwnerListResponse {
   owners: OwnerTableHeader[];
   totalPage: number;
 }

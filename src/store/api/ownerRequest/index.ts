@@ -2,12 +2,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
 import {
-  OwnersResponse, OwnerResponse, OwnerRequestListResponse, OwnersParam,
+  OwnerResponse, OwnerRequestListResponse, OwnersParam, OwnersResponse,
 } from 'model/owner.model';
 
-export const ownerApi = createApi({
-  reducerPath: 'owner',
-  tagTypes: ['owners', 'owner'],
+export const ownerRequestApi = createApi({
+  reducerPath: 'ownerRequest',
+  tagTypes: ['ownerRequests', 'ownerRequest'],
   baseQuery: fetchBaseQuery({
     baseUrl: `${API_PATH}`,
     prepareHeaders: (headers, { getState }) => {
@@ -22,8 +22,8 @@ export const ownerApi = createApi({
     getOwnerRequestList: builder.query<OwnerRequestListResponse, OwnersParam>({
       query: ({ page }) => `admin/users/new-owners/?page=${page}`,
       providesTags: (result) => (result
-        ? [...result.owners.map((owner) => ({ type: 'owner' as const, id: owner.id })), { type: 'owners', id: 'LIST' }]
-        : [{ type: 'owners', id: 'LIST' }]),
+        ? [...result.owners.map((owner) => ({ type: 'ownerRequest' as const, id: owner.id })), { type: 'ownerRequests', id: 'LIST' }]
+        : [{ type: 'ownerRequests', id: 'LIST' }]),
       transformResponse: (ownersResponse: OwnersResponse):OwnerRequestListResponse => {
         const tableHeaders = ownersResponse.owners.map((owner) => {
           return {
@@ -39,35 +39,35 @@ export const ownerApi = createApi({
       },
     }),
 
-    getOwner: builder.query<OwnerResponse, number>({
+    getOwnerRequest: builder.query<OwnerResponse, number>({
       query: (id) => ({ url: `admin/users/owner/${id}` }),
-      providesTags: (result, error, id) => [{ type: 'owner', id }],
+      providesTags: (result, error, id) => [{ type: 'ownerRequest', id }],
     }),
 
-    updateOwner: builder.mutation<{ success: boolean; id: number }, number>({
+    updateOwnerRequest: builder.mutation<{ success: boolean; id: number }, number>({
       query(id) {
         return {
           url: `admin/owner/${id}/authed`,
           method: 'PUT',
         };
       },
-      invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+      invalidatesTags: (result, error, id) => [{ type: 'ownerRequest', id }, { type: 'ownerRequests', id: 'LIST' }],
     }),
 
-    deleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
+    deleteOwnerRequest: builder.mutation<{ success: boolean; id: number }, number>({
       query(id) {
         return {
           url: `admin/users/${id}`,
           method: 'DELETE',
         };
       },
-      invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+      invalidatesTags: (result, error, id) => [{ type: 'ownerRequest', id }, { type: 'ownerRequests', id: 'LIST' }],
     }),
 
   }),
 });
 
 export const {
-  useGetOwnerRequestListQuery, useGetOwnerQuery, useUpdateOwnerMutation,
-  useDeleteOwnerMutation,
-} = ownerApi;
+  useGetOwnerRequestListQuery, useGetOwnerRequestQuery, useUpdateOwnerRequestMutation,
+  useDeleteOwnerRequestMutation,
+} = ownerRequestApi;

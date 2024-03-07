@@ -29,7 +29,7 @@ export interface OwnerTableHeader {
   shop_name: string;
 }
 
-export interface OwnerListResponse {
+export interface OwnerRequestListResponse {
   owners: OwnerTableHeader[];
   totalPage: number;
 }

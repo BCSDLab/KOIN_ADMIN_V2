@@ -10,9 +10,9 @@ import CustomForm from 'components/common/CustomForm';
 import useOwnerMutation from './useOwnerMutation';
 import DetailForm from './components/DetailForm';
 
-import * as S from './OwnerDetail.style';
+import * as S from './OwnerRequestDetail.style';
 
-export default function OwnerDetail() {
+export default function OwnerRequestDetail() {
   const { id } = useParams();
   const { data: ownerData } = useGetOwnerQuery(Number(id));
   const { updateOwner } = useOwnerMutation(Number(id));

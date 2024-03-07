@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
 import {
-  OwnersResponse, OwnerResponse, OwnerListResponse, OwnersParam,
+  OwnersResponse, OwnerResponse, OwnerRequestListResponse, OwnersParam,
 } from 'model/owner.model';
 
 export const ownerApi = createApi({
@@ -19,12 +19,12 @@ export const ownerApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getOwnerList: builder.query<OwnerListResponse, OwnersParam>({
+    getOwnerRequestList: builder.query<OwnerRequestListResponse, OwnersParam>({
       query: ({ page }) => `admin/users/new-owners/?page=${page}`,
       providesTags: (result) => (result
         ? [...result.owners.map((owner) => ({ type: 'owner' as const, id: owner.id })), { type: 'owners', id: 'LIST' }]
         : [{ type: 'owners', id: 'LIST' }]),
-      transformResponse: (ownersResponse: OwnersResponse):OwnerListResponse => {
+      transformResponse: (ownersResponse: OwnersResponse):OwnerRequestListResponse => {
         const tableHeaders = ownersResponse.owners.map((owner) => {
           return {
             id: owner.id,
@@ -68,6 +68,6 @@ export const ownerApi = createApi({
 });
 
 export const {
-  useGetOwnerListQuery, useGetOwnerQuery, useUpdateOwnerMutation,
+  useGetOwnerRequestListQuery, useGetOwnerQuery, useUpdateOwnerMutation,
   useDeleteOwnerMutation,
 } = ownerApi;

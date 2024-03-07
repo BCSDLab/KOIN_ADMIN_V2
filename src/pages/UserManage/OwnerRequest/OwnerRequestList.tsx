@@ -1,11 +1,11 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
-import { useGetOwnerListQuery } from 'store/api/owner';
-import * as S from './OwnerList.style';
+import { useGetOwnerRequestListQuery } from 'store/api/owner';
+import * as S from './OwnerRequestList.style';
 
-function ManagerRequest() {
+function OwnerRequestList() {
   const [page, setPage] = useState(1);
-  const { data: ownersRes } = useGetOwnerListQuery({ page });
+  const { data: ownersRes } = useGetOwnerRequestListQuery({ page });
 
   return (
     <S.Container>
@@ -26,4 +26,4 @@ function ManagerRequest() {
   );
 }
 
-export default ManagerRequest;
+export default OwnerRequestList;

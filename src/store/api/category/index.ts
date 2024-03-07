@@ -4,7 +4,7 @@ import { CategoriesResponse, Category } from 'model/category.model';
 import { RootState } from 'store';
 
 export const categoryApi = createApi({
-  reducerPath: 'categoryApi',
+  reducerPath: 'category',
   tagTypes: ['categories', 'category'],
 
   baseQuery: fetchBaseQuery({

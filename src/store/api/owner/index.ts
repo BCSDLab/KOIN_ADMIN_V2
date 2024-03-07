@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
 import {
-  OwnersResponse, OwnerResponse, OwnerListResponse, OwnersParam,
+  OwnerResponse, OwnersParam, OwnerListResponse, OwnersResponse,
 } from 'model/owner.model';
 
 export const ownerApi = createApi({
@@ -20,7 +20,7 @@ export const ownerApi = createApi({
   }),
   endpoints: (builder) => ({
     getOwnerList: builder.query<OwnerListResponse, OwnersParam>({
-      query: ({ page }) => `admin/users/new-owners/?page=${page}`,
+      query: ({ page }) => `admin/users/owners/?page=${page}`,
       providesTags: (result) => (result
         ? [...result.owners.map((owner) => ({ type: 'owner' as const, id: owner.id })), { type: 'owners', id: 'LIST' }]
         : [{ type: 'owners', id: 'LIST' }]),
@@ -31,7 +31,7 @@ export const ownerApi = createApi({
             email: owner.email,
             name: owner.name,
             created_at: owner.created_at,
-            shop_name: owner.shop_name,
+            phone_number: owner.phone_number,
           };
         });
         const totalPage = ownersResponse.total_page;
@@ -44,14 +44,16 @@ export const ownerApi = createApi({
       providesTags: (result, error, id) => [{ type: 'owner', id }],
     }),
 
-    updateOwner: builder.mutation<{ success: boolean; id: number }, number>({
-      query(id) {
+    updateOwner: builder.mutation<void, Pick<OwnerResponse, 'id'> & Partial<OwnerResponse>>({
+      query(data) {
+        const { id, ...body } = data;
         return {
-          url: `admin/owner/${id}/authed`,
+          url: `admin/users/owner/${id}`,
           method: 'PUT',
+          body,
         };
       },
-      invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
     }),
 
     deleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
@@ -63,7 +65,6 @@ export const ownerApi = createApi({
       },
       invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
     }),
-
   }),
 });
 

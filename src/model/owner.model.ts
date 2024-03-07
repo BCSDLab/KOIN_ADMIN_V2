@@ -21,12 +21,25 @@ export interface Owner {
   shop_name: string;
 }
 
-export interface OwnerTableHeader {
+export interface OwnerRequestTableHeader {
   id: number;
   email: string;
   name: string;
   created_at: string;
   shop_name: string;
+}
+
+export interface OwnerRequestListResponse {
+  owners: OwnerRequestTableHeader[];
+  totalPage: number;
+}
+
+export interface OwnerTableHeader {
+  created_at: string;
+  email: string;
+  id: number;
+  name: string;
+  phone_number: string;
 }
 
 export interface OwnerListResponse {
@@ -49,7 +62,7 @@ export interface OwnerResponse {
   email: string;
   gender: string | null;
   is_authed: boolean;
-  ast_logged_at: string;
+  last_logged_at: string;
   created_at: string;
   updated_at: string;
   company_registration_number: string;

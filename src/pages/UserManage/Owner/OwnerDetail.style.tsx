@@ -7,4 +7,9 @@ export const Wrap = styled.div`
     color: #252525;
     background-color: white;
   }
+
+  .ant-checkbox-wrapper {
+    margin-top: 15px;
+    margin-left: 30px;
+  }
 `;

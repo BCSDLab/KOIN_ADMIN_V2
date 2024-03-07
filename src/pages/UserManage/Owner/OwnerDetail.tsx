@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Divider } from 'antd';
 import {
+  DeleteOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
 import DetailHeading from 'components/common/DetailHeading';
@@ -10,11 +11,13 @@ import { useGetOwnerQuery } from 'store/api/owner';
 import DetailForm from './components/DetailForm';
 
 import * as S from './OwnerDetail.style';
+import useOwnerMutation from './useOwnerMutation';
 
 export default function OwnerDetail() {
   const { id } = useParams();
   const { data: ownerData } = useGetOwnerQuery(Number(id));
   const [form] = CustomForm.useForm();
+  const { updateOwner, deleteOwner } = useOwnerMutation(Number(id));
 
   return (
     <S.Wrap>
@@ -26,7 +29,7 @@ export default function OwnerDetail() {
           </S.BreadCrumb>
           <S.FormWrap>
             <CustomForm
-              // onFinish={}
+              onFinish={updateOwner}
               form={form}
               initialValues={ownerData}
             >
@@ -34,12 +37,11 @@ export default function OwnerDetail() {
               <DetailForm form={form} />
               <S.ButtonWrap>
                 <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
-                  승인
+                  수정
                 </CustomForm.Button>
-                {/* <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteOwner}>
+                <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteOwner}>
                   삭제
-                </CustomForm.Button> */}
-                {/* 삭제는 soft delete 문제와 조금 더 다루 부분이 있어 주석 처리 후 재작업하겠습니다. */}
+                </CustomForm.Button>
               </S.ButtonWrap>
             </CustomForm>
           </S.FormWrap>

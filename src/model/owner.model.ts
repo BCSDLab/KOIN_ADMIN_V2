@@ -62,7 +62,7 @@ export interface OwnerResponse {
   email: string;
   gender: string | null;
   is_authed: boolean;
-  ast_logged_at: string;
+  last_logged_at: string;
   created_at: string;
   updated_at: string;
   company_registration_number: string;

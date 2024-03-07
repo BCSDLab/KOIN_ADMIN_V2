@@ -1,6 +1,6 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
-import { useGetOwnerRequestListQuery } from 'store/api/owner';
+import { useGetOwnerRequestListQuery } from 'store/api/ownerRequest';
 import * as S from './OwnerRequestList.style';
 
 function OwnerRequestList() {

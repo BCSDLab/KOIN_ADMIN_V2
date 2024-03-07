@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useUpdateOwnerMutation, useDeleteOwnerMutation } from 'store/api/owner';
+import { useUpdateOwnerMutation, useDeleteOwnerMutation } from 'store/api/ownerRequest';
 
 export default function useOwnerMutation(id: number) {
   const [updateOwnerMutation] = useUpdateOwnerMutation();

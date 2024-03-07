@@ -9,7 +9,7 @@ import { storeApi } from './api/store';
 import { categoryApi } from './api/category';
 import { storeMenuApi } from './api/storeMenu';
 import { menuCategoriesApi } from './api/storeMenu/category';
-import { ownerApi } from './api/owner';
+import { ownerApi } from './api/ownerRequest';
 
 const apiList = [
   authApi,

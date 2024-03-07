@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetOwnerQuery } from 'store/api/owner';
+import { useGetOwnerQuery } from 'store/api/ownerRequest';
 import { Divider } from 'antd';
 import {
   UploadOutlined,

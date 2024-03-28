@@ -59,10 +59,10 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
     uploadFile({ domain, image })
       .unwrap()
       .then((value) => {
-        setUploadFileList([...uploadFileList, `https://${value.file_url}`]);
+        setUploadFileList([...uploadFileList, value.file_url]);
         form.setFieldValue(name, [
           ...uploadFileList,
-          `https://${value.file_url}`,
+          value.file_url,
         ]);
         message.success('업로드에 성공했습니다.');
       })

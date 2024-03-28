@@ -42,8 +42,8 @@ export default function CustomSingleUpload({ form, domain, name }: Props) {
     uploadFile({ domain, image })
       .unwrap()
       .then((value) => {
-        setUploadFileList([`https://${value.file_url}`]);
-        form.setFieldValue(name, `https://${value.file_url}`);
+        setUploadFileList([value.file_url]);
+        form.setFieldValue(name, value.file_url);
         message.success('업로드에 성공했습니다.');
       })
       .catch(() => {

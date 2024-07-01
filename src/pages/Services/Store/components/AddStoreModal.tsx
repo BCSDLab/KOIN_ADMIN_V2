@@ -4,11 +4,13 @@ import CustomForm from 'components/common/CustomForm';
 
 import { message } from 'antd';
 import * as S from 'styles/List.style';
-import { StoreResponse } from 'model/store.model';
+import { DAY, StoreResponse } from 'model/store.model';
 import STORE_OPTION from 'constant/store';
 import { useEffect } from 'react';
 import useStoreMutation from './useStoreMutation';
 import StoreDetailForm from './StoreDetailForm';
+
+const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
 export default function AddStoreModal({ closeModal }: { closeModal: () => void }) {
   const [form] = CustomForm.useForm();
@@ -20,9 +22,17 @@ export default function AddStoreModal({ closeModal }: { closeModal: () => void }
     ));
   }, [form]);
 
+  const defaultTimeInfo = DAYS.map((day, index) => {
+    return (
+      {
+        close_time: '00:00',
+        closed: false,
+        day_of_week: DAY[index],
+        open_time: '00:00',
+      });
+  });
+
   const createStore = (values: Partial<StoreResponse>) => {
-    // open 데이터 fetching 예외 처리
-    values.open = form.getFieldValue('open');
     addStore(values, {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');
@@ -44,6 +54,7 @@ export default function AddStoreModal({ closeModal }: { closeModal: () => void }
     <CustomForm
       onFinish={createStore}
       form={form}
+      initialValues={{ open: defaultTimeInfo }}
     >
       <S.DetailFormWrap>
         <StoreDetailForm form={form} />

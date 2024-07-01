@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-imports */
 import { Divider, Select, TimePicker } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
-import { DAY, StoreOpen } from 'model/store.model';
+import { StoreOpen } from 'model/store.model';
 import { useState } from 'react';
 import CustomForm from 'components/common/CustomForm';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -25,22 +25,13 @@ const TABLE_TYPES = {
   },
 };
 
-const defaultTimeInfo = DAYS.map((day, index) => {
-  return (
-    {
-      close_time: '00:00',
-      closed: false,
-      day_of_week: DAY[index],
-      open_time: '00:00',
-    });
-});
-
 dayjs.extend(customParseFormat);
 
 function OpenTimeForm({ form }: { form: FormInstance }) {
-  const openTimeInfo: StoreOpen[] = form.getFieldValue('open') || defaultTimeInfo;
+  const openTimeInfo: StoreOpen[] = form.getFieldValue('open');
   const [selectType, setSelectType] = useState<keyof typeof TABLE_TYPES>('직접 지정');
   const newOpenTimeInfo = [...openTimeInfo];
+
   const handleTimeFormChange = (index: number, key: keyof StoreOpen, value: string | string[]) => {
     const selected = TABLE_TYPES[selectType];
     for (let i = 0; i < selected.colSize[index]; i += 1) {

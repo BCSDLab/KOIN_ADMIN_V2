@@ -22,10 +22,10 @@ export default function StoreDetailForm({ form }: { form: FormInstance }) {
             required,
             pattern(/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/, '전화번호 형식을 맞춰주세요')]}
         />
-        <CustomForm.InputNumber label="배달비" name="delivery_price" />
+        <CustomForm.InputNumber label="배달비" name="delivery_price" rules={[required]} />
       </CustomForm.GridRow>
       <CustomForm.Input label="주소" name="address" rules={[max(65535), required]} />
-      <CustomForm.TextArea label="설명" name="description" maxLength={200} />
+      <CustomForm.TextArea label="설명" name="description" maxLength={200} rules={[required]} />
       <CustomForm.Input label="카테고리 목록" name="category_ids" disabled rules={[required]} />
       <StoreCategory form={form} />
       <OpenTimeForm form={form} />

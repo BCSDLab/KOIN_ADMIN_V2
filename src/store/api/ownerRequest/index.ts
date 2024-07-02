@@ -20,11 +20,11 @@ export const ownerRequestApi = createApi({
   }),
   endpoints: (builder) => ({
     getOwnerRequestList: builder.query<OwnerRequestListResponse, OwnersParam>({
-      query: ({ page }) => `admin/users/new-owners/?page=${page}`,
+      query: ({ page }) => `admin/users/new-owners?page=${page}`,
       providesTags: (result) => (result
         ? [...result.owners.map((owner) => ({ type: 'ownerRequest' as const, id: owner.id })), { type: 'ownerRequests', id: 'LIST' }]
         : [{ type: 'ownerRequests', id: 'LIST' }]),
-      transformResponse: (ownersResponse: OwnersResponse):OwnerRequestListResponse => {
+      transformResponse: (ownersResponse: OwnersResponse): OwnerRequestListResponse => {
         const tableHeaders = ownersResponse.owners.map((owner) => {
           return {
             id: owner.id,

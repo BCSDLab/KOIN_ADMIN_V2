@@ -4,6 +4,7 @@ import {
 } from 'react';
 import { useGetReviewListQuery } from 'store/api/review';
 import * as Common from 'styles/List.style';
+import { UpCircleOutlined } from '@ant-design/icons';
 import ReviewCard from './ReviewCard';
 import * as S from './ReviewList.style';
 
@@ -16,6 +17,10 @@ export default function ReviewList() {
     data, isLoading, isFetching,
   } = useGetReviewListQuery({ page, limit: LIMIT, isReported });
   const endOfPage = useRef<HTMLDivElement>(null);
+
+  const scrollUp = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const filterReportedReview = () => {
     setIsReported((prev) => !prev);
@@ -64,6 +69,9 @@ export default function ReviewList() {
           </S.DataContainer>
         </>
       )}
+      <S.RightDownButton onClick={scrollUp}>
+        <UpCircleOutlined />
+      </S.RightDownButton>
     </S.Container>
   );
 }

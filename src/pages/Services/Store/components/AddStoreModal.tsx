@@ -1,4 +1,5 @@
-/* eslint-disable no-restricted-imports */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { UploadOutlined } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
 
@@ -33,7 +34,8 @@ export default function AddStoreModal({ closeModal }: { closeModal: () => void }
   });
 
   const createStore = (values: Partial<StoreResponse>) => {
-    addStore(values, {
+    const data = form.getFieldsValue(true);
+    addStore(data, {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');
         closeModal();

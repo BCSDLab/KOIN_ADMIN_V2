@@ -11,6 +11,7 @@ import { storeMenuApi } from './api/storeMenu';
 import { menuCategoriesApi } from './api/storeMenu/category';
 import { ownerRequestApi } from './api/ownerRequest';
 import { ownerApi } from './api/owner';
+import { reviewApi } from './api/review';
 
 const apiList = [
   authApi,
@@ -24,6 +25,7 @@ const apiList = [
   menuCategoriesApi,
   ownerRequestApi,
   ownerApi,
+  reviewApi,
 ];
 
 const apiMiddleware = apiList.map((api) => api.middleware);

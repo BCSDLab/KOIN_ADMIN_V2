@@ -43,44 +43,46 @@ interface Props<TableData> {
     onChange: (idx: number) => void;
   };
   columnSize?: number[];
+  hiddenColumns?: string[];
 }
 
-function CustomTable<TableData extends DefaultTableData>(
-  { data, pagination, columnSize }: Props<TableData>,
-) {
+function CustomTable<TableData extends DefaultTableData>({
+  data, pagination, columnSize, hiddenColumns = [],
+}: Props<TableData>) {
   const navigate = useNavigate();
 
   const getColumns = (): ColumnsType<TableData> => {
     const columnKeys = Object.keys(data[0]);
 
-    return columnKeys.map((key, idx) => ({
-      title: TITLE_MAPPER[key] || key.toUpperCase(),
-      dataIndex: key,
-      key,
-      width: columnSize && columnSize[idx] ? `${columnSize[idx]}%` : 'auto',
-      render: (value: string | number | boolean) => {
-        if (typeof value === 'boolean') {
-          return value ? 'True' : 'False';
-        }
-
-        if (typeof value === 'number') {
-          return value || '-';
-        }
-
-        if (typeof value === 'string') {
-          if (value.startsWith('https://')) {
-            return <TableItemImage src={value} alt="icon" />;
+    return columnKeys
+      .filter((key) => !hiddenColumns.includes(key))
+      .map((key, idx) => ({
+        title: TITLE_MAPPER[key] || key.toUpperCase(),
+        dataIndex: key,
+        key,
+        width: columnSize && columnSize[idx] ? `${columnSize[idx]}%` : 'auto',
+        render: (value: string | number | boolean) => {
+          if (typeof value === 'boolean') {
+            return value ? 'True' : 'False';
           }
 
-          if (longDateRegExp.test(value)) {
-            return toDateStringFormat(value);
+          if (typeof value === 'number') {
+            return value || '-';
           }
-        }
-        return value;
-      },
-    }));
+
+          if (typeof value === 'string') {
+            if (value.startsWith('https://')) {
+              return <TableItemImage src={value} alt="icon" />;
+            }
+
+            if (longDateRegExp.test(value)) {
+              return toDateStringFormat(value);
+            }
+          }
+          return value;
+        },
+      }));
   };
-  // const hasData = data.length > 0;
 
   return (
     <TableContainer>

@@ -38,6 +38,7 @@ export interface GetReviewListParam {
 
 export interface SetReviewParam {
   id: number;
+  page: number;
   body: {
     report_status: string
   }

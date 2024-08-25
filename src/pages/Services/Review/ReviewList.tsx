@@ -44,11 +44,13 @@ export default function ReviewList() {
               />
             ))}
             {data && (
-            <Pagination
-              total={Math.round(data.total_count / 10) * 10}
-              current={page}
-              onChange={(num) => setPage(num)}
-            />
+              <S.DataContainer>
+                <Pagination
+                  total={data.total_count}
+                  current={page}
+                  onChange={(num) => setPage(num)}
+                />
+              </S.DataContainer>
             )}
           </S.DataContainer>
         </>

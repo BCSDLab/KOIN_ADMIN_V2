@@ -32,7 +32,7 @@ export const reviewApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: 'reviews' }],
+      invalidatesTags: (result, error, { page }) => [{ type: 'reviews', id: page }],
     }),
 
     deleteReview: builder.mutation<void, { id: number, page: number }>({

@@ -46,6 +46,7 @@ export default function ReviewCard({ review, currentPage }: Props) {
   const dismissSpecificReview = () => {
     dismissReview({
       id: review.reviewId,
+      page: currentPage,
       body: {
         report_status: 'DISMISSED',
       },

@@ -22,6 +22,7 @@ export const DataContainer = styled.div`
   flex-direction: column;
   gap: 15px;
   width: 100%;
+  margin-bottom: 30px;
 `;
 
 export const RightDownButton = styled.div`

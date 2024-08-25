@@ -21,18 +21,7 @@ export const reviewApi = createApi({
   endpoints: (builder) => ({
     getReviewList: builder.query<ReviewListResponse, GetReviewListParam>({
       query: ({ page, limit, isReported }) => ({ url: `admin/shops/reviews?page=${page}&limit=${limit}&${isReported ? 'is_reported=true' : ''}` }),
-      providesTags: () => [{ type: 'reviews' }],
-      serializeQueryArgs: ({ queryArgs }) => {
-        return `${queryArgs.isReported}`; // 캐시 키를 `isReported` 값을 포함하도록 수정
-      },
-      merge: (cached, newItem, { arg }) => {
-        if (arg.page === 1) return newItem;
-        cached.reviews.push(...newItem.reviews);
-        return cached;
-      },
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg?.page !== previousArg?.page;
-      },
+      providesTags: (result, error, { page }) => [{ type: 'reviews', id: page }],
     }),
 
     setReviewDismissed: builder.mutation<string, SetReviewParam>({
@@ -46,14 +35,14 @@ export const reviewApi = createApi({
       invalidatesTags: [{ type: 'reviews' }],
     }),
 
-    deleteReview: builder.mutation<void, number>({
-      query(id) {
+    deleteReview: builder.mutation<void, { id: number, page: number }>({
+      query({ id }) {
         return {
           url: `/admin/shops/reviews/${id}`,
           method: 'delete',
         };
       },
-      invalidatesTags: [{ type: 'reviews' }],
+      invalidatesTags: (result, error, { page }) => [{ type: 'reviews', id: page }],
     }),
   }),
 });

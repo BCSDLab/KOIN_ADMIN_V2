@@ -6,12 +6,13 @@ import { useDeleteReviewMutation, useSetReviewDismissedMutation } from 'store/ap
 import * as S from './ReviewCard.style';
 
 interface Props {
-  review: ReviewContent
+  review: ReviewContent;
+  currentPage: number;
 }
 
 const KOIN_URL = process.env.REACT_APP_API_PATH?.includes('stage') ? 'https://stage.koreatech.in' : 'https://koreatech.in';
 
-export default function ReviewCard({ review }: Props) {
+export default function ReviewCard({ review, currentPage }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isReportOpen, setIsReportOpen] = useState<boolean>(false);
@@ -36,7 +37,10 @@ export default function ReviewCard({ review }: Props) {
   }
 
   const deleteSpecificReview = () => {
-    deleteReview(review.reviewId);
+    deleteReview({
+      id: review.reviewId,
+      page: currentPage,
+    });
   };
 
   const dismissSpecificReview = () => {

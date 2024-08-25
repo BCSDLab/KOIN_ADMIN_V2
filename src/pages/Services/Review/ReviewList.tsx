@@ -1,7 +1,5 @@
-import { Checkbox, Skeleton } from 'antd';
-import {
-  useEffect, useRef, useState,
-} from 'react';
+import { Checkbox, Skeleton, Pagination } from 'antd';
+import { useState } from 'react';
 import { useGetReviewListQuery } from 'store/api/review';
 import * as Common from 'styles/List.style';
 import { UpCircleOutlined } from '@ant-design/icons';
@@ -14,9 +12,8 @@ export default function ReviewList() {
   const [page, setPage] = useState(1);
   const [isReported, setIsReported] = useState<boolean>(false);
   const {
-    data, isLoading, isFetching,
+    data, isLoading,
   } = useGetReviewListQuery({ page, limit: LIMIT, isReported });
-  const endOfPage = useRef<HTMLDivElement>(null);
 
   const scrollUp = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -26,26 +23,6 @@ export default function ReviewList() {
     setIsReported((prev) => !prev);
     setPage(1);
   };
-
-  useEffect(() => {
-    const getNextPage = (entries: IntersectionObserverEntry[]) => {
-      if (entries[0].isIntersecting
-        && data && data.total_count > LIMIT * page
-        && !isLoading && !isFetching) {
-        setPage((prev) => prev + 1);
-      }
-    };
-
-    const observer = new IntersectionObserver(getNextPage);
-
-    if (endOfPage.current) {
-      observer.observe(endOfPage.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [data, isLoading, page, isFetching]);
 
   return (
     <S.Container>
@@ -63,9 +40,16 @@ export default function ReviewList() {
               <ReviewCard
                 review={review}
                 key={review.reviewId}
+                currentPage={page}
               />
             ))}
-            <div ref={endOfPage} style={{ height: '100px' }} />
+            {data && (
+            <Pagination
+              total={Math.round(data.total_count / 10) * 10}
+              current={page}
+              onChange={(num) => setPage(num)}
+            />
+            )}
           </S.DataContainer>
         </>
       )}

@@ -14,10 +14,6 @@ export const Container = styled.div<{ $isHandle: boolean }>`
   transition: scale 0.3s, height 0.3s;
   width: 100%;
   gap: 10px;
-
-  &:hover {
-    scale: 1.015;
-  }
 `;
 
 export const Row = styled.div`

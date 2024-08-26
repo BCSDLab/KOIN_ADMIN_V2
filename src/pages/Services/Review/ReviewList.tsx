@@ -2,7 +2,7 @@ import { Checkbox, Skeleton, Pagination } from 'antd';
 import { useState } from 'react';
 import { useGetReviewListQuery } from 'store/api/review';
 import * as Common from 'styles/List.style';
-import { UpCircleOutlined } from '@ant-design/icons';
+import ScrollUpButton from 'components/common/ScrollUpButton/ScrollUpButton';
 import ReviewCard from './ReviewCard';
 import * as S from './ReviewList.style';
 
@@ -14,10 +14,6 @@ export default function ReviewList() {
   const {
     data, isLoading,
   } = useGetReviewListQuery({ page, limit: LIMIT, isReported });
-
-  const scrollUp = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const filterReportedReview = () => {
     setIsReported((prev) => !prev);
@@ -32,7 +28,7 @@ export default function ReviewList() {
       {isLoading ? [1, 2, 3, 4, 5].map((key) => <Skeleton key={key} active />) : (
         <>
           <S.Filter>
-            <Checkbox checked={!!isReported} onChange={filterReportedReview} />
+            <Checkbox checked={isReported} onChange={filterReportedReview} />
             신고된 리뷰만 모아보기
           </S.Filter>
           <S.DataContainer>
@@ -55,9 +51,7 @@ export default function ReviewList() {
           </S.DataContainer>
         </>
       )}
-      <S.RightDownButton onClick={scrollUp}>
-        <UpCircleOutlined />
-      </S.RightDownButton>
+      <ScrollUpButton />
     </S.Container>
   );
 }

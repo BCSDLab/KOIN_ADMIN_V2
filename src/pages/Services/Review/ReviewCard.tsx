@@ -3,14 +3,13 @@ import { Button, message, Modal } from 'antd';
 import { useState } from 'react';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { useDeleteReviewMutation, useSetReviewDismissedMutation } from 'store/api/review';
+import { KOIN_URL } from 'constant';
 import * as S from './ReviewCard.style';
 
 interface Props {
   review: ReviewContent;
   currentPage: number;
 }
-
-const KOIN_URL = process.env.REACT_APP_API_PATH?.includes('stage') ? 'https://stage.koreatech.in' : 'https://koreatech.in';
 
 export default function ReviewCard({ review, currentPage }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -54,7 +53,7 @@ export default function ReviewCard({ review, currentPage }: Props) {
   };
 
   return (
-    <S.Container $isHandle={review.isHaveUnhandledReport}>
+    <S.Container isHandle={review.isHaveUnhandledReport}>
       <S.Row>
         <S.RowItem>
           <S.Item>

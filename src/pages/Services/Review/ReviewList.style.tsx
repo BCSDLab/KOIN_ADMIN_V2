@@ -24,11 +24,3 @@ export const DataContainer = styled.div`
   width: 100%;
   margin-bottom: 30px;
 `;
-
-export const RightDownButton = styled.div`
-  position: fixed;
-  bottom: 100px;
-  right: 100px;
-  font-size: 40px;
-  cursor: pointer;
-`;

@@ -5,11 +5,11 @@ export const Shortcut = styled.a`
   text-decoration: none;
 `;
 
-export const Container = styled.div<{ $isHandle: boolean }>`
+export const Container = styled.div<{ isHandle: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 10px 15px;
-  background: ${(props) => (props.$isHandle ? '#ff000050' : '#00BFFF10')};
+  background: ${(props) => (props.isHandle ? '#ff000050' : '#00BFFF10')};
   border-radius: 10px;
   transition: scale 0.3s, height 0.3s;
   width: 100%;

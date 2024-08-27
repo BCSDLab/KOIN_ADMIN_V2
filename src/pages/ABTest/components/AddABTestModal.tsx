@@ -1,101 +1,59 @@
-/* eslint-disable no-restricted-imports */
-
-import CustomForm from 'components/common/CustomForm';
-import { useState } from 'react';
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable react/no-array-index-key */
+import React, { useState } from 'react';
+import { Slider } from 'antd';
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import CustomForm from 'components/common/CustomForm';
 import * as S from './AddABTestModal.style';
 import NewTest from './NewTest';
 
-export default function AddABTestModal({ onCancel }: { onCancel: () => void }) {
+function AddABTestModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();
   const [step, setStep] = useState(1);
   const [title, setTile] = useState('');
   const [displayTitle, setDisplayTitle] = useState('');
+  const [sliderValues, setSliderValues] = useState([50]);
   const [tests, setTests] = useState([
     { rate: 50, displayName: '', name: '' },
     { rate: 50, displayName: '', name: '' },
   ]);
 
-  const createABTest = () => {
-    onCancel();
-    form.resetFields();
-  };
+  const handleSliderChange = (values: number[]) => {
+    const updatedTests = [...tests];
+    updatedTests[0].rate = values[0];
 
-  const handleNextStep = () => {
-    if (step < 3) {
-      setStep(step + 1);
-    } else {
-      form.submit();
-    }
-  };
-
-  const handlePreviousStep = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    }
-  };
-
-  const handleRateChange = (index: number, newRate: number) => {
-    const newTests = [...tests];
-    newTests[index].rate = newRate;
-
-    const totalRate = newTests.reduce((sum, test) => sum + test.rate, 0);
-
-    if (totalRate !== 100) {
-      const remainingRate = 100 - newRate;
-      const otherTests = newTests.filter((_, i) => i !== index);
-      const adjustedTests = otherTests.map((test) => ({
-        ...test,
-        // eslint-disable-next-line no-mixed-operators
-        rate: Math.floor(test.rate / (totalRate - newRate) * remainingRate),
-      }));
-
-      // 총합이 100이 되도록 마지막 항목에 차이를 반영
-      // eslint-disable-next-line max-len
-      adjustedTests[adjustedTests.length - 1].rate += 100 - adjustedTests.reduce((sum, test) => sum + test.rate, 0);
-
-      // 새로운 테스트 배열에 반영
-      newTests.forEach((test, i) => {
-        if (i !== index) {
-          const adjustedTest = adjustedTests.shift();
-          if (adjustedTest) test.rate = adjustedTest.rate;
-        }
-      });
+    for (let i = 1; i < values.length; i++) {
+      updatedTests[i].rate = values[i] - values[i - 1];
     }
 
-    setTests(newTests);
-  };
-
-  const handleDisplayNameChange = (index: number, value: string) => {
-    const newTests = [...tests];
-    newTests[index].displayName = value;
-    setTests(newTests);
-  };
-
-  const handleNameChange = (index: number, value: string) => {
-    const newTests = [...tests];
-    newTests[index].name = value;
-    setTests(newTests);
+    updatedTests[updatedTests.length - 1].rate = 100 - values[values.length - 1];
+    setSliderValues(values);
+    setTests(updatedTests);
   };
 
   const addTest = () => {
     const newTest = { rate: 0, displayName: '', name: '' };
     const newTests = [...tests, newTest];
 
-    const distributedRate = Math.floor(100 / newTests.length);
+    const newSliderValue = Math.floor(100 / newTests.length) * newTests.length;
+    setSliderValues([...sliderValues, newSliderValue]);
 
     setTests(
       newTests.map((test, index) => ({
         ...test,
         rate: index === newTests.length - 1
-          ? 100 - distributedRate * (newTests.length - 1) : distributedRate,
+          ? 100 - newSliderValue : newSliderValue / newTests.length,
       })),
     );
   };
 
   return (
     <CustomForm
-      onFinish={createABTest}
+      onFinish={() => {
+        onCancel();
+        form.resetFields();
+      }}
       form={form}
     >
       {step === 1 && (
@@ -115,45 +73,57 @@ export default function AddABTestModal({ onCancel }: { onCancel: () => void }) {
             <S.SubTitle>{title}</S.SubTitle>
           </S.StepTowLabel>
           {tests.map((test, index) => (
-            <NewTest
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              index={index}
-              rate={test.rate}
-              displayName={test.displayName}
-              name={test.name}
-              onRateChange={handleRateChange}
-              onDisplayNameChange={handleDisplayNameChange}
-              onNameChange={handleNameChange}
-            />
+            <div key={index}>
+              <NewTest
+                key={index}
+                index={index}
+                rate={test.rate}
+                displayName={test.displayName}
+                name={test.name}
+                onRateChange={() => {}}
+                onDisplayNameChange={(idx, value) => {
+                  const newTests = [...tests];
+                  newTests[idx].displayName = value;
+                  setTests(newTests);
+                }}
+                onNameChange={(idx, value) => {
+                  const newTests = [...tests];
+                  newTests[idx].name = value;
+                  setTests(newTests);
+                }}
+              />
+            </div>
           ))}
-          <CustomForm.Button
-            icon={<PlusCircleOutlined />}
-            onClick={addTest}
-          >
+          <CustomForm.Button icon={<PlusCircleOutlined />} onClick={addTest}>
             실험 추가
           </CustomForm.Button>
         </S.StepTwoContainer>
       )}
-      {step === 3 && (
-        <S.StepContainer>
-          <S.Label>세 번째 단계 제목</S.Label>
-          <S.Label>세 번째 단계 내용</S.Label>
-        </S.StepContainer>
+      {step === 2 && (
+      <Slider
+        range
+        min={0}
+        max={100}
+        value={sliderValues}
+        onChange={handleSliderChange}
+      />
       )}
+
       <S.ButtonWrap>
         {step > 1 && (
-          <CustomForm.Button
-            danger
-            icon={<ArrowLeftOutlined />}
-            onClick={handlePreviousStep}
-          >
+          <CustomForm.Button danger icon={<ArrowLeftOutlined />} onClick={() => setStep(step - 1)}>
             이전
           </CustomForm.Button>
         )}
         <CustomForm.Button
           icon={<ArrowRightOutlined />}
-          onClick={handleNextStep}
+          onClick={() => {
+            if (step === 3) {
+              form.submit();
+            } else {
+              setStep(step + 1);
+            }
+          }}
           htmlType={step === 3 ? 'submit' : 'button'}
         >
           {step === 3 ? '완료' : '다음'}
@@ -162,3 +132,5 @@ export default function AddABTestModal({ onCancel }: { onCancel: () => void }) {
     </CustomForm>
   );
 }
+
+export default AddABTestModal;

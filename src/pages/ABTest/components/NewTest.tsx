@@ -6,7 +6,7 @@ interface NewTestProps {
   rate: number;
   displayName: string;
   name: string;
-  onRateChange: (index: number, newRate: number) => void;
+  onRateChange: (index: number, rate: number) => void;
   onDisplayNameChange: (index: number, value: string) => void;
   onNameChange: (index: number, value: string) => void;
 }

@@ -28,6 +28,11 @@ export default function MenuDetailForm({ form, storeMenu }: {
   }));
   form.setFieldValue('is_single', isSingleMenu);
 
+  const setSingleMenu = () => {
+    isSingleMenuChange();
+    form.setFieldValue('option_prices', null);
+  };
+
   return (
     <CustomForm
       form={form}
@@ -43,7 +48,7 @@ export default function MenuDetailForm({ form, storeMenu }: {
       <Form.Item name="is_single">
         <Checkbox
           checked={isSingleMenu}
-          onChange={() => isSingleMenuChange()}
+          onChange={() => setSingleMenu()}
         >
           단일 메뉴
         </Checkbox>

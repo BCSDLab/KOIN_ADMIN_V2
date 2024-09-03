@@ -1,7 +1,7 @@
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Card, message } from 'antd';
 import CustomForm from 'components/common/CustomForm';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useBooleanState from 'utils/hooks/useBoolean';
 import MenuDetailForm from './MenuDetailForm';
@@ -19,6 +19,7 @@ export default function AddMenuForm() {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');
         form.resetFields();
+        form.setFieldValue('image_urls', []);
       },
       onError: (error) => {
         if (error?.violations) message.error(error.violations[0]);
@@ -26,6 +27,9 @@ export default function AddMenuForm() {
       },
     });
   };
+  useEffect(() => {
+    form.setFieldValue('image_urls', []);
+  }, [form]);
   return (
     <>
       <S.MenuAddButton onClick={() => chagneIsVisible()} type="dashed" icon={<PlusOutlined />}>메뉴 추가</S.MenuAddButton>

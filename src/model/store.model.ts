@@ -82,3 +82,23 @@ export interface StoreParams {
   page: number;
   is_deleted: boolean;
 }
+
+export interface CreateStoreParams {
+  address: string;
+  category_ids: number[];
+  delivery: true;
+  delivery_price: number;
+  description: string;
+  image_urls: string[];
+  name: string;
+  open: StoreOpen[];
+  pay_bank: boolean;
+  pay_card: boolean;
+  phone: string;
+}
+
+export interface ModifyStoreParams extends CreateStoreParams {
+  phone: string;
+  bank: string;
+  account_number: string;
+}

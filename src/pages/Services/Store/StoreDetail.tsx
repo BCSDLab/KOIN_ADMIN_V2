@@ -4,7 +4,7 @@ import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icon
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import { useGetStoreQuery } from 'store/api/store';
-import { StoreResponse } from 'model/store.model';
+import { ModifyStoreParams } from 'model/store.model';
 import useStoreMutation from './components/useStoreMutation';
 import * as S from './StoreDetail.style';
 import StoreDetailForm from './components/StoreDetailForm';
@@ -14,9 +14,9 @@ export default function StoreDetail() {
   const { id } = useParams();
   const { data: storeData } = useGetStoreQuery(Number(id));
   const { updateStore, deleteStore, undeleteStore } = useStoreMutation(Number(id));
-  const [storeForm] = CustomForm.useForm();
+  const [storeForm] = CustomForm.useForm<Partial<ModifyStoreParams>>();
 
-  const onFinish = (values : StoreResponse) => {
+  const onFinish = (values : Partial<ModifyStoreParams>) => {
     const updatedValues = { ...values };
     // open만 업데이트 되지않아 재할당함
     updatedValues.open = storeForm.getFieldValue('open');

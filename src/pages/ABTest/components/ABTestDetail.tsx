@@ -226,7 +226,6 @@ export default function ABTestDetail() {
       <Divider orientation="left">수동 인원 추가</Divider>
       <Search
         placeholder="사용자 검색"
-        onSearch={(value) => console.log('Search:', value)}
         style={{ width: 200 }}
       />
 

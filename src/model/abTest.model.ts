@@ -82,6 +82,10 @@ export interface ABTestUserMoveRequest {
   }
 }
 
+export interface ABTestWinnerRequest {
+  id: string | number | undefined;
+  winner_name: string;
+}
 // 테스트
 export interface ABTestAssignRequest {
   title: string;

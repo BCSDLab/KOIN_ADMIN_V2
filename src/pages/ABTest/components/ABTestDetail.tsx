@@ -3,7 +3,8 @@ import {
   Button, Divider, message, Tag, Slider, Modal, Checkbox, Table,
 } from 'antd';
 import {
-  CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, PlusOutlined, SyncOutlined,
+  CheckCircleOutlined, CloseCircleOutlined,
+  DeleteOutlined, LikeOutlined, PlusOutlined, SyncOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import CustomForm from 'components/common/CustomForm';
@@ -46,7 +47,7 @@ export default function ABTestDetail() {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { data: abTestData, isLoading } = useGetABTestQuery(id);
-  const { modifyABTest, deleteABTest } = useABTestMutation();
+  const { modifyABTest, deleteABTest, postWinner } = useABTestMutation();
   const [form] = CustomForm.useForm();
   const navigate = useNavigate();
   const [variables, setVariables] = useState<Variable[]>([]);
@@ -196,6 +197,12 @@ export default function ABTestDetail() {
                       name={[fieldIndex, 'rate']}
                       disabled
                     />
+                    <Button
+                      icon={<LikeOutlined />}
+                      onClick={() => { postWinner({ id, winner_name: variableName }); }}
+                    >
+                      승자
+                    </Button>
                     <br />
                     <br />
                   </div>

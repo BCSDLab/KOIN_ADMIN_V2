@@ -1,10 +1,14 @@
 import { message } from 'antd';
-import { ABTest, ABTestUserMoveRequest, ModifyABTest } from 'model/abTest.model';
+import {
+  ABTest, ABTestUserMoveRequest, ABTestWinnerRequest, ModifyABTest,
+} from 'model/abTest.model';
+import { useNavigate } from 'react-router-dom';
 import {
   useAddABTestMutation,
   useModifyABTestMutation,
   useDeleteABTestMutation,
   useMoveUserMutation,
+  usePostWinnerMutation,
 } from 'store/api/abtest';
 
 const useABTestMutation = () => {
@@ -12,7 +16,8 @@ const useABTestMutation = () => {
   const [modifyABTestMutation] = useModifyABTestMutation();
   const [deleteABTestMutation] = useDeleteABTestMutation();
   const [moveUserMutation] = useMoveUserMutation();
-
+  const [postWinnerMutation] = usePostWinnerMutation();
+  const navigate = useNavigate();
   const addABTest = (
     formData: ABTest,
     {
@@ -95,8 +100,26 @@ const useABTestMutation = () => {
         message.error(errorMessage);
       });
   };
+
+  const postWinner = (data : ABTestWinnerRequest) => {
+    if (!data.id) {
+      const errorMessage = '유효한 ID가 필요합니다.';
+      message.error(errorMessage);
+      return;
+    }
+    postWinnerMutation(data)
+      .unwrap()
+      .then(() => {
+        message.success('승자 추가 완료');
+        navigate('/abtest');
+      })
+      .catch((error) => {
+        const errorMessage = error.data?.message || '에러가 발생했습니다.';
+        message.error(errorMessage);
+      });
+  };
   return {
-    addABTest, modifyABTest, deleteABTest, moveUser,
+    addABTest, modifyABTest, deleteABTest, moveUser, postWinner,
   };
 };
 

@@ -46,6 +46,7 @@ const items: MenuProps['items'] = [
 
   getItem('테스트', 'test', <ControlOutlined />, [
     getItem('AB 테스트', '/abtest', <ApartmentOutlined />),
+    getItem('AB 테스트의 테스트 페이지', '/abtest/test', <ApartmentOutlined />),
   ]),
 ];
 

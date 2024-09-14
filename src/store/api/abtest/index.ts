@@ -3,14 +3,14 @@ import {
   ABTestResponse, ModifyABTest,
   ABTest, NewABTestResponse,
   ABTestUsersResponse, ABTestUserUserIDResponse,
-  ABTestUserMoveRequest, ABTestAssignRequest, ABTestAssignResponse,
+  ABTestUserMoveRequest, ABTestAssignRequest, ABTestAssignResponse, ABTestWinnerRequest,
 } from 'model/abTest.model';
 import { RootState } from 'store';
 
 export const abTestApi = createApi({
   reducerPath: 'abTestApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH_TEST}`,
+    baseUrl: `${process.env.REACT_APP_API_PATH}`,
     prepareHeaders: (headers, { getState }) => {
       const { token } = (getState() as RootState).auth;
       if (token) {
@@ -80,7 +80,14 @@ export const abTestApi = createApi({
         body: data.data,
       }),
     }),
-
+    postWinner: builder.mutation<void, ABTestWinnerRequest>({
+      query: (data) => ({
+        url: `/abtest/close/${data.id}`,
+        method: 'POST',
+        body: { winner_name: data.winner_name },
+      }),
+      invalidatesTags: [{ type: 'ABTest', id: 'LIST' }],
+    }),
     // 테스트 요청
     getFirstMyPage: builder.query< ABTestAssignResponse, ABTestAssignRequest>({
       query: (data) => ({
@@ -108,6 +115,6 @@ export const abTestApi = createApi({
 export const {
   useGetABTestsQuery, useGetABTestQuery,
   useAddABTestMutation, useModifyABTestMutation, useDeleteABTestMutation,
-  useGetUserByNameQuery, useGetUserByIDQuery, useMoveUserMutation,
+  useGetUserByNameQuery, useGetUserByIDQuery, useMoveUserMutation, usePostWinnerMutation,
   useGetFirstMyPageQuery, useGetMyPageQuery,
 } = abTestApi;

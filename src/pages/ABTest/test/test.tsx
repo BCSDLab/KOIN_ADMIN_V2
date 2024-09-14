@@ -5,7 +5,7 @@ import { Divider } from 'antd';
 
 // Set up axios instance with base URL
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_PATH_TEST, // Use the base URL from environment variables
+  baseURL: process.env.REACT_APP_API_PATH, // Use the base URL from environment variables
 });
 
 export default function ABTestTest() {

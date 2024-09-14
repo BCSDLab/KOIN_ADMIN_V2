@@ -63,3 +63,32 @@ export interface ABTestUser {
 export interface ABTestUsersResponse {
   users: ABTestUser[]
 }
+export interface ABTestUserUserID {
+  id: string | number;
+  type: string;
+  model: string;
+  last_accessed_at: string;
+}
+
+export interface ABTestUserUserIDResponse {
+  devices: ABTestUserUserID[]
+}
+
+export interface ABTestUserMoveRequest {
+  id: string | number;
+  data: {
+    device_id: string | number;
+    variable_name: string | number;
+  }
+}
+
+// 테스트
+export interface ABTestAssignRequest {
+  title: string;
+  access_history_id: number | string | null ;
+}
+
+export interface ABTestAssignResponse {
+  variable_name: string,
+  access_history_id: number
+}

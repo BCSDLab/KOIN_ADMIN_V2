@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button, Divider, message, Tag, Slider,
+  Button, Divider, message, Tag, Slider, Modal, Checkbox, Table,
 } from 'antd';
 import {
   CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, PlusOutlined, SyncOutlined,
@@ -9,22 +9,49 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CustomForm from 'components/common/CustomForm';
 import { useGetABTestQuery } from 'store/api/abtest';
 import { ABTest } from 'model/abTest.model';
+import Search from 'antd/es/input/Search';
 import useABTestMutation from './hook/useABTestMutation';
+import * as S from './DeleteWarning.style';
+import AddUserForm from './AddUserForm';
 
 interface Variable {
   rate: number;
   display_name: string;
   name: string;
 }
+const userData = [
+  { id: '1', name: '김성재', detail: '010-4407-6751' },
+  { id: '2', name: '최정훈', detail: 'songsunkook@gmail.com' },
+];
+
+const deviceData = [
+  {
+    id: 1, type: 'mobile', model: 'Galaxy20', last_accessed_at: '2024-07-30',
+  },
+];
+const userColumns = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: '이름', dataIndex: 'name', key: 'name' },
+  { title: '세부 정보', dataIndex: 'detail', key: 'detail' },
+];
+
+const deviceColumns = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: '유형', dataIndex: 'type', key: 'type' },
+  { title: '모델', dataIndex: 'model', key: 'model' },
+  { title: '마지막 접속', dataIndex: 'last_accessed_at', key: 'last_accessed_at' },
+];
 
 export default function ABTestDetail() {
   const { id } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { data: abTestData, isLoading } = useGetABTestQuery(id);
-  const { modifyABTest } = useABTestMutation();
+  const { modifyABTest, deleteABTest } = useABTestMutation();
   const [form] = CustomForm.useForm();
   const navigate = useNavigate();
   const [variables, setVariables] = useState<Variable[]>([]);
   const [sliderValues, setSliderValues] = useState<number[]>([]);
+  const [selectedOption, setSelectedOption] = useState<string>('name');
   const calculateSliderValues = (vars: Variable[]): number[] => {
     if (vars.length <= 1) {
       return [];
@@ -79,39 +106,9 @@ export default function ABTestDetail() {
     setSliderValues(values);
   };
 
-  const handleAddVariable = () => {
-    const newVariable: Variable = { rate: 0, display_name: '', name: '' };
-    const updatedVariables = [...variables, newVariable];
-    const numberOfVariables = updatedVariables.length;
-    const equalRate = Math.floor(100 / numberOfVariables);
-    const newRates = Array(numberOfVariables).fill(equalRate);
-    newRates[newRates.length - 1] += 100 - equalRate * numberOfVariables;
-
-    updateVariablesRates(newRates);
-    const newSliderValues = calculateSliderValues(updatedVariables);
-    setSliderValues(newSliderValues);
-    setVariables(updatedVariables);
-    form.setFieldsValue({ variables: updatedVariables });
+  const handleOptionChange = (checkedValues: string[]) => {
+    setSelectedOption(checkedValues[0]);
   };
-
-  const handleRemoveVariable = (fieldIndex: number) => {
-    const updatedVariables = variables.filter((_, index) => index !== fieldIndex);
-    setVariables(updatedVariables);
-    form.setFieldsValue({ variables: updatedVariables });
-    const numberOfVariables = updatedVariables.length;
-    if (numberOfVariables > 0) {
-      const equalRate = Math.floor(100 / numberOfVariables);
-      const newRates = Array(numberOfVariables).fill(equalRate);
-      newRates[newRates.length - 1] += 100 - equalRate * numberOfVariables;
-
-      updateVariablesRates(newRates);
-      const newSliderValues = calculateSliderValues(updatedVariables);
-      setSliderValues(newSliderValues);
-    } else {
-      setSliderValues([]);
-    }
-  };
-
   const onFinish = (values: ABTest) => {
     modifyABTest(id, values, {
       onSuccess: () => {
@@ -199,17 +196,11 @@ export default function ABTestDetail() {
                       name={[fieldIndex, 'rate']}
                       disabled
                     />
-                    <Button onClick={() => handleRemoveVariable(fieldIndex)}>
-                      삭제
-                    </Button>
                     <br />
                     <br />
                   </div>
                 );
               })}
-              <Button icon={<PlusOutlined />} onClick={handleAddVariable}>
-                변수 추가
-              </Button>
             </>
           )}
         </CustomForm.List>
@@ -221,11 +212,65 @@ export default function ABTestDetail() {
         >
           수정
         </Button>
-        <Button type="primary" danger icon={<DeleteOutlined />}>
+        <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => setIsModalOpen(true)}>
           삭제
         </Button>
       </CustomForm>
       <Divider orientation="left">수동 인원 추가</Divider>
+      <Search
+        placeholder="사용자 검색"
+        onSearch={(value) => console.log('Search:', value)}
+        style={{ width: 200 }}
+      />
+
+      <Checkbox.Group
+        options={['이름', 'ID']}
+        defaultValue={['이름']}
+        onChange={handleOptionChange}
+      />
+
+      {selectedOption === '이름' ? (
+        <Table
+          columns={userColumns}
+          dataSource={userData}
+          rowKey="id"
+        />
+      ) : (
+        <Table
+          columns={deviceColumns}
+          dataSource={deviceData}
+          rowKey="id"
+        />
+      )}
+      <AddUserForm
+        test_id={13}
+        data={{ device_id: 307, variable_name: 'A' }}
+      />
+      <Modal open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
+        <S.AroundRow>
+          정말로 삭제하시겠습니까?
+          <S.Item>
+            <Button
+              danger
+              onClick={() => {
+                deleteABTest(id, {
+                  onSuccess: () => {
+                    message.success('AB 테스트가 삭제되었습니다.');
+                    navigate('/abtest');
+                  },
+                  onError: (errorMessage) => {
+                    message.error(errorMessage);
+                  },
+                });
+                setIsModalOpen(false);
+              }}
+            >
+              삭제
+            </Button>
+            <Button onClick={() => setIsModalOpen(false)}>취소</Button>
+          </S.Item>
+        </S.AroundRow>
+      </Modal>
     </>
   );
 }

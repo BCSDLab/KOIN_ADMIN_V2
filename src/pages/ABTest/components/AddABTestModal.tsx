@@ -3,7 +3,9 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { message, Slider } from 'antd';
-import { ArrowLeftOutlined, ArrowRightOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import {
+  ArrowLeftOutlined, ArrowRightOutlined, DeleteOutlined, PlusCircleOutlined,
+} from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
 import { ABTest } from 'model/abTest.model';
 import * as S from './AddABTestModal.style';
@@ -13,14 +15,19 @@ import useABTestMutation from './hook/useABTestMutation';
 function AddABTestModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();
   const [step, setStep] = useState(1);
-  const [title, setTile] = useState('');
+  const [title, setTitle] = useState('');
   const [creator, setCreator] = useState('');
   const [team, setTeam] = useState('');
   const [displayTitle, setDisplayTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [sliderValues, setSliderValues] = useState([50]);
   const [tests, setTests] = useState([
-    { rate: 50, displayName: '', name: '' },
-    { rate: 50, displayName: '', name: '' },
+    {
+      rate: 50, displayName: '', name: '',
+    },
+    {
+      rate: 50, displayName: '', name: '',
+    },
   ]);
 
   const { addABTest } = useABTestMutation();
@@ -39,7 +46,9 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
   };
 
   const addTest = () => {
-    const newTest = { rate: 0, displayName: '', name: '' };
+    const newTest = {
+      rate: 0, displayName: '', name: '',
+    };
     const newTests = [...tests, newTest];
 
     const newSliderValue = Math.floor(100 / newTests.length) * newTests.length;
@@ -60,21 +69,53 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
       creator,
       team,
       title,
-      description: '',
+      description,
       variables: tests.map((test) => ({
         rate: test.rate,
         display_name: test.displayName,
         name: test.name,
       })),
     };
-
+    const resetForm = () => {
+      form.resetFields();
+      setStep(1);
+      setTitle('');
+      setCreator('');
+      setTeam('');
+      setDisplayTitle('');
+      setDescription('');
+      setTests([
+        {
+          rate: 50, displayName: '', name: '',
+        },
+        {
+          rate: 50, displayName: '', name: '',
+        },
+      ]);
+      setSliderValues([50]);
+    };
     addABTest(newABTest, {
       onSuccess: () => {
         message.success('테스트가 추가되었습니다.');
         onCancel();
-        form.resetFields();
+        resetForm();
       },
     });
+  };
+
+  const handleRemoveTest = () => {
+    if (tests.length > 1) {
+      const updatedTests = tests.slice(0, -1);
+      setTests(updatedTests);
+
+      const newSliderValues = updatedTests.map(
+        (test, idx) => (idx === updatedTests.length - 1 ? 100
+          : (100 / updatedTests.length) * (idx + 1)),
+      );
+      setSliderValues(newSliderValues);
+    } else {
+      message.warning('최소한 하나의 실험은 필요합니다.');
+    }
   };
 
   return (
@@ -91,7 +132,9 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
           <S.Label>테스트의 제목</S.Label>
           <S.Input onChange={(e) => setDisplayTitle(e.target.value)} />
           <S.Label>변수</S.Label>
-          <S.Input onChange={(e) => setTile(e.target.value)} />
+          <S.Input onChange={(e) => setTitle(e.target.value)} />
+          <S.Label>설명</S.Label>
+          <S.Input onChange={(e) => setDescription(e.target.value)} />
         </S.StepContainer>
       )}
       {step === 2 && (
@@ -105,6 +148,8 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
             <S.SubTitle>{displayTitle}</S.SubTitle>
             <S.Label>실험 변수 명</S.Label>
             <S.SubTitle>{title}</S.SubTitle>
+            <S.Label>설명</S.Label>
+            <S.SubTitle>{description}</S.SubTitle>
           </S.StepTowLabel>
           {tests.map((test, index) => (
             <div key={index}>
@@ -128,9 +173,18 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
               />
             </div>
           ))}
-          <CustomForm.Button icon={<PlusCircleOutlined />} onClick={addTest}>
-            실험 추가
-          </CustomForm.Button>
+          <S.ButtonContainer>
+            <CustomForm.Button icon={<PlusCircleOutlined />} onClick={addTest}>
+              실험 추가
+            </CustomForm.Button>
+            <CustomForm.Button
+              icon={<DeleteOutlined />}
+              onClick={handleRemoveTest}
+              danger
+            >
+              실험 삭제
+            </CustomForm.Button>
+          </S.ButtonContainer>
         </S.StepTwoContainer>
       )}
       {step === 2 && (

@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  ABTestResponse, ModifyABTest, ABTest, NewABTestResponse,
+  ABTestResponse, ModifyABTest,
+  ABTest, NewABTestResponse,
+  ABTestUsersResponse, ABTestUserUserIDResponse,
+  ABTestUserMoveRequest, ABTestAssignRequest, ABTestAssignResponse,
 } from 'model/abTest.model';
 import { RootState } from 'store';
 
@@ -35,7 +38,7 @@ export const abTestApi = createApi({
       query: (data) => ({
         url: '/abtest',
         method: 'POST',
-        data,
+        body: data,
       }),
       invalidatesTags: [{ type: 'ABTest', id: 'LIST' }],
     }),
@@ -50,9 +53,61 @@ export const abTestApi = createApi({
         { type: 'ABTest', id: 'LIST' },
       ],
     }),
+    deleteABTest: builder.mutation<NewABTestResponse, number | string | undefined>({
+      query: (id) => ({
+        url: `/abtest/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'ABTest', id }, { type: 'ABTest', id: 'LIST' }],
+    }),
+    getUserByName: builder.query<ABTestUsersResponse, string>({
+      query: (name) => ({
+        url: '/abtest/user',
+        params: {
+          name,
+        },
+      }),
+    }),
+    getUserByID: builder.query<ABTestUserUserIDResponse, string | number>({
+      query: (id) => ({
+        url: `/abtest/user/${id}/device`,
+      }),
+    }),
+    moveUser: builder.mutation<void, ABTestUserMoveRequest>({
+      query: (data) => ({
+        url: `/abtest/${data.id}/move`,
+        method: 'POST',
+        body: data.data,
+      }),
+    }),
+
+    // 테스트 요청
+    getFirstMyPage: builder.query< ABTestAssignResponse, ABTestAssignRequest>({
+      query: (data) => ({
+        url: '/abtest/assign',
+        method: 'POST',
+        headers: {
+          access_history_id: `${data.access_history_id}`,
+        },
+        body: data.title,
+      }),
+    }),
+    getMyPage: builder.query< ABTestAssignResponse, ABTestAssignRequest>({
+      query: (data) => ({
+        url: '/abtest/me',
+        method: 'GET',
+        headers: {
+          access_history_id: `${data.access_history_id}`,
+        },
+        body: data.title,
+      }),
+    }),
   }),
 });
 
 export const {
-  useGetABTestsQuery, useGetABTestQuery, useAddABTestMutation, useModifyABTestMutation,
+  useGetABTestsQuery, useGetABTestQuery,
+  useAddABTestMutation, useModifyABTestMutation, useDeleteABTestMutation,
+  useGetUserByNameQuery, useGetUserByIDQuery, useMoveUserMutation,
+  useGetFirstMyPageQuery, useGetMyPageQuery,
 } = abTestApi;

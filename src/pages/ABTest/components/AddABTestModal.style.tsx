@@ -113,3 +113,10 @@ export const AddTestButton = styled.button`
   align-items: center;
   justify-content: center;
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:5px;
+`;

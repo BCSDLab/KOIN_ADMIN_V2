@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ABTestResponse, NewABTest, NewABTestResponse } from 'model/abTest.model';
+import {
+  ABTestResponse, ModifyABTest, ABTest, NewABTestResponse,
+} from 'model/abTest.model';
 import { RootState } from 'store';
 
 export const abTestApi = createApi({
@@ -25,16 +27,32 @@ export const abTestApi = createApi({
         ]
         : [{ type: 'ABTest', id: 'LIST' }]),
     }),
-    addABTest: builder.mutation<NewABTestResponse, Partial<NewABTest>>({
-      query: (body) => ({
+    getABTest: builder.query<Partial<NewABTestResponse>, number | string | undefined>({
+      query: (id) => `abtest/${id}`,
+      providesTags: (result, error, id) => [{ type: 'ABTest', id }],
+    }),
+    addABTest: builder.mutation<NewABTestResponse, Partial<ABTest>>({
+      query: (data) => ({
         url: '/abtest',
         method: 'POST',
-        body,
+        data,
       }),
       invalidatesTags: [{ type: 'ABTest', id: 'LIST' }],
     }),
-
+    modifyABTest: builder.mutation<NewABTestResponse, Partial<ModifyABTest>>({
+      query: ({ id, data }) => ({
+        url: `/abtest/${id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: (result, error, { id }) => [
+        { type: 'ABTest', id },
+        { type: 'ABTest', id: 'LIST' },
+      ],
+    }),
   }),
 });
 
-export const { useGetABTestsQuery, useAddABTestMutation } = abTestApi;
+export const {
+  useGetABTestsQuery, useGetABTestQuery, useAddABTestMutation, useModifyABTestMutation,
+} = abTestApi;

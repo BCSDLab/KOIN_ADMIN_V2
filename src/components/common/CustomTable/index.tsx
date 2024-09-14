@@ -1,4 +1,5 @@
-import { Empty, Table } from 'antd';
+import { CheckCircleOutlined, CloseCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import { Empty, Table, Tag } from 'antd';
 import Pagination from 'antd/es/pagination';
 import type { ColumnsType } from 'antd/es/table';
 import { TITLE_MAPPER } from 'constant';
@@ -79,6 +80,27 @@ function CustomTable<TableData extends DefaultTableData>({
               return toDateStringFormat(value);
             }
           }
+          if (key === 'status') {
+            if (value === 'IN_PROGRESS') {
+              return (
+                <Tag icon={<SyncOutlined spin />} color="processing">
+                  {value}
+                </Tag>
+              );
+            } if (value === 'COMPLETED') {
+              return (
+                <Tag icon={<CheckCircleOutlined />} color="success">
+                  {value}
+                </Tag>
+              );
+            }
+            return (
+              <Tag icon={<CloseCircleOutlined />} color="error">
+                {value}
+              </Tag>
+            );
+          }
+
           return value;
         },
       }));

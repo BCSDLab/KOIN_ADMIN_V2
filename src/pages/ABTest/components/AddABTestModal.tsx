@@ -2,22 +2,28 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
-import { Slider } from 'antd';
+import { message, Slider } from 'antd';
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
+import { ABTest } from 'model/abTest.model';
 import * as S from './AddABTestModal.style';
 import NewTest from './NewTest';
+import useABTestMutation from './hook/useABTestMutation';
 
 function AddABTestModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();
   const [step, setStep] = useState(1);
   const [title, setTile] = useState('');
+  const [creator, setCreator] = useState('');
+  const [team, setTeam] = useState('');
   const [displayTitle, setDisplayTitle] = useState('');
   const [sliderValues, setSliderValues] = useState([50]);
   const [tests, setTests] = useState([
     { rate: 50, displayName: '', name: '' },
     { rate: 50, displayName: '', name: '' },
   ]);
+
+  const { addABTest } = useABTestMutation();
 
   const handleSliderChange = (values: number[]) => {
     const updatedTests = [...tests];
@@ -48,16 +54,40 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
     );
   };
 
-  return (
-    <CustomForm
-      onFinish={() => {
+  const createABTest = () => {
+    const newABTest: ABTest = {
+      display_title: displayTitle,
+      creator,
+      team,
+      title,
+      description: '',
+      variables: tests.map((test) => ({
+        rate: test.rate,
+        display_name: test.displayName,
+        name: test.name,
+      })),
+    };
+
+    addABTest(newABTest, {
+      onSuccess: () => {
+        message.success('테스트가 추가되었습니다.');
         onCancel();
         form.resetFields();
-      }}
+      },
+    });
+  };
+
+  return (
+    <CustomForm
+      onFinish={createABTest}
       form={form}
     >
       {step === 1 && (
         <S.StepContainer>
+          <S.Label>작성자</S.Label>
+          <S.Input onChange={(e) => setCreator(e.target.value)} />
+          <S.Label>소속팀</S.Label>
+          <S.Input onChange={(e) => setTeam(e.target.value)} />
           <S.Label>테스트의 제목</S.Label>
           <S.Input onChange={(e) => setDisplayTitle(e.target.value)} />
           <S.Label>변수</S.Label>
@@ -67,6 +97,10 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
       {step === 2 && (
         <S.StepTwoContainer>
           <S.StepTowLabel>
+            <S.Label>작성자</S.Label>
+            <S.SubTitle>{creator}</S.SubTitle>
+            <S.Label>소속팀</S.Label>
+            <S.SubTitle>{team}</S.SubTitle>
             <S.Label>실험 제목</S.Label>
             <S.SubTitle>{displayTitle}</S.SubTitle>
             <S.Label>실험 변수 명</S.Label>
@@ -100,13 +134,13 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
         </S.StepTwoContainer>
       )}
       {step === 2 && (
-      <Slider
-        range
-        min={0}
-        max={100}
-        value={sliderValues}
-        onChange={handleSliderChange}
-      />
+        <Slider
+          range
+          min={0}
+          max={100}
+          value={sliderValues}
+          onChange={handleSliderChange}
+        />
       )}
 
       <S.ButtonWrap>
@@ -118,15 +152,14 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
         <CustomForm.Button
           icon={<ArrowRightOutlined />}
           onClick={() => {
-            if (step === 3) {
+            if (step === 2) {
               form.submit();
             } else {
               setStep(step + 1);
             }
           }}
-          htmlType={step === 3 ? 'submit' : 'button'}
         >
-          {step === 3 ? '완료' : '다음'}
+          {step === 2 ? '완료' : '다음'}
         </CustomForm.Button>
       </S.ButtonWrap>
     </CustomForm>

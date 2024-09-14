@@ -18,7 +18,7 @@ export interface ABTestResponse {
   current_page: number;
 }
 
-export interface NewABTest {
+export interface ABTest {
   display_title: string;
   creator: string;
   team: string;
@@ -47,4 +47,19 @@ export interface NewABTestResponse {
   }[]
   created_at: string;
   updated_at: string;
+}
+
+export interface ModifyABTest {
+  id: string | number;
+  data: Partial<ABTest>;
+}
+
+export interface ABTestUser {
+  id: string;
+  name: string;
+  detail: string;
+}
+
+export interface ABTestUsersResponse {
+  users: ABTestUser[]
 }

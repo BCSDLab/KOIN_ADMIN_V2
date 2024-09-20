@@ -29,13 +29,13 @@ export default function ABTestTest() {
               access_history_id: accessHistoryId,
             },
             params: {
-              title: 'sadf',
+              title: 'test1',
             },
           });
         } else {
           // Send `getFirstMyPage` request
           response = await axiosInstance.post('/abtest/assign', {
-            title: 'sadf',
+            title: 'test1',
           });
         }
         setMyPage(response.data);

@@ -112,7 +112,7 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
         (test, idx) => (idx === updatedTests.length - 1 ? 100
           : (100 / updatedTests.length) * (idx + 1)),
       );
-      setSliderValues(newSliderValues);
+      setSliderValues(newSliderValues.slice(0, -1));
     } else {
       message.warning('최소한 하나의 실험은 필요합니다.');
     }
@@ -126,15 +126,15 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
       {step === 1 && (
         <S.StepContainer>
           <S.Label>작성자</S.Label>
-          <S.Input onChange={(e) => setCreator(e.target.value)} />
+          <S.Input onChange={(e) => setCreator(e.target.value)} maxLength={10} />
           <S.Label>소속팀</S.Label>
-          <S.Input onChange={(e) => setTeam(e.target.value)} />
+          <S.Input onChange={(e) => setTeam(e.target.value)} maxLength={10} />
           <S.Label>테스트의 제목</S.Label>
-          <S.Input onChange={(e) => setDisplayTitle(e.target.value)} />
+          <S.Input onChange={(e) => setDisplayTitle(e.target.value)} maxLength={20} />
           <S.Label>변수</S.Label>
-          <S.Input onChange={(e) => setTitle(e.target.value)} />
+          <S.Input onChange={(e) => setTitle(e.target.value)} maxLength={20} />
           <S.Label>설명</S.Label>
-          <S.Input onChange={(e) => setDescription(e.target.value)} />
+          <S.Input onChange={(e) => setDescription(e.target.value)} maxLength={200} />
         </S.StepContainer>
       )}
       {step === 2 && (

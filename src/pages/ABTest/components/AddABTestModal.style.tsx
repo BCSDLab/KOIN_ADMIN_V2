@@ -98,6 +98,7 @@ export const StepTowLabel = styled.div`
 export const SubTitle = styled.div`
   font-size: 15px;
   color: gray;
+  text-overflow: ellipsis
 `;
 
 export const StepTwoContainer = styled.div`

@@ -68,7 +68,7 @@ export const abTestApi = createApi({
         },
       }),
     }),
-    getUserByID: builder.query<ABTestUserUserIDResponse, string | number>({
+    getUserByID: builder.query<ABTestUserUserIDResponse, number | undefined>({
       query: (id) => ({
         url: `/abtest/user/${id}/device`,
       }),

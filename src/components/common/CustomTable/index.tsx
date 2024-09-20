@@ -45,10 +45,11 @@ interface Props<TableData> {
   };
   columnSize?: number[];
   hiddenColumns?: string[];
+  onClick?: any
 }
 
 function CustomTable<TableData extends DefaultTableData>({
-  data, pagination, columnSize, hiddenColumns = [],
+  data, pagination, columnSize, hiddenColumns = [], onClick,
 }: Props<TableData>) {
   const navigate = useNavigate();
 
@@ -118,7 +119,10 @@ function CustomTable<TableData extends DefaultTableData>({
             rowKey={(record) => record.id}
             onRow={(record) => ({
               onClick: () => {
-                navigate(`${record.id}`);
+                if (onClick) {
+                  console.log(record.id);
+                  onClick(record.id);
+                } else navigate(`${record.id}`);
               },
             })}
             pagination={pagination ? false : { position: ['bottomRight'] }}

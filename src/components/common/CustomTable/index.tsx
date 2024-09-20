@@ -120,7 +120,6 @@ function CustomTable<TableData extends DefaultTableData>({
             onRow={(record) => ({
               onClick: () => {
                 if (onClick) {
-                  console.log(record.id);
                   onClick(record.id);
                 } else navigate(`${record.id}`);
               },

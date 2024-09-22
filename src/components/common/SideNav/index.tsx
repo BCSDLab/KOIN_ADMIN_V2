@@ -2,7 +2,7 @@ import {
   AppstoreOutlined, UserOutlined, CarOutlined, ShopOutlined,
   HomeOutlined, UserSwitchOutlined,
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
-  UserAddOutlined, BoldOutlined, SnippetsOutlined,
+  UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined,
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -42,6 +42,11 @@ const items: MenuProps['items'] = [
     getItem('사장님', '/owner', <UserSwitchOutlined />),
     getItem('사장님 권한 요청', '/owner-request', <UserAddOutlined />),
     getItem('BCSD Lab', '/member', <BoldOutlined />),
+  ]),
+
+  getItem('테스트', 'test', <ControlOutlined />, [
+    getItem('AB 테스트', '/abtest', <ApartmentOutlined />),
+    getItem('AB 테스트의 테스트 페이지', '/abtest/test', <ApartmentOutlined />),
   ]),
 ];
 

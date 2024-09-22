@@ -19,7 +19,10 @@ import OwnerList from 'pages/UserManage/Owner/OwnerList';
 import OwnerRequestList from 'pages/UserManage/OwnerRequest/OwnerRequestList';
 import OwnerRequestDetail from 'pages/UserManage/OwnerRequest/OwnerRequestDetail';
 import OwnerDetail from 'pages/UserManage/Owner/OwnerDetail';
+import ABTest from 'pages/ABTest';
+import ABTestDetail from 'pages/ABTest/components/ABTestDetail';
 import ReviewList from 'pages/Services/Review/ReviewList';
+import ABTestTest from 'pages/ABTest/test/test';
 
 function RequireAuth() {
   const location = useLocation();
@@ -57,6 +60,9 @@ function App() {
         <Route path="/owner-request/:id" element={<OwnerRequestDetail />} />
         <Route path="/member" element={<MemberList />} />
         <Route path="/member/:id" element={<MemberDetail />} />
+        <Route path="/abtest" element={<ABTest />} />
+        <Route path="/abtest/:id" element={<ABTestDetail />} />
+        <Route path="/abtest/test" element={<ABTestTest />} />
         <Route path="/review" element={<ReviewList />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>

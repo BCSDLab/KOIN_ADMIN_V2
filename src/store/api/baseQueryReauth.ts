@@ -1,10 +1,9 @@
 import {
-  BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError,
+  BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { LoginRequest, LoginResponse } from 'model/auth.model';
-import { RootState } from 'store';
-import { API_PATH } from 'constant';
 import { setCredentials } from 'store/slice/auth';
+import { API_PATH } from 'constant';
+import { RootState } from 'store';
 
 interface RefreshResponse {
   refresh_token: string;
@@ -12,7 +11,7 @@ interface RefreshResponse {
 }
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${API_PATH}/admin`,
+  baseUrl: `${API_PATH}`,
   prepareHeaders: (headers, { getState }) => {
     // 토큰이 필요한 조회에는 헤더를 추가할 필요가 있음.
     const { token } = (getState() as RootState).auth;
@@ -61,24 +60,4 @@ FetchBaseQueryError
   return result;
 };
 
-export const authApi = createApi({
-  baseQuery: baseQueryReauth,
-  endpoints: (builder) => ({
-    login: builder.mutation<LoginResponse, LoginRequest>({
-      query: ({ email, password }) => ({
-        url: '/user/login',
-        method: 'POST',
-        body: {
-          email: `${email}@koreatech.ac.kr`,
-          password,
-        },
-      }),
-    }),
-    // 요청 예시
-    protected: builder.mutation<{ message: string }, void>({
-      query: () => 'protected',
-    }),
-  }),
-});
-
-export const { useLoginMutation, useProtectedMutation } = authApi;
+export default baseQueryReauth;

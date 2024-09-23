@@ -1,25 +1,14 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_PATH } from 'constant';
-
+import { createApi } from '@reduxjs/toolkit/query/react';
 import {
   MenusResponse, MenuResponse, MutationMenuArgs, Menu,
 } from 'model/menus.model';
-import { RootState } from 'store';
+import baseQueryReauth from 'store/api/baseQueryReauth';
 
 export const storeMenuApi = createApi({
   reducerPath: 'storeMenusApi',
   tagTypes: ['storeMenus', 'storeMenu'],
 
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_PATH}`,
-    prepareHeaders: (headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryReauth,
 
   endpoints: (builder) => ({
     getMenusList: builder.query<MenusResponse, number>({

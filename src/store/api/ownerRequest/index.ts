@@ -1,23 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from 'store';
-import { API_PATH } from 'constant';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import {
   OwnerResponse, OwnerRequestListResponse, OwnersParam, OwnersResponse,
 } from 'model/owner.model';
+import baseQueryReauth from 'store/api/baseQueryReauth';
 
 export const ownerRequestApi = createApi({
   reducerPath: 'ownerRequest',
   tagTypes: ['ownerRequests', 'ownerRequest'],
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_PATH}`,
-    prepareHeaders: (headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryReauth,
   endpoints: (builder) => ({
     getOwnerRequestList: builder.query<OwnerRequestListResponse, OwnersParam>({
       query: ({ page }) => `admin/users/new-owners?page=${page}`,

@@ -30,7 +30,7 @@ FetchBaseQueryError
   let result = await baseQuery(args, api, extraOptions);
   const refreshToken = localStorage.getItem('refresh_token');
 
-  // 401 오류가 발생한다면 액세스 토큰 없음
+  // 401 오류가 발생한다면 액세스 토큰 만료일 가능성이 높음
   if (result.error && result.error.status === 401 && refreshToken) {
     // 리프레시 토큰을 통해 액세스 토큰을 재발급
     const refresh = await baseQuery(
@@ -54,6 +54,8 @@ FetchBaseQueryError
 
       // 액세스 토큰 갱신 후 다시 요청
       result = await baseQuery(args, api, extraOptions);
+    } else {
+      throw new Error('refresh failed');
     }
   }
 

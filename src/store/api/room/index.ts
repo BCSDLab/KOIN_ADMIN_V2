@@ -1,25 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_PATH } from 'constant';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import {
   RoomParams,
   RoomResponse, RoomsResponse, RoomTableHead,
 } from 'model/room.model';
-import { RootState } from 'store';
+import baseQueryReauth from 'store/api/baseQueryReauth';
 
 export const roomApi = createApi({
   reducerPath: 'room',
   tagTypes: ['rooms', 'room'],
 
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_PATH}`,
-    prepareHeaders: (headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryReauth,
 
   endpoints: (builder) => ({
     getRoomList: builder.query<{ roomList: RoomTableHead[], totalPage: number }, RoomParams>({

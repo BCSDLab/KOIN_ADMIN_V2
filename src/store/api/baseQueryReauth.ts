@@ -40,6 +40,7 @@ FetchBaseQueryError
         body: {
           refresh_token: refreshToken,
         },
+        headers: undefined,
       },
       api,
       extraOptions,

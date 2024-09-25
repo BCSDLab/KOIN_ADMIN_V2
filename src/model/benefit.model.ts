@@ -40,3 +40,5 @@ export interface DeleteShopsRequest {
   shop_ids: number[];
   id: number;
 }
+
+export interface AddShopRequest extends DeleteShopsRequest {}

@@ -12,6 +12,7 @@ export const Box = styled.button<{ isClicked: boolean }>`
   gap: 10px;
   cursor: pointer;
   transition: scale 0.2s;
+  background: #fff;
 
   &:active {
     scale: 0.95;

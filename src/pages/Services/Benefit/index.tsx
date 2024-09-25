@@ -1,7 +1,7 @@
 import * as Common from 'styles/List.style';
 import CustomForm from 'components/common/CustomForm';
 import { useState } from 'react';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { useDeleteBenefitShopsMutation, useGetBenefitShopsQuery } from 'store/api/benefit';
 import * as S from './index.style';
 import Category from './components/Category';
@@ -36,7 +36,7 @@ export default function BenefitPage() {
     setSelectedShop([]);
   };
   const deleteShops = () => {
-    if (selected) deleteShopsMutaion({ id: selected, shop_ids: selectedShop });
+    if (selected) deleteShopsMutaion({ id: selected, shop_ids: selectedShop }).then(() => message.success('상점을 삭제했습니다.'));
   };
   const onShopClickAll = () => {
     if (data) {
@@ -123,13 +123,13 @@ export default function BenefitPage() {
               onCancel={closeAdditionModal}
               onClick={openAddtionModal}
             >
-              <AdditionalModal id={selected} />
+              <AdditionalModal id={selected} closeAdditionModal={closeAdditionModal} />
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>
-        <S.ShopContainer>
+        <S.ShopListContainer>
           {selected ? (
-            <div>
+            <S.ShopContainer>
               {data?.shops.map((shop) => (
                 <S.Button
                   isClicked={selectedShop.includes(shop.id)}
@@ -138,9 +138,9 @@ export default function BenefitPage() {
                   {shop.name}
                 </S.Button>
               ))}
-            </div>
+            </S.ShopContainer>
           ) : null}
-        </S.ShopContainer>
+        </S.ShopListContainer>
       </S.Container>
     </S.Wrapper>
   );

@@ -34,11 +34,10 @@ export const Wrapper = styled.div`
 `;
 
 export const ShopContainer = styled.div`
-  background: #ddd;
-  padding: 25px;
-  height: 60%;
-  width: 100%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(auto-fill, 80px);
+  place-items: center;
 `;
 
 export const Button = styled.button<{ isClicked: boolean }>`
@@ -54,4 +53,12 @@ export const Button = styled.button<{ isClicked: boolean }>`
   &:active {
     scale: 0.95;
   }
+`;
+
+export const ShopListContainer = styled.div`
+  background: #ddd;
+  padding: 25px;
+  height: 60%;
+  width: 100%;
+  overflow-y: auto;
 `;

@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {
   BenefitCategoryResponse, GetBenefitShopsResponse, SearchResponse,
-  CreateBenefitResponse, CreateBenefitRequest,
+  CreateBenefitResponse, CreateBenefitRequest, DeleteShopsRequest,
 } from 'model/benefit.model';
 import baseQueryReauth from 'store/api/baseQueryReauth';
 
@@ -43,10 +43,20 @@ export const benefitApi = createApi({
       },
       invalidatesTags: () => [{ type: 'benefit' }],
     }),
+    deleteBenefitShops: builder.mutation<void, DeleteShopsRequest>({
+      query({ id, shop_ids }) {
+        return {
+          url: `admin/benefit/${id}/shops`,
+          method: 'delete',
+          body: { shop_ids },
+        };
+      },
+      invalidatesTags: (result, error, { id }) => [{ type: 'benefit', id }],
+    }),
   }),
 });
 
 export const {
   useGetBenefitCategoryQuery, useGetBenefitShopsQuery, useSearchShopsQuery,
-  useCreateBenefitCategoryMutation, useDeleteBenefitCategoryMutation,
+  useCreateBenefitCategoryMutation, useDeleteBenefitCategoryMutation, useDeleteBenefitShopsMutation,
 } = benefitApi;

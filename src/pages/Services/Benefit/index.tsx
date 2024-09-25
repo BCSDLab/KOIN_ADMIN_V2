@@ -1,8 +1,8 @@
 import * as Common from 'styles/List.style';
 import CustomForm from 'components/common/CustomForm';
-import { Button } from 'antd';
 import { useState } from 'react';
-import { useGetBenefitShopsQuery } from 'store/api/benefit';
+import { Button } from 'antd';
+import { useDeleteBenefitShopsMutation, useGetBenefitShopsQuery } from 'store/api/benefit';
 import * as S from './index.style';
 import Category from './components/Category';
 import AdditionalModal from './components/AdditionalModal';
@@ -14,9 +14,36 @@ export default function BenefitPage() {
   const { data } = useGetBenefitShopsQuery(selected, {
     skip: !selected,
   });
+  const [deleteShopsMutaion] = useDeleteBenefitShopsMutation();
   const [isAdditionOpen, setIsAdditionOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isDeleteOpne, setIsDeleteOpen] = useState(false);
+  const [selectedShop, setSelectedShop] = useState<number[]>([]);
+  const onShopClick = (id: number) => {
+    setSelectedShop((prev) => {
+      const isSelected = prev.find((item) => item === id);
+      if (isSelected) {
+        return prev.filter((item) => item !== id);
+      }
+      return [...prev, id];
+    });
+  };
+  const onClickBenefit = (id: number) => {
+    setSelected((prev) => {
+      if (prev === id) return undefined;
+      return id;
+    });
+    setSelectedShop([]);
+  };
+  const deleteShops = () => {
+    if (selected) deleteShopsMutaion({ id: selected, shop_ids: selectedShop });
+  };
+  const onShopClickAll = () => {
+    if (data) {
+      const allId = data.shops.map((shop) => shop.id);
+      setSelectedShop([...allId]);
+    }
+  };
   const openAddtionModal = () => {
     setIsAdditionOpen(true);
   };
@@ -35,6 +62,7 @@ export default function BenefitPage() {
   const closeDeleteModal = () => {
     setIsDeleteOpen(false);
   };
+
   return (
     <S.Wrapper>
       <Common.Heading>
@@ -74,27 +102,18 @@ export default function BenefitPage() {
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>
-        <Category selected={selected} setSelected={setSelected} />
+        <Category selected={selected} setSelected={setSelected} onClickBenefit={onClickBenefit} />
         <S.SideContainer>
           <Common.SmallHeading>
             혜택 상점 목록
           </Common.SmallHeading>
           <S.ButtonContainer>
-            <Button>
+            <Button onClick={onShopClickAll}>
               전체 선택
             </Button>
-            <CustomForm.Modal
-              buttonText="삭제"
-              title="등록하기"
-              width={900}
-              footer={null}
-              open={false}
-              onCancel={() => { }}
-              onClick={() => { }}
-              isDelete
-            >
-              1
-            </CustomForm.Modal>
+            <Button onClick={deleteShops}>
+              삭제
+            </Button>
             <CustomForm.Modal
               buttonText="추가"
               title="혜택 상점 목록 추가"
@@ -108,7 +127,20 @@ export default function BenefitPage() {
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>
-        {data?.shops.map((shop) => <Button>{shop.name}</Button>)}
+        <S.ShopContainer>
+          {selected ? (
+            <div>
+              {data?.shops.map((shop) => (
+                <S.Button
+                  isClicked={selectedShop.includes(shop.id)}
+                  onClick={() => onShopClick(shop.id)}
+                >
+                  {shop.name}
+                </S.Button>
+              ))}
+            </div>
+          ) : null}
+        </S.ShopContainer>
       </S.Container>
     </S.Wrapper>
   );

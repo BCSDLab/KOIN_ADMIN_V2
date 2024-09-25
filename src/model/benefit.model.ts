@@ -35,3 +35,8 @@ export interface CreateBenefitRequest {
 export interface CreateBenefitResponse extends CreateBenefitRequest {
   id: number;
 }
+
+export interface DeleteShopsRequest {
+  shop_ids: number[];
+  id: number;
+}

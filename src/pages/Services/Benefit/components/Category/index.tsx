@@ -4,18 +4,12 @@ import * as S from './index.style';
 
 interface Props {
   selected: number | undefined;
-  setSelected: React.Dispatch<React.SetStateAction<number | undefined>>
+  setSelected: React.Dispatch<React.SetStateAction<number | undefined>>;
+  onClickBenefit: (id: number) => void;
 }
 
-export default function Category({ selected, setSelected }: Props) {
+export default function Category({ selected, setSelected, onClickBenefit }: Props) {
   const { data } = useGetBenefitCategoryQuery();
-
-  const onClickBenefit = (id: number) => {
-    setSelected((prev) => {
-      if (prev === id) return undefined;
-      return id;
-    });
-  };
 
   useEffect(() => {
     if (data) setSelected(data.benefits[0].id);

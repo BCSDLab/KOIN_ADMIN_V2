@@ -92,13 +92,13 @@ export default function BenefitPage() {
             <CustomForm.Modal
               buttonText="생성"
               title="혜택 카테고리 등록하기"
-              width={750}
+              width={900}
               footer
               open={isCreateOpen}
               onCancel={closeCreateModal}
               onClick={openCreateModal}
             >
-              <CreationModal />
+              <CreationModal closeCreateModal={closeCreateModal} />
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>

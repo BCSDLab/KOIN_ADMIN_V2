@@ -19,7 +19,7 @@ export default function Category({ selected, setSelected, onClickBenefit }: Prop
     <S.Container>
       {data?.benefits && data.benefits.map((benefit) => (
         <S.Box onClick={() => onClickBenefit(benefit.id)} isClicked={selected === benefit.id}>
-          <img src={benefit.off_image_url} alt="toggle-off" />
+          <img src={selected === benefit.id ? benefit.on_image_url : benefit.off_image_url} alt="toggle-off" />
           {benefit.title}
         </S.Box>
       ))}

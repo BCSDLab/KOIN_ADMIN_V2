@@ -4,7 +4,7 @@ import {
 import { useRef, useState } from 'react';
 import { useAddBenefitShopsMutation, useSearchShopsQuery } from 'store/api/benefit';
 import { Shops } from 'model/benefit.model';
-import { MinusCircleOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import * as S from './index.style';
 
 interface Props {
@@ -101,12 +101,15 @@ export default function AdditionalModal({ id, closeAdditionModal }: Props) {
           </S.ButtonWrapper>
         ))}
       </S.SelectContainer>
-      <Button
-        onClick={ConfirmAddShop}
-        disabled={isLoading}
-      >
-        완료
-      </Button>
+      <S.FlexRight>
+        <Button
+          onClick={ConfirmAddShop}
+          disabled={isLoading}
+        >
+          <UploadOutlined />
+          완료
+        </Button>
+      </S.FlexRight>
     </div>
   );
 }

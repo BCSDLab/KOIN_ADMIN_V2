@@ -14,6 +14,7 @@ export const SelectContainer = styled.div`
   overflow: auto;
   padding: 25px;
   border: 0.5px solid #eeeeeeff;
+  background: #eee;
 `;
 
 export const FlexColumn = styled.div`
@@ -63,4 +64,11 @@ export const DeleteButtonWrapper = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+`;
+
+export const FlexRight = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 10px
 `;

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const UploadWarpper = styled.div`
+export const UploadWrapper = styled.div`
   position: relative;
   padding-left: 50px;
 `;

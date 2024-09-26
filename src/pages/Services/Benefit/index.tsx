@@ -14,7 +14,7 @@ export default function BenefitPage() {
   const { data } = useGetBenefitShopsQuery(selected, {
     skip: !selected,
   });
-  const [deleteShopsMutaion] = useDeleteBenefitShopsMutation();
+  const [deleteShopsMutation] = useDeleteBenefitShopsMutation();
   const [isAdditionOpen, setIsAdditionOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isDeleteOpne, setIsDeleteOpen] = useState(false);
@@ -36,7 +36,7 @@ export default function BenefitPage() {
     setSelectedShop([]);
   };
   const deleteShops = () => {
-    if (selected) deleteShopsMutaion({ id: selected, shop_ids: selectedShop }).then(() => message.success('상점을 삭제했습니다.'));
+    if (selected) deleteShopsMutation({ id: selected, shop_ids: selectedShop }).then(() => message.success('상점을 삭제했습니다.'));
   };
   const onShopClickAll = () => {
     if (data) {

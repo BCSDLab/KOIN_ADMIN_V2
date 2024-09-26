@@ -7,11 +7,11 @@ interface Props {
   closeModal: () => void;
 }
 export default function DeleteBenefitCategoryModal({ id, closeModal }: Props) {
-  const [deleteMutaion] = useDeleteBenefitCategoryMutation();
+  const [deleteMutation] = useDeleteBenefitCategoryMutation();
   const { data } = useGetBenefitCategoryQuery();
   const deleteBenefitCatogory = () => {
     if (id) {
-      deleteMutaion({ id });
+      deleteMutation({ id });
       closeModal();
     }
   };

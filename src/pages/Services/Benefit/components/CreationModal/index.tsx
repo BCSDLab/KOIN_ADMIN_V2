@@ -31,18 +31,18 @@ export default function CreationModal({ closeCreateModal }: Props) {
       <CustomForm.Input name="title" label="카테고리 명" maxLength={20} minLength={5} />
       <CustomForm.Input name="detail" label="혜택 설명 문구" maxLength={100} minLength={10} />
       <Divider orientation="left">아이콘 (필수)</Divider>
-      <S.UploadWarpper>
+      <S.UploadWrapper>
         <S.Label>
           토글 전
         </S.Label>
         <CustomForm.SingleUpload domain="shops" name="on_image_url" form={form} />
-      </S.UploadWarpper>
-      <S.UploadWarpper>
+      </S.UploadWrapper>
+      <S.UploadWrapper>
         <S.Label>
           토글 후
         </S.Label>
         <CustomForm.SingleUpload domain="shops" name="off_image_url" form={form} />
-      </S.UploadWarpper>
+      </S.UploadWrapper>
       <S.FlexRight>
         <CustomForm.Button
           icon={<UploadOutlined />}

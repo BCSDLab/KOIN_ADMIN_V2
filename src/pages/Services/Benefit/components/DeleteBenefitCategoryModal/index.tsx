@@ -25,7 +25,7 @@ export default function DeleteBenefitCategoryModal({ id, closeModal }: Props) {
       </S.NameWrapper>
       카테고리를 삭제하시겠습니까?
       <br />
-      카테고리에 해당하는 상점 목록들고 함께 삭제 돼요.
+      카테고리에 해당하는 상점 목록들도 함께 삭제 돼요.
       <S.ButtonContainer>
         <S.ButtonSet>
           <Button onClick={closeModal}>취소</Button>

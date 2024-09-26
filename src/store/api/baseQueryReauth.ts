@@ -15,7 +15,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     // 토큰이 필요한 조회에는 헤더를 추가할 필요가 있음.
     const { token } = (getState() as RootState).auth;
-    if (token) {
+    if (token && !headers.get('skip-auth')) {
       headers.set('authorization', `Bearer ${token}`);
     }
     return headers;
@@ -40,6 +40,7 @@ FetchBaseQueryError
         body: {
           refresh_token: refreshToken,
         },
+        headers: new Headers({ 'skip-auth': 'true' }),
       },
       api,
       extraOptions,
@@ -47,7 +48,6 @@ FetchBaseQueryError
 
     if (refresh.data) {
       // 액세스 토큰을 가져오는데 성공한다면 스토리지에 값 저장
-      localStorage.setItem('refresh_token', refresh.data.refresh_token);
       sessionStorage.setItem('token', refresh.data.token);
       // 액세스 토큰 갱신
       setCredentials({ token: refresh.data.token });

@@ -27,3 +27,10 @@ export const SubmitButtonWrap = styled.div`
 export const SwitchWrapper = styled.div`
   margin: 0 10px;
 `;
+
+export const SmallHeading = styled.h2`
+  font-size: 20px;
+  font-weight: 700;
+  color: #404040;
+  padding: 12px 0 0 12px;
+`;

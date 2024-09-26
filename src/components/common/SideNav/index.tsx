@@ -2,7 +2,7 @@ import {
   AppstoreOutlined, UserOutlined, CarOutlined, ShopOutlined,
   HomeOutlined, UserSwitchOutlined,
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
-  UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined,
+  UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -32,6 +32,7 @@ const items: MenuProps['items'] = [
       getItem('상점 관리', '/store', <ControlOutlined />),
       getItem('카테고리', '/category', <FolderOpenOutlined />),
       getItem('리뷰 관리', '/review', <SnippetsOutlined />),
+      getItem('혜택 관리', '/benefit', <GiftOutlined />),
     ]),
     getItem('버스 정보', '/bus', <CarOutlined />),
     getItem('복덕방', '/room', <HomeOutlined />),

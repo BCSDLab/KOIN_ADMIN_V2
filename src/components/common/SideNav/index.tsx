@@ -1,8 +1,9 @@
 import {
-  AppstoreOutlined, UserOutlined, CarOutlined, ShopOutlined,
+  AppstoreOutlined, UserOutlined, ShopOutlined,
   HomeOutlined, UserSwitchOutlined,
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
   UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
+  NotificationOutlined,
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -34,8 +35,8 @@ const items: MenuProps['items'] = [
       getItem('리뷰 관리', '/review', <SnippetsOutlined />),
       getItem('혜택 관리', '/benefit', <GiftOutlined />),
     ]),
-    getItem('버스 정보', '/bus', <CarOutlined />),
     getItem('복덕방', '/room', <HomeOutlined />),
+    getItem('공지사항', '/notice', <NotificationOutlined />),
   ]),
 
   getItem('회원 관리', 'user', <UserOutlined />, [
@@ -77,6 +78,8 @@ function SideNav() {
   const onClick: MenuProps['onClick'] = (e) => {
     navigate(e.key);
   };
+  const selectedKeys = pathname.startsWith('/notice') ? ['/notice'] : [pathname];
+
   return (
     <SideNavConatiner>
       <Logo>
@@ -86,7 +89,7 @@ function SideNav() {
       </Logo>
       <Menu
         onClick={onClick}
-        selectedKeys={[pathname]}
+        selectedKeys={selectedKeys}
         defaultOpenKeys={['service', 'service-store', 'user']}
         mode="inline"
         items={items}

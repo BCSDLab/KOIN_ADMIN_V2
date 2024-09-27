@@ -78,6 +78,8 @@ function SideNav() {
   const onClick: MenuProps['onClick'] = (e) => {
     navigate(e.key);
   };
+  const selectedKeys = pathname.startsWith('/notice') ? ['/notice'] : [pathname];
+
   return (
     <SideNavConatiner>
       <Logo>
@@ -87,7 +89,7 @@ function SideNav() {
       </Logo>
       <Menu
         onClick={onClick}
-        selectedKeys={[pathname]}
+        selectedKeys={selectedKeys}
         defaultOpenKeys={['service', 'service-store', 'user']}
         mode="inline"
         items={items}

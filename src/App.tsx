@@ -22,7 +22,6 @@ import OwnerDetail from 'pages/UserManage/Owner/OwnerDetail';
 import ABTest from 'pages/ABTest';
 import ABTestDetail from 'pages/ABTest/components/ABTestDetail';
 import ReviewList from 'pages/Services/Review/ReviewList';
-import ABTestTest from 'pages/ABTest/test/test';
 import BenefitPage from 'pages/Services/Benefit';
 
 function RequireAuth() {
@@ -63,7 +62,6 @@ function App() {
         <Route path="/member/:id" element={<MemberDetail />} />
         <Route path="/abtest" element={<ABTest />} />
         <Route path="/abtest/:id" element={<ABTestDetail />} />
-        <Route path="/abtest/test" element={<ABTestTest />} />
         <Route path="/review" element={<ReviewList />} />
         <Route path="/benefit" element={<BenefitPage />} />
         <Route path="*" element={<h1>404</h1>} />

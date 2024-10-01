@@ -129,7 +129,7 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
           <S.Input onChange={(e) => setCreator(e.target.value)} maxLength={10} />
           <S.Label>소속팀</S.Label>
           <S.Input onChange={(e) => setTeam(e.target.value)} maxLength={10} />
-          <S.Label>테스트의 제목</S.Label>
+          <S.Label>AB테스트의 제목</S.Label>
           <S.Input onChange={(e) => setDisplayTitle(e.target.value)} maxLength={20} />
           <S.Label>변수</S.Label>
           <S.Input onChange={(e) => setTitle(e.target.value)} maxLength={20} />
@@ -144,7 +144,7 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
             <S.SubTitle>{creator}</S.SubTitle>
             <S.Label>소속팀</S.Label>
             <S.SubTitle>{team}</S.SubTitle>
-            <S.Label>실험 제목</S.Label>
+            <S.Label>실험군 제목</S.Label>
             <S.SubTitle>{displayTitle}</S.SubTitle>
             <S.Label>실험 변수 명</S.Label>
             <S.SubTitle>{title}</S.SubTitle>

@@ -101,7 +101,9 @@ function UserManageModal({ ABTestId, ABTestVariables }: UserManageModalProps) {
                 onClick={() => setExperimentGroup(variable.name)}
               >
                 {variable.display_name}
+                (
                 {variable.name}
+                )
               </Button>
             ))}
           </S.Container>

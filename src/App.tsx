@@ -24,7 +24,7 @@ import ABTestDetail from 'pages/ABTest/components/ABTestDetail';
 import ReviewList from 'pages/Services/Review/ReviewList';
 import ABTestTest from 'pages/ABTest/test/test';
 import BenefitPage from 'pages/Services/Benefit';
-import NoticePage from 'pages/Services/Notice';
+import NoticeList from 'pages/Services/Notice/NoticeList';
 import NoticeWritePage from 'pages/Services/Notice/Write';
 
 function RequireAuth() {
@@ -68,7 +68,7 @@ function App() {
         <Route path="/abtest/test" element={<ABTestTest />} />
         <Route path="/review" element={<ReviewList />} />
         <Route path="/benefit" element={<BenefitPage />} />
-        <Route path="/notice" element={<NoticePage />} />
+        <Route path="/notice" element={<NoticeList />} />
         <Route path="/notice/write" element={<NoticeWritePage />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>

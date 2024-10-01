@@ -1,21 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from 'store';
-import { API_PATH } from 'constant';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { UserDetail, UsersResponse, UserTableHead } from 'model/user.model';
+import baseQueryReauth from 'store/api/baseQueryReauth';
 
 export const userApi = createApi({
   reducerPath: 'user',
   tagTypes: ['users', 'user'],
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_PATH}`,
-    prepareHeaders: (headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryReauth,
   endpoints: (builder) => ({
     getUserList: builder.query<{ students: UserTableHead[]; totalPage: number }, number>({
       query: (page) => `admin/students?page=${page}`,

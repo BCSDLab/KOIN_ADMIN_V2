@@ -1,23 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from 'store';
-import { API_PATH } from 'constant';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import {
   Upload, UploadResponse, Uploads, UploadsResponse,
 } from 'model/upload.model';
+import baseQueryReauth from 'store/api/baseQueryReauth';
 
 export const uploadApi = createApi({
   reducerPath: 'file',
   tagTypes: ['files', 'file'],
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_PATH}`,
-    prepareHeaders: (headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryReauth,
   endpoints: (builder) => ({
     uploadfiles: builder.mutation<UploadsResponse, Uploads>({
       query({ domain, images }) {

@@ -1,4 +1,4 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import {
   Button, Checkbox, CheckboxProps, Form,
   Input, InputNumberProps, InputProps,
@@ -156,14 +156,22 @@ interface CustomModalProps {
   onClick: () => void;
   buttonText: string;
   children: ReactNode;
+  isDelete?: boolean;
 }
 
 function CustomModal({
-  buttonText, title, width, footer, children, open, onCancel, onClick,
+  buttonText, title, width, footer, children, open, onCancel, onClick, isDelete,
 }: CustomModalProps & ModalProps) {
   return (
     <>
-      <Button icon={<PlusOutlined />} onClick={onClick}>{buttonText}</Button>
+      <Button
+        icon={isDelete
+          ? <MinusOutlined />
+          : <PlusOutlined />}
+        onClick={onClick}
+      >
+        {buttonText}
+      </Button>
       <Modal
         title={title}
         open={open}

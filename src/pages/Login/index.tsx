@@ -38,6 +38,7 @@ function useLogin() {
         const credentials = res.data;
         dispatch(setCredentials(credentials));
         sessionStorage.setItem('token', credentials.token);
+        localStorage.setItem('refresh_token', credentials.refresh_token);
       } else if ('error' in res) {
         message.error('올바른 계정이 아닙니다.');
       }

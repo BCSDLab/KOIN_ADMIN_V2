@@ -4,12 +4,18 @@ import { ABTestUserMoveRequest } from 'model/abTest.model';
 import { useState } from 'react';
 import { useGetUserByIDQuery, useGetUserByNameQuery } from 'store/api/abtest';
 import useABTestMutation from './hook/useABTestMutation';
-//  import useDebounce from 'utils/hooks/debouce';
+import * as S from './UserManageModal.style';
 
+interface ABTestVariable {
+  rate: number
+  display_name: string;
+  name: string
+}
 interface UserManageModalProps {
   ABTestId: string
+  ABTestVariables? : ABTestVariable[]
 }
-function UserManageModal({ ABTestId }: UserManageModalProps) {
+function UserManageModal({ ABTestId, ABTestVariables }: UserManageModalProps) {
   const { moveUser } = useABTestMutation();
   const [page, setPage] = useState(1);
   const [name, setName] = useState<string>('');
@@ -21,23 +27,12 @@ function UserManageModal({ ABTestId }: UserManageModalProps) {
     func(e.target.value);
   };
 
-  // const debounceInput = useDebounce(handleInput, 1);
-  // const [selectedUser, setSelectedUser] = useState<any>(null);
-  // const [selectedDevice, setSelectedDevice] = useState<any>(null);
   const [experimentGroup, setExperimentGroup] = useState<string>('');
   const { data: userData } = useGetUserByNameQuery(name);
   const { data: deviceData } = useGetUserByIDQuery(userId, {
     skip: !userId,
   });
-  // const handleUserSelect = (id: string ) => {
-  //   useGetUserByIDQuery(id);
-  //   setStep(2);
-  // };
 
-  // const handleDeviceSelect = (record: any) => {
-  //   setSelectedDevice(record);
-  //   setStep(3);
-  // };
   const handleFinish = (data:ABTestUserMoveRequest) => {
     moveUser(data);
   };
@@ -97,12 +92,21 @@ function UserManageModal({ ABTestId }: UserManageModalProps) {
     if (step === 3) {
       return (
         <>
-          <h3>실험군 입력</h3>
-          <Input
-            placeholder="실험군 이름을 입력해주세요"
-            value={experimentGroup}
-            onChange={(e) => setExperimentGroup(e.target.value)}
-          />
+          <h3>실험군 선택</h3>
+          <S.Container>
+            {ABTestVariables?.map((variable) => (
+              <Button
+                value={variable.name}
+                type={experimentGroup === variable.name ? 'primary' : 'default'}
+                onClick={() => setExperimentGroup(variable.name)}
+              >
+                {variable.display_name}
+                (
+                {variable.name}
+                )
+              </Button>
+            ))}
+          </S.Container>
         </>
       );
     }

@@ -76,7 +76,7 @@ export const Label = styled.div`
 `;
 
 export const Input = styled.input`
-  width: 50%;
+  width: 100%;
   
 `;
 
@@ -96,6 +96,7 @@ export const StepTowLabel = styled.div`
 `;
 
 export const SubTitle = styled.div`
+  width: 210px;
   font-size: 15px;
   color: gray;
   text-overflow: ellipsis
@@ -104,6 +105,7 @@ export const SubTitle = styled.div`
 export const StepTwoContainer = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
   gap: 5px
 `;
 

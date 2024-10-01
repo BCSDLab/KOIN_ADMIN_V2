@@ -235,7 +235,7 @@ export default function ABTestDetail() {
               danger
               onClick={() => { postWinner({ id, winner_name: winner }); }}
             >
-              삭제
+              승자 선택
             </Button>
             <Button onClick={() => setIsModalOpen(false)}>취소</Button>
           </S.Item>

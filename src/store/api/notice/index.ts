@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {
-  NoticesParam, NoticesResponse,
+  NoticesParam, NoticesResponse, TransformedNoticesResponse,
 } from 'model/notice.model';
 import baseQueryReauth from 'store/api/baseQueryReauth';
 
@@ -9,11 +9,23 @@ export const noticeApi = createApi({
   tagTypes: ['notices', 'notice'],
   baseQuery: baseQueryReauth,
   endpoints: (builder) => ({
-    getNoticeList: builder.query<NoticesResponse, NoticesParam>({
+    getNoticeList: builder.query<TransformedNoticesResponse, NoticesParam>({
       query: ({ page, is_deleted }) => `admin/notice?page=${page}&limit=1&is_deleted=${is_deleted}`,
       providesTags: (result) => (result
         ? [...result.notices.map((notice) => ({ type: 'notice' as const, id: notice.id })), { type: 'notices', id: 'LIST' }]
         : [{ type: 'notices', id: 'LIST' }]),
+      transformResponse: (res: NoticesResponse): TransformedNoticesResponse => {
+        const notices = res.notices.map((notice) => {
+          return {
+            id: notice.id,
+            post_number: notice.id,
+            title: notice.title,
+            author: notice.author,
+            post_date: notice.created_at,
+          };
+        });
+        return { notices, total_page: res.total_page };
+      },
     }),
 
     // getOwner: builder.query<OwnerResponse, number>({
@@ -30,7 +42,8 @@ export const noticeApi = createApi({
     //       body,
     //     };
     //   },
-    //   invalidatesTags: (result, error, { id }) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+    //   invalidatesTags: (result, error, { id }) =>
+    //  [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
     // }),
 
     // deleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
@@ -40,7 +53,8 @@ export const noticeApi = createApi({
     //       method: 'DELETE',
     //     };
     //   },
-    //   invalidatesTags: (result, error, id) => [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
+    //   invalidatesTags: (result, error, id) =>
+    // [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
     // }),
     // owner에서 가져와서 작업하고 있어요. 그쪽 참고하면 될 듯 합니당
   }),

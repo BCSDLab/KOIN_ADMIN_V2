@@ -22,6 +22,12 @@ const TableContainer = styled.div`
     margin: 20px 40px 0 0;
     align-self: flex-end;
   }
+  .ant-table-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50px;
+  }
 `;
 
 const TableItemImage = styled.img`

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button, Switch } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { styled } from 'styled-components';
+import { useGetNoticeListQuery } from 'store/api/notice';
 import * as S from './NoticeList.style';
 
 const ActionBar = styled.div`
@@ -15,25 +16,14 @@ const ActionBar = styled.div`
   justify-content: space-between;
 `;
 
-const temp = {
-  notices: [
-    {
-      id: 1,
-      제목: 'test',
-      글쓴이: 'test',
-      생성일: 'test',
-    },
-  ],
-  total_count: 1,
-  current_count: 1,
-  total_page: 1,
-  current_page: 1,
-};
-
 export default function NoticeList() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [showDeleted, setShowDeleted] = useState(false);
+  const { data: noticesResponse } = useGetNoticeListQuery({
+    page,
+    is_deleted: showDeleted,
+  });
 
   return (
     <S.Container>
@@ -54,15 +44,16 @@ export default function NoticeList() {
           글쓰기
         </Button>
       </ActionBar>
-      {temp && (
+      {noticesResponse && (
         <CustomTable
-          data={temp.notices}
+          data={noticesResponse.notices}
           pagination={{
             current: page,
             onChange: setPage,
-            total: temp.total_page,
+            total: noticesResponse.total_page,
           }}
-          columnSize={[10, 40, 15, 15]}
+          columnSize={[10, 50, 10, 15]}
+          hiddenColumns={['id']}
         />
       )}
     </S.Container>

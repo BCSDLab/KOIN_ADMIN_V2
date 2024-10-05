@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {
+  NoticeResponse,
   NoticesParam, NoticesResponse, TransformedNoticesResponse,
 } from 'model/notice.model';
 import baseQueryReauth from 'store/api/baseQueryReauth';
@@ -28,10 +29,10 @@ export const noticeApi = createApi({
       },
     }),
 
-    // getOwner: builder.query<OwnerResponse, number>({
-    //   query: (id) => ({ url: `admin/users/owner/${id}` }),
-    //   providesTags: (result, error, id) => [{ type: 'owner', id }],
-    // }),
+    getNotice: builder.query<NoticeResponse, number>({
+      query: (id) => ({ url: `admin/notice/${id}` }),
+      providesTags: (result, error, id) => [{ type: 'notice', id }],
+    }),
 
     // updateOwner: builder.mutation<void, Pick<OwnerResponse, 'id'> & Partial<OwnerResponse>>({
     //   query(data) {

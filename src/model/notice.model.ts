@@ -22,6 +22,10 @@ export interface Notice {
   updated_at: string;
 }
 
+export interface NoticeResponse extends Notice {
+  content: string;
+}
+
 export interface TransformedNotice {
   id: number;
   post_number: number;

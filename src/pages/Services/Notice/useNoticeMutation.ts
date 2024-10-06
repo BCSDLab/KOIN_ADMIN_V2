@@ -17,6 +17,7 @@ const useNoticeMutation = () => {
       .unwrap()
       .then(() => {
         onSuccess?.();
+        message.success('공지사항 게시가 완료되었습니다.');
         navigate(-1);
       })
       .catch(({ data }) => {

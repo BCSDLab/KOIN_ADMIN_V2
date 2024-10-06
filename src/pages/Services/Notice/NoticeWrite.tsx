@@ -3,11 +3,12 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import CustomForm from 'components/common/CustomForm';
 import { Button, message } from 'antd';
-import { useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import { LeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import useNoticeMutation from 'pages/Services/Notice/useNoticeMutation';
+import useDebounce from 'utils/hooks/debouce';
 import { useUploadfileMutation } from 'store/api/upload';
 import * as S from './NoticeWrite.style';
 
@@ -19,18 +20,13 @@ export default function NoticeWrite() {
   const { addNotice } = useNoticeMutation();
   const [uploadfile] = useUploadfileMutation();
 
-  useEffect(() => {
-    const editorInstance = editorRef.current?.getInstance();
-    if (editorInstance) {
-      editorInstance.on('change', () => {
-        const content = editorInstance.getHTML();
-        form.setFieldsValue({ content });
-      });
-    }
-    return () => {
-      editorInstance?.off('change');
-    };
-  }, [form]);
+  const debouncedSetFieldsValue = useDebounce(useCallback((value: string) => {
+    form.setFieldsValue({ content: value });
+  }, [form]), 300);
+
+  const handleChange = useCallback((newContent: string) => {
+    debouncedSetFieldsValue(newContent);
+  }, [debouncedSetFieldsValue]);
 
   const onFinish = (values: any) => {
     const editorContent = editorRef.current?.getInstance().getHTML();
@@ -38,6 +34,12 @@ export default function NoticeWrite() {
       values.content = editorContent;
     }
     addNotice(values);
+  };
+
+  const handleImageUpload = async (blob: Blob) => {
+    const formData = new FormData();
+    formData.append('multipartFile', blob);
+    return formData;
   };
 
   return (
@@ -62,16 +64,14 @@ export default function NoticeWrite() {
             useCommandShortcut={false}
             ref={editorRef}
             rules={[required()]}
+            onChange={handleChange}
             hooks={{
               addImageBlobHook: async (blob, callback) => {
                 try {
+                  const formData = await handleImageUpload(blob);
                   const response = await uploadfile({
                     domain: 'admin',
-                    image: (() => {
-                      const formData = new FormData();
-                      formData.append('multipartFile', blob);
-                      return formData;
-                    })(),
+                    image: formData,
                   }).unwrap();
                   callback(response.file_url, '');
                 } catch (error) {

@@ -3,18 +3,8 @@ import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { Button, Switch } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { styled } from 'styled-components';
 import { useGetNoticeListQuery } from 'store/api/notice';
 import * as S from './NoticeList.style';
-
-const ActionBar = styled.div`
-  margin-top: 24px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
 
 export default function NoticeList() {
   const navigate = useNavigate();
@@ -28,7 +18,7 @@ export default function NoticeList() {
   return (
     <S.Container>
       <S.Heading>공지사항 목록</S.Heading>
-      <ActionBar>
+      <S.ActionBar>
         <S.SwitchWrapper>
           <Switch
             onClick={setShowDeleted}
@@ -43,7 +33,7 @@ export default function NoticeList() {
         >
           글쓰기
         </Button>
-      </ActionBar>
+      </S.ActionBar>
       {noticesResponse && (
         <CustomTable
           data={noticesResponse.notices}

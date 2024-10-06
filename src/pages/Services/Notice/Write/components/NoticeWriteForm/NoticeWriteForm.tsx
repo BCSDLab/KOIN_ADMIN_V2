@@ -60,7 +60,7 @@ export default function NoticeWriteForm() {
           <CustomForm.Input label="제목" name="title" rules={[required()]} />
           <CustomForm.Editor
             label="본문"
-            name="description"
+            name="content"
             initialEditType="wysiwyg"
             initialValue=" "
             height="600px"

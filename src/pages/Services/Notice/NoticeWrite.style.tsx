@@ -21,3 +21,13 @@ export const ButtonWrapper = styled.div`
   justify-content: flex-end;
   width: calc(100% - 110px);
 `;
+
+export const HeadingWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  .ant-btn-icon-only {
+    border: none;
+    margin-right: 5px;
+  }
+`;

@@ -2,15 +2,17 @@
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import CustomForm from 'components/common/CustomForm';
-import { message } from 'antd';
+import { Button, message } from 'antd';
 import { useEffect, useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
-import { UploadOutlined } from '@ant-design/icons';
+import { LeftOutlined, UploadOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import useNoticeMutation from 'pages/Services/Notice/useNoticeMutation';
 import { useUploadfileMutation } from 'store/api/upload';
 import * as S from './NoticeWrite.style';
 
 export default function NoticeWrite() {
+  const navigate = useNavigate();
   const { required } = CustomForm.useValidate();
   const [form] = CustomForm.useForm();
   const editorRef = useRef<Editor | null>(null);
@@ -40,9 +42,10 @@ export default function NoticeWrite() {
 
   return (
     <S.Container>
-      <S.Heading>
-        공지사항 글쓰기
-      </S.Heading>
+      <S.HeadingWrapper>
+        <Button onClick={() => navigate(-1)} icon={<LeftOutlined />} />
+        <S.Heading>공지사항 글쓰기</S.Heading>
+      </S.HeadingWrapper>
       <CustomForm form={form} onFinish={onFinish}>
         <S.FormWrapper>
           <CustomForm.Input label="글번호" name="id" disabled />

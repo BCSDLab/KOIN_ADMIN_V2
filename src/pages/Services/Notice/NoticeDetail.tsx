@@ -27,11 +27,7 @@ export default function NoticeDetail() {
   const { data: notice } = useGetNoticeQuery(Number(id));
   const { required } = CustomForm.useValidate();
   const [form] = CustomForm.useForm();
-
-  const { updateNotice } = useNoticeMutation();
-  const deleteNotice = (noticeId: number) => {
-    console.log(noticeId);
-  };
+  const { updateNotice, deleteNotice } = useNoticeMutation();
 
   return (
     <S.Container>

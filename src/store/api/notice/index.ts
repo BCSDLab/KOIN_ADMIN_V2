@@ -47,20 +47,18 @@ export const noticeApi = createApi({
       invalidatesTags: (result, error, { id }) => [{ type: 'notice', id }, { type: 'notices', id: 'LIST' }],
     }),
 
-    // deleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
-    //   query(id) {
-    //     return {
-    //       url: `admin/users/${id}`,
-    //       method: 'DELETE',
-    //     };
-    //   },
-    //   invalidatesTags: (result, error, id) =>
-    // [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
-    // }),
-    // owner에서 가져와서 작업하고 있어요. 그쪽 참고하면 될 듯 합니당
+    deleteNotice: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `admin/notice/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'notice', id }, { type: 'notices', id: 'LIST' }],
+    }),
   }),
 });
 
 export const {
-  useGetNoticeListQuery, useGetNoticeQuery, useUpdateNoticeMutation,
+  useGetNoticeListQuery, useGetNoticeQuery, useUpdateNoticeMutation, useDeleteNoticeMutation,
 } = noticeApi;

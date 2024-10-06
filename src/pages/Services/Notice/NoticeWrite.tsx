@@ -20,6 +20,14 @@ export default function NoticeWrite() {
   const { addNotice } = useNoticeMutation();
   const [uploadfile] = useUploadfileMutation();
 
+  const handleFinish = (values: any) => {
+    const editorContent = editorRef.current?.getInstance().getHTML();
+    if (editorContent) {
+      values.content = editorContent;
+    }
+    addNotice(values);
+  };
+
   const debouncedSetFieldsValue = useDebounce(useCallback((value: string) => {
     form.setFieldsValue({ content: value });
   }, [form]), 300);
@@ -27,14 +35,6 @@ export default function NoticeWrite() {
   const handleChange = useCallback((newContent: string) => {
     debouncedSetFieldsValue(newContent);
   }, [debouncedSetFieldsValue]);
-
-  const onFinish = (values: any) => {
-    const editorContent = editorRef.current?.getInstance().getHTML();
-    if (editorContent) {
-      values.content = editorContent;
-    }
-    addNotice(values);
-  };
 
   const handleImageUpload = async (blob: Blob) => {
     const formData = new FormData();
@@ -48,7 +48,7 @@ export default function NoticeWrite() {
         <Button onClick={() => navigate(-1)} icon={<LeftOutlined />} />
         <S.Heading>공지사항 글쓰기</S.Heading>
       </S.HeadingWrapper>
-      <CustomForm form={form} onFinish={onFinish}>
+      <CustomForm form={form} onFinish={handleFinish}>
         <S.FormWrapper>
           <CustomForm.Input label="글번호" name="id" disabled />
           <CustomForm.Input label="작성자" name="author" disabled />

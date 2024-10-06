@@ -41,6 +41,6 @@ export interface NoticeRequest {
 
 export interface NoticeUpdateForm {
   id: number;
-  titme: string;
-  contents: string;
+  title: string;
+  content: string;
 }

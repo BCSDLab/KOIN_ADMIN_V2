@@ -1,14 +1,14 @@
 /* eslint-disable no-restricted-imports */
+import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/i18n/ko-kr';
 import CustomForm from 'components/common/CustomForm';
 import { useEffect, useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-import '@toast-ui/editor/dist/i18n/ko-kr';
 import { UploadOutlined } from '@ant-design/icons';
 import useNoticeMutation from 'pages/Services/Notice/useNoticeMutation';
-import * as S from './NoticeWriteForm.style';
+import * as S from './NoticeWrite.style';
 
-export default function NoticeWriteForm() {
+export default function NoticeWrite() {
   const { required } = CustomForm.useValidate();
   const [form] = CustomForm.useForm();
   const editorRef = useRef<Editor | null>(null);
@@ -37,6 +37,9 @@ export default function NoticeWriteForm() {
 
   return (
     <S.Container>
+      <S.Heading>
+        공지사항 글쓰기
+      </S.Heading>
       <CustomForm form={form} onFinish={onFinish}>
         <S.FormWrapper>
           <CustomForm.Input label="글번호" name="id" disabled />

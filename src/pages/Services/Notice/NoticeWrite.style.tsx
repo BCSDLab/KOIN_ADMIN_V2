@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export * from 'styles/Detail.style';
+export * from 'styles/List.style';
+
+export const Title = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+`;
 
 export const FormWrapper = styled.div`
   padding: 10px 112px 60px 20px;

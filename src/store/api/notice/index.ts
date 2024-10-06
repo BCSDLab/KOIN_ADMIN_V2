@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {
-  NoticeUpdateRequest,
+  NoticeRequest,
   NoticeResponse,
   NoticesParam, NoticesResponse, TransformedNoticesResponse,
 } from 'model/notice.model';
@@ -35,7 +35,16 @@ export const noticeApi = createApi({
       providesTags: (result, error, id) => [{ type: 'notice', id }],
     }),
 
-    updateNotice: builder.mutation<string, Pick<NoticeResponse, 'id'> & Partial<NoticeUpdateRequest>>({
+    addNotice: builder.mutation<NoticeRequest, Partial<NoticeRequest>>({
+      query: (body) => ({
+        url: 'admin/notice',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'notices', id: 'LIST' }],
+    }),
+
+    updateNotice: builder.mutation<string, Pick<NoticeResponse, 'id'> & Partial<NoticeRequest>>({
       query(data) {
         const { id, ...body } = data;
         return {
@@ -60,5 +69,6 @@ export const noticeApi = createApi({
 });
 
 export const {
-  useGetNoticeListQuery, useGetNoticeQuery, useUpdateNoticeMutation, useDeleteNoticeMutation,
+  useGetNoticeListQuery, useGetNoticeQuery,
+  useAddNoticeMutation, useUpdateNoticeMutation, useDeleteNoticeMutation,
 } = noticeApi;

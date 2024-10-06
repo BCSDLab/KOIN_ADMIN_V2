@@ -1,28 +1,28 @@
 import { message } from 'antd';
-import { NoticeUpdateForm } from 'model/notice.model';
+import { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteNoticeMutation, useUpdateNoticeMutation } from 'store/api/notice';
+import { useAddNoticeMutation, useDeleteNoticeMutation, useUpdateNoticeMutation } from 'store/api/notice';
 
 const useNoticeMutation = () => {
-  // const [addCategoryMutation] = useAddCategoryMutation();
+  const [addNoticeMutation] = useAddNoticeMutation();
   const [updateNoticeMutation] = useUpdateNoticeMutation();
   const [deleteNoticeMutation] = useDeleteNoticeMutation();
   const navigate = useNavigate();
 
-  // const addCategory = (formData: Category, {
-  //   onSuccess,
-  //   onError,
-  // }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
-  //   addCategoryMutation({ ...formData })
-  //     .unwrap()
-  //     .then(() => {
-  //       onSuccess?.();
-  //     })
-  //     .catch(({ data }) => {
-  //       onError?.(data.message);
-  //       message.error(data.message);
-  //     });
-  // };
+  const addNotice = (formData: NoticeRequest, {
+    onSuccess,
+    onError,
+  }: { onSuccess?: () => string, onError?: (message: string) => void } = {}) => {
+    addNoticeMutation({ ...formData })
+      .unwrap()
+      .then(() => {
+        onSuccess?.();
+      })
+      .catch(({ data }) => {
+        onError?.(data.message);
+        message.error(data.message);
+      });
+  };
 
   const updateNotice = (formData: NoticeUpdateForm, {
     onSuccess,
@@ -58,7 +58,7 @@ const useNoticeMutation = () => {
       });
   };
 
-  return { updateNotice, deleteNotice };
+  return { addNotice, updateNotice, deleteNotice };
 };
 
 export default useNoticeMutation;

@@ -34,7 +34,7 @@ export interface TransformedNotice {
   post_date: string;
 }
 
-export interface NoticeUpdateRequest {
+export interface NoticeRequest {
   title: string;
   content: string;
 }

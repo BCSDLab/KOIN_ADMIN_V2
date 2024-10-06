@@ -1,37 +1,58 @@
 /* eslint-disable no-restricted-imports */
 import CustomForm from 'components/common/CustomForm';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
-import { Form, message } from 'antd';
+import { message } from 'antd';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { UploadOutlined } from '@ant-design/icons';
 import { useUploadfileMutation } from 'store/api/upload';
+import { useAddNoticeMutation } from 'store/api/notice';
+import { useNavigate } from 'react-router-dom';
 import * as S from './NoticeWriteForm.style';
+
+interface NoticeWrite {
+  title: string;
+  description: string;
+}
 
 export default function NoticeWriteForm() {
   const { required } = CustomForm.useValidate();
   const editorRef = useRef<Editor | null>(null);
   const [uploadfile] = useUploadfileMutation();
+  const [form] = CustomForm.useForm();
+  const [addNotice] = useAddNoticeMutation();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const editorInstance = editorRef.current?.getInstance();
+  const createNotice = async (values: NoticeWrite) => {
+    try {
+      const editorInstance = editorRef.current?.getInstance();
+      const description = editorInstance?.getHTML() || '';
 
-    if (editorInstance) {
-      editorInstance.on('change', () => {
-        const data = editorInstance.getHTML();
-        console.log(data);
-      });
+      if (!description || description === '<p><br></p>') {
+        message.error('본문을 입력해주세요.');
+        return;
+      }
+
+      const requestBody = {
+        title: values.title,
+        content: description,
+      };
+
+      await addNotice(requestBody).unwrap();
+      navigate('/notice');
+      message.success('공지사항 게시가 완료되었습니다.');
+    } catch (error) {
+      message.error('공지사항 게시에 실패했습니다.');
     }
-
-    return () => {
-      editorInstance?.off('change');
-    };
-  }, []);
+  };
 
   return (
     <S.Container>
-      <Form>
+      <CustomForm
+        onFinish={createNotice}
+        form={form}
+      >
         <S.FormWrapper>
           <CustomForm.Input label="글번호" name="id" disabled />
           <CustomForm.Input label="작성자" name="name" disabled />
@@ -46,7 +67,6 @@ export default function NoticeWriteForm() {
             previewStyle="vertical"
             useCommandShortcut={false}
             ref={editorRef}
-            rules={[required()]}
             hooks={{
               addImageBlobHook: async (blob, callback) => {
                 try {
@@ -67,9 +87,9 @@ export default function NoticeWriteForm() {
           />
         </S.FormWrapper>
         <S.ButtonWrapper>
-          <CustomForm.Button icon={<UploadOutlined />}>게시</CustomForm.Button>
+          <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">게시</CustomForm.Button>
         </S.ButtonWrapper>
-      </Form>
+      </CustomForm>
     </S.Container>
   );
 }

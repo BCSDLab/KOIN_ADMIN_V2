@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {
+  NoticeUpdateRequest,
   NoticeResponse,
   NoticesParam, NoticesResponse, TransformedNoticesResponse,
 } from 'model/notice.model';
@@ -34,18 +35,17 @@ export const noticeApi = createApi({
       providesTags: (result, error, id) => [{ type: 'notice', id }],
     }),
 
-    // updateOwner: builder.mutation<void, Pick<OwnerResponse, 'id'> & Partial<OwnerResponse>>({
-    //   query(data) {
-    //     const { id, ...body } = data;
-    //     return {
-    //       url: `admin/users/owner/${id}`,
-    //       method: 'PUT',
-    //       body,
-    //     };
-    //   },
-    //   invalidatesTags: (result, error, { id }) =>
-    //  [{ type: 'owner', id }, { type: 'owners', id: 'LIST' }],
-    // }),
+    updateNotice: builder.mutation<string, Pick<NoticeResponse, 'id'> & Partial<NoticeUpdateRequest>>({
+      query(data) {
+        const { id, ...body } = data;
+        return {
+          url: `admin/notice/${id}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: (result, error, { id }) => [{ type: 'notice', id }, { type: 'notices', id: 'LIST' }],
+    }),
 
     // deleteOwner: builder.mutation<{ success: boolean; id: number }, number>({
     //   query(id) {
@@ -62,5 +62,5 @@ export const noticeApi = createApi({
 });
 
 export const {
-  useGetNoticeListQuery, useGetNoticeQuery,
+  useGetNoticeListQuery, useGetNoticeQuery, useUpdateNoticeMutation,
 } = noticeApi;

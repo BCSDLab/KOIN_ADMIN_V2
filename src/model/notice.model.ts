@@ -33,3 +33,14 @@ export interface TransformedNotice {
   author: string;
   post_date: string;
 }
+
+export interface NoticeUpdateRequest {
+  title: string;
+  content: string;
+}
+
+export interface NoticeUpdateForm {
+  id: number;
+  titme: string;
+  contents: string;
+}

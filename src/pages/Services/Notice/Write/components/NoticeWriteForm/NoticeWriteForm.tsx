@@ -13,7 +13,7 @@ import * as S from './NoticeWriteForm.style';
 
 interface NoticeWrite {
   title: string;
-  description: string;
+  content: string;
 }
 
 export default function NoticeWriteForm() {

@@ -17,6 +17,7 @@ const useNoticeMutation = () => {
       .unwrap()
       .then(() => {
         onSuccess?.();
+        navigate(-1);
       })
       .catch(({ data }) => {
         onError?.(data.message);

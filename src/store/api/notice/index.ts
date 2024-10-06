@@ -62,5 +62,5 @@ export const noticeApi = createApi({
 });
 
 export const {
-  useGetNoticeListQuery,
+  useGetNoticeListQuery, useGetNoticeQuery,
 } = noticeApi;

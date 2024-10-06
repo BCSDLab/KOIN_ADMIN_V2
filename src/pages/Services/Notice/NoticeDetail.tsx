@@ -31,7 +31,7 @@ export default function NoticeDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: notice } = useGetNoticeQuery(Number(id));
   const { required } = CustomForm.useValidate();
   const [form] = CustomForm.useForm();

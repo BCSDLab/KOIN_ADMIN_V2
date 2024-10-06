@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import CustomForm from 'components/common/CustomForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   DeleteOutlined, UploadOutlined, EditOutlined, LeftOutlined,
 } from '@ant-design/icons';
 import { useGetNoticeQuery } from 'store/api/notice';
-import { Button, Divider, Modal } from 'antd';
+import {
+  Button, Divider, Modal, message,
+} from 'antd';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/i18n/ko-kr';
 import { styled } from 'styled-components';
+import { useUploadfileMutation } from 'store/api/upload';
 import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
 
@@ -33,9 +39,11 @@ export default function NoticeDetail() {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: notice } = useGetNoticeQuery(Number(id));
+  const editorRef = useRef<Editor | null>(null);
   const { required } = CustomForm.useValidate();
   const [form] = CustomForm.useForm();
   const { updateNotice, deleteNotice } = useNoticeMutation();
+  const [uploadfile] = useUploadfileMutation();
 
   return (
     <S.Container>
@@ -50,11 +58,44 @@ export default function NoticeDetail() {
             initialValues={notice}
             onFinish={updateNotice}
           >
-            <CustomForm.Input name="id" label="글번호" disabled />
-            <CustomForm.Input name="author" label="작성자" disabled />
-            <CustomForm.Input name="created_at" label="게시일" disabled />
-            <CustomForm.Input name="title" label="제목" rules={[required()]} disabled={!isEditing} />
-            <CustomForm.Input name="content" label="본문" rules={[required()]} disabled={!isEditing} />
+            <S.FormWrapper>
+              <CustomForm.Input name="id" label="글번호" disabled />
+              <CustomForm.Input name="author" label="작성자" disabled />
+              <CustomForm.Input name="created_at" label="게시일" disabled />
+              <CustomForm.Input name="title" label="제목" rules={[required()]} disabled={!isEditing} />
+              {isEditing ? (
+                <CustomForm.Editor
+                  label="본문"
+                  name="content"
+                  initialEditType="wysiwyg"
+                  initialValue={notice.content}
+                  height="600px"
+                  previewStyle="vertical"
+                  useCommandShortcut={false}
+                  ref={editorRef}
+                  disabled={!isEditing}
+                  hooks={{
+                    addImageBlobHook: async (blob, callback) => {
+                      try {
+                        const response = await uploadfile({
+                          domain: 'admin',
+                          image: (() => {
+                            const formData = new FormData();
+                            formData.append('multipartFile', blob);
+                            return formData;
+                          })(),
+                        }).unwrap();
+                        callback(response.file_url, '');
+                      } catch (error) {
+                        message.error('이미지 업로드에 실패했습니다.');
+                      }
+                    },
+                  }}
+                />
+              )
+                : (<CustomForm.Viewer name="content" label="본문" disabled rules={[required()]} initialValue={notice.content} />)}
+
+            </S.FormWrapper>
             <S.ButtonWrap>
               <CustomForm.Button
                 danger

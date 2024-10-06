@@ -6,8 +6,8 @@ import {
 } from '@ant-design/icons';
 import { useGetNoticeQuery } from 'store/api/notice';
 import { Button } from 'antd';
-// import useCategoryMutation from './useCategoryMutation';
 import { styled } from 'styled-components';
+import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
 
 const HeadingWrapper = styled.div`
@@ -28,13 +28,9 @@ export default function NoticeDetail() {
   const { required } = CustomForm.useValidate();
   const [form] = CustomForm.useForm();
 
-  // const { updateCategory, deleteCategory } = useCategoryMutation();
-  const updateCategory = () => {
-    console.log('updateCategory');
-  };
-  const deleteCategory = (noticeId: number) => {
+  const { updateNotice } = useNoticeMutation();
+  const deleteNotice = (noticeId: number) => {
     console.log(noticeId);
-    console.log('deleteCategory');
   };
 
   return (
@@ -48,10 +44,10 @@ export default function NoticeDetail() {
           <CustomForm
             form={form}
             initialValues={notice}
-            onFinish={updateCategory}
+            onFinish={updateNotice}
           >
             <CustomForm.Input name="id" label="글번호" disabled />
-            <CustomForm.Input name="author" label="작성자" disabled={!isEditing} />
+            <CustomForm.Input name="author" label="작성자" disabled />
             <CustomForm.Input name="created_at" label="게시일" disabled />
             <CustomForm.Input name="title" label="제목" rules={[required()]} disabled={!isEditing} />
             <CustomForm.Input name="content" label="본문" rules={[required()]} disabled={!isEditing} />
@@ -59,13 +55,13 @@ export default function NoticeDetail() {
               <CustomForm.Button
                 danger
                 icon={<DeleteOutlined />}
-                onClick={() => deleteCategory(Number(id))}
+                onClick={() => deleteNotice(Number(id))}
               >
                 삭제
               </CustomForm.Button>
               <CustomForm.Button
                 icon={isEditing ? <UploadOutlined /> : <EditOutlined />}
-                htmlType="submit"
+                htmlType={isEditing ? 'button' : 'submit'}
                 onClick={() => setIsEditing((prev) => !prev)}
               >
                 {isEditing ? '저장' : '수정'}

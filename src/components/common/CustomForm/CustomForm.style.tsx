@@ -57,7 +57,7 @@ export const FormTextItem = styled(Form.Item)`
   margin-bottom: 0;
   .ant-form-item-label > label {
     width: 120px;
-    height: 600px;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,4 +1,4 @@
-export type Domain = 'items' | 'lands' | 'circles' | 'market' | 'shops' | 'members' | 'owners';
+export type Domain = 'items' | 'lands' | 'circles' | 'market' | 'shops' | 'members' | 'owners' | 'admin';
 
 export interface Uploads {
   domain: Domain;

@@ -2,10 +2,12 @@
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import CustomForm from 'components/common/CustomForm';
+import { message } from 'antd';
 import { useEffect, useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import { UploadOutlined } from '@ant-design/icons';
 import useNoticeMutation from 'pages/Services/Notice/useNoticeMutation';
+import { useUploadfileMutation } from 'store/api/upload';
 import * as S from './NoticeWrite.style';
 
 export default function NoticeWrite() {
@@ -13,6 +15,7 @@ export default function NoticeWrite() {
   const [form] = CustomForm.useForm();
   const editorRef = useRef<Editor | null>(null);
   const { addNotice } = useNoticeMutation();
+  const [uploadfile] = useUploadfileMutation();
 
   useEffect(() => {
     const editorInstance = editorRef.current?.getInstance();
@@ -51,11 +54,28 @@ export default function NoticeWrite() {
             name="content"
             initialEditType="wysiwyg"
             initialValue=" "
-            height="600px"
+            height="500px"
             previewStyle="vertical"
             useCommandShortcut={false}
             ref={editorRef}
             rules={[required()]}
+            hooks={{
+              addImageBlobHook: async (blob, callback) => {
+                try {
+                  const response = await uploadfile({
+                    domain: 'admin',
+                    image: (() => {
+                      const formData = new FormData();
+                      formData.append('multipartFile', blob);
+                      return formData;
+                    })(),
+                  }).unwrap();
+                  callback(response.file_url, '');
+                } catch (error) {
+                  message.error('이미지 업로드에 실패했습니다.');
+                }
+              },
+            }}
           />
         </S.FormWrapper>
         <S.ButtonWrapper>

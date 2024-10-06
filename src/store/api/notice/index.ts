@@ -12,7 +12,7 @@ export const noticeApi = createApi({
   baseQuery: baseQueryReauth,
   endpoints: (builder) => ({
     getNoticeList: builder.query<TransformedNoticesResponse, NoticesParam>({
-      query: ({ page, is_deleted }) => `admin/notice?page=${page}&limit=1&is_deleted=${is_deleted}`,
+      query: ({ page, is_deleted }) => `admin/notice?page=${page}&is_deleted=${is_deleted}`,
       providesTags: (result) => (result
         ? [...result.notices.map((notice) => ({ type: 'notice' as const, id: notice.id })), { type: 'notices', id: 'LIST' }]
         : [{ type: 'notices', id: 'LIST' }]),

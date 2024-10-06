@@ -6,26 +6,8 @@ import {
 } from '@ant-design/icons';
 import { useGetNoticeQuery } from 'store/api/notice';
 import { Button, Divider, Modal } from 'antd';
-import { styled } from 'styled-components';
 import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
-
-const HeadingWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 24px 0;
-  .ant-btn-icon-only {
-    border: none;
-    margin-right: 5px;
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  gap: 10px;
-`;
 
 export default function NoticeDetail() {
   const navigate = useNavigate();
@@ -41,10 +23,10 @@ export default function NoticeDetail() {
     <S.Container>
       {notice && (
         <>
-          <HeadingWrapper>
+          <S.HeadingWrapper>
             <Button onClick={() => navigate(-1)} icon={<LeftOutlined />} />
             <S.Heading>공지사항 상세보기</S.Heading>
-          </HeadingWrapper>
+          </S.HeadingWrapper>
           <CustomForm
             form={form}
             initialValues={notice}
@@ -82,7 +64,7 @@ export default function NoticeDetail() {
             해당 공지사항을 삭제하시겠습니까?
             <br />
             코인에 게시된 글도 함께 삭제됩니다.
-            <ButtonWrapper>
+            <S.ButtonWrapper>
               <Button
                 onClick={() => setIsModalOpen(false)}
               >
@@ -94,7 +76,7 @@ export default function NoticeDetail() {
               >
                 삭제
               </Button>
-            </ButtonWrapper>
+            </S.ButtonWrapper>
           </Modal>
         </>
       )}

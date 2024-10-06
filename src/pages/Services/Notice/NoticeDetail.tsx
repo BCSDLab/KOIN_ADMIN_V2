@@ -5,7 +5,7 @@ import {
   DeleteOutlined, UploadOutlined, EditOutlined, LeftOutlined,
 } from '@ant-design/icons';
 import { useGetNoticeQuery } from 'store/api/notice';
-import { Button } from 'antd';
+import { Button, Divider, Modal } from 'antd';
 import { styled } from 'styled-components';
 import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
@@ -20,10 +20,18 @@ const HeadingWrapper = styled.div`
   }
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px;
+`;
+
 export default function NoticeDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const { data: notice } = useGetNoticeQuery(Number(id));
   const { required } = CustomForm.useValidate();
   const [form] = CustomForm.useForm();
@@ -51,7 +59,7 @@ export default function NoticeDetail() {
               <CustomForm.Button
                 danger
                 icon={<DeleteOutlined />}
-                onClick={() => deleteNotice(Number(id))}
+                onClick={() => setIsModalOpen(true)}
               >
                 삭제
               </CustomForm.Button>
@@ -64,6 +72,30 @@ export default function NoticeDetail() {
               </CustomForm.Button>
             </S.ButtonWrap>
           </CustomForm>
+          <Modal
+            title="공지사항 삭제 확인"
+            open={isModalOpen}
+            onCancel={() => setIsModalOpen(false)}
+            footer={null}
+          >
+            <Divider />
+            해당 공지사항을 삭제하시겠습니까?
+            <br />
+            코인에 게시된 글도 함께 삭제됩니다.
+            <ButtonWrapper>
+              <Button
+                onClick={() => setIsModalOpen(false)}
+              >
+                취소
+              </Button>
+              <Button
+                danger
+                onClick={() => deleteNotice(Number(id))}
+              >
+                삭제
+              </Button>
+            </ButtonWrapper>
+          </Modal>
         </>
       )}
     </S.Container>

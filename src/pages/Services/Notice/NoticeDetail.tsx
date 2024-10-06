@@ -16,6 +16,11 @@ import { useUploadfileMutation } from 'store/api/upload';
 import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
 
+interface NoticeWrite {
+  title: string;
+  content: string;
+}
+
 const HeadingWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -45,6 +50,30 @@ export default function NoticeDetail() {
   const { updateNotice, deleteNotice } = useNoticeMutation();
   const [uploadfile] = useUploadfileMutation();
 
+  const editNotice = async (values: NoticeWrite) => {
+    try {
+      const editorInstance = editorRef.current?.getInstance();
+      const description = editorInstance?.getHTML() || '';
+
+      if (!description || description === '<p><br></p>') {
+        message.error('본문을 입력해주세요.');
+        return;
+      }
+
+      const requestBody = {
+        titme: values.title,
+        contents: description,
+        id: Number(id),
+      };
+
+      await updateNotice(requestBody);
+      navigate('/notice');
+      message.success('공지사항 수정이 완료되었습니다.');
+    } catch (error) {
+      message.error('공지사항 수정에 실패했습니다.');
+    }
+  };
+
   return (
     <S.Container>
       {notice && (
@@ -56,7 +85,7 @@ export default function NoticeDetail() {
           <CustomForm
             form={form}
             initialValues={notice}
-            onFinish={updateNotice}
+            onFinish={editNotice}
           >
             <S.FormWrapper>
               <CustomForm.Input name="id" label="글번호" disabled />

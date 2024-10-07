@@ -35,6 +35,7 @@ const useNoticeMutation = () => {
       .then(() => {
         message.success('공지사항 수정이 완료되었습니다.');
         onSuccess?.();
+        navigate(-1);
       })
       .catch(({ data }) => {
         onError?.(data.message);

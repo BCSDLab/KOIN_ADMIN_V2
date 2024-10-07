@@ -144,7 +144,7 @@ export default function ABTestDetail() {
         <CustomForm.Input label="id" name="id" disabled />
         <CustomForm.Input label="작성자" name="creator" maxLength={50} />
         <CustomForm.Input label="소속팀" name="team" maxLength={50} />
-        <CustomForm.Input label="테스트의 제목" name="display_title" maxLength={255} />
+        <CustomForm.Input label="AB테스트의 제목" name="display_title" maxLength={255} />
         <CustomForm.Input label="변수" name="title" disabled maxLength={255} />
         <CustomForm.TextArea label="설명" name="description" maxLength={255} />
         <Divider orientation="left">실험군</Divider>
@@ -235,7 +235,7 @@ export default function ABTestDetail() {
               danger
               onClick={() => { postWinner({ id, winner_name: winner }); }}
             >
-              삭제
+              승자 선택
             </Button>
             <Button onClick={() => setIsModalOpen(false)}>취소</Button>
           </S.Item>
@@ -247,7 +247,8 @@ export default function ABTestDetail() {
         onCancel={userModalClose}
         footer={null}
       >
-        {id ? <UserManageModal ABTestId={id} /> : ''}
+        {id && abTestData
+        && <UserManageModal ABTestId={id} ABTestVariables={abTestData.variables} /> }
       </Modal>
 
       <Modal open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>

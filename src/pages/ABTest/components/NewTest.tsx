@@ -23,7 +23,7 @@ function NewTest({
 }: NewTestProps) {
   return (
     <S.StepTowLabel>
-      <S.Label>실험 제목</S.Label>
+      <S.Label>실험군 제목</S.Label>
       <S.Input
         value={displayName}
         onChange={(e) => onDisplayNameChange(index, e.target.value)}

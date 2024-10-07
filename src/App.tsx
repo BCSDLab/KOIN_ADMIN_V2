@@ -23,6 +23,9 @@ import ABTest from 'pages/ABTest';
 import ABTestDetail from 'pages/ABTest/components/ABTestDetail';
 import ReviewList from 'pages/Services/Review/ReviewList';
 import BenefitPage from 'pages/Services/Benefit';
+import NoticeList from 'pages/Services/Notice/NoticeList';
+import NoticeDetail from 'pages/Services/Notice/NoticeDetail';
+import NoticeWrite from 'pages/Services/Notice/NoticeWrite';
 
 function RequireAuth() {
   const location = useLocation();
@@ -64,6 +67,9 @@ function App() {
         <Route path="/abtest/:id" element={<ABTestDetail />} />
         <Route path="/review" element={<ReviewList />} />
         <Route path="/benefit" element={<BenefitPage />} />
+        <Route path="/notice" element={<NoticeList />} />
+        <Route path="/notice/:id" element={<NoticeDetail />} />
+        <Route path="/notice/write" element={<NoticeWrite />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>
     </Routes>

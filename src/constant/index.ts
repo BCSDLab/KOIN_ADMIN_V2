@@ -24,4 +24,8 @@ export const TITLE_MAPPER: Record<string, string> = {
   shop_name: '상점명',
   shop_id: '상점 ID',
   image_url: '이미지',
+  post_number: '글번호',
+  title: '제목',
+  author: '작성자',
+  post_date: '게시일',
 };

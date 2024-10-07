@@ -1,6 +1,6 @@
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import CustomForm from 'components/common/CustomForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -13,7 +13,6 @@ import {
 import { Editor } from '@toast-ui/react-editor';
 import { useUploadfileMutation } from 'store/api/upload';
 import { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
-import useDebounce from 'utils/hooks/debouce';
 import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
 
@@ -42,14 +41,6 @@ export default function NoticeDetail() {
       onSuccess: () => setIsEditing(false),
     });
   };
-
-  const debouncedSetFieldsValue = useDebounce(useCallback((value: string) => {
-    form.setFieldsValue({ content: value });
-  }, [form]), 300);
-
-  const handleChange = useCallback((newContent: string) => {
-    debouncedSetFieldsValue(newContent);
-  }, [debouncedSetFieldsValue]);
 
   const handleImageUpload = async (blob: Blob) => {
     const formData = new FormData();
@@ -86,7 +77,6 @@ export default function NoticeDetail() {
                   useCommandShortcut={false}
                   ref={editorRef}
                   rules={[required()]}
-                  onChange={handleChange}
                   hooks={{
                     addImageBlobHook: async (blob, callback) => {
                       try {

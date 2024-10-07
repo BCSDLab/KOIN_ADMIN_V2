@@ -3,12 +3,11 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import CustomForm from 'components/common/CustomForm';
 import { Button, message } from 'antd';
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import { LeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import useNoticeMutation from 'pages/Services/Notice/useNoticeMutation';
-import useDebounce from 'utils/hooks/debouce';
 import { useUploadfileMutation } from 'store/api/upload';
 import * as S from './NoticeWrite.style';
 
@@ -27,14 +26,6 @@ export default function NoticeWrite() {
     }
     addNotice(values);
   };
-
-  const debouncedSetFieldsValue = useDebounce(useCallback((value: string) => {
-    form.setFieldsValue({ content: value });
-  }, [form]), 300);
-
-  const handleChange = useCallback((newContent: string) => {
-    debouncedSetFieldsValue(newContent);
-  }, [debouncedSetFieldsValue]);
 
   const handleImageUpload = async (blob: Blob) => {
     const formData = new FormData();
@@ -64,7 +55,6 @@ export default function NoticeWrite() {
             useCommandShortcut={false}
             ref={editorRef}
             rules={[required()]}
-            onChange={handleChange}
             hooks={{
               addImageBlobHook: async (blob, callback) => {
                 try {

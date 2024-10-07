@@ -12,7 +12,7 @@ const useNoticeMutation = () => {
   const addNotice = (formData: NoticeRequest, {
     onSuccess,
     onError,
-  }: { onSuccess?: () => string, onError?: (message: string) => void } = {}) => {
+  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
     addNoticeMutation({ ...formData })
       .unwrap()
       .then(() => {
@@ -29,12 +29,12 @@ const useNoticeMutation = () => {
   const updateNotice = (formData: NoticeUpdateForm, {
     onSuccess,
     onError,
-  }: { onSuccess?: () => string, onError?: (message: string) => void } = {}) => {
+  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
     updateNoticeMutation({ ...formData })
       .unwrap()
       .then(() => {
-        onSuccess?.();
         message.success('공지사항 수정이 완료되었습니다.');
+        onSuccess?.();
       })
       .catch(({ data }) => {
         onError?.(data.message);
@@ -46,7 +46,7 @@ const useNoticeMutation = () => {
   const deleteNotice = (id: number, {
     onSuccess,
     onError,
-  }: { onSuccess?: () => string, onError?: (message: string) => void } = {}) => {
+  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
     deleteNoticeMutation(id)
       .unwrap()
       .then(() => {

@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from 'react';
 import CustomForm from 'components/common/CustomForm';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  DeleteOutlined, UploadOutlined, EditOutlined, LeftOutlined,
+  DeleteOutlined, UploadOutlined, EditOutlined, LeftOutlined, CloseOutlined,
 } from '@ant-design/icons';
 import { useGetNoticeQuery } from 'store/api/notice';
 import {
@@ -12,6 +12,7 @@ import {
 } from 'antd';
 import { Editor } from '@toast-ui/react-editor';
 import { useUploadfileMutation } from 'store/api/upload';
+import { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
 import useDebounce from 'utils/hooks/debouce';
 import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
@@ -21,26 +22,26 @@ export default function NoticeDetail() {
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: notice } = useGetNoticeQuery(Number(id));
   const editorRef = useRef<Editor | null>(null);
-  const { required } = CustomForm.useValidate();
-  const [form] = CustomForm.useForm();
+  const { data: notice } = useGetNoticeQuery(Number(id));
   const { updateNotice, deleteNotice } = useNoticeMutation();
   const [uploadfile] = useUploadfileMutation();
+  const { required } = CustomForm.useValidate();
+  const [form] = CustomForm.useForm();
 
-  // const handleFinish = (values: NoticeRequest) => {
-  //   const editorContent = editorRef.current?.getInstance().getHTML();
-  //   console.log(editorContent);
-  //   if (editorContent) {
-  //     values.content = editorContent;
-  //   }
+  const handleFinish = (values: NoticeRequest) => {
+    const editorContent = editorRef.current?.getInstance().getHTML();
+    if (editorContent) values.content = editorContent;
 
-  //   const noticeForm: NoticeUpdateForm = {
-  //     id: Number(id),
-  //     ...values,
-  //   };
-  //   updateNotice(noticeForm);
-  // };
+    const noticeForm: NoticeUpdateForm = {
+      id: Number(id),
+      ...values,
+    };
+
+    updateNotice(noticeForm, {
+      onSuccess: () => setIsEditing(false),
+    });
+  };
 
   const debouncedSetFieldsValue = useDebounce(useCallback((value: string) => {
     form.setFieldsValue({ content: value });
@@ -67,7 +68,7 @@ export default function NoticeDetail() {
           <CustomForm
             form={form}
             initialValues={notice}
-            onFinish={updateNotice}
+            onFinish={handleFinish}
           >
             <S.FormWrapper>
               <CustomForm.Input label="글번호" name="id" disabled />
@@ -109,15 +110,15 @@ export default function NoticeDetail() {
           <S.ButtonWrapper>
             <CustomForm.Button
               danger
-              icon={<DeleteOutlined />}
-              onClick={() => setIsModalOpen(true)}
+              icon={isEditing ? <CloseOutlined /> : <DeleteOutlined />}
+              onClick={() => (isEditing ? setIsEditing(false) : setIsModalOpen(true))}
             >
-              삭제
+              {isEditing ? '취소' : '삭제'}
             </CustomForm.Button>
             <CustomForm.Button
               icon={isEditing ? <UploadOutlined /> : <EditOutlined />}
-              htmlType={isEditing ? 'submit' : 'submit'}
-              onClick={() => setIsEditing((prev) => !prev)}
+              htmlType="button"
+              onClick={() => (isEditing ? form.submit() : setIsEditing(true))}
             >
               {isEditing ? '저장' : '수정'}
             </CustomForm.Button>

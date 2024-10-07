@@ -9,6 +9,7 @@ import { storeApi } from './api/store';
 import { categoryApi } from './api/category';
 import { storeMenuApi } from './api/storeMenu';
 import { menuCategoriesApi } from './api/storeMenu/category';
+import { noticeApi } from './api/notice';
 import { ownerRequestApi } from './api/ownerRequest';
 import { ownerApi } from './api/owner';
 import { reviewApi } from './api/review';
@@ -25,6 +26,7 @@ const apiList = [
   categoryApi,
   storeMenuApi,
   menuCategoriesApi,
+  noticeApi,
   ownerRequestApi,
   ownerApi,
   reviewApi,

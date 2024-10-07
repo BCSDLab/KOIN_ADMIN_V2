@@ -18,6 +18,12 @@ const TableContainer = styled.div`
       background-color: #e6f7ff;
     }
   }
+  .ant-table-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50px;
+  }
   .ant-pagination {
     margin: 20px 40px 0 0;
     align-self: flex-end;
@@ -126,7 +132,7 @@ function CustomTable<TableData extends DefaultTableData>({
             })}
             pagination={pagination ? false : { position: ['bottomRight'] }}
           />
-          {pagination && (
+          {pagination && pagination.total > 0 && (
             <Pagination
               current={pagination.current}
               total={pagination.total * 10}

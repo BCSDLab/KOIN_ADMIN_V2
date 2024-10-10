@@ -8,6 +8,7 @@ import Category from './components/Category';
 import AdditionalModal from './components/AdditionalModal';
 import CreationModal from './components/CreationModal';
 import DeleteBenefitCategoryModal from './components/DeleteBenefitCategoryModal';
+import ModifyModal from './components/ModifyModal';
 
 export default function BenefitPage() {
   const [selected, setSelected] = useState<number>();
@@ -18,6 +19,7 @@ export default function BenefitPage() {
   const [isAdditionOpen, setIsAdditionOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isDeleteOpne, setIsDeleteOpen] = useState(false);
+  const [isModifyOpen, setIsModifyOpen] = useState(false);
   const [selectedShop, setSelectedShop] = useState<number[]>([]);
   const onShopClick = (id: number) => {
     setSelectedShop((prev) => {
@@ -36,7 +38,7 @@ export default function BenefitPage() {
     setSelectedShop([]);
   };
   const deleteShops = () => {
-    if (selected) deleteShopsMutation({ id: selected, shop_ids: selectedShop }).then(() => message.success('상점을 삭제했습니다.'));
+    if (selected && selectedShop.length > 0) deleteShopsMutation({ id: selected, shop_ids: selectedShop }).then(() => message.success('상점을 삭제했습니다.'));
   };
   const onShopClickAll = () => {
     if (data) {
@@ -61,6 +63,12 @@ export default function BenefitPage() {
   };
   const closeDeleteModal = () => {
     setIsDeleteOpen(false);
+  };
+  const openModifyModal = () => {
+    setIsModifyOpen(true);
+  };
+  const closeModifyModal = () => {
+    setIsModifyOpen(false);
   };
 
   return (
@@ -87,6 +95,23 @@ export default function BenefitPage() {
               <DeleteBenefitCategoryModal
                 id={selected}
                 closeModal={closeDeleteModal}
+              />
+            </CustomForm.Modal>
+            <CustomForm.Modal
+              buttonText="수정"
+              title="혜택 카테고리 수정하기"
+              width={900}
+              footer={null}
+              open={isModifyOpen}
+              onCancel={closeModifyModal}
+              onClick={openModifyModal}
+              destroyOnClose
+              isDelete
+              key={selected}
+            >
+              <ModifyModal
+                closeModifyModal={closeModifyModal}
+                selected={selected}
               />
             </CustomForm.Modal>
             <CustomForm.Modal
@@ -132,8 +157,9 @@ export default function BenefitPage() {
             <S.ShopContainer>
               {data?.shops.map((shop) => (
                 <S.Button
-                  isClicked={selectedShop.includes(shop.id)}
+                  isclicked={selectedShop.includes(shop.id)}
                   onClick={() => onShopClick(shop.id)}
+                  key={shop.id}
                 >
                   {shop.name}
                 </S.Button>

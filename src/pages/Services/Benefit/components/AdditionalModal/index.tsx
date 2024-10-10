@@ -75,7 +75,7 @@ export default function AdditionalModal({ id, closeAdditionModal }: Props) {
               : (
                 <div>
                   {data?.non_benefit_shops.map((shop) => (
-                    <S.SearchItem onMouseDown={() => addShop(shop.id, shop.name)} key={shop.name}>
+                    <S.SearchItem onMouseDown={() => addShop(shop.id, shop.name)}>
                       {shop.name}
                     </S.SearchItem>
                   ))}
@@ -89,7 +89,7 @@ export default function AdditionalModal({ id, closeAdditionModal }: Props) {
       <Divider orientation="left">선택 상점</Divider>
       <S.SelectContainer>
         {shops.map((shop) => (
-          <S.ButtonWrapper key={shop.id}>
+          <S.ButtonWrapper>
             <Button style={{ width: '180px' }}>
               <S.DeleteButtonWrapper onClick={() => cancelAddShop(shop.id)}>
                 <MinusCircleOutlined />

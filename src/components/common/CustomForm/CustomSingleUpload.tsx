@@ -71,7 +71,7 @@ export default function CustomSingleUpload({ form, domain, name }: Props) {
           showRemoveIcon: true,
         }}
         beforeUpload={handleUpload}
-        customRequest={() => { }}
+        customRequest={() => {}}
         onRemove={removeUpload}
         fileList={convertedFileList}
       >

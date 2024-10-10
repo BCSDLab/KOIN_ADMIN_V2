@@ -42,10 +42,3 @@ export interface DeleteShopsRequest {
 }
 
 export interface AddShopRequest extends DeleteShopsRequest {}
-
-export interface ModifyBenefitRequest {
-  body: CreateBenefitRequest;
-  id: number;
-}
-
-export interface ModifyBenefitForm extends CreateBenefitRequest { }

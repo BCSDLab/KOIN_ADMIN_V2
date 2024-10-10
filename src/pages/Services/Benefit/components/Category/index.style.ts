@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
 
-export const Box = styled.button<{ isclicked: boolean }>`
+export const Box = styled.button<{ isClicked: boolean }>`
   width: 150px;
   height: 100px;
-  border: ${(props) => (props.isclicked ? '4px solid rgba(129, 173, 255, 0.8)' : '1px solid #ddd')};
+  border: ${(props) => (props.isClicked ? '4px solid rgba(129, 173, 255, 0.8)' : '1px solid #ddd')};
   border-radius: 10px;
   display: flex;
   flex-direction: column;

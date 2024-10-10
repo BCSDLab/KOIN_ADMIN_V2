@@ -40,14 +40,14 @@ export const ShopContainer = styled.div`
   place-items: center;
 `;
 
-export const Button = styled.button<{ isClicked: boolean }>`
+export const Button = styled.button<{ isclicked: boolean }>`
   cursor: pointer;
   width: 150px;
   height: 50px;
   background: #fff;
   text-align: center;
   transition: scale 0.2s;
-  border: ${(props) => (props.isClicked ? '4px solid rgba(129, 173, 255, 0.8) ' : 'none')};
+  border: ${(props) => (props.isclicked ? '4px solid rgba(129, 173, 255, 0.8) ' : 'none')};
   border-radius: 10px;
 
   &:active {

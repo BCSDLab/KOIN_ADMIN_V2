@@ -89,7 +89,7 @@ export const FormTextItem = styled(Form.Item)`
     position: absolute;
     right: 12px;
     z-index: 10;
-    top: 5px;
+    bottom: 35px;
   }
 
   .ant-input-number-input-wrap {

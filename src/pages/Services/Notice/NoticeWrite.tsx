@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import useNoticeMutation from 'pages/Services/Notice/useNoticeMutation';
 import { useUploadfileMutation } from 'store/api/upload';
 import * as S from './NoticeWrite.style';
+import * as T from './NoticeDetail.style';
 
 export default function NoticeWrite() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function NoticeWrite() {
     <S.Container>
       <S.HeadingWrapper>
         <Button onClick={() => navigate(-1)} icon={<LeftOutlined />} />
-        <S.Heading>공지사항 글쓰기</S.Heading>
+        <T.Heading>공지사항 글쓰기</T.Heading>
       </S.HeadingWrapper>
       <CustomForm form={form} onFinish={handleFinish}>
         <S.FormWrapper>

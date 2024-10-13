@@ -89,7 +89,7 @@ export const FormTextItem = styled(Form.Item)`
     position: absolute;
     right: 12px;
     z-index: 10;
-    top: 5px;
+    bottom: 35px;
   }
 
   .ant-input-number-input-wrap {
@@ -164,5 +164,13 @@ export const UploadWrap = styled(Form.Item)`
 
 export const TextWrap = styled.div`
   display: flex;
-  height: 100%;
+  height: 500px;
+`;
+
+export const ViewerWrap = styled.div`
+  display: flex;
+  height: 500px;
+  width: calc(944px - 120px);
+  overflow: auto;
+  padding: 10px 20px;
 `;

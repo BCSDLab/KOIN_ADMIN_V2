@@ -212,7 +212,9 @@ export const CustomViewer = forwardRef<Viewer, CustomFormItemProps & EditorProps
   return (
     <S.TextWrap>
       <S.FormTextItem label={label} name={name} rules={rules}>
-        <Viewer {...props} ref={ref} />
+        <S.ViewerWrap>
+          <Viewer {...props} ref={ref} />
+        </S.ViewerWrap>
       </S.FormTextItem>
     </S.TextWrap>
 

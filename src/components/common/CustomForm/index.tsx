@@ -4,10 +4,11 @@ import {
   Input, InputNumberProps, InputProps,
   Modal, ModalProps, Select, Switch, SwitchProps,
 } from 'antd';
-import { ReactNode } from 'react';
+import { ReactNode, forwardRef } from 'react';
 import { Rule } from 'antd/lib/form';
 import useValidate from 'utils/hooks/useValidate';
 import { NamePath } from 'antd/lib/form/interface';
+import { Editor, EditorProps, Viewer } from '@toast-ui/react-editor';
 import * as S from './CustomForm.style';
 import CustomMultipleUpload from './CustomMultipleUpload';
 import CustomSingleUpload from './CustomSingleUpload';
@@ -186,6 +187,42 @@ function CustomModal({
   );
 }
 
+export const CustomEditor = forwardRef<Editor, CustomFormItemProps & EditorProps>((
+  {
+    label, name, rules, ...props
+  },
+  ref,
+) => {
+  return (
+    <S.TextWrap>
+      <S.FormTextItem label={label} name={name} rules={rules}>
+        <Editor {...props} ref={ref} />
+      </S.FormTextItem>
+    </S.TextWrap>
+
+  );
+});
+
+export const CustomViewer = forwardRef<Viewer, CustomFormItemProps & EditorProps>((
+  {
+    label, name, rules, ...props
+  },
+  ref,
+) => {
+  return (
+    <S.TextWrap>
+      <S.FormTextItem label={label} name={name} rules={rules}>
+        <S.ViewerWrap>
+          <Viewer {...props} ref={ref} />
+        </S.ViewerWrap>
+      </S.FormTextItem>
+    </S.TextWrap>
+
+  );
+});
+
+CustomEditor.displayName = 'CustomEditor';
+
 const CustomForm = Object.assign(Form, {
   GridRow,
   Button: CustomButton,
@@ -199,6 +236,8 @@ const CustomForm = Object.assign(Form, {
   Switch: CustomSwitch,
   Modal: CustomModal,
   useValidate,
+  Editor: CustomEditor,
+  Viewer: CustomViewer,
 });
 
 export default CustomForm;

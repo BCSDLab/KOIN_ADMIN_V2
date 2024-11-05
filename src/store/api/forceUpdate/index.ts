@@ -12,14 +12,24 @@ export const forceUpdateApi = createApi({
     getAppVersion: builder.query<AppVersionResponse, AppType>({
       query: (type) => ({
         url: `admin/version/${type}`,
-        method: 'GET',
       }),
       providesTags: [{ type: 'appVersion', id: 'APPVERSION' }],
+    }),
+    updateAppVersion: builder.mutation<void, Partial<AppVersionResponse>>({
+      query(data) {
+        const { type, ...body } = data;
+        return {
+          url: `admin/version/${type}`,
+          method: 'POST',
+          body,
+        };
+      },
+      invalidatesTags: () => [{ type: 'appVersion', id: 'APPVERSION' }],
     }),
   }),
 
 });
 
 export const {
-  useGetAppVersionQuery,
+  useGetAppVersionQuery, useUpdateAppVersionMutation,
 } = forceUpdateApi;

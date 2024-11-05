@@ -15,6 +15,7 @@ import { ownerApi } from './api/owner';
 import { reviewApi } from './api/review';
 import { abTestApi } from './api/abtest';
 import { benefitApi } from './api/benefit';
+import { forceUpdateApi } from './api/forceUpdate';
 
 const apiList = [
   authApi,
@@ -32,6 +33,7 @@ const apiList = [
   reviewApi,
   abTestApi,
   benefitApi,
+  forceUpdateApi,
 ];
 
 const apiMiddleware = apiList.map((api) => api.middleware);

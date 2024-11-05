@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQueryReauth from 'store/api/baseQueryReauth';
-import { AppVersionResponse, VersionType } from 'model/forceUpdate.model';
+import { AppVersionResponse, AppType } from 'model/forceUpdate.model';
 
 export const forceUpdateApi = createApi({
   reducerPath: 'forceUpdateApi',
@@ -9,7 +9,7 @@ export const forceUpdateApi = createApi({
   baseQuery: baseQueryReauth,
 
   endpoints: (builder) => ({
-    getAppVersion: builder.query<AppVersionResponse, VersionType>({
+    getAppVersion: builder.query<AppVersionResponse, AppType>({
       query: (type) => ({
         url: `admin/version/${type}`,
         method: 'GET',

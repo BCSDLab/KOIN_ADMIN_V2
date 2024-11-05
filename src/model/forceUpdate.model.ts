@@ -1,9 +1,9 @@
-export type VersionType = 'android' | 'ios';
+export type AppType = 'android' | 'ios';
 
 export interface AppVersionResponse {
   id: number,
-  type: string,
-  version: VersionType,
+  type: AppType,
+  version: string,
   title: string,
   content: string,
   created_at: string,

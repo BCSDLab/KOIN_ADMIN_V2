@@ -1,31 +1,24 @@
 import { message } from 'antd';
 import { useState } from 'react';
-import { useGetAppVersionQuery, useUpdateAppVersionMutation } from 'store/api/forceUpdate';
 import { AppType } from 'model/forceUpdate.model';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { useGetAppVersionQuery, useUpdateAppVersionMutation } from 'store/api/forceUpdate';
+import AppTypeDropdown from 'pages/Update/components/AppTypeDropdown';
 import * as S from './ForceUpdate.style';
 
 export default function ForceUpdate() {
   const [appType, setAppType] = useState<AppType>('android');
-  const [isOpen, setIsOpen] = useState(false);
 
   const [appVersion, setAppVersion] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const typeList: AppType[] = ['android', 'ios'];
   const versionRegex = /^\d+\.\d+\.\d+$/;
 
   const { data: version } = useGetAppVersionQuery(appType);
   const [updateVersion] = useUpdateAppVersionMutation();
 
-  const toggle = () => {
-    setIsOpen((prev) => !prev);
-  };
-
   const handleAppType = (type: AppType) => {
     setAppType(type);
-    toggle();
   };
 
   const checkForm = (inputArray: string[]) => {
@@ -69,19 +62,10 @@ export default function ForceUpdate() {
     <S.PageContainer>
       <S.Heading>강제 업데이트 관리</S.Heading>
       <S.UpdateContainer>
-        <S.TypeContainer>
-          <S.Type onClick={toggle}>
-            {appType}
-            <S.Icon>{isOpen ? <UpOutlined /> : <DownOutlined />}</S.Icon>
-          </S.Type>
-          {isOpen && (
-          <S.MenuList>
-            {typeList.map((type) => (
-              appType !== type && <S.Menu onClick={() => handleAppType(type)}>{type}</S.Menu>
-            ))}
-          </S.MenuList>
-          )}
-        </S.TypeContainer>
+        <AppTypeDropdown
+          appType={appType}
+          handleAppType={handleAppType}
+        />
         {version && (
           <S.UpdateInfo>
             <S.Title>현재 업데이트 상황</S.Title>

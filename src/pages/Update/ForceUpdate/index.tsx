@@ -2,27 +2,52 @@ import { useState } from 'react';
 import { useGetAppVersionQuery, useUpdateAppVersionMutation } from 'store/api/forceUpdate';
 import { AppType } from 'model/forceUpdate.model';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
 import * as S from './ForceUpdate.style';
 
 export default function ForceUpdate() {
   const [appType, setAppType] = useState<AppType>('android');
   const [isOpen, setIsOpen] = useState(false);
+
   const [appVersion, setAppVersion] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const { data: version } = useGetAppVersionQuery(appType);
-  const [updateVersion] = useUpdateAppVersionMutation();
 
   const typeList: AppType[] = ['android', 'ios'];
+  const versionRegex = /^\d+\.\d+\.\d+$/;
+
+  const { data: version } = useGetAppVersionQuery(appType);
+  const [updateVersion] = useUpdateAppVersionMutation();
 
   const toggle = () => {
     setIsOpen((prev) => !prev);
   };
-  const changeType = (type: AppType) => {
+
+  const handleAppType = (type: AppType) => {
     setAppType(type);
     toggle();
   };
+
+  const checkForm = (inputArray: string[]) => {
+    const themes = ['version', 'title', 'content'];
+    if (!versionRegex.test(inputArray[0]) && inputArray[0] !== '') {
+      toast.error('예시 형식과 맞게 version을 입력해주세요.');
+      return true;
+    }
+    const hasEmptyField = inputArray.some((text, index) => {
+      if (text === '') {
+        const theme = themes[index];
+        toast.error(`${theme}는 필수 값입니다. ${theme}값을 입력해주세요.`);
+        return true;
+      }
+      return false;
+    });
+    return hasEmptyField;
+  };
+
   const submit = () => {
+    const inputArray = [appVersion, title, content];
+    if (checkForm(inputArray)) return;
     updateVersion({
       type: appType,
       version: appVersion,
@@ -43,7 +68,7 @@ export default function ForceUpdate() {
           {isOpen && (
           <S.MenuList>
             {typeList.map((type) => (
-              appType !== type && <S.Menu onClick={() => changeType(type)}>{type}</S.Menu>
+              appType !== type && <S.Menu onClick={() => handleAppType(type)}>{type}</S.Menu>
             ))}
           </S.MenuList>
           )}

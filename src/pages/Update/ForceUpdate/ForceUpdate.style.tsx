@@ -9,7 +9,6 @@ export const UpdateContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 72px 48px;
 `;
 
 export const UpdateInfo = styled.div`

@@ -28,8 +28,6 @@ import NoticeDetail from 'pages/Services/Notice/NoticeDetail';
 import NoticeWrite from 'pages/Services/Notice/NoticeWrite';
 import ForceUpdate from 'pages/Update/ForceUpdate';
 import UpdateList from 'pages/Update/UpdateList';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function RequireAuth() {
   const location = useLocation();
@@ -48,40 +46,37 @@ function RequireAuth() {
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<RequireAuth />}>
-          <Route index element={<Store />} />
-          <Route path="/store" element={<Store />} />
-          <Route path="/store/:id" element={<StoreDetail />} />
-          <Route path="/category" element={<CategoryList />} />
-          <Route path="/category/:id" element={<CategoryDetail />} />
-          <Route path="/bus" element={<Bus />} />
-          <Route path="/room" element={<RoomList />} />
-          <Route path="/room/:id" element={<RoomDetail />} />
-          <Route path="/user" element={<UserList />} />
-          <Route path="/user/:id" element={<UserDetail />} />
-          <Route path="/owner" element={<OwnerList />} />
-          <Route path="/owner/:id" element={<OwnerDetail />} />
-          <Route path="/owner-request" element={<OwnerRequestList />} />
-          <Route path="/owner-request/:id" element={<OwnerRequestDetail />} />
-          <Route path="/member" element={<MemberList />} />
-          <Route path="/member/:id" element={<MemberDetail />} />
-          <Route path="/abtest" element={<ABTest />} />
-          <Route path="/abtest/:id" element={<ABTestDetail />} />
-          <Route path="/review" element={<ReviewList />} />
-          <Route path="/benefit" element={<BenefitPage />} />
-          <Route path="/notice" element={<NoticeList />} />
-          <Route path="/notice/:id" element={<NoticeDetail />} />
-          <Route path="/notice/write" element={<NoticeWrite />} />
-          <Route path="/force-update" element={<ForceUpdate />} />
-          <Route path="/update-list" element={<UpdateList />} />
-          <Route path="*" element={<h1>404</h1>} />
-        </Route>
-      </Routes>
-      <ToastContainer />
-    </>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<RequireAuth />}>
+        <Route index element={<Store />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/store/:id" element={<StoreDetail />} />
+        <Route path="/category" element={<CategoryList />} />
+        <Route path="/category/:id" element={<CategoryDetail />} />
+        <Route path="/bus" element={<Bus />} />
+        <Route path="/room" element={<RoomList />} />
+        <Route path="/room/:id" element={<RoomDetail />} />
+        <Route path="/user" element={<UserList />} />
+        <Route path="/user/:id" element={<UserDetail />} />
+        <Route path="/owner" element={<OwnerList />} />
+        <Route path="/owner/:id" element={<OwnerDetail />} />
+        <Route path="/owner-request" element={<OwnerRequestList />} />
+        <Route path="/owner-request/:id" element={<OwnerRequestDetail />} />
+        <Route path="/member" element={<MemberList />} />
+        <Route path="/member/:id" element={<MemberDetail />} />
+        <Route path="/abtest" element={<ABTest />} />
+        <Route path="/abtest/:id" element={<ABTestDetail />} />
+        <Route path="/review" element={<ReviewList />} />
+        <Route path="/benefit" element={<BenefitPage />} />
+        <Route path="/notice" element={<NoticeList />} />
+        <Route path="/notice/:id" element={<NoticeDetail />} />
+        <Route path="/notice/write" element={<NoticeWrite />} />
+        <Route path="/force-update" element={<ForceUpdate />} />
+        <Route path="/update-list" element={<UpdateList />} />
+        <Route path="*" element={<h1>404</h1>} />
+      </Route>
+    </Routes>
   );
 }
 

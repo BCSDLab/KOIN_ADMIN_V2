@@ -1,8 +1,8 @@
+import { message } from 'antd';
 import { useState } from 'react';
 import { useGetAppVersionQuery, useUpdateAppVersionMutation } from 'store/api/forceUpdate';
 import { AppType } from 'model/forceUpdate.model';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import { toast } from 'react-toastify';
 import * as S from './ForceUpdate.style';
 
 export default function ForceUpdate() {
@@ -31,13 +31,13 @@ export default function ForceUpdate() {
   const checkForm = (inputArray: string[]) => {
     const themes = ['version', 'title', 'content'];
     if (!versionRegex.test(inputArray[0]) && inputArray[0] !== '') {
-      toast.error('예시 형식과 맞게 version을 입력해주세요.');
+      message.error('예시 형식과 맞게 version을 입력해주세요.');
       return true;
     }
     const hasEmptyField = inputArray.some((text, index) => {
       if (text === '') {
         const theme = themes[index];
-        toast.error(`${theme}는 필수 값입니다. ${theme}값을 입력해주세요.`);
+        message.error(`${theme}는 필수 값입니다. ${theme}값을 입력해주세요.`);
         return true;
       }
       return false;
@@ -53,7 +53,16 @@ export default function ForceUpdate() {
       version: appVersion,
       title,
       content,
-    });
+    })
+      .then(() => {
+        setAppVersion('');
+        setTitle('');
+        setContent('');
+        message.success('업데이트 완료');
+      })
+      .catch(({ data }) => {
+        message.error(data.message);
+      });
   };
 
   return (
@@ -96,6 +105,7 @@ export default function ForceUpdate() {
             <S.Theme>version :</S.Theme>
             <S.Input
               placeholder="ex) 3.4.0"
+              value={appVersion}
               onChange={(e) => setAppVersion(e.target.value)}
             />
           </S.Content>
@@ -103,6 +113,7 @@ export default function ForceUpdate() {
             <S.Theme>title :</S.Theme>
             <S.Input
               placeholder="ex) 변경할 코인업데이트 화면 제목 문구를 작성해주세요."
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </S.Content>
@@ -110,6 +121,7 @@ export default function ForceUpdate() {
             <S.Theme>content :</S.Theme>
             <S.Input
               placeholder="ex) 변경할 코인업데이트 화면 콘텐츠 문구를 작성해주세요."
+              value={content}
               onChange={(e) => setContent(e.target.value)}
             />
           </S.Content>

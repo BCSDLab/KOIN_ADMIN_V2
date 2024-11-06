@@ -28,6 +28,8 @@ export const MenuList = styled.ul`
   margin: 0;
   font-weight: 700;
   list-style-type: none;
+  z-index: 5;
+  background-color: #fff;
 `;
 
 export const Menu = styled.li`

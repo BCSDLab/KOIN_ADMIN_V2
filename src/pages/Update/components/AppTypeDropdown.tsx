@@ -31,7 +31,14 @@ export default function AppTypeDropdown({ appType, handleAppType }: AppTypeDropd
       {isOpen && (
       <S.MenuList>
         {typeList.map((type) => (
-          appType !== type && <S.Menu onClick={() => selectAppType(type)}>{type}</S.Menu>
+          appType !== type && (
+          <S.Menu
+            onClick={() => selectAppType(type)}
+            key={type}
+          >
+            {type}
+          </S.Menu>
+          )
         ))}
       </S.MenuList>
       )}

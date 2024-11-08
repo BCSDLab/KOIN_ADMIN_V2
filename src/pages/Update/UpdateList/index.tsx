@@ -1,27 +1,27 @@
-import AppTypeDropdown from 'pages/Update/components/AppTypeDropdown';
+import OSDropdown from 'pages/Update/components/OSDropdown';
 import { useState } from 'react';
-import { AppType } from 'model/forceUpdate.model';
+import { OS } from 'model/forceUpdate.model';
 import CustomTable from 'components/common/CustomTable';
 import { useGetUpdateListQuery } from 'store/api/updateList';
 import * as S from './UpdateList.style';
 
 export default function UpdateList() {
-  const [appType, setAppType] = useState<AppType>('android');
+  const [os, setOs] = useState<OS>('android');
 
   const [page, setPage] = useState<number>(1);
 
-  const { data: updateList } = useGetUpdateListQuery({ page, type: appType });
+  const { data: updateList } = useGetUpdateListQuery({ page, type: os });
 
-  const handleAppType = (type: AppType) => {
-    setAppType(type);
+  const handleOS = (type: OS) => {
+    setOs(type);
   };
 
   return (
     <S.PageContainer>
       <S.Heading>강제 업데이트 목록</S.Heading>
-      <AppTypeDropdown
-        appType={appType}
-        handleAppType={handleAppType}
+      <OSDropdown
+        os={os}
+        handleOS={handleOS}
       />
       {updateList
       && (

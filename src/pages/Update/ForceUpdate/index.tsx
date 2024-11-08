@@ -1,12 +1,12 @@
 import { message } from 'antd';
 import { useState } from 'react';
-import { AppType } from 'model/forceUpdate.model';
+import { OS } from 'model/forceUpdate.model';
 import { useGetAppVersionQuery, useUpdateAppVersionMutation } from 'store/api/forceUpdate';
-import AppTypeDropdown from 'pages/Update/components/AppTypeDropdown';
+import OSDropdown from 'pages/Update/components/OSDropdown';
 import * as S from './ForceUpdate.style';
 
 export default function ForceUpdate() {
-  const [appType, setAppType] = useState<AppType>('android');
+  const [os, setOs] = useState<OS>('android');
 
   const [appVersion, setAppVersion] = useState('');
   const [title, setTitle] = useState('');
@@ -14,11 +14,11 @@ export default function ForceUpdate() {
 
   const versionRegex = /^\d+\.\d+\.\d+$/;
 
-  const { data: version } = useGetAppVersionQuery(appType);
+  const { data: version } = useGetAppVersionQuery(os);
   const [updateVersion] = useUpdateAppVersionMutation();
 
-  const handleAppType = (type: AppType) => {
-    setAppType(type);
+  const handleOS = (type: OS) => {
+    setOs(type);
   };
 
   const checkForm = (inputArray: string[]) => {
@@ -42,7 +42,7 @@ export default function ForceUpdate() {
     const inputArray = [appVersion, title, content];
     if (checkForm(inputArray)) return;
     updateVersion({
-      type: appType,
+      type: os,
       version: appVersion,
       title,
       content,
@@ -62,9 +62,9 @@ export default function ForceUpdate() {
     <S.PageContainer>
       <S.Heading>강제 업데이트 관리</S.Heading>
       <S.UpdateContainer>
-        <AppTypeDropdown
-          appType={appType}
-          handleAppType={handleAppType}
+        <OSDropdown
+          os={os}
+          handleOS={handleOS}
         />
         {version && (
           <S.UpdateInfo>

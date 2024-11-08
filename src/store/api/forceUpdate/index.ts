@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQueryReauth from 'store/api/baseQueryReauth';
-import { AppVersionResponse, OS } from 'model/forceUpdate.model';
+import { AppVersionResponse, OS, UpdateAppVersionRequest } from 'model/forceUpdate.model';
 
 export const forceUpdateApi = createApi({
   reducerPath: 'forceUpdateApi',
@@ -15,7 +15,7 @@ export const forceUpdateApi = createApi({
       }),
       providesTags: [{ type: 'appVersion', id: 'APPVERSION' }],
     }),
-    updateAppVersion: builder.mutation<void, Partial<AppVersionResponse>>({
+    updateAppVersion: builder.mutation<void, UpdateAppVersionRequest>({
       query(data) {
         const { type, ...body } = data;
         return {

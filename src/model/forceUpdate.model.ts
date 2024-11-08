@@ -1,5 +1,12 @@
 export type OS = 'android' | 'ios';
 
+export interface UpdateAppVersionRequest {
+  type: OS;
+  version: string;
+  title: string;
+  content: string;
+}
+
 export interface AppVersionResponse {
   id: number;
   type: OS;

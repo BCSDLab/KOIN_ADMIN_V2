@@ -1,6 +1,7 @@
 import { message } from 'antd';
-import { useState } from 'react';
-import { OS } from 'model/forceUpdate.model';
+import { useEffect, useState } from 'react';
+import CustomForm from 'components/common/CustomForm';
+import { OS, UpdateAppVersionRequest } from 'model/forceUpdate.model';
 import { useGetAppVersionQuery, useUpdateAppVersionMutation } from 'store/api/forceUpdate';
 import OSDropdown from 'pages/Update/components/OSDropdown';
 import * as S from './ForceUpdate.style';
@@ -10,9 +11,9 @@ const versionRegex = /^\d+\.\d+\.\d+$/;
 export default function ForceUpdate() {
   const [os, setOs] = useState<OS>('android');
 
-  const [appVersion, setAppVersion] = useState('');
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [currentVersionForm] = CustomForm.useForm();
+  const [afterVersionForm] = CustomForm.useForm();
+  const { pattern, required } = CustomForm.useValidate();
 
   const { data: version } = useGetAppVersionQuery(os);
   const [updateVersion] = useUpdateAppVersionMutation();
@@ -21,42 +22,29 @@ export default function ForceUpdate() {
     setOs(type);
   };
 
-  const checkForm = (inputArray: string[]) => {
-    const themes = ['version', 'title', 'content'];
-    if (!versionRegex.test(inputArray[0]) && inputArray[0] !== '') {
-      message.error('예시 형식과 맞게 version을 입력해주세요.');
-      return true;
-    }
-    const hasEmptyField = inputArray.some((text, index) => {
-      if (text === '') {
-        const theme = themes[index];
-        message.error(`${theme}는 필수 값입니다. ${theme}값을 입력해주세요.`);
-        return true;
-      }
-      return false;
-    });
-    return hasEmptyField;
-  };
-
-  const submit = () => {
-    const inputArray = [appVersion, title, content];
-    if (checkForm(inputArray)) return;
+  const onFinish = (formData: UpdateAppVersionRequest) => {
     updateVersion({
       type: os,
-      version: appVersion,
-      title,
-      content,
+      version: formData.version,
+      title: formData.title,
+      content: formData.content,
     })
       .then(() => {
-        setAppVersion('');
-        setTitle('');
-        setContent('');
+        afterVersionForm.setFieldsValue({
+          version: '',
+          title: '',
+          content: '',
+        });
         message.success('업데이트 완료');
       })
       .catch(({ data }) => {
         message.error(data.message);
       });
   };
+
+  useEffect(() => {
+    currentVersionForm.setFieldsValue(version);
+  }, [currentVersionForm, version]);
 
   return (
     <S.PageContainer>
@@ -67,50 +55,35 @@ export default function ForceUpdate() {
           handleOS={handleOS}
         />
         {version && (
-          <S.UpdateInfo>
+          <CustomForm form={currentVersionForm} initialValues={version}>
             <S.Title>현재 업데이트 상황</S.Title>
-            <S.Content>
-              <S.Theme>version :</S.Theme>
-              {version.version}
-            </S.Content>
-            <S.Content>
-              <S.Theme>title :</S.Theme>
-              {version.title}
-            </S.Content>
-            <S.Content>
-              <S.Theme>content :</S.Theme>
-              {version.content}
-            </S.Content>
-          </S.UpdateInfo>
+            <CustomForm.Input label="version" name="version" disabled />
+            <CustomForm.Input label="title" name="title" disabled />
+            <CustomForm.Input label="content" name="content" disabled />
+          </CustomForm>
         )}
-        <S.UpdateInfo>
+        <CustomForm form={afterVersionForm} onFinish={onFinish}>
           <S.Title>수정 문구는 아래에 입력해서 수정해주세요.</S.Title>
-          <S.Content>
-            <S.Theme>version :</S.Theme>
-            <S.Input
-              placeholder="ex) 3.4.0"
-              value={appVersion}
-              onChange={(e) => setAppVersion(e.target.value)}
-            />
-          </S.Content>
-          <S.Content>
-            <S.Theme>title :</S.Theme>
-            <S.Input
-              placeholder="ex) 변경할 코인업데이트 화면 제목 문구를 작성해주세요."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </S.Content>
-          <S.Content>
-            <S.Theme>content :</S.Theme>
-            <S.Input
-              placeholder="ex) 변경할 코인업데이트 화면 콘텐츠 문구를 작성해주세요."
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
-          </S.Content>
-        </S.UpdateInfo>
-        <S.Button onClick={submit}>수정 완료</S.Button>
+          <CustomForm.Input
+            label="version"
+            name="version"
+            rules={[pattern(versionRegex, '예시 형식과 맞게 version을 입력해주세요.'), required()]}
+            placeholder="ex) 1.2.0"
+          />
+          <CustomForm.Input
+            label="title"
+            name="title"
+            rules={[required()]}
+            placeholder="변경할 코인업데이트 화면 제목 문구를 작성해주세요."
+          />
+          <CustomForm.Input
+            label="content"
+            name="content"
+            rules={[required()]}
+            placeholder="변경할 코인업데이트 화면 콘텐츠 문구를 작성해주세요."
+          />
+          <CustomForm.Button htmlType="submit">수정 완료</CustomForm.Button>
+        </CustomForm>
       </S.UpdateContainer>
     </S.PageContainer>
   );

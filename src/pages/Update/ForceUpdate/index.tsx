@@ -5,14 +5,14 @@ import { useGetAppVersionQuery, useUpdateAppVersionMutation } from 'store/api/fo
 import OSDropdown from 'pages/Update/components/OSDropdown';
 import * as S from './ForceUpdate.style';
 
+const versionRegex = /^\d+\.\d+\.\d+$/;
+
 export default function ForceUpdate() {
   const [os, setOs] = useState<OS>('android');
 
   const [appVersion, setAppVersion] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
-  const versionRegex = /^\d+\.\d+\.\d+$/;
 
   const { data: version } = useGetAppVersionQuery(os);
   const [updateVersion] = useUpdateAppVersionMutation();

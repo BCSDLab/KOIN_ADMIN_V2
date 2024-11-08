@@ -1,3 +1,4 @@
+import { Flex } from 'antd';
 import OSDropdown from 'pages/Update/components/OSDropdown';
 import { useState } from 'react';
 import { OS } from 'model/forceUpdate.model';
@@ -17,7 +18,7 @@ export default function UpdateList() {
   };
 
   return (
-    <S.PageContainer>
+    <Flex vertical>
       <S.Heading>강제 업데이트 목록</S.Heading>
       <OSDropdown
         os={os}
@@ -38,6 +39,6 @@ export default function UpdateList() {
       />
       )}
 
-    </S.PageContainer>
+    </Flex>
   );
 }

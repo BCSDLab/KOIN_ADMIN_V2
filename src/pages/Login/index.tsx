@@ -1,7 +1,6 @@
 import { SyntheticEvent, useEffect, useRef } from 'react';
 import { useLoginMutation } from 'store/api/auth';
 import sha256 from 'sha256';
-import { SECOND_PASSWORD } from 'constant';
 import { setCredentials, useToken } from 'store/slice/auth';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +11,6 @@ import * as S from './Login.style';
 function useLogin() {
   const idRef = useRef<InputRef>(null);
   const passwordRef = useRef<InputRef>(null);
-  const secondPasswordRef = useRef<InputRef>(null);
   const token = useToken();
   const [loginMutation] = useLoginMutation();
   const dispatch = useDispatch();
@@ -24,10 +22,9 @@ function useLogin() {
 
   const login = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const refList = [idRef.current, passwordRef.current, secondPasswordRef.current];
+    const refList = [idRef.current, passwordRef.current];
 
     if (refList.some((current) => (current?.input?.value === ''))) message.warning('필수 입력값을 입력해주세요.');
-    else if (refList[2]?.input?.value !== SECOND_PASSWORD) message.error('올바른 계정이 아닙니다.');
     else {
       const res = await loginMutation({
         email: refList[0]?.input?.value!,
@@ -46,13 +43,13 @@ function useLogin() {
   };
 
   return {
-    idRef, passwordRef, secondPasswordRef, login,
+    idRef, passwordRef, login,
   };
 }
 
 function Login() {
   const {
-    idRef, passwordRef, secondPasswordRef, login,
+    idRef, passwordRef, login,
   } = useLogin();
 
   return (
@@ -63,7 +60,6 @@ function Login() {
         <S.Divider />
         <S.FormInput ref={idRef} autoComplete="id" placeholder="ID" />
         <S.FormInput ref={passwordRef} type="password" autoComplete="current-password" placeholder="PASSWORD" />
-        <S.FormInput ref={secondPasswordRef} type="password" placeholder="SECOND PASSWORD" />
         <S.SubmitButton type="primary" htmlType="submit">Login</S.SubmitButton>
       </S.LoginForm>
     </S.Container>

@@ -3,7 +3,7 @@ import {
   HomeOutlined, UserSwitchOutlined,
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
   UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
-  NotificationOutlined,
+  NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -48,6 +48,11 @@ const items: MenuProps['items'] = [
 
   getItem('테스트', 'test', <ControlOutlined />, [
     getItem('AB 테스트', '/abtest', <ApartmentOutlined />),
+  ]),
+
+  getItem('강제업데이트', 'force-update', <IssuesCloseOutlined />, [
+    getItem('업데이트 관리', '/force-update', <FormOutlined />),
+    getItem('목록 관리', '/update-list', <UnorderedListOutlined />),
   ]),
 ];
 

@@ -26,6 +26,8 @@ import BenefitPage from 'pages/Services/Benefit';
 import NoticeList from 'pages/Services/Notice/NoticeList';
 import NoticeDetail from 'pages/Services/Notice/NoticeDetail';
 import NoticeWrite from 'pages/Services/Notice/NoticeWrite';
+import ForceUpdate from 'pages/Update/ForceUpdate';
+import UpdateList from 'pages/Update/UpdateList';
 
 function RequireAuth() {
   const location = useLocation();
@@ -70,6 +72,8 @@ function App() {
         <Route path="/notice" element={<NoticeList />} />
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/notice/write" element={<NoticeWrite />} />
+        <Route path="/force-update" element={<ForceUpdate />} />
+        <Route path="/update-list" element={<UpdateList />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>
     </Routes>

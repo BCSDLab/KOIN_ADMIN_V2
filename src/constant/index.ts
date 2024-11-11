@@ -28,4 +28,5 @@ export const TITLE_MAPPER: Record<string, string> = {
   title: '제목',
   author: '작성자',
   post_date: '게시일',
+  updatedAt: 'date',
 };

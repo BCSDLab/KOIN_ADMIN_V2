@@ -49,16 +49,30 @@ function CustomInputNumber({
   );
 }
 
+interface AutoSizeProps {
+  minRows: number,
+  maxRows: number,
+}
+
 interface CustomTextAreaProps {
   maxLength?: number;
+  showCount?: boolean;
+  style?: React.CSSProperties;
+  autoSize?: AutoSizeProps;
 }
 
 function CusctomTextArea({
-  label, name, maxLength, disabled, rules,
+  label, name, maxLength, disabled, rules, showCount, autoSize, style,
 }: CustomFormItemProps & CustomTextAreaProps) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <Input.TextArea showCount maxLength={maxLength} disabled={disabled} />
+      <Input.TextArea
+        showCount={showCount}
+        maxLength={maxLength}
+        disabled={disabled}
+        autoSize={autoSize}
+        style={style}
+      />
     </S.FormItem>
   );
 }

@@ -4,6 +4,7 @@ import {
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
   UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
+  HistoryOutlined, FlagOutlined,
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -53,6 +54,9 @@ const items: MenuProps['items'] = [
   getItem('강제업데이트', 'force-update', <IssuesCloseOutlined />, [
     getItem('업데이트 관리', '/force-update', <FormOutlined />),
     getItem('목록 관리', '/update-list', <UnorderedListOutlined />),
+  ]),
+  getItem('히스토리', 'history', <HistoryOutlined />, [
+    getItem('로그 히스토리', '/history', <FlagOutlined />),
   ]),
 ];
 

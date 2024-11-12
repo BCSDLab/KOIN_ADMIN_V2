@@ -6,9 +6,14 @@ import {
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
   HistoryOutlined, FlagOutlined,
 } from '@ant-design/icons';
-import { Menu, MenuProps } from 'antd';
+import {
+  Button, Divider, Menu, MenuProps,
+} from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useBooleanState from 'utils/hooks/useBoolean';
+import useLogout from 'utils/hooks/useLogout';
+import ChangePasswordForm from './ChangePasswordModal';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -83,10 +88,13 @@ const LogoImg = styled.img`
 function SideNav() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const onClick: MenuProps['onClick'] = (e) => {
+  const onClickMenu: MenuProps['onClick'] = (e) => {
     navigate(e.key);
   };
   const selectedKeys = pathname.startsWith('/notice') ? ['/notice'] : [pathname];
+
+  const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState(false);
+  const logout = useLogout();
 
   return (
     <SideNavConatiner>
@@ -96,12 +104,17 @@ function SideNav() {
         </Link>
       </Logo>
       <Menu
-        onClick={onClick}
+        onClick={onClickMenu}
         selectedKeys={selectedKeys}
         defaultOpenKeys={['service', 'service-store', 'user']}
         mode="inline"
         items={items}
       />
+      <Divider>
+        <Button size="small" style={{ border: 'none', boxShadow: 'none' }} onClick={openModal}>비밀번호변경</Button>
+        <Button size="small" style={{ border: 'none', boxShadow: 'none' }} onClick={logout}>로그아웃</Button>
+      </Divider>
+      <ChangePasswordForm open={isModalOpen} closeModal={closeModal} />
     </SideNavConatiner>
   );
 }

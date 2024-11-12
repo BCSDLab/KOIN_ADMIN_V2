@@ -1,7 +1,7 @@
 import {
   BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { LoginRequest, LoginResponse } from 'model/auth.model';
+import { LoginRequest, LoginResponse, ChangePasswordRequest } from 'model/auth.model';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
 import { setCredentials } from 'store/slice/auth';
@@ -78,7 +78,14 @@ export const authApi = createApi({
     protected: builder.mutation<{ message: string }, void>({
       query: () => 'protected',
     }),
+    changePassword: builder.mutation<void, ChangePasswordRequest>({
+      query: ({ old_password, new_password }) => ({
+        url: '/password',
+        method: 'PUT',
+        body: { old_password, new_password },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useProtectedMutation } = authApi;
+export const { useLoginMutation, useProtectedMutation, useChangePasswordMutation } = authApi;

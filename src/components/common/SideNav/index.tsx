@@ -7,12 +7,13 @@ import {
   HistoryOutlined, FlagOutlined,
 } from '@ant-design/icons';
 import {
-  Button, Divider, Menu, MenuProps,
+  Button, Menu, MenuProps,
 } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useBooleanState from 'utils/hooks/useBoolean';
 import useLogout from 'utils/hooks/useLogout';
+import CustomForm from 'components/common/CustomForm';
 import ChangePasswordForm from './ChangePasswordModal';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -85,6 +86,23 @@ const LogoImg = styled.img`
   cursor: pointer;
 `;
 
+const ModalWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0;
+  
+  button {
+    border: none;
+    box-shadow: none;
+    padding: 0 7px;;
+  }
+
+  span.ant-btn-icon {
+    display: none;
+  }
+`;
+
 function SideNav() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -110,11 +128,20 @@ function SideNav() {
         mode="inline"
         items={items}
       />
-      <Divider>
-        <Button size="small" style={{ border: 'none', boxShadow: 'none' }} onClick={openModal}>비밀번호변경</Button>
-        <Button size="small" style={{ border: 'none', boxShadow: 'none' }} onClick={logout}>로그아웃</Button>
-      </Divider>
-      <ChangePasswordForm open={isModalOpen} closeModal={closeModal} />
+      <ModalWrap>
+        <CustomForm.Modal
+          buttonText="비밀번호 변경"
+          title="비밀번호 변경"
+          footer={null}
+          open={isModalOpen}
+          onCancel={closeModal}
+          onClick={openModal}
+        >
+          <ChangePasswordForm closeModal={closeModal} />
+        </CustomForm.Modal>
+        <Button onClick={logout}>로그아웃</Button>
+      </ModalWrap>
+
     </SideNavConatiner>
   );
 }

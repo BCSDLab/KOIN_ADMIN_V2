@@ -1,8 +1,9 @@
 import sha256 from 'sha256';
-import { message } from 'antd';
+import { Button, Flex, message } from 'antd';
 import { useChangePasswordMutation } from 'store/api/auth';
 import useBooleanState from 'utils/hooks/useBoolean';
 import CustomForm from 'components/common/CustomForm';
+import { styled } from 'styled-components';
 
 interface ChangePasswordFormProps {
   closeModal: () => void,
@@ -13,6 +14,13 @@ interface PasswordFormData {
   newPassword: string,
   checkPassword: string,
 }
+
+const ButtonContainer = styled(Flex)`
+  padding: 12px 0;
+  button {
+    border-radius: 5px;
+  }
+`;
 
 export default function ChangePasswordForm({
   closeModal,
@@ -87,7 +95,10 @@ export default function ChangePasswordForm({
         !isNewPasswordMatch
         && <div style={{ color: 'red' }}>새 비밀번호와 일치하지 않습니다.</div>
       }
-      <CustomForm.Button htmlType="submit">변경하기</CustomForm.Button>
+      <ButtonContainer justify="end">
+        <Button onClick={closeModal}>취소하기</Button>
+        <CustomForm.Button htmlType="submit">변경하기</CustomForm.Button>
+      </ButtonContainer>
     </CustomForm>
   );
 }

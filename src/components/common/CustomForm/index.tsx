@@ -29,11 +29,15 @@ interface CustomFormItemProps {
   rules?: Rule[];
 }
 
+interface DependenciesProps {
+  dependencies?: NamePath[];
+}
+
 function CustomInput({
-  label, name, rules, disabled, ...args
-}: CustomFormItemProps & Omit<InputProps, 'name'>) {
+  label, name, rules, disabled, dependencies, ...args
+}: CustomFormItemProps & Omit<InputProps, 'name'> & DependenciesProps) {
   return (
-    <S.FormItem label={label} name={name} rules={rules}>
+    <S.FormItem label={label} name={name} rules={rules} dependencies={dependencies}>
       <S.StyledInput disabled={disabled} {...args} />
     </S.FormItem>
   );

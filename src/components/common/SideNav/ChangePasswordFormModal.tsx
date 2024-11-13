@@ -27,23 +27,14 @@ const ButtonContainer = styled(Flex)`
 
 export default function ChangePasswordFormModal() {
   const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState(false);
-  const {
-    value: isPasswordCorrect, setTrue: correctPassword, setFalse: incorrectPassword,
-  } = useBooleanState(true);
-  const {
-    value: isNewPasswordMatch, setTrue: matchPassword, setFalse: notMatchPassword,
-  } = useBooleanState(true);
 
   const [changePassword] = useChangePasswordMutation();
   const [changePasswordForm] = CustomForm.useForm();
   const { required } = CustomForm.useValidate();
 
-  const handlePasswordMatch = () => {
-    if (changePasswordForm.getFieldValue('newPassword') === changePasswordForm.getFieldValue('checkPassword')) {
-      matchPassword();
-    } else {
-      notMatchPassword();
-    }
+  const handleModalClose = () => {
+    closeModal();
+    changePasswordForm.resetFields();
   };
 
   const onFinish = (formData: PasswordFormData) => {
@@ -57,13 +48,10 @@ export default function ChangePasswordFormModal() {
       .unwrap()
       .then(() => {
         message.success('비밀번호 변경 완료');
-        correctPassword();
-        closeModal();
-        changePasswordForm.resetFields();
+        handleModalClose();
       })
       .catch(({ data }) => {
         message.error(data.message);
-        incorrectPassword();
       });
   };
 
@@ -84,24 +72,31 @@ export default function ChangePasswordFormModal() {
             type="password"
             rules={[required()]}
           />
-          { !isPasswordCorrect && <div style={{ color: 'red' }}>현재 비밀번호가 일치하지 않습니다.</div> }
           <CustomForm.Input
             label="새 비밀번호"
             name="newPassword"
             type="password"
-            onChange={handlePasswordMatch}
             rules={[required()]}
           />
           <CustomForm.Input
             label="새 비밀번호 확인"
             name="checkPassword"
             type="password"
-            onChange={handlePasswordMatch}
-            rules={[required()]}
+            dependencies={['newPassword']}
+            rules={[
+              required(),
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('newPassword') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('새 비밀번호와 일치하지 않습니다.'));
+                },
+              }),
+            ]}
           />
-          { !isNewPasswordMatch && <div style={{ color: 'red' }}>새 비밀번호와 일치하지 않습니다.</div> }
           <ButtonContainer justify="end">
-            <Button onClick={closeModal}>취소하기</Button>
+            <Button onClick={handleModalClose}>취소하기</Button>
             <CustomForm.Button htmlType="submit">변경하기</CustomForm.Button>
           </ButtonContainer>
         </CustomForm>

@@ -28,7 +28,7 @@ function CategoryList() {
       {categoryData && (
         <CustomTable
           data={categoryData}
-          columnSize={[10, 20, 70]}
+          columnSize={[10, 20, 20, 20, 30]}
         />
       )}
 

@@ -8,7 +8,7 @@ import { styled } from 'styled-components';
 interface PasswordFormData {
   currentPassword: string,
   newPassword: string,
-  checkPassword: string,
+  passwordConfirmation: string,
 }
 
 const ModalWrap = styled.div`
@@ -39,8 +39,8 @@ export default function ChangePasswordFormModal() {
 
   const onFinish = (formData: PasswordFormData) => {
     const hashedCurrentPassword = sha256(formData.currentPassword);
-    const hashedNewPassword = sha256(formData.checkPassword);
-    if (formData.newPassword !== formData.checkPassword) {
+    const hashedNewPassword = sha256(formData.passwordConfirmation);
+    if (formData.newPassword !== formData.passwordConfirmation) {
       message.error('새 비밀번호를 다시 확인해주세요.');
       return;
     }
@@ -80,7 +80,7 @@ export default function ChangePasswordFormModal() {
           />
           <CustomForm.Input
             label="새 비밀번호 확인"
-            name="checkPassword"
+            name="passwordConfirmation"
             type="password"
             dependencies={['newPassword']}
             rules={[

@@ -7,8 +7,7 @@ import { Category } from 'model/category.model';
 import * as S from '../StoreDetail.style';
 
 export default function StoreCategory({ form } : { form: FormInstance }) {
-  const [page] = useState(1);
-  const { data: categoryList } = useGetCategoryListQuery({ page, size: 100 });
+  const { data: categoryList } = useGetCategoryListQuery();
   // formData를 직접적으로 수정하면, 렌더링이 발생하지 않아 state를 따로 만들어서 관리
   const [selectedCategory, setSelectedCategory] = useState<ShopCategoriesModel[]>(form.getFieldValue('shop_categories') ?? []);
 
@@ -33,7 +32,7 @@ export default function StoreCategory({ form } : { form: FormInstance }) {
 
       {categoryList && (
         <S.CategoryWrap>
-          {categoryList.categories.map((category) => (
+          {categoryList.map((category) => (
             <S.CategoryItem
               selected={selectedCategory?.some(({ id }) => id === category.id)}
               key={category.id}

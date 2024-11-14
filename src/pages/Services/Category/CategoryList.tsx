@@ -27,7 +27,7 @@ function CategoryList() {
       </S.ModalWrap>
       {categoryData && (
         <CustomTable
-          data={categoryData.categories}
+          data={categoryData}
           columnSize={[10, 20, 70]}
         />
       )}

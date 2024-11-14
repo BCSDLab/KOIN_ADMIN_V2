@@ -6,6 +6,8 @@ export interface Category {
   name: string;
 }
 
+export type CategoriesResponseV2 = Category[];
+
 export interface CategoriesResponse extends ListPagination {
   categories: Category[];
 }

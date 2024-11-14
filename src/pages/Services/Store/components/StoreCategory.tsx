@@ -32,7 +32,7 @@ export default function StoreCategory({ form } : { form: FormInstance }) {
 
       {categoryList && (
         <S.CategoryWrap>
-          {categoryList.categories.map((category) => (
+          {categoryList.map((category) => (
             <S.CategoryItem
               selected={selectedCategory?.some(({ id }) => id === category.id)}
               key={category.id}

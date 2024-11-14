@@ -10,8 +10,9 @@ import {
   Button, Flex, Menu, MenuProps,
 } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { setCredentials } from 'store/slice/auth';
 import styled from 'styled-components';
-import useLogout from 'utils/hooks/useLogout';
+// import useLogout from 'utils/hooks/useLogout';
 import ChangePasswordFormModal from './ChangePasswordFormModal';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -102,7 +103,12 @@ function SideNav() {
   };
   const selectedKeys = pathname.startsWith('/notice') ? ['/notice'] : [pathname];
 
-  const logout = useLogout();
+  const logout = () => {
+    sessionStorage.removeItem('token');
+    localStorage.removeItem('refresh_token');
+    setCredentials({ token: '' });
+    window.location.href = '/login';
+  };
 
   return (
     <SideNavConatiner>

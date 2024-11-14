@@ -27,15 +27,12 @@ interface CustomFormItemProps {
   name: NamePath;
   disabled?: boolean;
   rules?: Rule[];
-}
-
-interface DependenciesProps {
   dependencies?: NamePath[];
 }
 
 function CustomInput({
   label, name, rules, disabled, dependencies, ...args
-}: CustomFormItemProps & Omit<InputProps, 'name'> & DependenciesProps) {
+}: CustomFormItemProps & Omit<InputProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules} dependencies={dependencies}>
       <S.StyledInput disabled={disabled} {...args} />
@@ -66,7 +63,7 @@ interface CustomTextAreaProps {
 }
 
 function CusctomTextArea({
-  label, name, maxLength, disabled, rules, showCount, autoSize, style,
+  label, name, maxLength, disabled, rules, showCount, autoSize, style, ...args
 }: CustomFormItemProps & CustomTextAreaProps) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
@@ -76,6 +73,7 @@ function CusctomTextArea({
         disabled={disabled}
         autoSize={autoSize}
         style={style}
+        {...args}
       />
     </S.FormItem>
   );
@@ -141,7 +139,7 @@ function CustomButton({
 }
 
 function CustomSelect({
-  options, label, name, rules, disabled,
+  options, label, name, rules, disabled, ...args
 }: CustomFormItemProps & {
   options: Record<string, string>
 }) {
@@ -149,7 +147,7 @@ function CustomSelect({
     <S.FormItem label={label} name={name} rules={rules}>
       <Select disabled={disabled}>
         {Object.entries(options).map(([key, val]) => (
-          <Select.Option value={Number.isNaN(Number(key)) ? key : Number(key)} key={key}>
+          <Select.Option value={Number.isNaN(Number(key)) ? key : Number(key)} key={key} {...args}>
             {val}
           </Select.Option>
         ))}

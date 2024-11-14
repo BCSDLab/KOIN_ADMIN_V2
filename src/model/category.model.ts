@@ -9,3 +9,7 @@ export interface Category {
 export interface CategoriesResponse extends ListPagination {
   categories: Category[];
 }
+
+export type DropdownCategory = Omit<Category, 'image_url'>;
+
+export type DropdownCategoryResponse = DropdownCategory[];

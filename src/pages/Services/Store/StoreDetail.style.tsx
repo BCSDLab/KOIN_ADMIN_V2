@@ -96,3 +96,8 @@ export const OpenDay = styled.div`
   margin: 10px 0;
   border-right: 2px solid #7d7d7d;
 `;
+
+export const MainCategoryCheckBoxWrap = styled.div`
+  display: flex;
+  gap: 5px;
+`;

@@ -85,6 +85,7 @@ export interface StoreParams {
 
 export interface CreateStoreParams {
   address: string;
+  main_category_id: number;
   category_ids: number[];
   delivery: true;
   delivery_price: number;

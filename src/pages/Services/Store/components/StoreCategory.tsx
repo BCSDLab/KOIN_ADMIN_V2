@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-imports */
-import { Divider, FormInstance } from 'antd';
+import { Checkbox, Divider, FormInstance } from 'antd';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { useState } from 'react';
 import { useGetCategoryListQuery } from 'store/api/category';
 import { ShopCategoriesModel } from 'model/store.model';
@@ -11,26 +12,36 @@ export default function StoreCategory({ form } : { form: FormInstance }) {
   const { data: categoryList } = useGetCategoryListQuery({ page, size: 100 });
   // formData를 직접적으로 수정하면, 렌더링이 발생하지 않아 state를 따로 만들어서 관리
   const [selectedCategory, setSelectedCategory] = useState<ShopCategoriesModel[]>(form.getFieldValue('shop_categories') ?? []);
+  const [isMainCategory, setIsMainCategory] = useState(false);
+  const [mainId, setMainId] = useState<number | null>(null);
 
   const changeCategory = (category: Category) => {
     const categories = form.getFieldValue('shop_categories') as ShopCategoriesModel[];
     const selected = categories?.some(({ id }) => id === category.id);
-
     const newList = selected
       ? selectedCategory.filter(({ id }) => category.id !== id)
       : [...selectedCategory, category];
+    if (isMainCategory) {
+      setMainId(category.id);
+    }
 
     form.setFieldsValue({
+      main_category_id: isMainCategory ? category.id : mainId,
       shop_categories: newList,
       category_ids: newList.map(({ id }) => id),
     });
     setSelectedCategory(newList);
   };
-
+  const handleMainCategoryChange = (e: CheckboxChangeEvent) => {
+    setIsMainCategory(e.target.checked);
+  };
   return (
     <div>
       <Divider orientation="left">카테고리</Divider>
-
+      <S.MainCategoryCheckBoxWrap>
+        <Checkbox onChange={handleMainCategoryChange} />
+        <span>메인 카테고리</span>
+      </S.MainCategoryCheckBoxWrap>
       {categoryList && (
         <S.CategoryWrap>
           {categoryList.categories.map((category) => (

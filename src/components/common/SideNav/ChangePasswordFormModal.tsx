@@ -40,10 +40,7 @@ export default function ChangePasswordFormModal() {
   const onFinish = (formData: PasswordFormData) => {
     const hashedCurrentPassword = sha256(formData.currentPassword);
     const hashedNewPassword = sha256(formData.passwordConfirmation);
-    if (formData.newPassword !== formData.passwordConfirmation) {
-      message.error('새 비밀번호를 다시 확인해주세요.');
-      return;
-    }
+
     changePassword({ old_password: hashedCurrentPassword, new_password: hashedNewPassword })
       .unwrap()
       .then(() => {

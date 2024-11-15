@@ -9,10 +9,10 @@ import {
 import {
   Button, Flex, Menu, MenuProps,
 } from 'antd';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { setCredentials } from 'store/slice/auth';
 import styled from 'styled-components';
-// import useLogout from 'utils/hooks/useLogout';
 import ChangePasswordFormModal from './ChangePasswordFormModal';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -96,6 +96,7 @@ const AccountContainer = styled(Flex)`
 `;
 
 function SideNav() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const onClickMenu: MenuProps['onClick'] = (e) => {
@@ -106,8 +107,8 @@ function SideNav() {
   const logout = () => {
     sessionStorage.removeItem('token');
     localStorage.removeItem('refresh_token');
-    setCredentials({ token: '' });
-    window.location.href = '/login';
+    dispatch(setCredentials({ token: '' }));
+    navigate('/login');
   };
 
   return (

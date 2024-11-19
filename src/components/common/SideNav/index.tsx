@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { setCredentials } from 'store/slice/auth';
+import { logout } from 'store/slice/auth';
 import styled from 'styled-components';
 import ChangePasswordFormModal from './ChangePasswordFormModal';
 
@@ -104,10 +104,8 @@ function SideNav() {
   };
   const selectedKeys = pathname.startsWith('/notice') ? ['/notice'] : [pathname];
 
-  const logout = () => {
-    sessionStorage.removeItem('token');
-    localStorage.removeItem('refresh_token');
-    dispatch(setCredentials({ token: '' }));
+  const doLogout = () => {
+    dispatch(logout());
     navigate('/login');
   };
 
@@ -127,7 +125,7 @@ function SideNav() {
       />
       <AccountContainer justify="center">
         <ChangePasswordFormModal />
-        <Button onClick={logout}>로그아웃</Button>
+        <Button onClick={doLogout}>로그아웃</Button>
       </AccountContainer>
     </SideNavConatiner>
   );

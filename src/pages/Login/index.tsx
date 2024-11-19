@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLoginMutation } from 'store/api/auth';
 import sha256 from 'sha256';
-import { setCredentials, useToken } from 'store/slice/auth';
+import { login, useToken } from 'store/slice/auth';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
@@ -18,17 +18,14 @@ function useLogin() {
     if (token) navigate('/store');
   }, [token, navigate]);
 
-  const login = (form: { id: string, password: string }) => {
+  const doLogin = (form: { id: string, password: string }) => {
     loginMutation({
       email: form.id,
       password: sha256(form.password),
     })
       .unwrap()
       .then((value) => {
-        const credentials = value;
-        dispatch(setCredentials(credentials));
-        sessionStorage.setItem('token', credentials.token);
-        localStorage.setItem('refresh_token', credentials.refresh_token);
+        dispatch(login(value));
       })
       .catch(({ data }) => {
         message.error(data.message);
@@ -36,19 +33,19 @@ function useLogin() {
   };
 
   return {
-    login,
+    doLogin,
   };
 }
 
 function Login() {
   const { required } = CustomForm.validateUtils();
-  const { login } = useLogin();
+  const { doLogin } = useLogin();
   const [loginForm] = CustomForm.useForm();
 
   return (
     <S.Container>
       <S.LogoImg src="https://static.koreatech.in/assets/img/logo_primary.png" alt="KOIN 로고" />
-      <S.LoginForm form={loginForm} onFinish={login}>
+      <S.LoginForm form={loginForm} onFinish={doLogin}>
         <S.Header>LOGIN</S.Header>
         <S.Divider />
         <S.FormInput

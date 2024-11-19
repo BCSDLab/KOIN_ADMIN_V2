@@ -8,7 +8,7 @@ import StoreCategory from './StoreCategory';
 import OpenTimeForm from './OpenTimeForm';
 
 export default function StoreDetailForm({ form }: { form: FormInstance }) {
-  const { required, max, pattern } = CustomForm.useValidate();
+  const { required, max, pattern } = CustomForm.validateUtils();
 
   return (
     <>

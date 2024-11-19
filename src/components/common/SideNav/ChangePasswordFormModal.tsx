@@ -30,7 +30,7 @@ export default function ChangePasswordFormModal() {
 
   const [changePassword] = useChangePasswordMutation();
   const [changePasswordForm] = CustomForm.useForm();
-  const { required } = CustomForm.useValidate();
+  const { required } = CustomForm.validateUtils();
 
   const handleModalClose = () => {
     closeModal();

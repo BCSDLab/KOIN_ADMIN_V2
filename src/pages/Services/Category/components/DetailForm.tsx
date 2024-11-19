@@ -3,7 +3,7 @@ import { FormInstance } from 'antd/es/form/Form';
 import { Divider } from 'antd';
 
 export default function DetailForm({ form }: { form: FormInstance }) {
-  const { required } = CustomForm.useValidate();
+  const { required } = CustomForm.validateUtils();
 
   return (
     <>

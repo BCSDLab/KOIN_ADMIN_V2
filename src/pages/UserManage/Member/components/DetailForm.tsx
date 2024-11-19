@@ -6,7 +6,7 @@ import { FormInstance } from 'antd/es/form/Form';
 import * as S from '../MemberDetail.style';
 
 export default function DetailForm({ form }: { form: FormInstance }) {
-  const { required, max, pattern } = CustomForm.useValidate();
+  const { required, max, pattern } = CustomForm.validateUtils();
 
   return (
     <>

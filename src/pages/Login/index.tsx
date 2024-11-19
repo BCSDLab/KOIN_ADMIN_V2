@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import CustomForm from 'components/common/CustomForm';
-import useValidate from 'utils/hooks/useValidate';
 import * as S from './Login.style';
 
 function useLogin() {
@@ -42,7 +41,7 @@ function useLogin() {
 }
 
 function Login() {
-  const { required } = useValidate();
+  const { required } = CustomForm.validateUtils();
   const { login } = useLogin();
   const [loginForm] = CustomForm.useForm();
 

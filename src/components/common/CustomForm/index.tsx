@@ -6,7 +6,6 @@ import {
 } from 'antd';
 import { ReactNode, forwardRef } from 'react';
 import { Rule } from 'antd/lib/form';
-import useValidate from 'utils/hooks/useValidate';
 import { NamePath } from 'antd/lib/form/interface';
 import { Editor, EditorProps, Viewer } from '@toast-ui/react-editor';
 import * as S from './CustomForm.style';
@@ -28,6 +27,17 @@ interface CustomFormItemProps {
   disabled?: boolean;
   rules?: Rule[];
   dependencies?: NamePath[];
+}
+
+function validateUtils() {
+  const required = () => ({ required: true, message: '필수 항목입니다' });
+  const max = (maxLength: number) => ({ max: maxLength, message: `최대 ${maxLength}자 이내로 입력해주세요` });
+  const min = (minLength: number) => ({ min: minLength, message: `최소 ${minLength}자 이내로 입력해주세요` });
+  const pattern = (RegExp: RegExp, message: string) => ({ pattern: RegExp, message });
+
+  return {
+    required, max, min, pattern,
+  };
 }
 
 function CustomInput({
@@ -251,7 +261,7 @@ const CustomForm = Object.assign(Form, {
   Select: CustomSelect,
   Switch: CustomSwitch,
   Modal: CustomModal,
-  useValidate,
+  validateUtils,
   Editor: CustomEditor,
   Viewer: CustomViewer,
 });

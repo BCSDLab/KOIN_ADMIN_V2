@@ -170,7 +170,7 @@ interface CustomModalProps {
 }
 
 function CustomModal({
-  buttonText, title, width, footer, children, open, onCancel, onClick, hasIcon, isDelete,
+  buttonText, title, width, footer, children, open, onCancel, onClick, hasIcon = true, isDelete,
 }: CustomModalProps & ModalProps) {
   return (
     <>

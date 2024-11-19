@@ -1,7 +1,7 @@
 import {
   BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { LoginRequest, LoginResponse } from 'model/auth.model';
+import { LoginRequest, LoginResponse, AdminInfo } from 'model/auth.model';
 import { RootState } from 'store';
 import { API_PATH } from 'constant';
 import { setCredentials } from 'store/slice/auth';
@@ -62,6 +62,8 @@ FetchBaseQueryError
 };
 
 export const authApi = createApi({
+  reducerPath: 'authApi',
+  tagTypes: ['admin'],
   baseQuery: baseQueryReauth,
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
@@ -78,7 +80,14 @@ export const authApi = createApi({
     protected: builder.mutation<{ message: string }, void>({
       query: () => 'protected',
     }),
+
+    getAdminInfo: builder.query<AdminInfo, void>({
+      query: () => ({
+        url: '',
+      }),
+      providesTags: [{ type: 'admin', id: 'ADMIN' }],
+    }),
   }),
 });
 
-export const { useLoginMutation, useProtectedMutation } = authApi;
+export const { useLoginMutation, useProtectedMutation, useGetAdminInfoQuery } = authApi;

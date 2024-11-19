@@ -29,3 +29,13 @@ export interface LoginRequest {
   email: string
   password: string
 }
+
+export interface AdminInfo {
+  id: number;
+  email: string;
+  name: string;
+  track_name: string;
+  team_name: string;
+  can_create_admin: boolean;
+  super_admin: boolean;
+}

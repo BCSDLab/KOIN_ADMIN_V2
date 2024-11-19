@@ -8,15 +8,18 @@ import {
 } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
 import { ABTest } from 'model/abTest.model';
+import { useGetAdminInfoQuery } from 'store/api/auth';
 import * as S from './AddABTestModal.style';
 import NewTest from './NewTest';
 import useABTestMutation from './hook/useABTestMutation';
 
 function AddABTestModal({ onCancel }: { onCancel: () => void }) {
+  const { data: adminInfo } = useGetAdminInfoQuery();
+
   const [form] = CustomForm.useForm();
   const [step, setStep] = useState(1);
   const [title, setTitle] = useState('');
-  const [creator, setCreator] = useState('');
+  const [creator, setCreator] = useState(adminInfo ? adminInfo.name : '');
   const [team, setTeam] = useState('');
   const [displayTitle, setDisplayTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -126,7 +129,7 @@ function AddABTestModal({ onCancel }: { onCancel: () => void }) {
       {step === 1 && (
         <S.StepContainer>
           <S.Label>작성자</S.Label>
-          <S.Input onChange={(e) => setCreator(e.target.value)} maxLength={10} />
+          <S.Input onChange={(e) => setCreator(e.target.value)} maxLength={10} disabled />
           <S.Label>소속팀</S.Label>
           <S.Input onChange={(e) => setTeam(e.target.value)} maxLength={10} />
           <S.Label>AB테스트의 제목</S.Label>

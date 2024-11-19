@@ -165,18 +165,18 @@ interface CustomModalProps {
   onClick: () => void;
   buttonText: string;
   children: ReactNode;
+  hasIcon?: boolean
   isDelete?: boolean;
 }
 
 function CustomModal({
-  buttonText, title, width, footer, children, open, onCancel, onClick, isDelete,
+  buttonText, title, width, footer, children, open, onCancel, onClick, hasIcon, isDelete,
 }: CustomModalProps & ModalProps) {
   return (
     <>
       <Button
-        icon={isDelete
-          ? <MinusOutlined />
-          : <PlusOutlined />}
+        icon={hasIcon
+          && (isDelete ? <MinusOutlined /> : <PlusOutlined />)}
         onClick={onClick}
       >
         {buttonText}

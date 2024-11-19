@@ -11,12 +11,6 @@ interface PasswordFormData {
   passwordConfirmation: string,
 }
 
-const ModalWrap = styled.div`
-  span.ant-btn-icon {
-    display: none;
-  }
-`;
-
 const ButtonContainer = styled(Flex)`
   padding-top: 12px;
 
@@ -53,51 +47,50 @@ export default function ChangePasswordFormModal() {
   };
 
   return (
-    <ModalWrap>
-      <CustomForm.Modal
-        buttonText="비밀번호 변경"
-        title="비밀번호 변경"
-        footer={null}
-        open={isModalOpen}
-        onCancel={closeModal}
-        onClick={openModal}
-      >
-        <CustomForm form={changePasswordForm} onFinish={onFinish}>
-          <CustomForm.Input
-            label="현재 비밀번호"
-            name="currentPassword"
-            type="password"
-            rules={[required()]}
-          />
-          <CustomForm.Input
-            label="새 비밀번호"
-            name="newPassword"
-            type="password"
-            rules={[required()]}
-          />
-          <CustomForm.Input
-            label="새 비밀번호 확인"
-            name="passwordConfirmation"
-            type="password"
-            dependencies={['newPassword']}
-            rules={[
-              required(),
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue('newPassword') === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error('새 비밀번호와 일치하지 않습니다.'));
-                },
-              }),
-            ]}
-          />
-          <ButtonContainer justify="end">
-            <Button onClick={handleModalClose}>취소하기</Button>
-            <CustomForm.Button htmlType="submit">변경하기</CustomForm.Button>
-          </ButtonContainer>
-        </CustomForm>
-      </CustomForm.Modal>
-    </ModalWrap>
+    <CustomForm.Modal
+      buttonText="비밀번호 변경"
+      title="비밀번호 변경"
+      footer={null}
+      open={isModalOpen}
+      onCancel={closeModal}
+      onClick={openModal}
+      hasIcon={false}
+    >
+      <CustomForm form={changePasswordForm} onFinish={onFinish}>
+        <CustomForm.Input
+          label="현재 비밀번호"
+          name="currentPassword"
+          type="password"
+          rules={[required()]}
+        />
+        <CustomForm.Input
+          label="새 비밀번호"
+          name="newPassword"
+          type="password"
+          rules={[required()]}
+        />
+        <CustomForm.Input
+          label="새 비밀번호 확인"
+          name="passwordConfirmation"
+          type="password"
+          dependencies={['newPassword']}
+          rules={[
+            required(),
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('newPassword') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('새 비밀번호와 일치하지 않습니다.'));
+              },
+            }),
+          ]}
+        />
+        <ButtonContainer justify="end">
+          <Button onClick={handleModalClose}>취소하기</Button>
+          <CustomForm.Button htmlType="submit">변경하기</CustomForm.Button>
+        </ButtonContainer>
+      </CustomForm>
+    </CustomForm.Modal>
   );
 }

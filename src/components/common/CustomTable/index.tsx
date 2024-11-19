@@ -130,7 +130,7 @@ function CustomTable<TableData extends DefaultTableData>({
                 } else navigate(`${record.id}`);
               },
             })}
-            pagination={pagination ? false : { position: ['bottomRight'] }}
+            pagination={pagination ? { position: ['bottomRight'] } : false}
           />
           {pagination && pagination.total > 0 && (
             <Pagination

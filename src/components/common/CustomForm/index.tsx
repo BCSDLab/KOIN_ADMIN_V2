@@ -8,6 +8,7 @@ import { ReactNode, forwardRef } from 'react';
 import { Rule } from 'antd/lib/form';
 import { NamePath } from 'antd/lib/form/interface';
 import { Editor, EditorProps, Viewer } from '@toast-ui/react-editor';
+import { TextAreaProps } from 'antd/lib/input';
 import * as S from './CustomForm.style';
 import CustomMultipleUpload from './CustomMultipleUpload';
 import CustomSingleUpload from './CustomSingleUpload';
@@ -41,50 +42,31 @@ function validateUtils() {
 }
 
 function CustomInput({
-  label, name, rules, disabled, dependencies, ...args
+  label, name, rules, dependencies, ...args
 }: CustomFormItemProps & Omit<InputProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules} dependencies={dependencies}>
-      <S.StyledInput disabled={disabled} {...args} />
+      <S.StyledInput {...args} />
     </S.FormItem>
   );
 }
 
 function CustomInputNumber({
-  label, name, rules, disabled, ...args
+  label, name, rules, ...args
 }: CustomFormItemProps & Omit<InputNumberProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <S.StyledInputNumber controls={false} disabled={disabled} {...args} />
+      <S.StyledInputNumber controls={false} {...args} />
     </S.FormItem>
   );
 }
 
-interface AutoSizeProps {
-  minRows: number,
-  maxRows: number,
-}
-
-interface CustomTextAreaProps {
-  maxLength?: number;
-  showCount?: boolean;
-  style?: React.CSSProperties;
-  autoSize?: AutoSizeProps;
-}
-
-function CusctomTextArea({
-  label, name, maxLength, disabled, rules, showCount, autoSize, style, ...args
-}: CustomFormItemProps & CustomTextAreaProps) {
+function CustomTextArea({
+  label, name, rules, ...args
+}: CustomFormItemProps & TextAreaProps) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <Input.TextArea
-        showCount={showCount}
-        maxLength={maxLength}
-        disabled={disabled}
-        autoSize={autoSize}
-        style={style}
-        {...args}
-      />
+      <Input.TextArea {...args} />
     </S.FormItem>
   );
 }
@@ -149,13 +131,13 @@ function CustomButton({
 }
 
 function CustomSelect({
-  options, label, name, rules, disabled, ...args
+  options, label, name, rules, ...args
 }: CustomFormItemProps & {
   options: Record<string, string>
 }) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <Select disabled={disabled}>
+      <Select>
         {Object.entries(options).map(([key, val]) => (
           <Select.Option value={Number.isNaN(Number(key)) ? key : Number(key)} key={key} {...args}>
             {val}
@@ -254,7 +236,7 @@ const CustomForm = Object.assign(Form, {
   Button: CustomButton,
   Input: CustomInput,
   InputNumber: CustomInputNumber,
-  TextArea: CusctomTextArea,
+  TextArea: CustomTextArea,
   MultipleUpload: CustomMultipleUpload,
   SingleUpload: CustomSingleUpload,
   Checkbox: CustomCheckbox,

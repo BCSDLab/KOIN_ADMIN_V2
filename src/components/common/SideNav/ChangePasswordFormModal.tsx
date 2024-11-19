@@ -13,10 +13,6 @@ interface PasswordFormData {
 
 const ButtonContainer = styled(Flex)`
   padding-top: 12px;
-
-  button {
-    border-radius: 5px;
-  }
 `;
 
 export default function ChangePasswordFormModal() {
@@ -88,7 +84,7 @@ export default function ChangePasswordFormModal() {
         />
         <ButtonContainer justify="end">
           <Button onClick={handleModalClose}>취소하기</Button>
-          <CustomForm.Button htmlType="submit">변경하기</CustomForm.Button>
+          <Button htmlType="submit">변경하기</Button>
         </ButtonContainer>
       </CustomForm>
     </CustomForm.Modal>

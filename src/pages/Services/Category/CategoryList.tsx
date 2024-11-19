@@ -1,5 +1,4 @@
 import CustomTable from 'components/common/CustomTable';
-import { useState } from 'react';
 import { useGetCategoryListQuery } from 'store/api/category';
 import useBooleanState from 'utils/hooks/useBoolean';
 import CustomForm from 'components/common/CustomForm';
@@ -7,8 +6,7 @@ import * as S from './CategoryList.style';
 import AddCategoryModal from './components/AddCategoryModal';
 
 function CategoryList() {
-  const [page, setPage] = useState(1);
-  const { data: categoryData } = useGetCategoryListQuery({ page });
+  const { data: categoryData } = useGetCategoryListQuery();
   const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState();
 
   return (
@@ -29,13 +27,8 @@ function CategoryList() {
       </S.ModalWrap>
       {categoryData && (
         <CustomTable
-          data={categoryData.categories}
-          pagination={{
-            current: page,
-            onChange: setPage,
-            total: categoryData.total_page,
-          }}
-          columnSize={[10, 20, 70]}
+          data={categoryData}
+          columnSize={[10, 20, 20, 20, 30]}
         />
       )}
 

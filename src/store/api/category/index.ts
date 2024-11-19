@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { CategoriesResponse, Category } from 'model/category.model';
+import { CategoriesResponseV2, Category, DropdownCategoryResponse } from 'model/category.model';
 import baseQueryReauth from 'store/api/baseQueryReauth';
 
 export const categoryApi = createApi({
@@ -9,10 +9,10 @@ export const categoryApi = createApi({
   baseQuery: baseQueryReauth,
 
   endpoints: (builder) => ({
-    getCategoryList: builder.query<CategoriesResponse, { page: number, size?: number }>({
-      query: ({ page, size = 10 }) => ({ url: `admin/shops/categories?page=${page}&limit=${size}` }),
+    getCategoryList: builder.query<CategoriesResponseV2, void>({
+      query: () => ({ url: 'admin/shops/categories?limit=20' }),
       providesTags: (result) => (result
-        ? [...result.categories.map((category) => ({ type: 'category' as const, id: category.id })), { type: 'categories', id: 'LIST' }]
+        ? [...result.map((category) => ({ type: 'category' as const, id: category.id })), { type: 'categories', id: 'LIST' }]
         : [{ type: 'categories', id: 'LIST' }]),
     }),
 
@@ -46,10 +46,15 @@ export const categoryApi = createApi({
       }),
       invalidatesTags: (result, error, id) => [{ type: 'categories', id: 'LIST' }, { type: 'category', id }],
     }),
+
+    getParentCategory: builder.query<DropdownCategoryResponse, void>({
+      query: () => ({ url: 'admin/shops/parent-categories' }),
+      providesTags: () => [{ type: 'category', name: 'parent' }],
+    }),
   }),
 });
 
 export const {
   useGetCategoryListQuery, useGetCategoryQuery, useAddCategoryMutation,
-  useUpdateCategoryMutation, useDeleteCategoryMutation,
+  useUpdateCategoryMutation, useDeleteCategoryMutation, useGetParentCategoryQuery,
 } = categoryApi;

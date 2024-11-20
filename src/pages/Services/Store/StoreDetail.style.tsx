@@ -14,6 +14,12 @@ export const CategoryImg = styled.img`
   border-radius: 50%;
 `;
 
+export const CategoryButtonWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 export const CategoryItem = styled.div<{ selected: boolean }>`
   display: flex;
   flex-direction: column;

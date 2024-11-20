@@ -142,7 +142,7 @@ export default function ABTestDetail() {
         <br />
         <br />
         <CustomForm.Input label="id" name="id" disabled />
-        <CustomForm.Input label="작성자" name="creator" maxLength={50} />
+        <CustomForm.Input label="작성자" name="creator" maxLength={50} disabled />
         <CustomForm.Input label="소속팀" name="team" maxLength={50} />
         <CustomForm.Input label="AB테스트의 제목" name="display_title" maxLength={255} />
         <CustomForm.Input label="변수" name="title" disabled maxLength={255} />

@@ -27,6 +27,7 @@ export default function StoreDetailForm({ form }: { form: FormInstance }) {
       <CustomForm.Input label="주소" name="address" rules={[max(65535), required]} />
       <CustomForm.TextArea label="설명" name="description" maxLength={200} rules={[required]} />
       <CustomForm.Input label="카테고리 목록" name="category_ids" disabled rules={[required]} />
+      <CustomForm.Input label="메인 카테고리" name="main_category_id" disabled rules={[required]} />
       <StoreCategory form={form} />
       <OpenTimeForm form={form} />
       <Divider orientation="left" style={{ marginTop: '40px' }}>

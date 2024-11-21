@@ -40,6 +40,7 @@ export interface StoreResponse {
   pay_card: boolean;
   phone: string;
   shop_categories: ShopCategoriesModel[];
+  main_category_id: number;
 }
 
 export interface StoreDetailForm extends StoreResponse {
@@ -95,6 +96,7 @@ export interface CreateStoreParams {
   pay_bank: boolean;
   pay_card: boolean;
   phone: string;
+  main_category_id: number;
 }
 
 export interface ModifyStoreParams extends CreateStoreParams {

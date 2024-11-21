@@ -20,8 +20,8 @@ export default function StoreCategory({ form } : { form: FormInstance }) {
       ? selectedCategory.filter(({ id }) => category.id !== id)
       : [...selectedCategory, category];
 
-    if (categories.map((item) => item.id).includes(mainCategoryId)
-      && !newList.map((item) => item.id).includes(mainCategoryId)) return;
+    if (categories && categories.map((item) => item.id).includes(mainCategoryId)
+    && !newList.map((item) => item.id).includes(mainCategoryId)) return;
 
     form.setFieldsValue({
       shop_categories: newList,

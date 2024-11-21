@@ -1,5 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { CategoriesResponseV2, Category, DropdownCategoryResponse } from 'model/category.model';
+import {
+  CategoriesResponseV2, Category, CategoryOrderRequest, DropdownCategoryResponse,
+} from 'model/category.model';
 import baseQueryReauth from 'store/api/baseQueryReauth';
 
 export const categoryApi = createApi({
@@ -51,10 +53,20 @@ export const categoryApi = createApi({
       query: () => ({ url: 'admin/shops/parent-categories' }),
       providesTags: () => [{ type: 'category', name: 'parent' }],
     }),
+
+    updateCategoryOrder: builder.mutation<string, CategoryOrderRequest>({
+      query: (body) => ({
+        url: 'admin/shops/categories/order',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: () => [{ type: 'category' }],
+    }),
   }),
 });
 
 export const {
   useGetCategoryListQuery, useGetCategoryQuery, useAddCategoryMutation,
   useUpdateCategoryMutation, useDeleteCategoryMutation, useGetParentCategoryQuery,
+  useUpdateCategoryOrderMutation,
 } = categoryApi;

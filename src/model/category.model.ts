@@ -17,3 +17,7 @@ export interface CategoriesResponse extends ListPagination {
 export type DropdownCategory = Omit<Category, 'image_url'>;
 
 export type DropdownCategoryResponse = DropdownCategory[];
+
+export interface CategoryOrderRequest {
+  shop_category_ids: number[];
+}

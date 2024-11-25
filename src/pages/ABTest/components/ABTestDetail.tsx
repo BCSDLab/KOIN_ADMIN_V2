@@ -8,11 +8,13 @@ import {
 } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import CustomForm from 'components/common/CustomForm';
+import HistoryArea from 'components/common/HistoryArea';
 import { useGetABTestQuery } from 'store/api/abtest';
+import { useGetHistorysQuery } from 'store/api/history';
 import { ABTest } from 'model/abTest.model';
 import useBooleanState from 'utils/hooks/useBoolean';
 import useABTestMutation from './hook/useABTestMutation';
-import * as S from './DeleteWarning.style';
+import * as S from './ABTestDetail.style';
 import UserManageModal from './UserManageModal';
 
 interface Variable {
@@ -31,6 +33,7 @@ export default function ABTestDetail() {
   const [variables, setVariables] = useState<Variable[]>([]);
   const [sliderValues, setSliderValues] = useState<number[]>([]);
   const [winner, setWinner] = useState<string>('');
+  const { data: historys } = useGetHistorysQuery({ page: 1, domainId: Number(id) });
 
   // eslint-disable-next-line max-len
   const { value: checkModal, setTrue: checkModalOpen, setFalse: checkModalClose } = useBooleanState();
@@ -135,7 +138,7 @@ export default function ABTestDetail() {
   };
 
   return (
-    <>
+    <S.Container>
       <CustomForm form={form} onFinish={onFinish}>
         <Divider orientation="left">세부사항</Divider>
         {renderStatusTag()}
@@ -220,6 +223,14 @@ export default function ABTestDetail() {
       >
         실험 인원 수동 추가, 수정 하기
       </Button>
+      {(historys && abTestData) && (
+        <HistoryArea
+          historys={historys.historys}
+          creator={abTestData.creator}
+          created_at={abTestData.created_at}
+        />
+      )}
+
       <Modal
         open={checkModal}
         onCancel={checkModalClose}
@@ -276,6 +287,6 @@ export default function ABTestDetail() {
           </S.Item>
         </S.AroundRow>
       </Modal>
-    </>
+    </S.Container>
   );
 }

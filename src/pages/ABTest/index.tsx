@@ -23,7 +23,7 @@ export default function ABTest() {
         onCancel={closeModal}
         onClick={openModal}
       >
-        <AddABTestModal onCancel={closeModal} creator={adminInfo ? adminInfo.name : ''} />
+        <AddABTestModal onCancel={closeModal} creator={adminInfo?.name || ''} />
       </CustomForm.Modal>
       {abtestList && (
         <CustomTable

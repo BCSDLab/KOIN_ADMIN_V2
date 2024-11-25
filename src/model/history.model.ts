@@ -1,4 +1,4 @@
-interface HistoryInfo {
+export interface HistoryInfo {
   id: number;
   domain_id: number;
   name: string;

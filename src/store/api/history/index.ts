@@ -10,8 +10,8 @@ export const historyApi = createApi({
 
   endpoints: (builder) => ({
     getHistorys: builder.query<HistorysResponse, HistorysRequest>({
-      query: ({ page, limit = 30 }) => ({
-        url: `admin/historys?page=${page}&limit=${limit}`,
+      query: ({ page, domainId = null, limit = 30 }) => ({
+        url: `admin/historys?page=${page}&limit=${limit}${domainId ? `&domainId=${domainId}` : ''}`,
       }),
       providesTags: [{ type: 'historys', id: 'HISTORYS' }],
     }),

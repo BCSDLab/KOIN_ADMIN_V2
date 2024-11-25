@@ -16,6 +16,7 @@ export const historyApi = createApi({
       providesTags: [{ type: 'historys', id: 'HISTORYS' }],
     }),
   }),
+  refetchOnMountOrArgChange: true,
 });
 
 export const {

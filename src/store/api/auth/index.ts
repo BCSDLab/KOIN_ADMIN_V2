@@ -34,7 +34,7 @@ export const authApi = createApi({
 
     getAdminInfo: builder.query<AdminInfo, void>({
       query: () => ({
-        url: '',
+        url: 'admin',
       }),
       providesTags: [{ type: 'admin', id: 'ADMIN' }],
     }),

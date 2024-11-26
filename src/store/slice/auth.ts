@@ -9,16 +9,36 @@ const authSlice = createSlice({
   initialState: { token: sessionStorage.getItem('token') } as LoginState,
   reducers: {
     // 어드민은 인증토큰이 중요하므로 따로 스토리지에 보관하지 않고 redux내에서만 관리
-    setCredentials: (
+    login: (
       state,
-      { payload: { token } }: PayloadAction<{ token: string }>,
+      {
+        payload: { token, refresh_token },
+      }: PayloadAction<{ token: string, refresh_token: string }>,
     ) => {
       state.token = token;
+      sessionStorage.setItem('token', token);
+      localStorage.setItem('refresh_token', refresh_token);
+    },
+
+    logout: (state) => {
+      state.token = null;
+      sessionStorage.removeItem('token');
+    },
+
+    refreshAccessToken: (
+      state,
+      {
+        payload: { token, refresh_token },
+      }: PayloadAction<{ token: string, refresh_token: string }>,
+    ) => {
+      state.token = token;
+      sessionStorage.setItem('token', token);
+      localStorage.setItem('refresh_token', refresh_token);
     },
   },
 });
 
-export const { setCredentials } = authSlice.actions;
+export const { login, logout, refreshAccessToken } = authSlice.actions;
 
 export default authSlice.reducer;
 

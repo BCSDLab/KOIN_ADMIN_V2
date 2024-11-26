@@ -25,7 +25,7 @@ export default function NoticeDetail() {
   const { data: notice } = useGetNoticeQuery(Number(id));
   const { updateNotice, deleteNotice } = useNoticeMutation();
   const [uploadfile] = useUploadfileMutation();
-  const { required } = CustomForm.useValidate();
+  const { required } = CustomForm.validateUtils();
   const [form] = CustomForm.useForm();
 
   const handleFinish = (values: NoticeRequest) => {

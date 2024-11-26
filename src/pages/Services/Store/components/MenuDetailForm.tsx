@@ -17,7 +17,7 @@ export default function MenuDetailForm({ form, storeMenu }: {
 }) {
   const { id } = useParams();
   const { data: menuCategories } = useGetMenuCategoriesQuery(Number(id));
-  const { required } = CustomForm.useValidate();
+  const { required } = CustomForm.validateUtils();
   const {
     value: isSingleMenu,
     changeValue: isSingleMenuChange,

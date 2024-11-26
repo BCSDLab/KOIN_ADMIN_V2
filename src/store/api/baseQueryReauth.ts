@@ -1,7 +1,7 @@
 import {
   BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { setCredentials } from 'store/slice/auth';
+import { refreshAccessToken } from 'store/slice/auth';
 import { API_PATH } from 'constant';
 import { RootState } from 'store';
 
@@ -47,10 +47,11 @@ FetchBaseQueryError
     ) as { data: RefreshResponse };
 
     if (refresh.data) {
-      // 액세스 토큰을 가져오는데 성공한다면 스토리지에 값 저장
-      sessionStorage.setItem('token', refresh.data.token);
-      // 액세스 토큰 갱신
-      setCredentials({ token: refresh.data.token });
+      api.dispatch(
+        refreshAccessToken({
+          token: refresh.data.token, refresh_token: refresh.data.refresh_token,
+        }),
+      );
 
       // 액세스 토큰 갱신 후 다시 요청
       result = await baseQuery(args, api, extraOptions);

@@ -5,7 +5,6 @@ import SELECT_OPTIONS from 'constant/user';
 import { useParams } from 'react-router-dom';
 import { useGetUserQuery } from 'store/api/user';
 import DetailHeading from 'components/common/DetailHeading';
-import useValidate from 'utils/hooks/useValidate';
 import useNicknameCheck from './hooks/useNicknameCheck';
 import useUserMutation from './hooks/useUserMutation';
 import * as S from './UserDetail.style';
@@ -16,7 +15,7 @@ function UserDetail() {
   const [form] = CustomForm.useForm();
   const { handleNicknameChange, checkDuplicateNickname, validator } = useNicknameCheck(form);
   const { updateUser } = useUserMutation();
-  const { pattern } = useValidate();
+  const { pattern } = CustomForm.validateUtils();
 
   return (
     <S.Container>

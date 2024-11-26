@@ -4,7 +4,7 @@ import { Divider } from 'antd';
 import { useGetParentCategoryQuery } from 'store/api/category';
 
 export default function DetailForm({ form }: { form: FormInstance }) {
-  const { required } = CustomForm.useValidate();
+  const { required } = CustomForm.validateUtils();
   const { data } = useGetParentCategoryQuery();
   const options: Record<number, string> = {};
 

@@ -2,7 +2,7 @@ import CustomForm from 'components/common/CustomForm';
 import { Divider } from 'antd';
 
 export default function DetailForm() {
-  const { required } = CustomForm.useValidate();
+  const { required } = CustomForm.validateUtils();
 
   return (
     <>

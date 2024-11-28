@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   font-family: "Noto Sans KR", "Avenir", "Helvetica", "Arial", "sans-serif";
+  position: relative;
 `;
 
 export const BreadCrumb = styled.div`

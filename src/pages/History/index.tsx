@@ -14,6 +14,24 @@ export default function History() {
   };
   const historyList = historys ? historys.historys : [];
 
+  const parseRequestMessage = (domainName: string, message: string) => {
+    if (message === '') return '';
+
+    const domainPropertyMap: { [key: string]: string } = {
+      상점: 'name',
+      메뉴: 'name',
+      '상점 카테고리': 'name',
+      버전관리: 'version',
+      'AB 테스트': 'display_title',
+      '코인 공지': 'title',
+    };
+    const messageObject = JSON.parse(message);
+
+    const property = domainPropertyMap[domainName];
+
+    return property ? messageObject[property] : '';
+  };
+
   return (
     <Flex vertical>
       <S.Heading>로그 히스토리</S.Heading>
@@ -21,7 +39,7 @@ export default function History() {
         {
           historyList.map((history) => (
             <S.HistoryItem key={history.id}>
-              {`${history.created_at}. ${history.domain_name} ${history.request_method} (${history.name})`}
+              {`${history.created_at}. ${history.domain_name} ${parseRequestMessage(history.domain_name, history.request_message)} ${history.request_method} (${history.name})`}
             </S.HistoryItem>
           ))
         }

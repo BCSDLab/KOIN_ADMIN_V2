@@ -20,7 +20,7 @@ export default function History() {
       <S.HistoryContainer>
         {
           historyList.map((history) => (
-            <S.HistoryItem>
+            <S.HistoryItem key={history.id}>
               {`${history.created_at}. ${history.domain_name} ${history.request_method} (${history.name})`}
             </S.HistoryItem>
           ))

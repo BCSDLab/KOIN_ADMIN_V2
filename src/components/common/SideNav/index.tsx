@@ -4,10 +4,16 @@ import {
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
   UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
+  HistoryOutlined, FlagOutlined,
 } from '@ant-design/icons';
-import { Menu, MenuProps } from 'antd';
+import {
+  Button, Flex, Menu, MenuProps,
+} from 'antd';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { logout } from 'store/slice/auth';
 import styled from 'styled-components';
+import ChangePasswordFormModal from './ChangePasswordFormModal';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -54,6 +60,9 @@ const items: MenuProps['items'] = [
     getItem('업데이트 관리', '/force-update', <FormOutlined />),
     getItem('목록 관리', '/update-list', <UnorderedListOutlined />),
   ]),
+  getItem('히스토리', 'history', <HistoryOutlined />, [
+    getItem('로그 히스토리', '/history', <FlagOutlined />),
+  ]),
 ];
 
 const SideNavConatiner = styled.nav`
@@ -76,13 +85,29 @@ const LogoImg = styled.img`
   cursor: pointer;
 `;
 
+const AccountContainer = styled(Flex)`
+  margin-top: 12px;
+  
+  button {
+    border: none;
+    box-shadow: none;
+    padding: 0 7px;;
+  }
+`;
+
 function SideNav() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const onClick: MenuProps['onClick'] = (e) => {
+  const onClickMenu: MenuProps['onClick'] = (e) => {
     navigate(e.key);
   };
   const selectedKeys = pathname.startsWith('/notice') ? ['/notice'] : [pathname];
+
+  const doLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
 
   return (
     <SideNavConatiner>
@@ -92,12 +117,16 @@ function SideNav() {
         </Link>
       </Logo>
       <Menu
-        onClick={onClick}
+        onClick={onClickMenu}
         selectedKeys={selectedKeys}
         defaultOpenKeys={['service', 'service-store', 'user']}
         mode="inline"
         items={items}
       />
+      <AccountContainer justify="center">
+        <ChangePasswordFormModal />
+        <Button onClick={doLogout}>로그아웃</Button>
+      </AccountContainer>
     </SideNavConatiner>
   );
 }

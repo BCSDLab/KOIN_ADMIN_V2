@@ -14,7 +14,7 @@ import * as T from './NoticeDetail.style';
 
 export default function NoticeWrite() {
   const navigate = useNavigate();
-  const { required } = CustomForm.useValidate();
+  const { required } = CustomForm.validateUtils();
   const [form] = CustomForm.useForm();
   const editorRef = useRef<Editor | null>(null);
   const { addNotice } = useNoticeMutation();

@@ -13,6 +13,8 @@ import {
 import { Editor } from '@toast-ui/react-editor';
 import { useUploadfileMutation } from 'store/api/upload';
 import { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
+import { useGetHistoriesQuery } from 'store/api/history';
+import HistoryArea from 'components/common/HistoryArea';
 import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
 
@@ -25,8 +27,9 @@ export default function NoticeDetail() {
   const { data: notice } = useGetNoticeQuery(Number(id));
   const { updateNotice, deleteNotice } = useNoticeMutation();
   const [uploadfile] = useUploadfileMutation();
-  const { required } = CustomForm.useValidate();
+  const { required } = CustomForm.validateUtils();
   const [form] = CustomForm.useForm();
+  const { data: histories } = useGetHistoriesQuery({ page: 1, domainId: Number(id) });
 
   const handleFinish = (values: NoticeRequest) => {
     const editorContent = editorRef.current?.getInstance().getHTML();
@@ -113,7 +116,14 @@ export default function NoticeDetail() {
               {isEditing ? '저장' : '수정'}
             </CustomForm.Button>
           </S.ButtonWrapper>
-
+          {histories && (
+            <HistoryArea
+              histories={histories.histories}
+              creator={notice.author}
+              created_at={notice.created_at}
+              style={{ left: '20px', bottom: '-70px' }}
+            />
+          )}
           <Modal
             title="공지사항 삭제 확인"
             open={isModalOpen}

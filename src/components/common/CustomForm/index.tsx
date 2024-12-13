@@ -6,9 +6,9 @@ import {
 } from 'antd';
 import { ReactNode, forwardRef } from 'react';
 import { Rule } from 'antd/lib/form';
-import useValidate from 'utils/hooks/useValidate';
 import { NamePath } from 'antd/lib/form/interface';
 import { Editor, EditorProps, Viewer } from '@toast-ui/react-editor';
+import { TextAreaProps } from 'antd/lib/input';
 import * as S from './CustomForm.style';
 import CustomMultipleUpload from './CustomMultipleUpload';
 import CustomSingleUpload from './CustomSingleUpload';
@@ -27,52 +27,46 @@ interface CustomFormItemProps {
   name: NamePath;
   disabled?: boolean;
   rules?: Rule[];
+  dependencies?: NamePath[];
+}
+
+function validateUtils() {
+  const required = () => ({ required: true, message: '필수 항목입니다' });
+  const max = (maxLength: number) => ({ max: maxLength, message: `최대 ${maxLength}자 이내로 입력해주세요` });
+  const min = (minLength: number) => ({ min: minLength, message: `최소 ${minLength}자 이내로 입력해주세요` });
+  const pattern = (RegExp: RegExp, message: string) => ({ pattern: RegExp, message });
+
+  return {
+    required, max, min, pattern,
+  };
 }
 
 function CustomInput({
-  label, name, rules, disabled, ...args
+  label, name, rules, dependencies, ...args
 }: CustomFormItemProps & Omit<InputProps, 'name'>) {
   return (
-    <S.FormItem label={label} name={name} rules={rules}>
-      <S.StyledInput disabled={disabled} {...args} />
+    <S.FormItem label={label} name={name} rules={rules} dependencies={dependencies}>
+      <S.StyledInput {...args} />
     </S.FormItem>
   );
 }
 
 function CustomInputNumber({
-  label, name, rules, disabled, ...args
+  label, name, rules, ...args
 }: CustomFormItemProps & Omit<InputNumberProps, 'name'>) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <S.StyledInputNumber controls={false} disabled={disabled} {...args} />
+      <S.StyledInputNumber controls={false} {...args} />
     </S.FormItem>
   );
 }
 
-interface AutoSizeProps {
-  minRows: number,
-  maxRows: number,
-}
-
-interface CustomTextAreaProps {
-  maxLength?: number;
-  showCount?: boolean;
-  style?: React.CSSProperties;
-  autoSize?: AutoSizeProps;
-}
-
-function CusctomTextArea({
-  label, name, maxLength, disabled, rules, showCount, autoSize, style,
-}: CustomFormItemProps & CustomTextAreaProps) {
+function CustomTextArea({
+  label, name, rules, ...args
+}: CustomFormItemProps & TextAreaProps) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <Input.TextArea
-        showCount={showCount}
-        maxLength={maxLength}
-        disabled={disabled}
-        autoSize={autoSize}
-        style={style}
-      />
+      <Input.TextArea {...args} />
     </S.FormItem>
   );
 }
@@ -137,15 +131,15 @@ function CustomButton({
 }
 
 function CustomSelect({
-  options, label, name, rules, disabled,
+  options, label, name, rules, ...args
 }: CustomFormItemProps & {
   options: Record<string, string>
 }) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <Select disabled={disabled}>
+      <Select>
         {Object.entries(options).map(([key, val]) => (
-          <Select.Option value={Number.isNaN(Number(key)) ? key : Number(key)} key={key}>
+          <Select.Option value={Number.isNaN(Number(key)) ? key : Number(key)} key={key} {...args}>
             {val}
           </Select.Option>
         ))}
@@ -171,18 +165,18 @@ interface CustomModalProps {
   onClick: () => void;
   buttonText: string;
   children: ReactNode;
+  hasIcon?: boolean
   isDelete?: boolean;
 }
 
 function CustomModal({
-  buttonText, title, width, footer, children, open, onCancel, onClick, isDelete,
+  buttonText, title, width, footer, children, open, onCancel, onClick, hasIcon = true, isDelete,
 }: CustomModalProps & ModalProps) {
   return (
     <>
       <Button
-        icon={isDelete
-          ? <MinusOutlined />
-          : <PlusOutlined />}
+        icon={hasIcon
+          && (isDelete ? <MinusOutlined /> : <PlusOutlined />)}
         onClick={onClick}
       >
         {buttonText}
@@ -242,14 +236,14 @@ const CustomForm = Object.assign(Form, {
   Button: CustomButton,
   Input: CustomInput,
   InputNumber: CustomInputNumber,
-  TextArea: CusctomTextArea,
+  TextArea: CustomTextArea,
   MultipleUpload: CustomMultipleUpload,
   SingleUpload: CustomSingleUpload,
   Checkbox: CustomCheckbox,
   Select: CustomSelect,
   Switch: CustomSwitch,
   Modal: CustomModal,
-  useValidate,
+  validateUtils,
   Editor: CustomEditor,
   Viewer: CustomViewer,
 });

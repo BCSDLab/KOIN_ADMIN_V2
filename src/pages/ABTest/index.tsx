@@ -2,6 +2,7 @@ import CustomForm from 'components/common/CustomForm';
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { useGetABTestsQuery } from 'store/api/abtest';
+import { useGetAdminInfoQuery } from 'store/api/auth';
 import useBooleanState from 'utils/hooks/useBoolean';
 import * as S from './ABTest.style';
 import AddABTestModal from './components/AddABTestModal';
@@ -10,6 +11,7 @@ export default function ABTest() {
   const [page, setPage] = useState(1);
   const { data: abtestList } = useGetABTestsQuery({ page, limit: 10 });
   const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState();
+  const { data: adminInfo } = useGetAdminInfoQuery();
   return (
     <S.Container>
       <CustomForm.Modal
@@ -21,7 +23,7 @@ export default function ABTest() {
         onCancel={closeModal}
         onClick={openModal}
       >
-        <AddABTestModal onCancel={closeModal} />
+        <AddABTestModal onCancel={closeModal} creator={adminInfo?.name || ''} />
       </CustomForm.Modal>
       {abtestList && (
         <CustomTable

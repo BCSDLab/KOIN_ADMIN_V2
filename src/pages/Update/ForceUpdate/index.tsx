@@ -36,7 +36,7 @@ export default function ForceUpdate() {
 
   const [currentVersionForm] = CustomForm.useForm();
   const [afterVersionForm] = CustomForm.useForm();
-  const { pattern, required } = CustomForm.useValidate();
+  const { pattern, required } = CustomForm.validateUtils();
 
   const { data: version } = useGetAppVersionQuery(os);
   const [updateVersion] = useUpdateAppVersionMutation();

@@ -1,4 +1,5 @@
-import { Button, Input } from 'antd';
+import { Button, FormProps } from 'antd';
+import CustomForm from 'components/common/CustomForm';
 import styled from 'styled-components';
 import { mobile } from 'utils/style/mediaQuery';
 
@@ -17,7 +18,7 @@ export const Container = styled.main`
   }
 `;
 
-export const LoginForm = styled.form`
+export const LoginForm = styled(CustomForm)<FormProps>`
   width: 400px;
   background-color: white;
   display: flex;
@@ -58,7 +59,7 @@ export const Divider = styled.hr`
   margin: 0 0 20px;
 `;
 
-export const FormInput = styled(Input)`
+export const FormInput = styled(CustomForm.Input)`
   height: 50px;
   font-size: 20px;
   text-align: center;

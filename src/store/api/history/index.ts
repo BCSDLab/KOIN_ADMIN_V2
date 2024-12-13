@@ -1,24 +1,24 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { HistorysRequest, HistorysResponse } from 'model/history.model';
+import { HistoriesRequest, HistoriesResponse } from 'model/history.model';
 import baseQueryReauth from 'store/api/baseQueryReauth';
 
 export const historyApi = createApi({
   reducerPath: 'historyApi',
-  tagTypes: ['historys'],
+  tagTypes: ['histories'],
 
   baseQuery: baseQueryReauth,
 
   endpoints: (builder) => ({
-    getHistorys: builder.query<HistorysResponse, HistorysRequest>({
+    getHistories: builder.query<HistoriesResponse, HistoriesRequest>({
       query: ({ page, domainId = null, limit = 30 }) => ({
-        url: `admin/historys?page=${page}&limit=${limit}${domainId ? `&domainId=${domainId}` : ''}`,
+        url: `admin/histories?page=${page}&limit=${limit}${domainId ? `&domainId=${domainId}` : ''}`,
       }),
-      providesTags: [{ type: 'historys', id: 'HISTORYS' }],
+      providesTags: [{ type: 'histories', id: 'HISTORIES' }],
     }),
   }),
   refetchOnMountOrArgChange: true,
 });
 
 export const {
-  useGetHistorysQuery,
+  useGetHistoriesQuery,
 } = historyApi;

@@ -4,18 +4,18 @@ import { HistoryInfo } from 'model/history.model';
 import * as S from './HistoryArea.style';
 
 interface HistoryAreaProps {
-  historys: HistoryInfo[],
+  histories: HistoryInfo[],
   creator?: string,
   created_at?: string,
 }
 
 export default function HistoryArea({
-  historys, creator, created_at, ...args
+  histories, creator, created_at, ...args
 }: HistoryAreaProps & CardProps) {
   return (
     <S.HistoryArea {...args}>
       <List
-        dataSource={historys}
+        dataSource={histories}
         renderItem={(item) => <List.Item style={{ padding: '0', border: 'none' }}>{`${item.created_at} ${item.request_method} (${item.name})`}</List.Item>}
         locale={{ emptyText: ' ' }}
       />

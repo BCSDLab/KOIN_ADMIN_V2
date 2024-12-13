@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CustomForm from 'components/common/CustomForm';
 import HistoryArea from 'components/common/HistoryArea';
 import { useGetABTestQuery } from 'store/api/abtest';
-import { useGetHistorysQuery } from 'store/api/history';
+import { useGetHistoriesQuery } from 'store/api/history';
 import { ABTest } from 'model/abTest.model';
 import useBooleanState from 'utils/hooks/useBoolean';
 import useABTestMutation from './hook/useABTestMutation';
@@ -33,7 +33,7 @@ export default function ABTestDetail() {
   const [variables, setVariables] = useState<Variable[]>([]);
   const [sliderValues, setSliderValues] = useState<number[]>([]);
   const [winner, setWinner] = useState<string>('');
-  const { data: historys } = useGetHistorysQuery({ page: 1, domainId: Number(id) });
+  const { data: histories } = useGetHistoriesQuery({ page: 1, domainId: Number(id) });
 
   // eslint-disable-next-line max-len
   const { value: checkModal, setTrue: checkModalOpen, setFalse: checkModalClose } = useBooleanState();
@@ -223,9 +223,9 @@ export default function ABTestDetail() {
       >
         실험 인원 수동 추가, 수정 하기
       </Button>
-      {(historys && abTestData) && (
+      {(histories && abTestData) && (
         <HistoryArea
-          historys={historys.historys}
+          histories={histories.histories}
           creator={abTestData.creator}
           created_at={abTestData.created_at}
         />

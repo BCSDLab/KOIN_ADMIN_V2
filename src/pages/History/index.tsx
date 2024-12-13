@@ -1,18 +1,18 @@
 import { Flex, Pagination } from 'antd';
 import { useState } from 'react';
-import { useGetHistorysQuery } from 'store/api/history';
+import { useGetHistoriesQuery } from 'store/api/history';
 import * as S from './History.style';
 
 export default function History() {
   const [page, setPage] = useState<number>(1);
 
-  const { data: historys } = useGetHistorysQuery({ page });
+  const { data: histories } = useGetHistoriesQuery({ page });
   const pagination = {
     current: page,
     onChange: setPage,
-    total: historys ? historys.total_page : 0,
+    total: histories ? histories.total_page : 0,
   };
-  const historyList = historys ? historys.historys : [];
+  const historyList = histories ? histories.histories : [];
 
   const parseRequestMessage = (domainName: string, message: string) => {
     if (message === '') return '';

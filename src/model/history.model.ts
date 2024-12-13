@@ -8,7 +8,7 @@ export interface HistoryInfo {
   created_at: string;
 }
 
-export interface HistorysRequest {
+export interface HistoriesRequest {
   page: number;
   limit?: number;
   requestMethod?: string;
@@ -16,10 +16,10 @@ export interface HistorysRequest {
   domainId?: number;
 }
 
-export interface HistorysResponse {
+export interface HistoriesResponse {
   total_count: number;
   current_count: number;
   total_page: number;
   current_page: number;
-  historys: HistoryInfo[];
+  histories: HistoryInfo[];
 }

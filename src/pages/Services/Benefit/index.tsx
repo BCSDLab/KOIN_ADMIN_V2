@@ -46,29 +46,18 @@ export default function BenefitPage() {
       setSelectedShop([...allId]);
     }
   };
-  const openAddtionModal = () => {
-    setIsAdditionOpen(true);
-  };
-  const closeAdditionModal = () => {
-    setIsAdditionOpen(false);
-  };
-  const openCreateModal = () => {
-    setIsCreateOpen(true);
-  };
-  const closeCreateModal = () => {
-    setIsCreateOpen(false);
-  };
-  const openDeleteModal = () => {
-    if (selected) setIsDeleteOpen(true);
-  };
-  const closeDeleteModal = () => {
-    setIsDeleteOpen(false);
-  };
-  const openModifyModal = () => {
-    setIsModifyOpen(true);
-  };
-  const closeModifyModal = () => {
-    setIsModifyOpen(false);
+
+  const handleModal = (setOpenModal: React.Dispatch<React.SetStateAction<boolean>>, type: string, state: 'open' | 'close') => {
+    if (type === 'delete' && state === 'open') {
+      if (selected) setOpenModal(true);
+      return;
+    }
+
+    if (state === 'open') {
+      setOpenModal(true);
+    } else {
+      setOpenModal(false);
+    }
   };
 
   return (
@@ -88,13 +77,13 @@ export default function BenefitPage() {
               width={600}
               footer={null}
               open={isDeleteOpne}
-              onCancel={closeDeleteModal}
-              onClick={openDeleteModal}
+              onCancel={() => handleModal(setIsDeleteOpen, 'delete', 'close')}
+              onClick={() => handleModal(setIsDeleteOpen, 'delete', 'open')}
               isDelete
             >
               <DeleteBenefitCategoryModal
                 id={selected}
-                closeModal={closeDeleteModal}
+                closeModal={() => handleModal(setIsDeleteOpen, 'delete', 'close')}
               />
             </CustomForm.Modal>
             <CustomForm.Modal
@@ -103,14 +92,14 @@ export default function BenefitPage() {
               width={900}
               footer={null}
               open={isModifyOpen}
-              onCancel={closeModifyModal}
-              onClick={openModifyModal}
+              onCancel={() => handleModal(setIsModifyOpen, 'modify', 'close')}
+              onClick={() => handleModal(setIsModifyOpen, 'modify', 'open')}
               destroyOnClose
               isDelete
               key={selected}
             >
               <ModifyModal
-                closeModifyModal={closeModifyModal}
+                closeModifyModal={() => handleModal(setIsModifyOpen, 'modify', 'close')}
                 selected={selected}
               />
             </CustomForm.Modal>
@@ -120,10 +109,10 @@ export default function BenefitPage() {
               width={900}
               footer
               open={isCreateOpen}
-              onCancel={closeCreateModal}
-              onClick={openCreateModal}
+              onCancel={() => handleModal(setIsCreateOpen, 'create', 'close')}
+              onClick={() => handleModal(setIsCreateOpen, 'create', 'open')}
             >
-              <CreationModal closeCreateModal={closeCreateModal} />
+              <CreationModal closeCreateModal={() => handleModal(setIsCreateOpen, 'create', 'close')} />
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>
@@ -145,10 +134,10 @@ export default function BenefitPage() {
               width={750}
               footer
               open={isAdditionOpen}
-              onCancel={closeAdditionModal}
-              onClick={openAddtionModal}
+              onCancel={() => handleModal(setIsAdditionOpen, 'addition', 'close')}
+              onClick={() => handleModal(setIsAdditionOpen, 'addition', 'open')}
             >
-              <AdditionalModal id={selected} closeAdditionModal={closeAdditionModal} />
+              <AdditionalModal id={selected} closeAdditionModal={() => handleModal(setIsAdditionOpen, 'addition', 'close')} />
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>

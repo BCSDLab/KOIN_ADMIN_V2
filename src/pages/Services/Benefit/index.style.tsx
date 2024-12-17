@@ -33,32 +33,37 @@ export const Wrapper = styled.div`
 
 `;
 
-export const ShopContainer = styled.div`
+export const Row = styled.tr<{ isclicked: boolean }>`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: repeat(auto-fill, 80px);
-  place-items: center;
-`;
-
-export const Button = styled.button<{ isclicked: boolean }>`
+  grid-template-columns: 40% 60%;
   cursor: pointer;
-  width: 150px;
+  width: 100%;
   height: 50px;
-  background: #fff;
-  text-align: center;
-  transition: scale 0.2s;
-  border: ${(props) => (props.isclicked ? '4px solid rgba(129, 173, 255, 0.8) ' : 'none')};
-  border-radius: 10px;
-
-  &:active {
-    scale: 0.95;
-  }
+  border: ${(props) => (props.isclicked ? '1px solid rgba(129, 173, 255, 0.8) ' : '1px solid #f0f0f0')};
 `;
 
-export const ShopListContainer = styled.div`
-  background: #ddd;
-  padding: 25px;
-  height: 60%;
+export const HeaderRow = styled.tr`
+  display: grid;
+  grid-template-columns: 40% 60%;
   width: 100%;
-  overflow-y: auto;
+  height: 50px;
+  border: 1px solid #f0f0f0;
+`;
+
+export const HeaderItem = styled.th`
+  padding: 15px;
+`;
+
+export const TitleItem = styled.td`
+  padding: 15px;
+`;
+
+export const DetailItem = styled.td`
+  padding: 15px;
+`;
+
+export const ShopList = styled.table`
+  width: 100%;
+  border-spacing: 0 10px;
+  border-collapse: collapse;
 `;

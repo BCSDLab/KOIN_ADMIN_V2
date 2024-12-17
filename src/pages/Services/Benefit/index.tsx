@@ -141,21 +141,33 @@ export default function BenefitPage() {
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>
-        <S.ShopListContainer>
-          {selected ? (
-            <S.ShopContainer>
+        {selected ? (
+          <S.ShopList>
+            <thead>
+              <S.HeaderRow>
+                <S.HeaderItem>상점명</S.HeaderItem>
+                <S.HeaderItem>상세정보</S.HeaderItem>
+              </S.HeaderRow>
+            </thead>
+            <tbody>
               {data?.shops.map((shop) => (
-                <S.Button
+                <S.Row
                   isclicked={selectedShop.includes(shop.id)}
                   onClick={() => onShopClick(shop.id)}
                   key={shop.id}
                 >
-                  {shop.name}
-                </S.Button>
+                  <S.TitleItem>
+                    {shop.name}
+                  </S.TitleItem>
+                  <S.DetailItem>
+                    {shop.detail}
+                  </S.DetailItem>
+                </S.Row>
               ))}
-            </S.ShopContainer>
-          ) : null}
-        </S.ShopListContainer>
+            </tbody>
+          </S.ShopList>
+
+        ) : null}
       </S.Container>
     </S.Wrapper>
   );

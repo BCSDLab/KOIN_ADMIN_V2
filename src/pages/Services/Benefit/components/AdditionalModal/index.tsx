@@ -46,7 +46,9 @@ export default function AdditionalModal({ id, closeAdditionModal }: Props) {
   };
   const cancelAddShop = (shopId: number) => {
     const filteredShop = shops.filter((shop) => shop.id !== shopId);
+    const filteredDetail = details.filter((shop) => shop.shop_id !== shopId);
     setShops(filteredShop);
+    setDetails(filteredDetail);
   };
 
   const ConfirmAddShop = async () => {

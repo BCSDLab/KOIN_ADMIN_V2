@@ -101,7 +101,10 @@ export default function BenefitDetailModifyModal({ closeBenefitModifyModal, shop
                 </S.ButtonWrapper>
               </Style.TitleItem>
               <Style.DetailItem>
-                <S.DetailInput onChange={(e) => handleDetail(e, shop.shop_id)} />
+                <S.DetailInput
+                  onChange={(e) => handleDetail(e, shop.shop_id)}
+                  value={details.find((detail) => detail.shop_id === shop.shop_id)?.detail}
+                />
               </Style.DetailItem>
             </Style.Row>
           ))}

@@ -55,11 +55,11 @@ export const benefitApi = createApi({
       invalidatesTags: () => [{ type: 'benefit' }],
     }),
     addBenefitShops: builder.mutation<void, AddShopRequest>({
-      query({ id, shop_ids }) {
+      query({ id, shop_details }) {
         return {
           url: `admin/benefit/${id}/shops`,
           method: 'post',
-          body: { shop_ids },
+          body: { shop_details },
         };
       },
       invalidatesTags: () => [{ type: 'benefit' }],

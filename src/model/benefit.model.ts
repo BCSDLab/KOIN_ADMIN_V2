@@ -12,12 +12,17 @@ export interface BenefitCategoryContent {
 
 export interface GetBenefitShopsResponse {
   count: number;
-  shops: Shops[];
+  shops: ShopInfo[];
 }
 
 export interface Shops {
   id: number;
   name: string;
+}
+
+export interface ShopInfo extends Shops {
+  shop_benefit_map_id: number;
+  detail: string;
 }
 
 export interface SearchResponse {
@@ -41,7 +46,15 @@ export interface DeleteShopsRequest {
   id: number;
 }
 
-export interface AddShopRequest extends DeleteShopsRequest {}
+export interface ShopDetail {
+  shop_id: number;
+  detail: string;
+}
+
+export interface AddShopRequest {
+  id: number;
+  shop_details: ShopDetail[];
+}
 
 export interface ModifyBenefitRequest {
   body: CreateBenefitRequest;

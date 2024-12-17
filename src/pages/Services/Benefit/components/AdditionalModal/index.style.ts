@@ -4,19 +4,6 @@ export const SearchWrapper = styled.div`
  position: relative;
 `;
 
-export const SelectContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(auto-fill, 50px);
-  place-items: center;
-  width: 100%;
-  height: 600px;
-  overflow: auto;
-  padding: 25px;
-  border: 0.5px solid #eeeeeeff;
-  background: #eee;
-`;
-
 export const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,12 +41,12 @@ export const ButtonContent = styled.span`
 `;
 
 export const ButtonWrapper = styled.div`
-  display: relative;
+  position: relative;
 `;
 
 export const DeleteButtonWrapper = styled.button`
   position: absolute;
-  top: -10px;
+  top: -15px;
   left: -10px;
   background: none;
   border: none;
@@ -71,4 +58,11 @@ export const FlexRight = styled.div`
   width: 100%;
   justify-content: flex-end;
   margin-top: 10px
+`;
+
+export const DetailInput = styled.input`
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
 `;

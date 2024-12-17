@@ -41,22 +41,29 @@ export default function AdditionalModal({ id, closeAdditionModal }: Props) {
   const addShop = (shopId: number, name: string) => {
     if (shops.find((shop) => shop.id === shopId)) return;
     setShops((prev) => [...prev, { id: shopId, name }]);
+    setDetails((prev) => [...prev, { shop_id: shopId, detail: '' }]);
     setKeyword('');
   };
   const cancelAddShop = (shopId: number) => {
     const filteredShop = shops.filter((shop) => shop.id !== shopId);
     setShops(filteredShop);
   };
+
   const ConfirmAddShop = async () => {
     if (shops.length === 0) {
       closeAdditionModal();
       return;
     }
     if (id) {
+      if (details.some((shop) => shop.detail === '')) {
+        message.error('상세정보를 입력해주세요.');
+        return;
+      }
       await addShopMutation({ id, shop_details: details })
         .then(() => {
           message.success('상점을 추가했습니다.');
           setShops([]);
+          setDetails([]);
           setKeyword('');
           closeAdditionModal();
         });

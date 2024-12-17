@@ -61,4 +61,11 @@ export interface ModifyBenefitRequest {
   id: number;
 }
 
+export interface ModifyBenefitDetails {
+  modify_details: {
+    shop_benefit_map_id: number;
+    detail: string;
+  }[];
+}
+
 export interface ModifyBenefitForm extends CreateBenefitRequest { }

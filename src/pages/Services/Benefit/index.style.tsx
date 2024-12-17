@@ -6,6 +6,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-width: 1500px;
 `;
 
 export const SideContainer = styled.div`
@@ -52,10 +53,12 @@ export const HeaderRow = styled.tr`
 
 export const HeaderItem = styled.th`
   padding: 15px;
+  border-right: 1px solid #f0f0f0;
 `;
 
 export const TitleItem = styled.td`
   padding: 15px;
+  border-right: 1px solid #f0f0f0;
 `;
 
 export const DetailItem = styled.td`

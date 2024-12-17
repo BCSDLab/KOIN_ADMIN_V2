@@ -9,6 +9,7 @@ import AdditionalModal from './components/AdditionalModal';
 import CreationModal from './components/CreationModal';
 import DeleteBenefitCategoryModal from './components/DeleteBenefitCategoryModal';
 import ModifyModal from './components/ModifyModal';
+import BenefitDetailModifyModal from './components/BenefitDetailModifyModal';
 
 export default function BenefitPage() {
   const [selected, setSelected] = useState<number>();
@@ -20,6 +21,7 @@ export default function BenefitPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isDeleteOpne, setIsDeleteOpen] = useState(false);
   const [isModifyOpen, setIsModifyOpen] = useState(false);
+  const [isBenefitDetailOpen, setIsBenefitDetailOpen] = useState(false);
   const [selectedShop, setSelectedShop] = useState<number[]>([]);
   const onShopClick = (id: number) => {
     setSelectedShop((prev) => {
@@ -128,6 +130,23 @@ export default function BenefitPage() {
             <Button onClick={deleteShops}>
               삭제
             </Button>
+            <CustomForm.Modal
+              buttonText="수정"
+              title="혜택 상점 미리보기 수정"
+              width={750}
+              footer
+              open={isBenefitDetailOpen}
+              onCancel={() => handleModal(setIsBenefitDetailOpen, 'benefitDetail', 'close')}
+              onClick={() => {
+                if (selectedShop.length === 0) return;
+                handleModal(setIsBenefitDetailOpen, 'benefitDetail', 'open');
+              }}
+            >
+              <BenefitDetailModifyModal
+                shops={data?.shops.filter((shop) => selectedShop.includes(shop.id))}
+                closeBenefitModifyModal={() => handleModal(setIsBenefitDetailOpen, 'benefitDetail', 'close')}
+              />
+            </CustomForm.Modal>
             <CustomForm.Modal
               buttonText="추가"
               title="혜택 상점 목록 추가"

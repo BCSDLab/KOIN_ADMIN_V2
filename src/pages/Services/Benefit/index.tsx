@@ -9,6 +9,7 @@ import AdditionalModal from './components/AdditionalModal';
 import CreationModal from './components/CreationModal';
 import DeleteBenefitCategoryModal from './components/DeleteBenefitCategoryModal';
 import ModifyModal from './components/ModifyModal';
+import BenefitDetailModifyModal from './components/BenefitDetailModifyModal';
 
 export default function BenefitPage() {
   const [selected, setSelected] = useState<number>();
@@ -20,6 +21,7 @@ export default function BenefitPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isDeleteOpne, setIsDeleteOpen] = useState(false);
   const [isModifyOpen, setIsModifyOpen] = useState(false);
+  const [isBenefitDetailOpen, setIsBenefitDetailOpen] = useState(false);
   const [selectedShop, setSelectedShop] = useState<number[]>([]);
   const onShopClick = (id: number) => {
     setSelectedShop((prev) => {
@@ -46,29 +48,18 @@ export default function BenefitPage() {
       setSelectedShop([...allId]);
     }
   };
-  const openAddtionModal = () => {
-    setIsAdditionOpen(true);
-  };
-  const closeAdditionModal = () => {
-    setIsAdditionOpen(false);
-  };
-  const openCreateModal = () => {
-    setIsCreateOpen(true);
-  };
-  const closeCreateModal = () => {
-    setIsCreateOpen(false);
-  };
-  const openDeleteModal = () => {
-    if (selected) setIsDeleteOpen(true);
-  };
-  const closeDeleteModal = () => {
-    setIsDeleteOpen(false);
-  };
-  const openModifyModal = () => {
-    setIsModifyOpen(true);
-  };
-  const closeModifyModal = () => {
-    setIsModifyOpen(false);
+
+  const handleModal = (setOpenModal: React.Dispatch<React.SetStateAction<boolean>>, type: string, state: 'open' | 'close') => {
+    if (type === 'delete' && state === 'open') {
+      if (selected) setOpenModal(true);
+      return;
+    }
+
+    if (state === 'open') {
+      setOpenModal(true);
+    } else {
+      setOpenModal(false);
+    }
   };
 
   return (
@@ -88,13 +79,13 @@ export default function BenefitPage() {
               width={600}
               footer={null}
               open={isDeleteOpne}
-              onCancel={closeDeleteModal}
-              onClick={openDeleteModal}
+              onCancel={() => handleModal(setIsDeleteOpen, 'delete', 'close')}
+              onClick={() => handleModal(setIsDeleteOpen, 'delete', 'open')}
               isDelete
             >
               <DeleteBenefitCategoryModal
                 id={selected}
-                closeModal={closeDeleteModal}
+                closeModal={() => handleModal(setIsDeleteOpen, 'delete', 'close')}
               />
             </CustomForm.Modal>
             <CustomForm.Modal
@@ -103,14 +94,14 @@ export default function BenefitPage() {
               width={900}
               footer={null}
               open={isModifyOpen}
-              onCancel={closeModifyModal}
-              onClick={openModifyModal}
+              onCancel={() => handleModal(setIsModifyOpen, 'modify', 'close')}
+              onClick={() => handleModal(setIsModifyOpen, 'modify', 'open')}
               destroyOnClose
               isDelete
               key={selected}
             >
               <ModifyModal
-                closeModifyModal={closeModifyModal}
+                closeModifyModal={() => handleModal(setIsModifyOpen, 'modify', 'close')}
                 selected={selected}
               />
             </CustomForm.Modal>
@@ -120,10 +111,10 @@ export default function BenefitPage() {
               width={900}
               footer
               open={isCreateOpen}
-              onCancel={closeCreateModal}
-              onClick={openCreateModal}
+              onCancel={() => handleModal(setIsCreateOpen, 'create', 'close')}
+              onClick={() => handleModal(setIsCreateOpen, 'create', 'open')}
             >
-              <CreationModal closeCreateModal={closeCreateModal} />
+              <CreationModal closeCreateModal={() => handleModal(setIsCreateOpen, 'create', 'close')} />
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>
@@ -140,33 +131,62 @@ export default function BenefitPage() {
               삭제
             </Button>
             <CustomForm.Modal
+              buttonText="수정"
+              title="혜택 상점 미리보기 수정"
+              width={750}
+              footer
+              open={isBenefitDetailOpen}
+              onCancel={() => handleModal(setIsBenefitDetailOpen, 'benefitDetail', 'close')}
+              onClick={() => {
+                if (selectedShop.length === 0) return;
+                handleModal(setIsBenefitDetailOpen, 'benefitDetail', 'open');
+              }}
+            >
+              <BenefitDetailModifyModal
+                shops={data?.shops.filter((shop) => selectedShop.includes(shop.id))}
+                closeBenefitModifyModal={() => handleModal(setIsBenefitDetailOpen, 'benefitDetail', 'close')}
+              />
+            </CustomForm.Modal>
+            <CustomForm.Modal
               buttonText="추가"
               title="혜택 상점 목록 추가"
               width={750}
               footer
               open={isAdditionOpen}
-              onCancel={closeAdditionModal}
-              onClick={openAddtionModal}
+              onCancel={() => handleModal(setIsAdditionOpen, 'addition', 'close')}
+              onClick={() => handleModal(setIsAdditionOpen, 'addition', 'open')}
             >
-              <AdditionalModal id={selected} closeAdditionModal={closeAdditionModal} />
+              <AdditionalModal id={selected} closeAdditionModal={() => handleModal(setIsAdditionOpen, 'addition', 'close')} />
             </CustomForm.Modal>
           </S.ButtonContainer>
         </S.SideContainer>
-        <S.ShopListContainer>
-          {selected ? (
-            <S.ShopContainer>
+        {selected ? (
+          <S.ShopList>
+            <thead>
+              <S.HeaderRow>
+                <S.HeaderItem>상점명</S.HeaderItem>
+                <S.HeaderItem>상세정보</S.HeaderItem>
+              </S.HeaderRow>
+            </thead>
+            <tbody>
               {data?.shops.map((shop) => (
-                <S.Button
+                <S.Row
                   isclicked={selectedShop.includes(shop.id)}
                   onClick={() => onShopClick(shop.id)}
                   key={shop.id}
                 >
-                  {shop.name}
-                </S.Button>
+                  <S.TitleItem>
+                    {shop.name}
+                  </S.TitleItem>
+                  <S.DetailItem>
+                    {shop.detail}
+                  </S.DetailItem>
+                </S.Row>
               ))}
-            </S.ShopContainer>
-          ) : null}
-        </S.ShopListContainer>
+            </tbody>
+          </S.ShopList>
+
+        ) : null}
       </S.Container>
     </S.Wrapper>
   );

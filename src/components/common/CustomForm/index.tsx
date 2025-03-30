@@ -2,7 +2,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import {
   Button, Checkbox, CheckboxProps, Form,
   Input, InputNumberProps, InputProps,
-  Modal, ModalProps, Select, Switch, SwitchProps,
+  InputRef, Modal, ModalProps, Select, Switch, SwitchProps,
 } from 'antd';
 import { ReactNode, forwardRef } from 'react';
 import { Rule } from 'antd/lib/form';
@@ -41,15 +41,17 @@ function validateUtils() {
   };
 }
 
-function CustomInput({
-  label, name, rules, dependencies, ...args
-}: CustomFormItemProps & Omit<InputProps, 'name'>) {
-  return (
-    <S.FormItem label={label} name={name} rules={rules} dependencies={dependencies}>
-      <S.StyledInput {...args} />
-    </S.FormItem>
-  );
-}
+const CustomInput = forwardRef<InputRef, CustomFormItemProps & Omit<InputProps, 'name'>>(
+  ({
+    label, name, rules, dependencies, ...args
+  }, ref) => {
+    return (
+      <S.FormItem label={label} name={name} rules={rules} dependencies={dependencies}>
+        <S.StyledInput ref={ref} {...args} />
+      </S.FormItem>
+    );
+  },
+);
 
 function CustomInputNumber({
   label, name, rules, ...args
@@ -137,7 +139,7 @@ function CustomSelect({
 }) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <Select>
+      <Select {...args}>
         {Object.entries(options).map(([key, val]) => (
           <Select.Option value={Number.isNaN(Number(key)) ? key : Number(key)} key={key} {...args}>
             {val}

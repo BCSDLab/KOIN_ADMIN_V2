@@ -52,24 +52,23 @@ interface Props<TableData> {
   columnSize?: number[];
   hiddenColumns?: string[];
   onClick?: any
+  customColumns?: ColumnsType<TableData>;
 }
 
 function CustomTable<TableData extends DefaultTableData>({
-  data, pagination, columnSize, hiddenColumns = [], onClick,
+  data, pagination, columnSize, hiddenColumns = [], onClick, customColumns,
 }: Props<TableData>) {
   const navigate = useNavigate();
 
   const getColumns = (): ColumnsType<TableData> => {
-    const columnKeys = Object.keys(data[0]);
-
-    return columnKeys
+    const autoColumns = Object.keys(data[0])
       .filter((key) => !hiddenColumns.includes(key))
       .map((key, idx) => ({
         title: TITLE_MAPPER[key] || key.toUpperCase(),
         dataIndex: key,
         key,
         width: columnSize && columnSize[idx] ? `${columnSize[idx]}%` : 'auto',
-        render: (value: string | number | boolean) => {
+        render: (value: any) => {
           if (typeof value === 'boolean') {
             return value ? 'True' : 'False';
           }
@@ -111,6 +110,22 @@ function CustomTable<TableData extends DefaultTableData>({
           return value;
         },
       }));
+
+    if (customColumns) {
+      const customColumnMap: Record<string, any> = {};
+      customColumns.forEach((col) => {
+        if (typeof col.key === 'string') {
+          customColumnMap[col.key] = col;
+        }
+      });
+      return autoColumns.map((col) => {
+        if (typeof col.key === 'string' && customColumnMap[col.key]) {
+          return { ...col, ...customColumnMap[col.key] };
+        }
+        return col;
+      });
+    }
+    return autoColumns;
   };
 
   return (
@@ -130,7 +145,7 @@ function CustomTable<TableData extends DefaultTableData>({
                 } else navigate(`${record.id}`);
               },
             })}
-            pagination={pagination ? { position: ['bottomRight'] } : false}
+            pagination={false}
           />
           {pagination && pagination.total > 0 && (
             <Pagination

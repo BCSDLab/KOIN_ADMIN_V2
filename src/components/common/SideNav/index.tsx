@@ -4,7 +4,7 @@ import {
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
   UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
-  HistoryOutlined, FlagOutlined,
+  HistoryOutlined, FlagOutlined, BellOutlined,
 } from '@ant-design/icons';
 import {
   Button, Flex, Menu, MenuProps,
@@ -43,6 +43,7 @@ const items: MenuProps['items'] = [
     ]),
     getItem('복덕방', '/room', <HomeOutlined />),
     getItem('공지사항', '/notice', <NotificationOutlined />),
+    getItem('배너 관리', '/banner', <BellOutlined />),
   ]),
 
   getItem('회원 관리', 'user', <UserOutlined />, [
@@ -65,7 +66,7 @@ const items: MenuProps['items'] = [
   ]),
 ];
 
-const SideNavConatiner = styled.nav`
+const SideNavContainer = styled.nav`
   height: 100%;
   width: 200px;
   overflow-y: auto;
@@ -110,7 +111,7 @@ function SideNav() {
   };
 
   return (
-    <SideNavConatiner>
+    <SideNavContainer>
       <Logo>
         <Link to="/">
           <LogoImg src="https://static.koreatech.in/assets/img/logo_primary.png" alt="KOIN 로고" />
@@ -127,7 +128,7 @@ function SideNav() {
         <ChangePasswordFormModal />
         <Button onClick={doLogout}>로그아웃</Button>
       </AccountContainer>
-    </SideNavConatiner>
+    </SideNavContainer>
   );
 }
 

@@ -144,6 +144,7 @@ export const SwitchWrap = styled.h4`
   display: flex;
   gap: 5px;
   margin: 5px 0;
+  align-items: center;
 `;
 
 export const UploadWrap = styled(Form.Item)`

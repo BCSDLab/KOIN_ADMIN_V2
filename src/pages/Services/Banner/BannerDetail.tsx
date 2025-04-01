@@ -7,6 +7,7 @@ import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
 import { BannerUpdateFormValues } from 'model/banner.model';
 import emptyToNull from 'utils/ts/emptyToNull';
+import CustomBreadcrumb from 'components/common/CustomBreadCrumb';
 import useBannerMutation from './useBannerMutation';
 import ConfirmModal from './components/ConfirmModal/ConfirmModal';
 import BannerForm from './components/BannerForm/BannerForm';
@@ -59,9 +60,14 @@ export default function BannerDetail() {
       {bannerData ? (
         <>
           <DetailHeading>Banner Detail</DetailHeading>
-          <S.BreadCrumb>
-            {`Banner Management / Banner Detail / ${bannerData?.title}`}
-          </S.BreadCrumb>
+          <CustomBreadcrumb
+            items={[
+              { label: 'BannerList', path: '/banner' },
+              { label: 'BannerDetail' },
+              { label: bannerData.title },
+            ]}
+          />
+
           <S.FormWrap>
             <CustomForm onFinish={handleFinish} form={form} initialValues={bannerData}>
               <BannerForm form={form} isEdit />

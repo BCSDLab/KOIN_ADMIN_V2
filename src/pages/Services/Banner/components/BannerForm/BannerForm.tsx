@@ -22,9 +22,11 @@ export default function BannerForm({ form, isEdit, categoryOptions }: BannerForm
         <CustomForm.Select
           label="카테고리 명"
           name="banner_category"
-          disabled={isEdit}
           options={categoryOptions ?? {}}
           rules={[required()]}
+          selectProps={{
+            disabled: isEdit,
+          }}
         />
       </CustomForm.GridRow>
       <CustomForm.Input label="WEB 연결 링크" name="web_redirect_link" />

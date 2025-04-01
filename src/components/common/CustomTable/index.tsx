@@ -51,24 +51,45 @@ interface Props<TableData> {
   };
   columnSize?: number[];
   hiddenColumns?: string[];
-  onClick?: any
-  customColumns?: ColumnsType<TableData>;
+  onClick?: any,
+  columns?: ColumnsType<TableData>;
+}
+
+function mergeColumns<TableData extends DefaultTableData>(
+  base: ColumnsType<TableData>,
+  custom?: ColumnsType<TableData>,
+): ColumnsType<TableData> {
+  if (!custom) return base;
+
+  const customMap = new Map(custom.map((col) => [col.key, col]));
+
+  return base.map((col) => {
+    if (col.key && customMap.has(col.key)) {
+      return {
+        ...col,
+        ...customMap.get(col.key),
+      };
+    }
+    return col;
+  });
 }
 
 function CustomTable<TableData extends DefaultTableData>({
-  data, pagination, columnSize, hiddenColumns = [], onClick, customColumns,
+  data, pagination, columnSize, hiddenColumns = [], onClick, columns,
 }: Props<TableData>) {
   const navigate = useNavigate();
 
   const getColumns = (): ColumnsType<TableData> => {
-    const autoColumns = Object.keys(data[0])
+    const columnKeys = Object.keys(data[0]);
+
+    return columnKeys
       .filter((key) => !hiddenColumns.includes(key))
       .map((key, idx) => ({
         title: TITLE_MAPPER[key] || key.toUpperCase(),
         dataIndex: key,
         key,
         width: columnSize && columnSize[idx] ? `${columnSize[idx]}%` : 'auto',
-        render: (value: any) => {
+        render: (value: string | number | boolean) => {
           if (typeof value === 'boolean') {
             return value ? 'True' : 'False';
           }
@@ -110,23 +131,10 @@ function CustomTable<TableData extends DefaultTableData>({
           return value;
         },
       }));
-
-    if (customColumns) {
-      const customColumnMap: Record<string, any> = {};
-      customColumns.forEach((col) => {
-        if (typeof col.key === 'string') {
-          customColumnMap[col.key] = col;
-        }
-      });
-      return autoColumns.map((col) => {
-        if (typeof col.key === 'string' && customColumnMap[col.key]) {
-          return { ...col, ...customColumnMap[col.key] };
-        }
-        return col;
-      });
-    }
-    return autoColumns;
   };
+
+  const baseColumns = getColumns();
+  const finalColumns = mergeColumns(baseColumns, columns);
 
   return (
     <TableContainer>
@@ -135,7 +143,7 @@ function CustomTable<TableData extends DefaultTableData>({
       ) : (
         <>
           <Table
-            columns={getColumns()}
+            columns={finalColumns}
             dataSource={data}
             rowKey={(record) => record.id}
             onRow={(record) => ({

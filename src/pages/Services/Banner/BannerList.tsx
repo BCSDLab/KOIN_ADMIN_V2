@@ -19,7 +19,7 @@ export default function BannerList() {
   const { value: isActive, changeValue: handleActive } = useBooleanState(false);
   const { data: BannerCategory } = useGetBannerCategoryListQuery();
   const { updateBannerPriority, toggleBannerActive } = useBannerMutation();
-  const customColumns = useBannerColumns({ toggleBannerActive, updateBannerPriority });
+  const columns = useBannerColumns({ toggleBannerActive, updateBannerPriority });
 
   const categories = useMemo(() => {
     return BannerCategory?.banner_categories ?? [];
@@ -76,7 +76,7 @@ export default function BannerList() {
         }}
         columnSize={[5, 15, 15, 20, 10, 10, 10]}
         hiddenColumns={isActive ? [] : ['priority']}
-        customColumns={customColumns}
+        columns={columns}
       />
       )}
       <Flex justify="end">

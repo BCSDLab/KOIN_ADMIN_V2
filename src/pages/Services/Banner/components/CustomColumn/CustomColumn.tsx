@@ -1,17 +1,30 @@
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Switch } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import { RedirectLink } from 'model/banner.model';
 import * as S from './CustomColumn.style';
+
+type Banner = {
+  id: number;
+  redirect_link: RedirectLink;
+  is_active: boolean;
+  priority: number | null;
+};
 
 type Props = {
   toggleBannerActive: (id: number, checked: boolean) => void;
   updateBannerPriority: (id: number, params: { change_type: 'UP' | 'DOWN' }) => void;
 };
 
-export default function useBannerColumns({ toggleBannerActive, updateBannerPriority }: Props) {
+export default function useBannerColumns({
+  toggleBannerActive,
+  updateBannerPriority,
+}: Props): ColumnsType<Banner> {
   return [
     {
+      title: '광고 링크',
       key: 'redirect_link',
+      dataIndex: 'redirect_link',
       render: (value: RedirectLink) => (
         <div>
           {(['web', 'android', 'ios'] as const).map((platform) => {
@@ -26,8 +39,10 @@ export default function useBannerColumns({ toggleBannerActive, updateBannerPrior
       ),
     },
     {
+      title: '활성화 여부',
       key: 'is_active',
-      render: (value: boolean, record: any) => (
+      dataIndex: 'is_active',
+      render: (value: boolean, record: Banner) => (
         <Switch
           checked={value}
           onClick={(_, event) => event.stopPropagation()}
@@ -35,12 +50,13 @@ export default function useBannerColumns({ toggleBannerActive, updateBannerPrior
             toggleBannerActive(record.id, checked);
           }}
         />
-
       ),
     },
     {
+      title: '우선순위',
       key: 'priority',
-      render: (value: number | null, record: any) => (
+      dataIndex: 'priority',
+      render: (value: number | null, record: Banner) => (
         <S.PriorityWrapper>
           <>
             <CaretUpOutlined

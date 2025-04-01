@@ -8,10 +8,11 @@ import DetailHeading from 'components/common/DetailHeading';
 import { BannerUpdateFormValues } from 'model/banner.model';
 import emptyToNull from 'utils/ts/emptyToNull';
 import CustomBreadcrumb from 'components/common/CustomBreadCrumb';
+import * as S from 'styles/Detail.style';
+import { Flex } from 'antd';
 import useBannerMutation from './useBannerMutation';
 import ConfirmModal from './components/ConfirmModal/ConfirmModal';
 import BannerForm from './components/BannerForm/BannerForm';
-import * as S from './BannerDetail.style';
 
 export default function BannerDetail() {
   const { id } = useParams();
@@ -72,7 +73,7 @@ export default function BannerDetail() {
             <CustomForm onFinish={handleFinish} form={form} initialValues={bannerData}>
               <BannerForm form={form} isEdit />
             </CustomForm>
-            <S.ButtonWrapper>
+            <Flex justify="end" gap="10px">
               <CustomForm.Modal
                 buttonText="삭제"
                 title="배너 삭제하기"
@@ -94,7 +95,7 @@ export default function BannerDetail() {
               >
                 <ConfirmModal closeModal={closeUpdateModal} confirmText="수정" cancelText="취소" description="수정 완료하겠습니까?" onConfirm={handleConfirm} />
               </CustomForm.Modal>
-            </S.ButtonWrapper>
+            </Flex>
           </S.FormWrap>
         </>
       ) : (

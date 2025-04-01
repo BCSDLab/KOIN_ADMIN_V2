@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Switch } from 'antd';
+import { Button, Flex, Switch } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetBannerListQuery } from 'store/api/banner';
@@ -79,15 +79,14 @@ export default function BannerList() {
         customColumns={customColumns}
       />
       )}
-      <S.ButtonWrapper>
+      <Flex justify="end">
         <Button
           icon={<PlusOutlined />}
           onClick={() => navigate('/banner/write')}
         >
           배너 추가
         </Button>
-      </S.ButtonWrapper>
-
+      </Flex>
     </S.Container>
   );
 }

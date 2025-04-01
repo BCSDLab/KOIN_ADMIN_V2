@@ -9,6 +9,7 @@ import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
 import { BannerFormValues, BannerRequest } from 'model/banner.model';
 import emptyToNull from 'utils/ts/emptyToNull';
+import { Flex } from 'antd';
 import useBannerMutation from './useBannerMutation';
 import ConfirmModal from './components/ConfirmModal/ConfirmModal';
 import BannerForm from './components/BannerForm/BannerForm';
@@ -77,33 +78,33 @@ export default function BannerWrite() {
         <DetailHeading>배너 추가</DetailHeading>
       </S.HeadingWrapper>
       <CustomForm form={form} onValuesChange={handleValuesChange} onFinish={handleFinish}>
-        <S.FormWrapper>
+        <S.FormWrap>
           <BannerForm form={form} isEdit={false} categoryOptions={bannerCategoryOptions} />
-        </S.FormWrapper>
+          <Flex justify="end" gap="10px">
+            <CustomForm.Modal
+              buttonText="취소"
+              title="배너 생성 취소하기"
+              footer={null}
+              open={isDeleteModalOpen}
+              onCancel={closeDeleteModal}
+              onClick={openDeleteModal}
+              isDelete
+            >
+              <ConfirmModal closeModal={closeDeleteModal} confirmText="작성 취소" cancelText="계속 작성" description="생성을 취소하시겠습니까?" onConfirm={handleCancel} />
+            </CustomForm.Modal>
+            <CustomForm.Modal
+              buttonText="등록"
+              title="배너 생성하기"
+              footer={null}
+              open={isAddModalOpen}
+              onCancel={closeAddModal}
+              onClick={openAddModal}
+            >
+              <ConfirmModal closeModal={closeAddModal} confirmText="등록" cancelText="취소" description="등록하시겠습니까?" onConfirm={handleConfirm} />
+            </CustomForm.Modal>
+          </Flex>
+        </S.FormWrap>
       </CustomForm>
-      <S.ButtonWrapper>
-        <CustomForm.Modal
-          buttonText="취소"
-          title="배너 생성 취소하기"
-          footer={null}
-          open={isDeleteModalOpen}
-          onCancel={closeDeleteModal}
-          onClick={openDeleteModal}
-          isDelete
-        >
-          <ConfirmModal closeModal={closeDeleteModal} confirmText="작성 취소" cancelText="계속 작성" description="생성을 취소하시겠습니까?" onConfirm={handleCancel} />
-        </CustomForm.Modal>
-        <CustomForm.Modal
-          buttonText="등록"
-          title="배너 생성하기"
-          footer={null}
-          open={isAddModalOpen}
-          onCancel={closeAddModal}
-          onClick={openAddModal}
-        >
-          <ConfirmModal closeModal={closeAddModal} confirmText="등록" cancelText="취소" description="등록하시겠습니까?" onConfirm={handleConfirm} />
-        </CustomForm.Modal>
-      </S.ButtonWrapper>
     </S.Container>
   );
 }

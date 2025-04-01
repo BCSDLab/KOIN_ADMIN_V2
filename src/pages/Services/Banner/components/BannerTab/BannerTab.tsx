@@ -9,13 +9,7 @@ interface BannerTabsProps {
 }
 
 export default function BannerTabs({ categories, selectedId, onSelect }: BannerTabsProps) {
-  const [orderedCategories, setOrderedCategories] = useState<BannerCategory[]>([]);
-
-  useEffect(() => {
-    if (categories.length > 0) {
-      setOrderedCategories(categories);
-    }
-  }, [categories]);
+  const [orderedCategories, setOrderedCategories] = useState<BannerCategory[]>(categories);
 
   useEffect(() => {
     if (selectedId) {

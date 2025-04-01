@@ -70,6 +70,21 @@ export default function BannerWrite() {
         banner_category_id: selectedId,
       });
     }
+    if (changedValues.is_web_released === false) {
+      form.setFieldsValue({ web_redirect_link: '' });
+      return;
+    }
+
+    if (changedValues.is_android_released === false) {
+      form.setFieldsValue({ android_redirect_link: '' });
+      form.setFieldsValue({ android_minimum_version: '' });
+      return;
+    }
+
+    if (changedValues.is_ios_released === false) {
+      form.setFieldsValue({ ios_minimum_version: '' });
+      form.setFieldsValue({ ios_redirect_link: '' });
+    }
   };
 
   return (
@@ -77,7 +92,16 @@ export default function BannerWrite() {
       <S.HeadingWrapper>
         <DetailHeading>배너 추가</DetailHeading>
       </S.HeadingWrapper>
-      <CustomForm form={form} onValuesChange={handleValuesChange} onFinish={handleFinish}>
+      <CustomForm
+        form={form}
+        onValuesChange={handleValuesChange}
+        onFinish={handleFinish}
+        initialValues={{
+          is_web_released: false,
+          is_android_released: false,
+          is_ios_released: false,
+        }}
+      >
         <S.FormWrap>
           <BannerForm form={form} isEdit={false} categoryOptions={bannerCategoryOptions} />
           <Flex justify="end" gap="10px">

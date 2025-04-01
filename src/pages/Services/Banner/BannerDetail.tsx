@@ -21,6 +21,31 @@ export default function BannerDetail() {
   const [form] = CustomForm.useForm();
   const { updateBanner, deleteBanner } = useBannerMutation();
 
+  const initialValues = {
+    is_web_released: bannerData?.is_web_released === undefined ?? false,
+    is_android_released: bannerData?.is_android_released === undefined ?? false,
+    is_ios_released: bannerData?.is_ios_released === undefined ?? false,
+    ...bannerData,
+  };
+
+  const handleValuesChange = (changedValues: any) => {
+    if (changedValues.is_web_released === false) {
+      form.setFieldsValue({ web_redirect_link: '' });
+      return;
+    }
+
+    if (changedValues.is_android_released === false) {
+      form.setFieldsValue({ android_redirect_link: '' });
+      form.setFieldsValue({ android_minimum_version: '' });
+      return;
+    }
+
+    if (changedValues.is_ios_released === false) {
+      form.setFieldsValue({ ios_minimum_version: '' });
+      form.setFieldsValue({ ios_redirect_link: '' });
+    }
+  };
+
   const {
     setTrue: openUpdateModal,
     value: isUpdateModalOpen,
@@ -70,7 +95,12 @@ export default function BannerDetail() {
           />
 
           <S.FormWrap>
-            <CustomForm onFinish={handleFinish} form={form} initialValues={bannerData}>
+            <CustomForm
+              onFinish={handleFinish}
+              form={form}
+              initialValues={initialValues}
+              onValuesChange={handleValuesChange}
+            >
               <BannerForm form={form} isEdit />
             </CustomForm>
             <Flex justify="end" gap="10px">

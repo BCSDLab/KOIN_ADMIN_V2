@@ -7,9 +7,12 @@ export interface Banner {
   priority: number | null;
   title: string;
   image_url: string;
+  is_web_released: boolean;
   web_redirect_link: string | null;
+  is_android_released: boolean;
   android_redirect_link: string | null;
   android_minimum_version: string | null;
+  is_ios_released: boolean;
   ios_redirect_link: string | null;
   ios_minimum_version: string | null;
   is_active: boolean;
@@ -25,8 +28,11 @@ export interface BannerRequest {
   title: string;
   image_url: string;
   web_redirect_link: string | null;
+  is_web_released: boolean;
+  is_android_released: boolean;
   android_redirect_link: string | null;
   android_minimum_version: string | null;
+  is_ios_released: boolean;
   ios_redirect_link: string | null;
   ios_minimum_version: string | null;
   is_active: boolean;

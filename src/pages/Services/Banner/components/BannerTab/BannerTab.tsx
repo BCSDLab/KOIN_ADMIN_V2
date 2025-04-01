@@ -1,5 +1,5 @@
 import { BannerCategory } from 'model/bannerCategory.model';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import * as S from './BannerTab.style';
 
 interface BannerTabsProps {
@@ -9,34 +9,27 @@ interface BannerTabsProps {
 }
 
 export default function BannerTabs({ categories, selectedId, onSelect }: BannerTabsProps) {
-  const [orderedCategories, setOrderedCategories] = useState<BannerCategory[]>(categories);
-
-  useEffect(() => {
-    if (selectedId) {
-      const newOrder = categories.filter((category) => category.id !== selectedId);
-      const selected = categories.find((category) => category.id === selectedId);
-      if (selected) {
-        setOrderedCategories([selected, ...newOrder]);
-      }
-    }
-  }, [selectedId, categories]);
+  const orderedCategories = useMemo(() => {
+    const selected = categories.find((category) => category.id === selectedId);
+    const rest = categories.filter((category) => category.id !== selectedId);
+    return selected ? [selected, ...rest] : categories;
+  }, [categories, selectedId]);
 
   return (
-    <div>
-      <S.CategoryTabContainer>
-        <S.TabButton
-          type="button"
-          $active
-          onClick={() => onSelect(selectedId)}
-        >
-          {orderedCategories.find((category) => category.id === selectedId)?.name}
-        </S.TabButton>
+    <S.CategoryTabContainer>
+      {orderedCategories.length > 0 && (
+        <>
+          <S.TabButton
+            type="button"
+            $active
+            onClick={() => onSelect(orderedCategories[0].id)}
+          >
+            {orderedCategories[0].name}
+          </S.TabButton>
 
-        <S.TabScrollWrapper>
-          <S.TabList>
-            {orderedCategories
-              .filter((category) => category.id !== selectedId)
-              .map((category) => (
+          <S.TabScrollWrapper>
+            <S.TabList>
+              {orderedCategories.slice(1).map((category) => (
                 <li key={category.id}>
                   <S.TabButton
                     type="button"
@@ -47,9 +40,10 @@ export default function BannerTabs({ categories, selectedId, onSelect }: BannerT
                   </S.TabButton>
                 </li>
               ))}
-          </S.TabList>
-        </S.TabScrollWrapper>
-      </S.CategoryTabContainer>
-    </div>
+            </S.TabList>
+          </S.TabScrollWrapper>
+        </>
+      )}
+    </S.CategoryTabContainer>
   );
 }

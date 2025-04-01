@@ -39,7 +39,7 @@ export default function BannerForm({ form, isEdit, categoryOptions }: BannerForm
       </Divider>
       <CustomForm.SingleUpload form={form} name="image_url" domain="banner" />
       <Divider orientation="left" style={{ marginTop: '40px' }} />
-      <CustomForm.Switch label="활성화 여부" name="is_active" />
+      <CustomForm.Switch label="활성화 여부" name="is_active" disabled={!isEdit} />
     </>
   );
 }

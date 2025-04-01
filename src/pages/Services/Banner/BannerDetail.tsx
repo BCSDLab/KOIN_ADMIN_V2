@@ -6,6 +6,7 @@ import useBooleanState from 'utils/hooks/useBoolean';
 import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
 import { BannerUpdateFormValues } from 'model/banner.model';
+import emptyToNull from 'utils/ts/emptyToNull';
 import useBannerMutation from './useBannerMutation';
 import ConfirmModal from './components/ConfirmModal/ConfirmModal';
 import BannerForm from './components/BannerForm/BannerForm';
@@ -33,14 +34,12 @@ export default function BannerDetail() {
   const handleFinish = (values: BannerUpdateFormValues) => {
     const editorContent = editorRef.current?.getInstance().getHTML();
 
-    const payload = {
+    const rawPayload = {
       ...values,
-      android_redirect_link: values.android_redirect_link === '' ? null : values.android_redirect_link,
-      android_minimum_version: values.android_minimum_version === '' ? null : values.android_minimum_version,
-      ios_redirect_link: values.ios_redirect_link === '' ? null : values.ios_redirect_link,
-      ios_minimum_version: values.ios_minimum_version === '' ? null : values.ios_minimum_version,
       content: editorContent ?? '',
     };
+
+    const payload = emptyToNull(rawPayload);
 
     updateBanner(payload);
   };
@@ -57,7 +56,7 @@ export default function BannerDetail() {
 
   return (
     <S.Container>
-      {bannerData && (
+      {bannerData ? (
         <>
           <DetailHeading>Banner Detail</DetailHeading>
           <S.BreadCrumb>
@@ -92,6 +91,8 @@ export default function BannerDetail() {
             </S.ButtonWrapper>
           </S.FormWrap>
         </>
+      ) : (
+        <DetailHeading>해당 ID의 배너가 존재하지 않습니다.</DetailHeading>
       )}
     </S.Container>
   );

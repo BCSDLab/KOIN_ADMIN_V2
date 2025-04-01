@@ -1,7 +1,7 @@
 import { EditOutlined, CheckOutlined } from '@ant-design/icons';
 import { useRef, useState, useEffect } from 'react';
-import CustomForm from 'components/common/CustomForm';
-import { InputRef } from 'antd';
+import { Input, Button, InputRef } from 'antd';
+
 import useBannerCategoryMutation from 'pages/Services/Banner/useBannerCategoryMutation';
 import { BannerCategory } from 'model/bannerCategory.model';
 import * as S from './Description.style';
@@ -18,27 +18,25 @@ export default function CategoryDescriptionBox({
   const selected = categories.find((category) => category.id === selectedCategoryId);
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<InputRef>(null);
-  const [form] = CustomForm.useForm();
+  const [description, setDescription] = useState('');
+
   const { updateBannerDescription } = useBannerCategoryMutation();
 
   useEffect(() => {
-    form.setFieldsValue({ description: selected?.description || '' });
+    setDescription(selected?.description || '');
     setIsEditing(false);
-  }, [form, selected?.description, selectedCategoryId]);
+  }, [selected?.description, selectedCategoryId]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
-      inputRef.current?.focus();
+      inputRef.current.focus();
     }
   }, [isEditing]);
 
-  const handleSave = async () => {
-    const values = form.getFieldsValue();
-    const newDescription = values.description;
-
+  const handleSave = () => {
     updateBannerDescription({
       id: selectedCategoryId,
-      description: newDescription,
+      description,
     });
 
     setIsEditing(false);
@@ -46,40 +44,34 @@ export default function CategoryDescriptionBox({
 
   return (
     <S.DescriptionBox>
-      <CustomForm
-        form={form}
-        initialValues={{ description: selected?.description || '' }}
-        style={{ width: '100%' }}
-      >
-        <S.FormWrap>
-          <S.InputWrap>
-            <CustomForm.Input
-              ref={inputRef}
-              label=""
-              name="description"
-              disabled={!isEditing}
-              style={{ width: '100%' }}
-            />
-          </S.InputWrap>
-          {!isEditing ? (
-            <CustomForm.Button
-              onClick={() => setIsEditing(true)}
-              icon={<EditOutlined />}
-              type="default"
-            >
-              설명 수정하기
-            </CustomForm.Button>
-          ) : (
-            <CustomForm.Button
-              onClick={handleSave}
-              icon={<CheckOutlined />}
-              type="primary"
-            >
-              설명 저장하기
-            </CustomForm.Button>
-          )}
-        </S.FormWrap>
-      </CustomForm>
+      <S.FormWrap>
+        <S.InputWrap>
+          <Input
+            ref={inputRef}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={!isEditing}
+            style={{ width: '100%' }}
+          />
+        </S.InputWrap>
+        {!isEditing ? (
+          <Button
+            onClick={() => setIsEditing(true)}
+            icon={<EditOutlined />}
+            type="default"
+          >
+            설명 수정하기
+          </Button>
+        ) : (
+          <Button
+            onClick={handleSave}
+            icon={<CheckOutlined />}
+            type="primary"
+          >
+            설명 저장하기
+          </Button>
+        )}
+      </S.FormWrap>
     </S.DescriptionBox>
   );
 }

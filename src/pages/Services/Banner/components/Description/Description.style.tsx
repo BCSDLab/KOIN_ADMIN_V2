@@ -13,6 +13,7 @@ export const FormWrap = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
 `;
 
 export const InputWrap = styled.div`

@@ -2,7 +2,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import {
   Button, Checkbox, CheckboxProps, Form,
   Input, InputNumberProps, InputProps,
-  InputRef, Modal, ModalProps, Select, Switch, SwitchProps,
+  Modal, ModalProps, Select, Switch, SwitchProps,
 } from 'antd';
 import { ReactNode, forwardRef } from 'react';
 import { Rule } from 'antd/lib/form';
@@ -41,17 +41,15 @@ function validateUtils() {
   };
 }
 
-const CustomInput = forwardRef<InputRef, CustomFormItemProps & Omit<InputProps, 'name'>>(
-  ({
-    label, name, rules, dependencies, ...args
-  }, ref) => {
-    return (
-      <S.FormItem label={label} name={name} rules={rules} dependencies={dependencies}>
-        <S.StyledInput ref={ref} {...args} />
-      </S.FormItem>
-    );
-  },
-);
+function CustomInput({
+  label, name, rules, dependencies, ...args
+}: CustomFormItemProps & Omit<InputProps, 'name'>) {
+  return (
+    <S.FormItem label={label} name={name} rules={rules} dependencies={dependencies}>
+      <S.StyledInput {...args} />
+    </S.FormItem>
+  );
+}
 
 function CustomInputNumber({
   label, name, rules, ...args

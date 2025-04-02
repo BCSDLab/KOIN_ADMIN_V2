@@ -133,9 +133,6 @@ function CustomTable<TableData extends DefaultTableData>({
       }));
   };
 
-  const baseColumns = getColumns();
-  const finalColumns = mergeColumns(baseColumns, columns);
-
   return (
     <TableContainer>
       {data.length === 0 ? (
@@ -143,7 +140,7 @@ function CustomTable<TableData extends DefaultTableData>({
       ) : (
         <>
           <Table
-            columns={finalColumns}
+            columns={mergeColumns(getColumns(), columns)}
             dataSource={data}
             rowKey={(record) => record.id}
             onRow={(record) => ({

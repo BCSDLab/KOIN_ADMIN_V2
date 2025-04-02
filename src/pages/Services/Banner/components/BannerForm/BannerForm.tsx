@@ -75,7 +75,7 @@ export default function BannerForm({ form, isEdit, categoryOptions }: BannerForm
         이미지
       </Divider>
 
-      <CustomForm.SingleUpload form={form} name="image_url" domain="banner" />
+      <CustomForm.SingleImageUpload form={form} name="image_url" domain="banner" />
 
       <Divider orientation="left" style={{ marginTop: '40px' }} />
 

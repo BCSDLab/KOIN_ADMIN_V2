@@ -51,11 +51,31 @@ interface Props<TableData> {
   };
   columnSize?: number[];
   hiddenColumns?: string[];
-  onClick?: any
+  onClick?: any,
+  columns?: ColumnsType<TableData>;
+}
+
+function mergeColumns<TableData extends DefaultTableData>(
+  base: ColumnsType<TableData>,
+  custom?: ColumnsType<TableData>,
+): ColumnsType<TableData> {
+  if (!custom) return base;
+
+  const customMap = new Map(custom.map((col) => [col.key, col]));
+
+  return base.map((col) => {
+    if (col.key && customMap.has(col.key)) {
+      return {
+        ...col,
+        ...customMap.get(col.key),
+      };
+    }
+    return col;
+  });
 }
 
 function CustomTable<TableData extends DefaultTableData>({
-  data, pagination, columnSize, hiddenColumns = [], onClick,
+  data, pagination, columnSize, hiddenColumns = [], onClick, columns,
 }: Props<TableData>) {
   const navigate = useNavigate();
 
@@ -113,6 +133,9 @@ function CustomTable<TableData extends DefaultTableData>({
       }));
   };
 
+  const baseColumns = getColumns();
+  const finalColumns = mergeColumns(baseColumns, columns);
+
   return (
     <TableContainer>
       {data.length === 0 ? (
@@ -120,7 +143,7 @@ function CustomTable<TableData extends DefaultTableData>({
       ) : (
         <>
           <Table
-            columns={getColumns()}
+            columns={finalColumns}
             dataSource={data}
             rowKey={(record) => record.id}
             onRow={(record) => ({
@@ -130,7 +153,7 @@ function CustomTable<TableData extends DefaultTableData>({
                 } else navigate(`${record.id}`);
               },
             })}
-            pagination={pagination ? { position: ['bottomRight'] } : false}
+            pagination={false}
           />
           {pagination && pagination.total > 0 && (
             <Pagination

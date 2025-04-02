@@ -27,4 +27,8 @@ export const TITLE_MAPPER: Record<string, string> = {
   author: '작성자',
   post_date: '게시일',
   updatedAt: 'date',
+  redirect_link: '광고 링크',
+  is_active: '활성화 여부',
+  priority: '우선순위',
+  created_at: '생성일',
 };

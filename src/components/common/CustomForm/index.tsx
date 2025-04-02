@@ -131,13 +131,14 @@ function CustomButton({
 }
 
 function CustomSelect({
-  options, label, name, rules, ...args
+  options, label, name, rules, selectProps, ...args
 }: CustomFormItemProps & {
   options: Record<string, string>
+  selectProps?: React.ComponentProps<typeof Select>;
 }) {
   return (
     <S.FormItem label={label} name={name} rules={rules}>
-      <Select>
+      <Select {...selectProps}>
         {Object.entries(options).map(([key, val]) => (
           <Select.Option value={Number.isNaN(Number(key)) ? key : Number(key)} key={key} {...args}>
             {val}

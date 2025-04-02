@@ -12,6 +12,7 @@ import { TextAreaProps } from 'antd/lib/input';
 import * as S from './CustomForm.style';
 import CustomMultipleUpload from './CustomMultipleUpload';
 import CustomSingleUpload from './CustomSingleUpload';
+import CustomSingleImageUpload from './CustomSingleImageUpload';
 
 interface GridProps {
   children: ReactNode;
@@ -240,6 +241,7 @@ const CustomForm = Object.assign(Form, {
   TextArea: CustomTextArea,
   MultipleUpload: CustomMultipleUpload,
   SingleUpload: CustomSingleUpload,
+  SingleImageUpload: CustomSingleImageUpload,
   Checkbox: CustomCheckbox,
   Select: CustomSelect,
   Switch: CustomSwitch,

@@ -17,7 +17,7 @@ interface Props {
   name: string;
 }
 
-const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
+const createUploadFile = (fileUrl: string, index: number): UploadFile => {
   return ({
     uid: `${-(index + 1)}`,
     name: fileUrl,
@@ -32,7 +32,7 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
   const [uploadFile] = useUploadfileMutation();
   const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
   let convertedFileList: UploadFile[] = [];
-  convertedFileList = uploadFileList?.map(convertUploadFile);
+  convertedFileList = uploadFileList?.map(createUploadFile);
 
   const getBase64 = (file: any): Promise<string> => new Promise((resolve, reject) => {
     const reader = new FileReader();

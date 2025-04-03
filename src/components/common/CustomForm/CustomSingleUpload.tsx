@@ -15,9 +15,10 @@ interface Props {
   form: FormInstance;
   domain: Domain;
   name: string;
+  accept?: string;
 }
 
-const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
+const createUploadFile = (fileUrl: string, index: number): UploadFile => {
   return ({
     uid: `${-(index + 1)}`,
     name: fileUrl,
@@ -26,13 +27,15 @@ const convertUploadFile = (fileUrl: string, index: number): UploadFile => {
   });
 };
 
-export default function CustomSingleUpload({ form, domain, name }: Props) {
+export default function CustomSingleUpload({
+  form, domain, name, accept,
+}: Props) {
   const [uploadFile] = useUploadfileMutation();
   const [uploadFileList, setUploadFileList] = useState<string[]>([form.getFieldValue(name)]);
   let convertedFileList: UploadFile[] = [];
 
   if (uploadFileList[0]) {
-    convertedFileList = uploadFileList?.map(convertUploadFile);
+    convertedFileList = uploadFileList?.map(createUploadFile);
   }
 
   const handleUpload = (file: RcFile) => {
@@ -65,6 +68,7 @@ export default function CustomSingleUpload({ form, domain, name }: Props) {
   return (
     <S.UploadWrap name={name}>
       <Upload
+        accept={accept}
         listType="picture"
         className="upload-list-inline"
         showUploadList={{

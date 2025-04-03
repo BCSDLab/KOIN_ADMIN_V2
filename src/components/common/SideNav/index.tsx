@@ -92,7 +92,7 @@ const AccountContainer = styled(Flex)`
   button {
     border: none;
     box-shadow: none;
-    padding: 0 7px;;
+    padding: 0 7px;
   }
 `;
 

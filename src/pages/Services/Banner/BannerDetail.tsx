@@ -17,7 +17,7 @@ import BannerForm from './components/BannerForm/BannerForm';
 export default function BannerDetail() {
   const { id } = useParams();
   const editorRef = useRef<Editor | null>(null);
-  const { data: bannerData } = useGetBannerQuery(Number(id));
+  const { data: bannerData, isError, isLoading } = useGetBannerQuery(Number(id));
   const [form] = CustomForm.useForm();
   const { updateBanner, deleteBanner } = useBannerMutation();
 
@@ -81,56 +81,76 @@ export default function BannerDetail() {
     deleteBanner(Number(id));
   };
 
+  if (isLoading) {
+    return (
+      <>
+      </>
+    );
+  }
+
+  if (!bannerData || isError) {
+    return (
+      <S.Container>
+        <DetailHeading>해당 ID의 배너가 존재하지 않습니다.</DetailHeading>
+      </S.Container>
+    );
+  }
+
   return (
     <S.Container>
-      {bannerData ? (
-        <>
-          <DetailHeading>Banner Detail</DetailHeading>
-          <CustomBreadcrumb
-            items={[
-              { label: 'BannerList', path: '/banner' },
-              { label: 'BannerDetail' },
-              { label: bannerData.title },
-            ]}
-          />
-
-          <S.FormWrap>
-            <CustomForm
-              onFinish={handleFinish}
-              form={form}
-              initialValues={initialValues}
-              onValuesChange={handleValuesChange}
-            >
-              <BannerForm form={form} isEdit />
-            </CustomForm>
-            <Flex justify="end" gap="10px">
-              <CustomForm.Modal
-                buttonText="삭제"
-                title="배너 삭제하기"
-                footer={null}
-                open={isDeleteModalOpen}
-                onCancel={closeDeleteModal}
-                onClick={openDeleteModal}
-                isDelete
-              >
-                <ConfirmModal closeModal={closeDeleteModal} confirmText="삭제" cancelText="취소" description="삭제하겠습니까?" onConfirm={handleDelete} />
-              </CustomForm.Modal>
-              <CustomForm.Modal
-                buttonText="수정"
-                title="배너 수정하기"
-                footer={null}
-                open={isUpdateModalOpen}
-                onCancel={closeUpdateModal}
-                onClick={openUpdateModal}
-              >
-                <ConfirmModal closeModal={closeUpdateModal} confirmText="수정" cancelText="취소" description="수정 완료하겠습니까?" onConfirm={handleConfirm} />
-              </CustomForm.Modal>
-            </Flex>
-          </S.FormWrap>
-        </>
-      ) : (
-        <DetailHeading>해당 ID의 배너가 존재하지 않습니다.</DetailHeading>
-      )}
+      <DetailHeading>Banner Detail</DetailHeading>
+      <CustomBreadcrumb
+        items={[
+          { label: 'BannerList', path: '/banner' },
+          { label: 'BannerDetail' },
+          { label: bannerData.title },
+        ]}
+      />
+      <S.FormWrap>
+        <CustomForm
+          onFinish={handleFinish}
+          form={form}
+          initialValues={initialValues}
+          onValuesChange={handleValuesChange}
+        >
+          <BannerForm form={form} isEdit />
+        </CustomForm>
+        <Flex justify="end" gap="10px">
+          <CustomForm.Modal
+            buttonText="삭제"
+            title="배너 삭제하기"
+            footer={null}
+            open={isDeleteModalOpen}
+            onCancel={closeDeleteModal}
+            onClick={openDeleteModal}
+            isDelete
+          >
+            <ConfirmModal
+              closeModal={closeDeleteModal}
+              confirmText="삭제"
+              cancelText="취소"
+              description="삭제하겠습니까?"
+              onConfirm={handleDelete}
+            />
+          </CustomForm.Modal>
+          <CustomForm.Modal
+            buttonText="수정"
+            title="배너 수정하기"
+            footer={null}
+            open={isUpdateModalOpen}
+            onCancel={closeUpdateModal}
+            onClick={openUpdateModal}
+          >
+            <ConfirmModal
+              closeModal={closeUpdateModal}
+              confirmText="수정"
+              cancelText="취소"
+              description="수정 완료하겠습니까?"
+              onConfirm={handleConfirm}
+            />
+          </CustomForm.Modal>
+        </Flex>
+      </S.FormWrap>
     </S.Container>
   );
 }

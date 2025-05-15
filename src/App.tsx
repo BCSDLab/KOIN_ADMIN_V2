@@ -32,6 +32,9 @@ import History from 'pages/History';
 import BannerList from 'pages/Services/Banner/BannerList';
 import BannerWrite from 'pages/Services/Banner/BannerWrite';
 import BannerDetail from 'pages/Services/Banner/BannerDetail';
+import ClubList from 'pages/Services/Club/ClubList';
+import ClubDetail from 'pages/Services/Club/ClubDetail';
+import ClubWrite from 'pages/Services/Club/ClubWrite';
 
 function RequireAuth() {
   const location = useLocation();
@@ -82,6 +85,9 @@ function App() {
         <Route path="/banner" element={<BannerList />} />
         <Route path="banner/:id" element={<BannerDetail />} />
         <Route path="/banner/write" element={<BannerWrite />} />
+        <Route path="/club" element={<ClubList />} />
+        <Route path="/club/:id" element={<ClubDetail />} />
+        <Route path="/club/write" element={<ClubWrite />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>
     </Routes>

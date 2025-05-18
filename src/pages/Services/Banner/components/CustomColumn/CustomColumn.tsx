@@ -4,17 +4,17 @@ import type { ColumnsType } from 'antd/es/table';
 import { RedirectLink } from 'model/banner.model';
 import * as S from './CustomColumn.style';
 
-type Banner = {
+interface Banner {
   id: number;
   redirect_link: RedirectLink;
   is_active: boolean;
   priority: number | null;
-};
+}
 
-type Props = {
+interface Props {
   toggleBannerActive: (id: number, checked: boolean) => void;
   updateBannerPriority: (id: number, params: { change_type: 'UP' | 'DOWN' }) => void;
-};
+}
 
 export default function useBannerColumns({
   toggleBannerActive,

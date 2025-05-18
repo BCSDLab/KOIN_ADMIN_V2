@@ -6,6 +6,7 @@ export const ModalContent = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const Description = styled.div`
   font-size: 16px;
   font-weight: 600;

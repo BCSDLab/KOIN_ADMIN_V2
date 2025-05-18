@@ -1,10 +1,10 @@
 import { Switch } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 
-type Club = {
+interface Club {
   id: number;
   is_active: boolean;
-};
+}
 
 export default function CustomClubColumn() : ColumnType<Club>[] {
   return [

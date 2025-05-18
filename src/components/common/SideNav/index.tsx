@@ -4,7 +4,7 @@ import {
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
   UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
-  HistoryOutlined, FlagOutlined, BellOutlined,
+  HistoryOutlined, FlagOutlined, BellOutlined, CommentOutlined,
 } from '@ant-design/icons';
 import {
   Button, Flex, Menu, MenuProps,
@@ -44,6 +44,7 @@ const items: MenuProps['items'] = [
     getItem('복덕방', '/room', <HomeOutlined />),
     getItem('공지사항', '/notice', <NotificationOutlined />),
     getItem('배너 관리', '/banner', <BellOutlined />),
+    getItem('동아리 관리', '/club', <CommentOutlined />),
   ]),
 
   getItem('회원 관리', 'user', <UserOutlined />, [

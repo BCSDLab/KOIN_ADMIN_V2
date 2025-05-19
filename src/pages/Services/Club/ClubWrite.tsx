@@ -3,8 +3,8 @@ import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
 import * as S from 'styles/Detail.style';
 import useBooleanState from 'utils/hooks/useBoolean';
+import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import ClubForm from './Components/ClubForm/ClubForm';
-import ConfirmModal from './Components/ConfirmModal/ConfirmModal';
 
 export default function ClubWrite() {
   const [form] = CustomForm.useForm();

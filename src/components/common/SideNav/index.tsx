@@ -4,7 +4,7 @@ import {
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
   UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
-  HistoryOutlined, FlagOutlined, BellOutlined, CommentOutlined,
+  HistoryOutlined, FlagOutlined, BellOutlined, CommentOutlined, UsergroupAddOutlined,
 } from '@ant-design/icons';
 import {
   Button, Flex, Menu, MenuProps,
@@ -51,6 +51,8 @@ const items: MenuProps['items'] = [
     getItem('학생 회원', '/user', <UsergroupDeleteOutlined />),
     getItem('사장님', '/owner', <UserSwitchOutlined />),
     getItem('사장님 권한 요청', '/owner-request', <UserAddOutlined />),
+    getItem('동아리 관리자', '/club-manager', <UserAddOutlined />),
+    getItem('동아리 관리자 권한 요청', '/club-manager-request', <UsergroupAddOutlined />),
     getItem('BCSD Lab', '/member', <BoldOutlined />),
   ]),
 
@@ -69,7 +71,7 @@ const items: MenuProps['items'] = [
 
 const SideNavContainer = styled.nav`
   height: 100%;
-  width: 200px;
+  width: 230px;
   overflow-y: auto;
 `;
 

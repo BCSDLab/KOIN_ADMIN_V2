@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from 'antd';
 import * as S from './ConfirmModal.style';
 
@@ -11,7 +10,7 @@ interface ConfirmModalProps {
 }
 
 export default function ConfirmModal({
-  description, confirmText = '확인', cancelText = '취소', onConfirm, closeModal,
+  description, onConfirm, closeModal, confirmText = '확인', cancelText = '취소',
 }: ConfirmModalProps) {
   return (
     <S.ModalContent>

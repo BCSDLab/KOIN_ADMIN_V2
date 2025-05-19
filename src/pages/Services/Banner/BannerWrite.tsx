@@ -10,8 +10,8 @@ import DetailHeading from 'components/common/DetailHeading';
 import { BannerFormValues, BannerRequest } from 'model/banner.model';
 import emptyToNull from 'utils/ts/emptyToNull';
 import { Flex } from 'antd';
+import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import useBannerMutation from './useBannerMutation';
-import ConfirmModal from './components/ConfirmModal/ConfirmModal';
 import BannerForm from './components/BannerForm/BannerForm';
 import * as S from './BannerWrite.style';
 

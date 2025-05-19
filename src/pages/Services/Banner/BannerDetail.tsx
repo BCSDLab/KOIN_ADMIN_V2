@@ -10,8 +10,8 @@ import emptyToNull from 'utils/ts/emptyToNull';
 import CustomBreadcrumb from 'components/common/CustomBreadCrumb';
 import * as S from 'styles/Detail.style';
 import { Flex } from 'antd';
+import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import useBannerMutation from './useBannerMutation';
-import ConfirmModal from './components/ConfirmModal/ConfirmModal';
 import BannerForm from './components/BannerForm/BannerForm';
 
 export default function BannerDetail() {

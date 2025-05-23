@@ -35,6 +35,8 @@ import BannerDetail from 'pages/Services/Banner/BannerDetail';
 import ClubList from 'pages/Services/Club/ClubList';
 import ClubDetail from 'pages/Services/Club/ClubDetail';
 import ClubWrite from 'pages/Services/Club/ClubWrite';
+import ClubManagerList from 'pages/UserManage/ClubManager/ClubManagerList';
+import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubManagerRequestList';
 
 function RequireAuth() {
   const location = useLocation();
@@ -88,6 +90,8 @@ function App() {
         <Route path="/club" element={<ClubList />} />
         <Route path="/club/:id" element={<ClubDetail />} />
         <Route path="/club/write" element={<ClubWrite />} />
+        <Route path="/club-manager" element={<ClubManagerList />} />
+        <Route path="/club-manager-request" element={<ClubManagerRequestList />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>
     </Routes>

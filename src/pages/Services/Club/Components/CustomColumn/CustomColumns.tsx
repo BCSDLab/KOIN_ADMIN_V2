@@ -1,6 +1,6 @@
 import type { ColumnType } from 'antd/es/table';
-import ClubManagerList from 'pages/Services/Club/Components/ClubManagerList/ClubManagerList';
-import ClubActiveSwitch from 'pages/Services/Club/Components/ClubActiveSwitch/ClubActiveSwitch';
+import ClubManagerList from 'pages/Services/Club/Components/CustomColumn/ClubManagerList/ClubManagerList';
+import ClubActiveSwitch from 'pages/Services/Club/Components/CustomColumn/ClubActiveSwitch/ClubActiveSwitch';
 
 interface Club {
   id: number;

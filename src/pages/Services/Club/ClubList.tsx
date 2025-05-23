@@ -56,7 +56,7 @@ const ClubRes = {
 export default function ClubList() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const columns = CustomColumns();
+  const columns = CustomColumns({ toggleClubActive: () => {} });
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);

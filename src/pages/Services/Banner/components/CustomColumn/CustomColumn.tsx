@@ -1,8 +1,8 @@
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Switch } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { RedirectLink } from 'model/banner.model';
-import * as S from './CustomColumn.style';
+import BannerRedirectLinks from 'pages/Services/Banner/components/CustomColumn/BannerRedirectLink/BannerRedirectLink';
+import BannerActiveSwitch from 'pages/Services/Banner/components/CustomColumn/BannerActiveSwitch/BannerActiveSwitch';
+import BannerPriorityControl from 'pages/Services/Banner/components/CustomColumn/BannerPriorityControl/BannerPriorityControl';
 
 interface Banner {
   id: number;
@@ -25,31 +25,19 @@ export default function useBannerColumns({
       title: '광고 링크',
       key: 'redirect_link',
       dataIndex: 'redirect_link',
-      render: (value: RedirectLink) => (
-        <div>
-          {(['web', 'android', 'ios'] as const).map((platform) => {
-            const url = value[platform];
-            return url ? (
-              <div key={platform}>
-                {`${platform}: ${url}`}
-              </div>
-            ) : null;
-          })}
-        </div>
-      ),
+      render: (value: RedirectLink) => <BannerRedirectLinks link={value} />,
     },
     {
       title: '활성화 여부',
       key: 'is_active',
       dataIndex: 'is_active',
       render: (value: boolean, record: Banner) => (
-        <Switch
-          checked={value}
-          onClick={(_, event) => event.stopPropagation()}
-          onChange={(checked) => {
-            toggleBannerActive(record.id, checked);
-          }}
+        <BannerActiveSwitch
+          id={record.id}
+          isActive={value}
+          onToggle={toggleBannerActive}
         />
+
       ),
     },
     {
@@ -57,25 +45,11 @@ export default function useBannerColumns({
       key: 'priority',
       dataIndex: 'priority',
       render: (value: number | null, record: Banner) => (
-        <S.PriorityWrapper>
-          <>
-            <CaretUpOutlined
-              style={{ fontSize: 20, cursor: 'pointer' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                updateBannerPriority(record.id, { change_type: 'UP' });
-              }}
-            />
-            <S.PriorityValue>{value !== null ? value : ''}</S.PriorityValue>
-            <CaretDownOutlined
-              style={{ fontSize: 20, cursor: 'pointer' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                updateBannerPriority(record.id, { change_type: 'DOWN' });
-              }}
-            />
-          </>
-        </S.PriorityWrapper>
+        <BannerPriorityControl
+          id={record.id}
+          priority={value}
+          onChangePriority={updateBannerPriority}
+        />
       ),
     },
   ];

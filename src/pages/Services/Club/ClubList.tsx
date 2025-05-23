@@ -5,7 +5,7 @@ import CLUB_OPTION from 'constant/club';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './ClubList.style';
-import CustomClubColumn from './Components/CustomColumn/CustomColumn';
+import CustomColumns from './Components/CustomColumns/CustomColumns';
 
 const ClubRes = {
   total_page: 2,
@@ -56,7 +56,7 @@ const ClubRes = {
 export default function ClubList() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const columns = CustomClubColumn();
+  const columns = CustomColumns();
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);

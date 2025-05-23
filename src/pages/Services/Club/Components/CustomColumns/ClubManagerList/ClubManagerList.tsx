@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function ClubManagerList({ managers }: Props) {
-  if (!managers || managers.length === 0) return <>-</>;
+  if (!managers || managers.length === 0) return <div>-</div>;
 
   const display = managers.map((m) => {
     if (m.name && m.user_id) return `${m.name}/${m.user_id}`;

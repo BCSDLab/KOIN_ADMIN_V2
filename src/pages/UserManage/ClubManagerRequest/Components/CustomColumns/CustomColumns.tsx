@@ -4,23 +4,24 @@ import DetailInfo from 'pages/UserManage/ClubManagerRequest/Components/CustomCol
 
 interface ClubManagerRequestList {
   id: number;
-  is_active: boolean;
+  club_name: string;
+  is_accept: boolean;
   info: boolean;
 }
 
 export default function CustomClubManagerColumns(): ColumnType<ClubManagerRequestList>[] {
   return [
     {
-      key: 'is_active',
-      dataIndex: 'is_active',
+      key: 'is_accept',
+      dataIndex: 'is_accept',
       title: '승인/반려',
-      render: () => <AcceptModal />,
+      render: (_, record) => <AcceptModal club_name={record.club_name} />,
     },
     {
       key: 'info',
       dataIndex: 'info',
       title: '정보보기',
-      render: () => <DetailInfo />,
+      render: (_, record) => <DetailInfo name={record.club_name} />,
     },
   ];
 }

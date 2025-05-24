@@ -18,7 +18,7 @@ export const TITLE_MAPPER: Record<string, string> = {
   student_number: '학번',
   category_names: '카테고리',
   phone: '번호',
-  phone_number: '번호',
+  phone_number: '전화번호',
   shop_name: '상점명',
   shop_id: '상점 ID',
   image_url: '이미지',
@@ -31,4 +31,8 @@ export const TITLE_MAPPER: Record<string, string> = {
   is_active: '활성화 여부',
   priority: '우선순위',
   created_at: '생성일',
+  club_category_name: '분과 카테고리',
+  club_managers: '동아리 관리자',
+  club_manager_name: '이름',
+  club_name: '동아리명',
 };

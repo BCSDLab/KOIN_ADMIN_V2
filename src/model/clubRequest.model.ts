@@ -14,6 +14,7 @@ export interface PendingClubResponse extends ListPagination {
 
 export interface PendingClub {
   name: string;
+  role: string;
   requester_phone_number: string;
   requester_name: string;
   club_category: string;

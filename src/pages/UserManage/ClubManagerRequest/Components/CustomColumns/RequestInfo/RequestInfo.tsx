@@ -26,6 +26,11 @@ export default function RequestInfo({ name }: RequestInfoProps) {
         </S.SectionTitle>
       </Divider>
       <S.Content>
+        직책 :
+        {' '}
+        {PendingClubRes.role}
+      </S.Content>
+      <S.Content>
         이름 :
         {' '}
         {PendingClubRes.requester_name}

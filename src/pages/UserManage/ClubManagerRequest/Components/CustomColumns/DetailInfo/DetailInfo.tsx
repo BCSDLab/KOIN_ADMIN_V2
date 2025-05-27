@@ -3,7 +3,11 @@ import { Button, Drawer } from 'antd';
 import RequestInfo from 'pages/UserManage/ClubManagerRequest/Components/CustomColumns/RequestInfo/RequestInfo';
 import useBooleanState from 'utils/hooks/useBoolean';
 
-export default function DetailInfo() {
+interface DetailInfoProps {
+  name: string;
+}
+
+export default function DetailInfo({ name }: DetailInfoProps) {
   const {
     setTrue: openDrawer,
     value: isDrawerOpen,
@@ -29,7 +33,7 @@ export default function DetailInfo() {
         open={isDrawerOpen}
         onClose={closeDrawer}
       >
-        <RequestInfo />
+        <RequestInfo name={name} />
       </Drawer>
     </>
 

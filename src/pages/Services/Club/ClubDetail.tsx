@@ -1,16 +1,35 @@
 import { Flex } from 'antd';
+import { useMemo, Suspense } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetClubCategoryListQuery, useGetClubQuery } from 'store/api/club';
+import {
+  ClubUpdateFormValues, ClubUpdateRequest,
+} from 'model/club.model';
 import CustomBreadcrumb from 'components/common/CustomBreadCrumb';
 import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
-// import { useParams } from 'react-router-dom';
-import * as S from 'styles/Detail.style';
 import useBooleanState from 'utils/hooks/useBoolean';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
+import * as S from 'styles/Detail.style';
 import ClubForm from './Components/ClubForm/ClubForm';
+import useClubMutation from './useClubMutation';
 
-export default function ClubDetail() {
-  // const { id } = useParams();
+function LoadingFallback() {
+  return (
+    <S.Container>
+      <DetailHeading>동아리 정보 로딩 중...</DetailHeading>
+    </S.Container>
+  );
+}
+
+function ClubDetailContent() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [form] = CustomForm.useForm();
+
+  const { data: clubData } = useGetClubQuery(Number(id));
+  const { data: clubCategory } = useGetClubCategoryListQuery();
+  const { updateClub } = useClubMutation();
 
   const {
     setTrue: openUpdateModal,
@@ -31,7 +50,78 @@ export default function ClubDetail() {
 
   const handleCancel = () => {
     closeCancelModal();
+    navigate(-1);
   };
+
+  const clubCategoryOptions = useMemo(() => {
+    if (!clubCategory) return {};
+
+    return Object.fromEntries(
+      clubCategory.club_categories.map((category) => [String(category.id), category.name]),
+    );
+  }, [clubCategory]);
+
+  const initialValues = useMemo(() => {
+    if (!clubData || !clubCategoryOptions) return null;
+
+    const firstManager = clubData.club_managers?.[0] ?? {};
+    const managerFields = {
+      user_id: firstManager.user_id,
+      manager_name: firstManager.name,
+      manager_phone: firstManager.phone_number,
+    };
+
+    const snsFields = Object.fromEntries(
+      clubData.sns_contacts?.map((sns) => {
+        switch (sns.sns_type) {
+          case '전화 번호':
+            return ['phone_number', sns.contact];
+          case '인스타그램':
+            return ['instagram', sns.contact];
+          case '구글 폼':
+            return ['google_form', sns.contact];
+          case '오픈 채팅':
+            return ['open_chat', sns.contact];
+          default:
+            return [];
+        }
+      }).filter((entry) => entry.length > 0),
+    );
+
+    const categoryId = Object.entries(clubCategoryOptions).find(
+      ([, name]) => name === clubData.club_category_name,
+    )?.[0];
+
+    return {
+      ...clubData,
+      ...managerFields,
+      ...snsFields,
+      club_category_id: categoryId ? Number(categoryId) : undefined,
+    };
+  }, [clubData, clubCategoryOptions]);
+
+  const handleFinish = (values : ClubUpdateFormValues) => {
+    const payload: ClubUpdateRequest = {
+      ...values,
+      club_managers: [{
+        user_id: values.user_id,
+      }],
+    };
+    updateClub(payload);
+  };
+
+  const handleValuesChange = (changedValues: any) => {
+    if ('club_category_name' in changedValues) {
+      const selectedId = changedValues.club_category_name;
+      form.setFieldsValue({
+        club_category_id: Number(selectedId),
+      });
+    }
+  };
+
+  if (!clubData || !initialValues) {
+    return null;
+  }
 
   return (
     <S.Container>
@@ -40,12 +130,18 @@ export default function ClubDetail() {
         items={[
           { label: 'ClubList', path: '/club' },
           { label: 'ClubDetail' },
-          // { label: ClubData.title },
+          { label: clubData!.name },
         ]}
       />
+
       <S.FormWrap>
-        <CustomForm form={form}>
-          <ClubForm form={form} />
+        <CustomForm
+          form={form}
+          onFinish={handleFinish}
+          initialValues={initialValues || {}}
+          onValuesChange={handleValuesChange}
+        >
+          <ClubForm form={form} categoryOptions={clubCategoryOptions} />
         </CustomForm>
         <Flex justify="end" gap="10px">
           <CustomForm.Modal
@@ -84,5 +180,13 @@ export default function ClubDetail() {
         </Flex>
       </S.FormWrap>
     </S.Container>
+  );
+}
+
+export default function ClubDetail() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <ClubDetailContent />
+    </Suspense>
   );
 }

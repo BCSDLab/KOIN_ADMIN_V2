@@ -1,18 +1,31 @@
 import { Flex } from 'antd';
+import { ClubFormValues, ClubRequest } from 'model/club.model';
+import { useGetClubCategoryListQuery } from 'store/api/club';
 import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
-import * as S from 'styles/Detail.style';
-import useBooleanState from 'utils/hooks/useBoolean';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
+import useBooleanState from 'utils/hooks/useBoolean';
+import * as S from 'styles/Detail.style';
+import useClubMutation from './useClubMutation';
 import ClubForm from './Components/ClubForm/ClubForm';
 
 export default function ClubWrite() {
   const [form] = CustomForm.useForm();
 
+  const { data: ClubCategory } = useGetClubCategoryListQuery();
+  const { addClub } = useClubMutation();
+
+  const clubCategoryOptions: Record<string, string> = ClubCategory
+    ? ClubCategory.club_categories.reduce((categoryMap, clubCategory) => {
+      categoryMap[String(clubCategory.id)] = clubCategory.name;
+      return categoryMap;
+    }, {} as Record<string, string>)
+    : {};
+
   const {
-    setTrue: openUpdateModal,
-    value: isUpdateModalOpen,
-    setFalse: closeUpdateModal,
+    setTrue: openAddModal,
+    value: isAddModalOpen,
+    setFalse: closeAddModal,
   } = useBooleanState();
 
   const {
@@ -23,19 +36,42 @@ export default function ClubWrite() {
 
   const handleConfirm = () => {
     form.submit();
-    closeUpdateModal();
+    closeAddModal();
   };
 
   const handleCancel = () => {
     closeCancelModal();
   };
 
+  const handleFinish = (values: ClubFormValues) => {
+    const payload: ClubRequest = {
+      ...values,
+      club_managers: [{
+        user_id: values.user_id,
+      }],
+    };
+    addClub(payload);
+  };
+
+  const handleValuesChange = (changedValues: any) => {
+    if ('club_category_name' in changedValues) {
+      const selectedId = changedValues.club_category_name;
+      form.setFieldsValue({
+        club_category_id: Number(selectedId),
+      });
+    }
+  };
+
   return (
     <S.Container>
       <DetailHeading>동아리 추가</DetailHeading>
       <S.FormWrap>
-        <CustomForm form={form}>
-          <ClubForm form={form} />
+        <CustomForm
+          form={form}
+          onFinish={handleFinish}
+          onValuesChange={handleValuesChange}
+        >
+          <ClubForm form={form} categoryOptions={clubCategoryOptions} />
         </CustomForm>
         <Flex justify="end" gap="10px">
           <CustomForm.Modal
@@ -59,12 +95,12 @@ export default function ClubWrite() {
             buttonText="등록"
             title="등록하기"
             footer={null}
-            open={isUpdateModalOpen}
-            onCancel={closeUpdateModal}
-            onClick={openUpdateModal}
+            open={isAddModalOpen}
+            onCancel={closeAddModal}
+            onClick={openAddModal}
           >
             <ConfirmModal
-              closeModal={closeUpdateModal}
+              closeModal={closeAddModal}
               confirmText="등록"
               cancelText="취소"
               description="동아리를 등록하시겠습니까?"

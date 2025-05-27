@@ -1,9 +1,14 @@
 import { Space } from 'antd';
+import useClubManagerRequestMutation from 'pages/UserManage/ClubManagerRequest/useClubManagerRequestMutation';
 import CustomForm from 'components/common/CustomForm';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import useBooleanState from 'utils/hooks/useBoolean';
 
-export default function AcceptModal() {
+interface AcceptModalProps {
+  club_name: string;
+}
+
+export default function AcceptModal({ club_name }: AcceptModalProps) {
   const {
     setTrue: openAcceptModal,
     value: isAcceptModalOpen,
@@ -16,11 +21,15 @@ export default function AcceptModal() {
     setFalse: closeRejectModal,
   } = useBooleanState();
 
+  const { decidePendingClub } = useClubManagerRequestMutation();
+
   const handleConfirm = () => {
+    decidePendingClub(club_name, true);
     closeAcceptModal();
   };
 
   const handleReject = () => {
+    decidePendingClub(club_name, false);
     closeRejectModal();
   };
 

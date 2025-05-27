@@ -14,18 +14,18 @@ export default function ClubList() {
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<number>();
 
-  const { data: ClubCategory } = useGetClubCategoryListQuery();
+  const { data: clubCategory } = useGetClubCategoryListQuery();
   const { toggleClubActive } = useClubMutation();
-  const { data: ClubRes } = useGetClubListQuery({
+  const { data: clubRes } = useGetClubListQuery({
     page,
-    club_category_id: selectedCategory,
+    club_category_id: selectedCategory === undefined ? null : selectedCategory,
   });
 
-  const clubCategoryOptions: Record<string, string> = ClubCategory
+  const clubCategoryOptions: Record<string, string> = clubCategory
     ? {
       0: '전체',
-      ...ClubCategory.club_categories.reduce((categoryMap, clubCategory) => {
-        categoryMap[clubCategory.id] = clubCategory.name;
+      ...clubCategory.club_categories.reduce((categoryMap, category) => {
+        categoryMap[category.id] = category.name;
         return categoryMap;
       }, {} as Record<string, string>),
     }
@@ -48,13 +48,13 @@ export default function ClubList() {
         />
       </Flex>
 
-      {ClubRes && (
+      {clubRes && (
         <CustomTable
-          data={ClubRes.clubs}
+          data={clubRes.clubs}
           pagination={{
             current: page,
             onChange: setPage,
-            total: ClubRes.total_page,
+            total: clubRes.total_page,
           }}
           columnSize={[5, 10, 10, 15, 10, 10, 10]}
           columns={columns}

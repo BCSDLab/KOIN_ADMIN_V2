@@ -1,25 +1,36 @@
 import { Col, Divider, Flex } from 'antd';
 import { useGetPendingClubQuery } from 'store/api/clubRequest';
+import { Suspense } from 'react';
 import * as S from './RequestInfo.style';
 
 interface RequestInfoProps {
   name: string;
 }
 
-export default function RequestInfo({ name }: RequestInfoProps) {
-  const { data: PendingClubRes } = useGetPendingClubQuery(name);
+function LoadingFallback() {
+  return <div>동아리 요청 정보 로딩 중...</div>;
+}
 
-  if (!PendingClubRes) {
-    return <div>Loading...</div>;
+function RequestInfoContent({ name }: RequestInfoProps) {
+  const { data: pendingClubRes } = useGetPendingClubQuery(name);
+
+  if (!pendingClubRes) {
+    return null;
   }
 
   return (
     <>
-      <S.Title>
-        동아리명 :
-        {' '}
-        {PendingClubRes.name}
-      </S.Title>
+      <Flex gap={20}>
+        <S.Title>
+          동아리명 :
+          {' '}
+          {pendingClubRes.name}
+        </S.Title>
+        <S.Content>
+          <S.ClubImage src={pendingClubRes.image_url} alt="club" />
+        </S.Content>
+      </Flex>
+
       <Divider orientation="left">
         <S.SectionTitle>
           동아리 관리자
@@ -28,45 +39,42 @@ export default function RequestInfo({ name }: RequestInfoProps) {
       <S.Content>
         직책 :
         {' '}
-        {PendingClubRes.role}
+        {pendingClubRes.role}
       </S.Content>
       <S.Content>
         이름 :
         {' '}
-        {PendingClubRes.requester_name}
+        {pendingClubRes.requester_name}
       </S.Content>
       <S.Content>
         전화번호 :
         {' '}
-        {PendingClubRes.requester_phone_number}
+        {pendingClubRes.requester_phone_number}
       </S.Content>
       <Divider orientation="left">
         <S.SectionTitle>
           동아리 정보
         </S.SectionTitle>
       </Divider>
-      <Flex justify="start" gap={50}>
-        <Col>
-          <S.Content>
-            분과 :
-            {' '}
-            {PendingClubRes.club_category}
-          </S.Content>
-          <S.Content>
-            동아리 방 위치 :
-            {' '}
-            {PendingClubRes.location}
-          </S.Content>
-          <S.Content>
-            동아리 소개 :
-            {' '}
-            {PendingClubRes.description}
-          </S.Content>
-        </Col>
+
+      <Col>
         <S.Content>
-          <img src={PendingClubRes.image_url} alt="club" style={{ width: 400, height: 'auto' }} />
+          분과 :
+          {' '}
+          {pendingClubRes.club_category}
         </S.Content>
-      </Flex>
+        <S.Content>
+          동아리 방 위치 :
+          {' '}
+          {pendingClubRes.location}
+        </S.Content>
+        <S.Content>
+          동아리 소개 :
+          {' '}
+          {pendingClubRes.description}
+        </S.Content>
+      </Col>
+
       <Divider orientation="left">
         <S.SectionTitle>
           연락처
@@ -76,23 +84,31 @@ export default function RequestInfo({ name }: RequestInfoProps) {
       <S.Content>
         인스타그램 :
         {' '}
-        <a href={PendingClubRes.instagram} target="_blank" rel="noreferrer">{PendingClubRes.instagram}</a>
+        <a href={pendingClubRes.instagram} target="_blank" rel="noreferrer">{pendingClubRes.instagram}</a>
       </S.Content>
       <S.Content>
         구글 폼 :
         {' '}
-        <a href={PendingClubRes.google_form} target="_blank" rel="noreferrer">{PendingClubRes.google_form}</a>
+        <a href={pendingClubRes.google_form} target="_blank" rel="noreferrer">{pendingClubRes.google_form}</a>
       </S.Content>
       <S.Content>
         오픈채팅 :
         {' '}
-        <a href={PendingClubRes.open_chat} target="_blank" rel="noreferrer">{PendingClubRes.open_chat}</a>
+        <a href={pendingClubRes.open_chat} target="_blank" rel="noreferrer">{pendingClubRes.open_chat}</a>
       </S.Content>
       <S.Content>
         대표 전화 :
         {' '}
-        {PendingClubRes.phone_number}
+        {pendingClubRes.phone_number}
       </S.Content>
     </>
+  );
+}
+
+export default function RequestInfo({ name }: RequestInfoProps) {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <RequestInfoContent name={name} />
+    </Suspense>
   );
 }

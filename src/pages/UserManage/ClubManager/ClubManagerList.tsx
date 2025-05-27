@@ -5,11 +5,11 @@ import * as S from './ClubManagerList.style';
 
 export default function ClubManagerList() {
   const [page, setPage] = useState(1);
-  const { data: ClubManagerRes } = useGetAcceptedClubListQuery({ page });
+  const { data: clubManagerRes } = useGetAcceptedClubListQuery({ page });
 
-  const transformedRes = ClubManagerRes && {
-    ...ClubManagerRes,
-    clubs: ClubManagerRes.clubs.map((club, index) => {
+  const transformedRes = clubManagerRes && {
+    ...clubManagerRes,
+    clubs: clubManagerRes.clubs.map((club, index) => {
       const { club_id: clubId, ...rest } = club;
       return {
         id: index + 1,

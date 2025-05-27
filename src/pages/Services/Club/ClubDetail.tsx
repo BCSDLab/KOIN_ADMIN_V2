@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import { useMemo } from 'react';
+import { useMemo, Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetClubCategoryListQuery, useGetClubQuery } from 'store/api/club';
 import {
@@ -14,14 +14,21 @@ import * as S from 'styles/Detail.style';
 import ClubForm from './Components/ClubForm/ClubForm';
 import useClubMutation from './useClubMutation';
 
-export default function ClubDetail() {
-  const navigate = useNavigate();
+function LoadingFallback() {
+  return (
+    <S.Container>
+      <DetailHeading>동아리 정보 로딩 중...</DetailHeading>
+    </S.Container>
+  );
+}
 
+function ClubDetailContent() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [form] = CustomForm.useForm();
 
-  const { data: ClubData, isLoading, isError } = useGetClubQuery(Number(id));
-  const { data: ClubCategory } = useGetClubCategoryListQuery();
+  const { data: clubData } = useGetClubQuery(Number(id));
+  const { data: clubCategory } = useGetClubCategoryListQuery();
   const { updateClub } = useClubMutation();
 
   const {
@@ -46,56 +53,52 @@ export default function ClubDetail() {
     navigate(-1);
   };
 
-  const clubCategoryOptions: Record<string, string> = useMemo(() => (
-    ClubCategory
-      ? ClubCategory.club_categories.reduce((categoryMap: Record<string, string>, clubCategory) => {
-        categoryMap[String(clubCategory.id)] = clubCategory.name;
-        return categoryMap;
-      }, {} as Record<string, string>)
-      : {}
-  ), [ClubCategory]);
+  const clubCategoryOptions = useMemo(() => {
+    if (!clubCategory) return {};
+
+    return Object.fromEntries(
+      clubCategory.club_categories.map((category) => [String(category.id), category.name]),
+    );
+  }, [clubCategory]);
 
   const initialValues = useMemo(() => {
-    if (!ClubData || !clubCategoryOptions) return undefined;
+    if (!clubData || !clubCategoryOptions) return null;
 
-    const firstManager = ClubData.club_managers?.[0] ?? {};
+    const firstManager = clubData.club_managers?.[0] ?? {};
     const managerFields = {
       user_id: firstManager.user_id,
       manager_name: firstManager.name,
       manager_phone: firstManager.phone_number,
     };
 
-    const snsFields = ClubData.sns_contacts?.reduce((acc, contact) => {
-      switch (contact.sns_type) {
-        case '전화 번호':
-          acc.phone_number = contact.contact;
-          break;
-        case '인스타그램':
-          acc.instagram = contact.contact;
-          break;
-        case '구글 폼':
-          acc.google_form = contact.contact;
-          break;
-        case '오픈 채팅':
-          acc.open_chat = contact.contact;
-          break;
-        default:
-          break;
-      }
-      return acc;
-    }, {} as Record<string, string>);
+    const snsFields = Object.fromEntries(
+      clubData.sns_contacts?.map((sns) => {
+        switch (sns.sns_type) {
+          case '전화 번호':
+            return ['phone_number', sns.contact];
+          case '인스타그램':
+            return ['instagram', sns.contact];
+          case '구글 폼':
+            return ['google_form', sns.contact];
+          case '오픈 채팅':
+            return ['open_chat', sns.contact];
+          default:
+            return [];
+        }
+      }).filter((entry) => entry.length > 0),
+    );
 
     const categoryId = Object.entries(clubCategoryOptions).find(
-      ([, name]) => name === ClubData.club_category_name,
+      ([, name]) => name === clubData.club_category_name,
     )?.[0];
 
     return {
-      ...ClubData,
+      ...clubData,
       ...managerFields,
       ...snsFields,
       club_category_id: categoryId ? Number(categoryId) : undefined,
     };
-  }, [ClubData, clubCategoryOptions]);
+  }, [clubData, clubCategoryOptions]);
 
   const handleFinish = (values : ClubUpdateFormValues) => {
     const payload: ClubUpdateRequest = {
@@ -116,21 +119,6 @@ export default function ClubDetail() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <>
-      </>
-    );
-  }
-
-  if (!ClubData || isError) {
-    return (
-      <S.Container>
-        <DetailHeading>해당 ID의 동아리가 존재하지 않습니다.</DetailHeading>
-      </S.Container>
-    );
-  }
-
   return (
     <S.Container>
       <DetailHeading>Club Detail</DetailHeading>
@@ -138,14 +126,15 @@ export default function ClubDetail() {
         items={[
           { label: 'ClubList', path: '/club' },
           { label: 'ClubDetail' },
-          { label: ClubData!.name },
+          { label: clubData!.name },
         ]}
       />
+
       <S.FormWrap>
         <CustomForm
           form={form}
           onFinish={handleFinish}
-          initialValues={initialValues}
+          initialValues={initialValues || {}}
           onValuesChange={handleValuesChange}
         >
           <ClubForm form={form} categoryOptions={clubCategoryOptions} />
@@ -187,5 +176,13 @@ export default function ClubDetail() {
         </Flex>
       </S.FormWrap>
     </S.Container>
+  );
+}
+
+export default function ClubDetail() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <ClubDetailContent />
+    </Suspense>
   );
 }

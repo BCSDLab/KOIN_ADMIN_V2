@@ -70,5 +70,5 @@ export interface ClubCategoryResponse {
 
 export interface ClubParams {
   page: number;
-  club_category_id: number | undefined;
+  club_category_id: number | null;
 }

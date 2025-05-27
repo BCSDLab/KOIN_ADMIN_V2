@@ -119,6 +119,10 @@ function ClubDetailContent() {
     }
   };
 
+  if (!clubData || !initialValues) {
+    return null;
+  }
+
   return (
     <S.Container>
       <DetailHeading>Club Detail</DetailHeading>

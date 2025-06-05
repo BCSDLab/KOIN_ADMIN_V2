@@ -12,7 +12,8 @@ function LoadingFallback() {
 }
 
 function RequestInfoContent({ name }: RequestInfoProps) {
-  const { data: pendingClubRes } = useGetPendingClubQuery(name);
+  const encodedName = encodeURIComponent(name);
+  const { data: pendingClubRes } = useGetPendingClubQuery(encodedName);
 
   if (!pendingClubRes) {
     return null;

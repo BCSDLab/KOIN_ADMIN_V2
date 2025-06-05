@@ -4,6 +4,8 @@ import { useGetPendingClubListQuery } from 'store/api/clubRequest';
 import customColumns from './Components/CustomColumns/CustomColumns';
 import * as S from './ClubManagerRequestList.style';
 
+const pageSize = 10;
+
 export default function ClubManagerList() {
   const [page, setPage] = useState(1);
   const { data: clubManagerRes } = useGetPendingClubListQuery({ page });
@@ -13,7 +15,7 @@ export default function ClubManagerList() {
     clubs: clubManagerRes.clubs.map((club, index) => {
       const { club_id: clubId, ...rest } = club;
       return {
-        id: index + 1,
+        id: (page - 1) * pageSize + index + 1,
         ...rest,
         is_accept: true,
         info: true,

@@ -1,6 +1,6 @@
-import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { useGetPendingClubListQuery } from 'store/api/clubRequest';
+import CustomTable from 'components/common/CustomTable';
 import customColumns from './Components/CustomColumns/CustomColumns';
 import * as S from './ClubManagerRequestList.style';
 
@@ -14,8 +14,9 @@ export default function ClubManagerList() {
     ...clubManagerRes,
     clubs: clubManagerRes.clubs.map((club, index) => {
       const { club_id: clubId, ...rest } = club;
+
       return {
-        id: (page - 1) * pageSize + index + 1,
+        id: clubManagerRes.total_count - ((page - 1) * pageSize + index),
         ...rest,
         is_accept: true,
         info: true,

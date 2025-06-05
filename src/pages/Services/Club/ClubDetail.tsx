@@ -141,7 +141,7 @@ function ClubDetailContent() {
           initialValues={initialValues || {}}
           onValuesChange={handleValuesChange}
         >
-          <ClubForm form={form} categoryOptions={clubCategoryOptions} />
+          <ClubForm form={form} categoryOptions={clubCategoryOptions} isEdit />
         </CustomForm>
         <Flex justify="end" gap="10px">
           <CustomForm.Modal

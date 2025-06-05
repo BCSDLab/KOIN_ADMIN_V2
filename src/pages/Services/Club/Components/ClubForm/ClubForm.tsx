@@ -38,7 +38,7 @@ export default function ClubForm({ form, categoryOptions }: ClubFormProps) {
         <CustomForm.Input label="좋아요" name="likes" disabled />
         <CustomForm.Input label="등록일자" name="created_at" disabled />
       </CustomForm.GridRow>
-      <CustomForm.Input label="동아리 소개" name="description" rules={[required()]} />
+      <CustomForm.Input label="동아리 소개" name="description" />
 
       <Divider orientation="left">연락처</Divider>
       <CustomForm.Input label="전화" name="phone_number" />

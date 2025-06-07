@@ -1,7 +1,9 @@
 import { ListPagination } from './common.model';
 
 export interface PendingClubTableHead {
+  index: number;
   club_id: number;
+  club_manager_id: number;
   club_manager_name: string;
   phone_number: string;
   created_at: string;

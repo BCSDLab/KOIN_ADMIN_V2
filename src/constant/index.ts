@@ -33,6 +33,7 @@ export const TITLE_MAPPER: Record<string, string> = {
   created_at: '생성일',
   club_category_name: '분과 카테고리',
   club_managers: '동아리 관리자',
+  club_manager_id: '동아리 관리자 ID',
   club_manager_name: '이름',
   club_name: '동아리명',
 };

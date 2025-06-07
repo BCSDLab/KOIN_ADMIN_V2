@@ -9,10 +9,10 @@ export default function ClubManagerList() {
 
   const transformedRes = clubManagerRes && {
     ...clubManagerRes,
-    clubs: clubManagerRes.clubs.map((club, index) => {
-      const { club_id: clubId, ...rest } = club;
+    clubs: clubManagerRes.clubs.map((club) => {
+      const { index, club_id: clubId, ...rest } = club;
       return {
-        id: index + 1,
+        id: index,
         ...rest,
       };
     }),
@@ -29,7 +29,7 @@ export default function ClubManagerList() {
           onChange: setPage,
           total: transformedRes.total_page,
         }}
-        columnSize={[10, 25, 15, 25, 25]}
+        columnSize={[5, 15, 15, 15, 15, 25]}
         onClick={() => { }}
       />
       )}

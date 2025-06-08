@@ -3,10 +3,11 @@ import CustomForm from 'components/common/CustomForm';
 
 interface ClubFormProps {
   form: FormInstance;
+  isEdit: boolean;
   categoryOptions: Record<string, string>;
 }
 
-export default function ClubForm({ form, categoryOptions }: ClubFormProps) {
+export default function ClubForm({ form, categoryOptions, isEdit }: ClubFormProps) {
   const { required } = CustomForm.validateUtils();
 
   return (
@@ -38,7 +39,7 @@ export default function ClubForm({ form, categoryOptions }: ClubFormProps) {
         <CustomForm.Input label="좋아요" name="likes" disabled />
         <CustomForm.Input label="등록일자" name="created_at" disabled />
       </CustomForm.GridRow>
-      <CustomForm.Input label="동아리 소개" name="description" rules={[required()]} />
+      <CustomForm.Input label="동아리 소개" name="description" />
 
       <Divider orientation="left">연락처</Divider>
       <CustomForm.Input label="전화" name="phone_number" />
@@ -50,7 +51,7 @@ export default function ClubForm({ form, categoryOptions }: ClubFormProps) {
       <CustomForm.SingleUpload form={form} name="image_url" domain="club" accept="image/*" />
 
       <Divider orientation="left" style={{ marginTop: '40px' }} />
-      <CustomForm.Switch label="활성화 여부" name="is_active" />
+      <CustomForm.Switch label="활성화 여부" name="is_active" disabled={!isEdit} />
     </>
   );
 }

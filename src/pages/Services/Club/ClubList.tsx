@@ -56,7 +56,7 @@ export default function ClubList() {
             onChange: setPage,
             total: clubRes.total_page,
           }}
-          columnSize={[5, 10, 10, 15, 10, 10, 10]}
+          columnSize={[5, 15, 10, 15, 10, 10, 10]}
           columns={columns}
         />
       )}

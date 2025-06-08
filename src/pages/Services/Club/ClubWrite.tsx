@@ -1,4 +1,6 @@
 import { Flex } from 'antd';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ClubFormValues, ClubRequest } from 'model/club.model';
 import { useGetClubCategoryListQuery } from 'store/api/club';
 import CustomForm from 'components/common/CustomForm';
@@ -11,6 +13,7 @@ import ClubForm from './Components/ClubForm/ClubForm';
 
 export default function ClubWrite() {
   const [form] = CustomForm.useForm();
+  const navigate = useNavigate();
 
   const { data: ClubCategory } = useGetClubCategoryListQuery();
   const { addClub } = useClubMutation();
@@ -41,6 +44,7 @@ export default function ClubWrite() {
 
   const handleCancel = () => {
     closeCancelModal();
+    navigate(-1);
   };
 
   const handleFinish = (values: ClubFormValues) => {
@@ -62,6 +66,12 @@ export default function ClubWrite() {
     }
   };
 
+  useEffect(() => {
+    form.setFieldsValue({
+      is_active: true,
+    });
+  }, [form]);
+
   return (
     <S.Container>
       <DetailHeading>동아리 추가</DetailHeading>
@@ -71,7 +81,7 @@ export default function ClubWrite() {
           onFinish={handleFinish}
           onValuesChange={handleValuesChange}
         >
-          <ClubForm form={form} categoryOptions={clubCategoryOptions} />
+          <ClubForm form={form} categoryOptions={clubCategoryOptions} isEdit={false} />
         </CustomForm>
         <Flex justify="end" gap="10px">
           <CustomForm.Modal

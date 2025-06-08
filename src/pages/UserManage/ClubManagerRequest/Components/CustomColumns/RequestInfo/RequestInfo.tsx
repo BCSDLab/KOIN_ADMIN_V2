@@ -1,4 +1,4 @@
-import { Col, Divider, Flex } from 'antd';
+import { Col, Divider } from 'antd';
 import { useGetPendingClubQuery } from 'store/api/clubRequest';
 import { Suspense } from 'react';
 import * as S from './RequestInfo.style';
@@ -12,7 +12,8 @@ function LoadingFallback() {
 }
 
 function RequestInfoContent({ name }: RequestInfoProps) {
-  const { data: pendingClubRes } = useGetPendingClubQuery(name);
+  const encodedName = encodeURIComponent(name);
+  const { data: pendingClubRes } = useGetPendingClubQuery(encodedName);
 
   if (!pendingClubRes) {
     return null;
@@ -20,16 +21,14 @@ function RequestInfoContent({ name }: RequestInfoProps) {
 
   return (
     <>
-      <Flex gap={20}>
-        <S.Title>
-          동아리명 :
-          {' '}
-          {pendingClubRes.name}
-        </S.Title>
-        <S.Content>
-          <S.ClubImage src={pendingClubRes.image_url} alt="club" />
-        </S.Content>
-      </Flex>
+      <S.Title>
+        동아리명 :
+        {' '}
+        {pendingClubRes.name}
+      </S.Title>
+      <S.Content>
+        <S.ClubImage src={pendingClubRes.image_url} alt="club" />
+      </S.Content>
 
       <Divider orientation="left">
         <S.SectionTitle>

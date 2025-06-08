@@ -1,6 +1,6 @@
-import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { useGetPendingClubListQuery } from 'store/api/clubRequest';
+import CustomTable from 'components/common/CustomTable';
 import customColumns from './Components/CustomColumns/CustomColumns';
 import * as S from './ClubManagerRequestList.style';
 
@@ -10,10 +10,10 @@ export default function ClubManagerList() {
 
   const transformedRes = clubManagerRes && {
     ...clubManagerRes,
-    clubs: clubManagerRes.clubs.map((club, index) => {
-      const { club_id: clubId, ...rest } = club;
+    clubs: clubManagerRes.clubs.map((club) => {
+      const { index, club_id: clubId, ...rest } = club;
       return {
-        id: index + 1,
+        id: index,
         ...rest,
         is_accept: true,
         info: true,
@@ -22,7 +22,7 @@ export default function ClubManagerList() {
   };
 
   return (
-    <S.Container>
+    <S.TableContainer>
       <S.Heading>동아리 관리자</S.Heading>
       {transformedRes && (
       <CustomTable
@@ -32,11 +32,11 @@ export default function ClubManagerList() {
           onChange: setPage,
           total: transformedRes.total_page,
         }}
-        columnSize={[10, 10, 15, 15, 15, 15, 20]}
+        columnSize={[5, 15, 10, 15, 10, 20, 15, 15]}
         onClick={() => { }}
         columns={customColumns()}
       />
       )}
-    </S.Container>
+    </S.TableContainer>
   );
 }

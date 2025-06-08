@@ -27,6 +27,7 @@ export default function BannerWrite() {
     value: isAddModalOpen,
     setFalse: closeAddModal,
   } = useBooleanState();
+
   const {
     setTrue: openDeleteModal,
     value: isDeleteModalOpen,

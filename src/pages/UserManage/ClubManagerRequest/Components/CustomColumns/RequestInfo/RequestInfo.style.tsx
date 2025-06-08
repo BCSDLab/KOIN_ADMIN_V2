@@ -15,6 +15,7 @@ export const Content = styled.div`
   `;
 
 export const ClubImage = styled.img`
+  margin-top: 30px;
   height: auto;
   max-width: 400px;
 `;

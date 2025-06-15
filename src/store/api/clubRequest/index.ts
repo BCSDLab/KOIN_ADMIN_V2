@@ -48,9 +48,13 @@ export const clubRequestApi = createApi({
       }),
 
     getPendingClub:
-      builder.query<PendingClub, string>({
-        query: (name) => ({ url: `admin/clubs/pending/${name}` }),
-        providesTags: (result, error, id) => [{ type: 'clubRequest', id }],
+      builder.mutation<PendingClub, { club_name: string }>({
+        query: (body) => ({
+          url: 'admin/clubs/pending',
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: [{ type: 'clubRequests', id: 'LIST' }],
       }),
 
     decidePendingClub: builder.mutation<void, { club_name: string; is_accept: boolean }>({
@@ -66,6 +70,6 @@ export const clubRequestApi = createApi({
 });
 
 export const {
-  useGetPendingClubListQuery, useGetAcceptedClubListQuery, useGetPendingClubQuery,
+  useGetPendingClubListQuery, useGetAcceptedClubListQuery, useGetPendingClubMutation,
   useDecidePendingClubMutation,
 } = clubRequestApi;

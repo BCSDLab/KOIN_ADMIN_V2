@@ -1,19 +1,22 @@
 import { Col, Divider } from 'antd';
-import { useGetPendingClubQuery } from 'store/api/clubRequest';
-import { Suspense } from 'react';
+import { useGetPendingClubMutation } from 'store/api/clubRequest'; // 쿼리→뮤테이션 훅으로 변경!
+import { useEffect, useState } from 'react';
 import * as S from './RequestInfo.style';
 
 interface RequestInfoProps {
   name: string;
 }
 
-function LoadingFallback() {
-  return <div>동아리 요청 정보 로딩 중...</div>;
-}
-
 function RequestInfoContent({ name }: RequestInfoProps) {
-  const encodedName = encodeURIComponent(name);
-  const { data: pendingClubRes } = useGetPendingClubQuery(encodedName);
+  const [getPendingClub, { data: pendingClubRes }] = useGetPendingClubMutation();
+  const [fetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    if (name && !fetched) {
+      getPendingClub({ club_name: name });
+      setFetched(true);
+    }
+  }, [name, getPendingClub, fetched]);
 
   if (!pendingClubRes) {
     return null;
@@ -31,55 +34,42 @@ function RequestInfoContent({ name }: RequestInfoProps) {
       </S.Content>
 
       <Divider orientation="left">
-        <S.SectionTitle>
-          동아리 관리자
-        </S.SectionTitle>
+        <S.SectionTitle>동아리 관리자</S.SectionTitle>
       </Divider>
       <S.Content>
         직책 :
-        {' '}
         {pendingClubRes.role}
       </S.Content>
       <S.Content>
         이름 :
-        {' '}
         {pendingClubRes.requester_name}
       </S.Content>
       <S.Content>
         전화번호 :
-        {' '}
         {pendingClubRes.requester_phone_number}
       </S.Content>
-      <Divider orientation="left">
-        <S.SectionTitle>
-          동아리 정보
-        </S.SectionTitle>
-      </Divider>
 
+      <Divider orientation="left">
+        <S.SectionTitle>동아리 정보</S.SectionTitle>
+      </Divider>
       <Col>
         <S.Content>
           분과 :
-          {' '}
           {pendingClubRes.club_category}
         </S.Content>
         <S.Content>
           동아리 방 위치 :
-          {' '}
           {pendingClubRes.location}
         </S.Content>
         <S.Content>
           동아리 소개 :
-          {' '}
           {pendingClubRes.description}
         </S.Content>
       </Col>
 
       <Divider orientation="left">
-        <S.SectionTitle>
-          연락처
-        </S.SectionTitle>
+        <S.SectionTitle>연락처</S.SectionTitle>
       </Divider>
-
       <S.Content>
         인스타그램 :
         {' '}
@@ -105,9 +95,5 @@ function RequestInfoContent({ name }: RequestInfoProps) {
 }
 
 export default function RequestInfo({ name }: RequestInfoProps) {
-  return (
-    <Suspense fallback={<LoadingFallback />}>
-      <RequestInfoContent name={name} />
-    </Suspense>
-  );
+  return <RequestInfoContent name={name} />;
 }

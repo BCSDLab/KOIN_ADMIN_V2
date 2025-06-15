@@ -1,5 +1,5 @@
 import { Col, Divider } from 'antd';
-import { useGetPendingClubMutation } from 'store/api/clubRequest'; // 쿼리→뮤테이션 훅으로 변경!
+import { useGetPendingClubMutation } from 'store/api/clubRequest';
 import { useEffect, useState } from 'react';
 import * as S from './RequestInfo.style';
 

@@ -1,6 +1,6 @@
 import { Col, Divider } from 'antd';
 import { useGetPendingClubMutation } from 'store/api/clubRequest';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as S from './RequestInfo.style';
 
 interface RequestInfoProps {
@@ -9,14 +9,12 @@ interface RequestInfoProps {
 
 function RequestInfoContent({ name }: RequestInfoProps) {
   const [getPendingClub, { data: pendingClubRes }] = useGetPendingClubMutation();
-  const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
-    if (name && !fetched) {
+    if (name) {
       getPendingClub({ club_name: name });
-      setFetched(true);
     }
-  }, [name, getPendingClub, fetched]);
+  }, [name, getPendingClub]);
 
   if (!pendingClubRes) {
     return null;

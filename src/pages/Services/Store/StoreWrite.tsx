@@ -13,20 +13,19 @@ import StoreDetailForm from './components/StoreDetailForm';
 
 const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
+const DEFAULT_TIME_TEMPLATE = (index:number) => ({
+  close_time: '00:00',
+  closed: false,
+  day_of_week: DAY[index],
+  open_time: '00:00',
+});
+
+const defaultTimeInfo = DAYS.map((_, index) => DEFAULT_TIME_TEMPLATE(index));
+
 export default function StoreWrite() {
   const navigate = useNavigate();
   const [form] = CustomForm.useForm<CreateStoreParams>();
   const { addStore } = useStoreMutation(1);
-
-  const defaultTimeInfo = DAYS.map((day, index) => {
-    return (
-      {
-        close_time: '00:00',
-        closed: false,
-        day_of_week: DAY[index],
-        open_time: '00:00',
-      });
-  });
 
   const buildFinalAddress = () => {
     const base = (form.getFieldValue('address') ?? '').toString().trim();

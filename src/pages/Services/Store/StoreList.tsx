@@ -1,15 +1,15 @@
-import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Flex, Switch } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import CustomTable from 'components/common/CustomTable';
 import { useGetStoreListQuery } from 'store/api/store';
-import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
-import { Switch } from 'antd';
 import * as S from './StoreList.style';
-import AddStoreModal from './components/AddStoreModal';
 
 function StoreList() {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
   const { value: isDeletedStore, changeValue: containIsDeletedStore } = useBooleanState(false);
   const { data: StoreRes } = useGetStoreListQuery({
     page,
@@ -20,17 +20,14 @@ function StoreList() {
     <S.Container>
       <S.Heading>주변 상점 목록</S.Heading>
       <S.ModalWrap>
-        <CustomForm.Modal
-          buttonText="생성"
-          title="등록하기"
-          width={900}
-          footer={null}
-          open={isModalOpen}
-          onCancel={closeModal}
-          onClick={openModal}
-        >
-          <AddStoreModal closeModal={closeModal} />
-        </CustomForm.Modal>
+        <Flex justify="end">
+          <Button
+            icon={<PlusOutlined />}
+            onClick={() => navigate('/store/write')}
+          >
+            생성
+          </Button>
+        </Flex>
       </S.ModalWrap>
       <S.SwitchWrapper>
         <Switch

@@ -22,6 +22,7 @@ import { bannerApi } from './api/banner';
 import { bannerCategoryApi } from './api/bannerCategory';
 import { clubApi } from './api/club';
 import { clubRequestApi } from './api/clubRequest';
+import { addressApi } from './api/address';
 
 const apiList = [
   authApi,
@@ -46,6 +47,7 @@ const apiList = [
   bannerCategoryApi,
   clubApi,
   clubRequestApi,
+  addressApi,
 ];
 
 const apiMiddleware = apiList.map((api) => api.middleware);

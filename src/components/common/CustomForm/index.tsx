@@ -171,7 +171,8 @@ interface CustomModalProps {
 }
 
 function CustomModal({
-  buttonText, title, width, footer, children, open, onCancel, onClick, hasIcon = true, isDelete,
+  buttonText,
+  title, width, footer, children, open, onCancel, onClick, hasIcon = true, isDelete, destroyOnClose,
 }: CustomModalProps & ModalProps) {
   return (
     <>
@@ -189,6 +190,7 @@ function CustomModal({
         centered
         width={width}
         footer={footer}
+        destroyOnClose={destroyOnClose}
       >
         {children}
       </Modal>

@@ -13,6 +13,7 @@ import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
 import MemberDetail from 'pages/UserManage/Member/MemberDetail';
 import { useToken } from 'store/slice/auth';
+import StoreWrite from 'pages/Services/Store/StoreWrite';
 import StoreDetail from 'pages/Services/Store/StoreDetail';
 import CategoryDetail from 'pages/Services/Category/CategoryDetail';
 import OwnerList from 'pages/UserManage/Owner/OwnerList';
@@ -60,6 +61,7 @@ function App() {
       <Route path="/" element={<RequireAuth />}>
         <Route index element={<Store />} />
         <Route path="/store" element={<Store />} />
+        <Route path="/store/write" element={<StoreWrite />} />
         <Route path="/store/:id" element={<StoreDetail />} />
         <Route path="/category" element={<CategoryList />} />
         <Route path="/category/:id" element={<CategoryDetail />} />

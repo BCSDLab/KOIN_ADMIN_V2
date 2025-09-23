@@ -22,9 +22,9 @@ export default function BannerDetail() {
   const { updateBanner, deleteBanner } = useBannerMutation();
 
   const initialValues = {
-    is_web_released: bannerData?.is_web_released === undefined ?? false,
-    is_android_released: bannerData?.is_android_released === undefined ?? false,
-    is_ios_released: bannerData?.is_ios_released === undefined ?? false,
+    is_web_released: bannerData?.is_web_released ?? false,
+    is_android_released: bannerData?.is_android_released ?? false,
+    is_ios_released: bannerData?.is_ios_released ?? false,
     ...bannerData,
   };
 

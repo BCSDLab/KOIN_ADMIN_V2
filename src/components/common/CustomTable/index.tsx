@@ -57,9 +57,9 @@ interface Props<TableData> {
 
 function mergeColumns<TableData extends DefaultTableData>(
   base: ColumnsType<TableData>,
-  custom?: ColumnsType<TableData>,
+  custom: ColumnsType<TableData>,
 ): ColumnsType<TableData> {
-  if (!custom) return base;
+  if (custom.length === 0) return base;
 
   const customMap = new Map(custom.map((col) => [col.key, col]));
 
@@ -74,8 +74,51 @@ function mergeColumns<TableData extends DefaultTableData>(
   });
 }
 
+function renderColumn(key: string, value: string | number | boolean) {
+  if (typeof value === 'boolean') {
+    return value ? 'True' : 'False';
+  }
+
+  if (typeof value === 'number') {
+    return value || '-';
+  }
+
+  if (typeof value === 'string') {
+    if (value.startsWith('https://')) {
+      return <TableItemImage src={value} alt="icon" />;
+    }
+
+    if (longDateRegExp.test(value)) {
+      return toDateStringFormat(value);
+    }
+  }
+
+  if (key === 'status') {
+    if (value === 'IN_PROGRESS') {
+      return (
+        <Tag icon={<SyncOutlined spin />} color="processing">
+          {value}
+        </Tag>
+      );
+    } if (value === 'COMPLETED') {
+      return (
+        <Tag icon={<CheckCircleOutlined />} color="success">
+          {value}
+        </Tag>
+      );
+    }
+    return (
+      <Tag icon={<CloseCircleOutlined />} color="error">
+        {value}
+      </Tag>
+    );
+  }
+
+  return value;
+}
+
 function CustomTable<TableData extends DefaultTableData>({
-  data, pagination, columnSize, hiddenColumns = [], onClick, columns,
+  data, pagination, columnSize, hiddenColumns = [], onClick, columns = [],
 }: Props<TableData>) {
   const navigate = useNavigate();
 
@@ -86,50 +129,10 @@ function CustomTable<TableData extends DefaultTableData>({
       .filter((key) => !hiddenColumns.includes(key))
       .map((key, idx) => ({
         title: TITLE_MAPPER[key] || key.toUpperCase(),
-        dataIndex: key,
         key,
+        dataIndex: key,
         width: columnSize && columnSize[idx] ? `${columnSize[idx]}%` : 'auto',
-        render: (value: string | number | boolean) => {
-          if (typeof value === 'boolean') {
-            return value ? 'True' : 'False';
-          }
-
-          if (typeof value === 'number') {
-            return value || '-';
-          }
-
-          if (typeof value === 'string') {
-            if (value.startsWith('https://')) {
-              return <TableItemImage src={value} alt="icon" />;
-            }
-
-            if (longDateRegExp.test(value)) {
-              return toDateStringFormat(value);
-            }
-          }
-          if (key === 'status') {
-            if (value === 'IN_PROGRESS') {
-              return (
-                <Tag icon={<SyncOutlined spin />} color="processing">
-                  {value}
-                </Tag>
-              );
-            } if (value === 'COMPLETED') {
-              return (
-                <Tag icon={<CheckCircleOutlined />} color="success">
-                  {value}
-                </Tag>
-              );
-            }
-            return (
-              <Tag icon={<CloseCircleOutlined />} color="error">
-                {value}
-              </Tag>
-            );
-          }
-
-          return value;
-        },
+        render: (value: string | number | boolean) => renderColumn(key, value),
       }));
   };
 

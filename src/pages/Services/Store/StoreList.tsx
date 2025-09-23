@@ -33,8 +33,8 @@ function StoreList() {
         <Switch
           onClick={containIsDeletedStore}
           checked={isDeletedStore}
-          checkedChildren="trash"
-          unCheckedChildren="trash"
+          checkedChildren="deleted"
+          unCheckedChildren="existing"
         />
       </S.SwitchWrapper>
       {StoreRes && (
@@ -45,7 +45,8 @@ function StoreList() {
             onChange: setPage,
             total: StoreRes.total_page,
           }}
-          columnSize={[10, 20, 20, 20, 10]}
+          columnSize={[20, 10, 20, 20]}
+          hiddenColumns={['is_deleted']}
         />
       )}
     </S.Container>

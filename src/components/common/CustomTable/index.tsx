@@ -57,9 +57,9 @@ interface Props<TableData> {
 
 function mergeColumns<TableData extends DefaultTableData>(
   base: ColumnsType<TableData>,
-  custom?: ColumnsType<TableData>,
+  custom: ColumnsType<TableData>,
 ): ColumnsType<TableData> {
-  if (!custom) return base;
+  if (custom.length === 0) return base;
 
   const customMap = new Map(custom.map((col) => [col.key, col]));
 
@@ -118,7 +118,7 @@ function renderColumn(key: string, value: string | number | boolean) {
 }
 
 function CustomTable<TableData extends DefaultTableData>({
-  data, pagination, columnSize, hiddenColumns = [], onClick, columns,
+  data, pagination, columnSize, hiddenColumns = [], onClick, columns = [],
 }: Props<TableData>) {
   const navigate = useNavigate();
 

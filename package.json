@@ -32,10 +32,10 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "GENERATE_SOURCEMAP=false vite --open --host",
+    "build": "GENERATE_SOURCEMAP=false vite build",
+    "test": "vite test",
+    "eject": "vite eject",
     "lint": "eslint src/ --ext .tsx,.ts"
   },
   "eslintConfig": {

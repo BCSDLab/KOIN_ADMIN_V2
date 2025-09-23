@@ -33,8 +33,8 @@ function StoreList() {
         <Switch
           onClick={containIsDeletedStore}
           checked={isDeletedStore}
-          checkedChildren="trash"
-          unCheckedChildren="trash"
+          checkedChildren="deleted"
+          unCheckedChildren="existing"
         />
       </S.SwitchWrapper>
       {StoreRes && (

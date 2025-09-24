@@ -57,7 +57,8 @@ export default function NoticeWrite() {
             ref={editorRef}
             rules={[required()]}
             hooks={{
-              addImageBlobHook: async (blob, callback) => {
+              addImageBlobHook:
+              async (blob: Blob, callback: (url: string, altText: string) => void) => {
                 try {
                   const formData = await handleImageUpload(blob);
                   const response = await uploadfile({

@@ -1,6 +1,6 @@
-export const API_PATH = import.meta.env.VITE_APP_API_PATH;
+export const API_PATH = import.meta.env.VITE_API_PATH;
 
-export const KOIN_URL = import.meta.env.VITE_APP_API_PATH?.includes('stage') ? 'https://stage.koreatech.in' : 'https://koreatech.in';
+export const KOIN_URL = import.meta.env.VITE_API_PATH?.includes('stage') ? 'https://stage.koreatech.in' : 'https://koreatech.in';
 
 // 테이블 헤더 Title 매핑
 export const TITLE_MAPPER: Record<string, string> = {

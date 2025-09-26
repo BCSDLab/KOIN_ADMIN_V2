@@ -2,8 +2,10 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Flex, Select } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetClubCategoryListQuery, useGetClubListQuery } from 'store/api/club';
+import { useGetClubCategoryListQuery } from 'store/api/club';
 import CustomTable from 'components/common/CustomTable';
+import { useQuery } from '@tanstack/react-query';
+import clubQueries from 'queryFactory/clubQueries';
 import useClubMutation from './useClubMutation';
 import CustomColumns from './Components/CustomColumns/CustomColumns';
 import * as S from './ClubList.style';
@@ -16,10 +18,13 @@ export default function ClubList() {
 
   const { data: clubCategory } = useGetClubCategoryListQuery();
   const { toggleClubActive } = useClubMutation();
-  const { data: clubRes } = useGetClubListQuery({
-    page,
-    club_category_id: selectedCategory === undefined ? null : selectedCategory,
-  });
+
+  const { data: clubRes } = useQuery(
+    clubQueries.clubList(
+      page,
+      selectedCategory,
+    ),
+  );
 
   const clubCategoryOptions: Record<string, string> = clubCategory
     ? {

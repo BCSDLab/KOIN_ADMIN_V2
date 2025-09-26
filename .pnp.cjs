@@ -30,6 +30,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@ant-design/icons", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:4.8.3"],\
             ["@reduxjs/toolkit", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:1.9.7"],\
+            ["@tanstack/react-query", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:5.90.2"],\
             ["@testing-library/jest-dom", "npm:5.17.0"],\
             ["@testing-library/react", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:13.4.0"],\
             ["@testing-library/user-event", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:13.5.0"],\
@@ -1948,6 +1949,38 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@svgr/core",\
             "@types/svgr__core"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tanstack/query-core", [\
+        ["npm:5.90.2", {\
+          "packageLocation": "./.yarn/cache/@tanstack-query-core-npm-5.90.2-6d2ae791b7-ccee5dacfa.zip/node_modules/@tanstack/query-core/",\
+          "packageDependencies": [\
+            ["@tanstack/query-core", "npm:5.90.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tanstack/react-query", [\
+        ["npm:5.90.2", {\
+          "packageLocation": "./.yarn/cache/@tanstack-react-query-npm-5.90.2-25f7a29f52-da201f43ba.zip/node_modules/@tanstack/react-query/",\
+          "packageDependencies": [\
+            ["@tanstack/react-query", "npm:5.90.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:5.90.2", {\
+          "packageLocation": "./.yarn/__virtual__/@tanstack-react-query-virtual-fc90d27ead/0/cache/@tanstack-react-query-npm-5.90.2-25f7a29f52-da201f43ba.zip/node_modules/@tanstack/react-query/",\
+          "packageDependencies": [\
+            ["@tanstack/react-query", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:5.90.2"],\
+            ["@tanstack/query-core", "npm:5.90.2"],\
+            ["@types/react", "npm:18.3.24"],\
+            ["react", "npm:18.3.1"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5901,6 +5934,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["koin_admin_v2", "workspace:."],\
             ["@ant-design/icons", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:4.8.3"],\
             ["@reduxjs/toolkit", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:1.9.7"],\
+            ["@tanstack/react-query", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:5.90.2"],\
             ["@testing-library/jest-dom", "npm:5.17.0"],\
             ["@testing-library/react", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:13.4.0"],\
             ["@testing-library/user-event", "virtual:9d3f337d4ce8babbc193c806d4d9e413a867cad38593f4b1e990f4e182ddc8ed767147170cefc5df554999b9364f7479a97c29d84c6817d8e0d184881252dbf3#npm:13.5.0"],\

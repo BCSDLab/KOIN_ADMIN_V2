@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import store from 'store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/reset.css';
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -14,9 +18,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <App />
+        </Router>
+      </QueryClientProvider>
     </Provider>
   </React.StrictMode>,
 );

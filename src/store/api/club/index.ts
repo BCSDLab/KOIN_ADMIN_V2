@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {
-  Club, ClubCategoryResponse, ClubParams, ClubRequest, ClubResponse,
+  Club, ClubCategoryResponse, ClubRequest,
 } from 'model/club.model';
 import baseQueryReauth from 'store/api/baseQueryReauth';
 
@@ -11,26 +11,6 @@ export const clubApi = createApi({
   baseQuery: baseQueryReauth,
 
   endpoints: (builder) => ({
-    getClubList:
-      builder.query<ClubResponse, ClubParams>({
-        query: ({ page, club_category_id }) => {
-          const params = new URLSearchParams({ page: String(page) });
-          if (club_category_id) {
-            params.append('club_category_id', String(club_category_id));
-          }
-          return {
-            url: `admin/clubs?${params.toString()}`,
-          };
-        },
-        providesTags: (result) => (result
-          ? [...result.clubs.map((club) => ({ type: 'club' as const, id: club.id })), { type: 'clubs', id: 'LIST' }]
-          : [{ type: 'clubs', id: 'LIST' }]),
-      }),
-
-    getClub: builder.query<Club, number>({
-      query: (id) => ({ url: `admin/clubs/${id}` }),
-      providesTags: (result, error, id) => [{ type: 'club', id }],
-    }),
 
     getClubCategoryList: builder.query<ClubCategoryResponse, void>({
       query: () => ({ url: 'admin/clubs/categories' }),
@@ -70,6 +50,6 @@ export const clubApi = createApi({
 });
 
 export const {
-  useGetClubListQuery, useGetClubQuery, useGetClubCategoryListQuery,
+  useGetClubCategoryListQuery,
   useAddClubMutation, useUpdateClubMutation, useToggleClubActiveMutation,
 } = clubApi;

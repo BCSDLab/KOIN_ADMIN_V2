@@ -22,7 +22,7 @@ export default function ClubList() {
   const { data: clubRes } = useQuery(
     clubQueries.clubList(
       page,
-      selectedCategory,
+      selectedCategory || undefined,
     ),
   );
 

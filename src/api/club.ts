@@ -8,11 +8,11 @@ export const getClub = async (id: number) => {
 };
 
 export const getClubList = async (params: ClubParams): Promise<ClubResponse> => {
-  const searchParams = new URLSearchParams({ page: String(params.page) });
-  if (params.club_category_id) {
-    searchParams.append('club_category_id', String(params.club_category_id));
-  }
-
-  const res = await accessClient.get<ClubResponse>(`/admin/clubs?${searchParams.toString()}`);
+  const res = await accessClient.get<ClubResponse>('/admin/clubs', {
+    params: {
+      page: params.page,
+      club_category_id: params.club_category_id,
+    },
+  });
   return res.data;
 };

@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {
-  Club, ClubCategoryResponse, ClubRequest,
+  Club, ClubRequest,
 } from 'model/club.model';
 import baseQueryReauth from 'store/api/baseQueryReauth';
 
@@ -11,14 +11,6 @@ export const clubApi = createApi({
   baseQuery: baseQueryReauth,
 
   endpoints: (builder) => ({
-
-    getClubCategoryList: builder.query<ClubCategoryResponse, void>({
-      query: () => ({ url: 'admin/clubs/categories' }),
-      providesTags: (result) => (result
-        ? [
-          ...result.club_categories.map((clubCategory) => ({ type: 'club' as const, id: clubCategory.id })), { type: 'clubs', id: 'LIST' }]
-        : [{ type: 'clubs', id: 'LIST' }]),
-    }),
 
     addClub: builder.mutation<ClubRequest, Partial<ClubRequest>>({
       query: (body) => ({
@@ -50,6 +42,5 @@ export const clubApi = createApi({
 });
 
 export const {
-  useGetClubCategoryListQuery,
   useAddClubMutation, useUpdateClubMutation, useToggleClubActiveMutation,
 } = clubApi;

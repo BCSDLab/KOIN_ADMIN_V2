@@ -1,5 +1,5 @@
 import { skipToken, queryOptions } from '@tanstack/react-query';
-import { getClub, getClubList } from 'api/club';
+import { getClub, getClubCategoryList, getClubList } from 'api/club';
 
 const clubQueries = {
   allKey: () => ['club'],
@@ -15,6 +15,14 @@ const clubQueries = {
     queryKey: clubQueries.clubListKey(page, club_category_id),
     queryFn: () => getClubList({ page, club_category_id }),
   }),
+
+  categoryListKey: () => [...clubQueries.allKey(), 'clubCategories'],
+
+  categoryList: () => queryOptions({
+    queryKey: clubQueries.categoryListKey(),
+    queryFn: () => getClubCategoryList(),
+  }),
+
 };
 
 export default clubQueries;

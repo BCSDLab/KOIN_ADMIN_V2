@@ -2,24 +2,26 @@ import { Flex } from 'antd';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClubFormValues, ClubRequest } from 'model/club.model';
-import { useGetClubCategoryListQuery } from 'store/api/club';
 import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import useBooleanState from 'utils/hooks/useBoolean';
 import * as S from 'styles/Detail.style';
-import useClubMutation from './useClubMutation';
+import { useQuery } from '@tanstack/react-query';
+import clubQueries from 'queryFactory/clubQueries';
+import useClubMutation from 'pages/Services/Club/useClubMutation';
 import ClubForm from './Components/ClubForm/ClubForm';
 
 export default function ClubWrite() {
   const [form] = CustomForm.useForm();
   const navigate = useNavigate();
 
-  const { data: ClubCategory } = useGetClubCategoryListQuery();
-  const { addClub } = useClubMutation();
+  const { data: clubCategoryList } = useQuery(clubQueries.categoryList());
 
-  const clubCategoryOptions: Record<string, string> = ClubCategory
-    ? ClubCategory.club_categories.reduce((categoryMap, clubCategory) => {
+  const { postClubMutation } = useClubMutation();
+
+  const clubCategoryOptions: Record<string, string> = clubCategoryList
+    ? clubCategoryList.club_categories.reduce((categoryMap, clubCategory) => {
       categoryMap[String(clubCategory.id)] = clubCategory.name;
       return categoryMap;
     }, {} as Record<string, string>)
@@ -54,7 +56,7 @@ export default function ClubWrite() {
         user_id: values.user_id,
       }],
     };
-    addClub(payload);
+    postClubMutation.mutate(payload);
   };
 
   const handleValuesChange = (changedValues: any) => {

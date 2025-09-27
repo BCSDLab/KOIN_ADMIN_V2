@@ -2,11 +2,10 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Flex, Select } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetClubCategoryListQuery } from 'store/api/club';
 import CustomTable from 'components/common/CustomTable';
 import { useQuery } from '@tanstack/react-query';
 import clubQueries from 'queryFactory/clubQueries';
-import useClubMutation from './useClubMutation';
+import useClubMutation from 'pages/Services/Club/useClubMutation';
 import CustomColumns from './Components/CustomColumns/CustomColumns';
 import * as S from './ClubList.style';
 
@@ -16,8 +15,8 @@ export default function ClubList() {
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<number>();
 
-  const { data: clubCategory } = useGetClubCategoryListQuery();
-  const { toggleClubActive } = useClubMutation();
+  const { data: clubCategory } = useQuery(clubQueries.categoryList());
+  const { toggleClubActiveMutation } = useClubMutation();
 
   const { data: clubRes } = useQuery(
     clubQueries.clubList(
@@ -36,7 +35,12 @@ export default function ClubList() {
     }
     : { 0: '전체' };
 
-  const columns = CustomColumns({ toggleClubActive });
+  const columns = CustomColumns({
+    toggleClubActive: (
+      id: number,
+      checked: boolean,
+    ) => toggleClubActiveMutation.mutate({ id, active: checked }),
+  });
 
   return (
     <S.Container>

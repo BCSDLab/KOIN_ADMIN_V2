@@ -1,6 +1,7 @@
 import { Col, Divider } from 'antd';
-import { useGetPendingClubMutation } from 'store/api/clubRequest';
 import { useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { createPendingClub } from 'api/clubRequest';
 import * as S from './RequestInfo.style';
 
 interface RequestInfoProps {
@@ -8,7 +9,9 @@ interface RequestInfoProps {
 }
 
 function RequestInfoContent({ name }: RequestInfoProps) {
-  const [getPendingClub, { data: pendingClubRes }] = useGetPendingClubMutation();
+  const { mutate: getPendingClub, data: pendingClubRes } = useMutation({
+    mutationFn: createPendingClub,
+  });
 
   useEffect(() => {
     if (name) {

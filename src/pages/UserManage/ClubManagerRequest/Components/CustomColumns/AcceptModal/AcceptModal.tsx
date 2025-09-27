@@ -21,15 +21,15 @@ export default function AcceptModal({ club_name }: AcceptModalProps) {
     setFalse: closeRejectModal,
   } = useBooleanState();
 
-  const { decidePendingClub } = useClubManagerRequestMutation();
+  const { decidePendingClubMutation } = useClubManagerRequestMutation();
 
   const handleConfirm = () => {
-    decidePendingClub(club_name, true);
+    decidePendingClubMutation.mutate({ club_name, is_accept: true });
     closeAcceptModal();
   };
 
   const handleReject = () => {
-    decidePendingClub(club_name, false);
+    decidePendingClubMutation.mutate({ club_name, is_accept: false });
     closeRejectModal();
   };
 

@@ -6,21 +6,24 @@ import {
 } from 'api/category';
 
 const categoryQueries = {
-  allKey: () => ['category'] as const,
+  allKey: () => ['category'],
 
+  listKey: () => [...categoryQueries.allKey(), 'list'],
   list: () => queryOptions({
-    queryKey: [...categoryQueries.allKey(), 'list'],
+    queryKey: [...categoryQueries.listKey()],
     queryFn: () => getCategoryList(),
   }),
 
+  detailKey: (id: number) => [...categoryQueries.allKey(), 'detail', id],
   detail: (id: number) => queryOptions({
-    queryKey: [...categoryQueries.allKey(), 'detail', id],
+    queryKey: categoryQueries.detailKey(id),
     queryFn: () => getCategory(id),
     enabled: !!id,
   }),
 
+  parentKey: () => [...categoryQueries.allKey(), 'parent'],
   parent: () => queryOptions({
-    queryKey: [...categoryQueries.allKey(), 'parent'],
+    queryKey: categoryQueries.parentKey(),
     queryFn: () => getParentCategory(),
   }),
 };

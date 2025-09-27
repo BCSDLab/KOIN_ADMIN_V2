@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useGetAcceptedClubListQuery } from 'store/api/clubRequest';
 import CustomTable from 'components/common/CustomTable';
+import { useQuery } from '@tanstack/react-query';
+import clubRequestQueries from 'queryFactory/clubRequestQueries';
 import * as S from './ClubManagerList.style';
 
 export default function ClubManagerList() {
   const [page, setPage] = useState(1);
-  const { data: clubManagerRes } = useGetAcceptedClubListQuery({ page });
+  const { data: clubManagerRes } = useQuery(clubRequestQueries.acceptedList({ page }));
 
   const transformedRes = clubManagerRes && {
     ...clubManagerRes,

@@ -20,8 +20,6 @@ import { updateListApi } from './api/updateList';
 import { historyApi } from './api/history';
 import { bannerApi } from './api/banner';
 import { bannerCategoryApi } from './api/bannerCategory';
-import { clubApi } from './api/club';
-import { clubRequestApi } from './api/clubRequest';
 import { addressApi } from './api/address';
 
 const apiList = [
@@ -45,8 +43,6 @@ const apiList = [
   historyApi,
   bannerApi,
   bannerCategoryApi,
-  clubApi,
-  clubRequestApi,
   addressApi,
 ];
 

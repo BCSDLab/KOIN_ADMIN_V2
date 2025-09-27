@@ -1,24 +1,18 @@
-import { useDecidePendingClubMutation } from 'store/api/clubRequest';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { decidePendingClub } from 'api/clubRequest';
+import clubRequestQueries from 'queryFactory/clubRequestQueries';
 
 export default function useClubManagerRequestMutation() {
-  const [decidePendingClubMutation] = useDecidePendingClubMutation();
+  const queryClient = useQueryClient();
 
-  const decidePendingClub = (
-    club_name: string,
-    is_accept: boolean,
-    { onSuccess, onError }: { onSuccess?: () => void; onError?: (message: string) => void } = {},
-  ) => {
-    decidePendingClubMutation({ club_name, is_accept })
-      .unwrap()
-      .then(() => {
-        onSuccess?.();
-      })
-      .catch(({ data }) => {
-        onError?.(data.message);
-      });
-  };
+  const decidePendingClubMutation = useMutation({
+    mutationFn: (
+      { club_name, is_accept }: { club_name: string; is_accept: boolean },
+    ) => decidePendingClub({ club_name, is_accept }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: clubRequestQueries.allKey() });
+    },
+  });
 
-  return {
-    decidePendingClub,
-  };
+  return { decidePendingClubMutation };
 }

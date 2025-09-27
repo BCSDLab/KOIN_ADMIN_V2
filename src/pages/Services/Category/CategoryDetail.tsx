@@ -1,15 +1,19 @@
 import CustomForm from 'components/common/CustomForm';
 import { useParams } from 'react-router-dom';
-import { useGetCategoryQuery } from 'store/api/category';
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
+import { useQuery } from '@tanstack/react-query';
+import categoryQueries from 'queryFactory/categoryQueries';
 import * as S from './CategoryDetail.style';
 import DetailForm from './components/DetailForm';
 import useCategoryMutation from './useCategoryMutation';
 
 export default function CategoryDetail() {
   const { id } = useParams();
-  const { data: categoryData } = useGetCategoryQuery(Number(id));
-  const { updateCategory, deleteCategory } = useCategoryMutation();
+  const { data: categoryData } = useQuery(categoryQueries.detail(Number(id)));
+  const {
+    updateCategory: updateCategoryMutation,
+    deleteCategory: deleteCategoryMutation,
+  } = useCategoryMutation();
   const [form] = CustomForm.useForm();
 
   return (
@@ -23,7 +27,7 @@ export default function CategoryDetail() {
           <CustomForm
             form={form}
             initialValues={categoryData}
-            onFinish={updateCategory}
+            onFinish={updateCategoryMutation.mutate}
           >
             <DetailForm form={form} />
             <S.ButtonWrap>
@@ -33,7 +37,7 @@ export default function CategoryDetail() {
               <CustomForm.Button
                 danger
                 icon={<DeleteOutlined />}
-                onClick={() => deleteCategory(Number(id))}
+                onClick={() => deleteCategoryMutation.mutate(Number(id))}
               >
                 삭제
               </CustomForm.Button>

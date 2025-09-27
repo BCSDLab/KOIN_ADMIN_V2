@@ -6,7 +6,6 @@ import { roomApi } from './api/room';
 import { memberApi } from './api/member';
 import { uploadApi } from './api/upload';
 import { storeApi } from './api/store';
-import { categoryApi } from './api/category';
 import { storeMenuApi } from './api/storeMenu';
 import { menuCategoriesApi } from './api/storeMenu/category';
 import { noticeApi } from './api/notice';
@@ -29,7 +28,6 @@ const apiList = [
   memberApi,
   uploadApi,
   storeApi,
-  categoryApi,
   storeMenuApi,
   menuCategoriesApi,
   noticeApi,

@@ -14,7 +14,6 @@ import { ownerApi } from './api/owner';
 import { reviewApi } from './api/review';
 import { abTestApi } from './api/abtest';
 import { benefitApi } from './api/benefit';
-import { forceUpdateApi } from './api/forceUpdate';
 import { updateListApi } from './api/updateList';
 import { historyApi } from './api/history';
 import { bannerApi } from './api/banner';
@@ -36,7 +35,6 @@ const apiList = [
   reviewApi,
   abTestApi,
   benefitApi,
-  forceUpdateApi,
   updateListApi,
   historyApi,
   bannerApi,

@@ -9,7 +9,7 @@ export default function useClubMutation() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const postClubMutation = useMutation({
+  const addClubMutation = useMutation({
     mutationFn: (formData: Partial<ClubRequest>) => postClub(formData),
     onSuccess: () => {
       message.success('동아리 추가가 완료되었습니다.');
@@ -21,7 +21,7 @@ export default function useClubMutation() {
     },
   });
 
-  const putClubMutation = useMutation({
+  const updateClubMutation = useMutation({
     mutationFn: (formData: ClubUpdateRequest) => putClub(formData),
     onSuccess: () => {
       message.success('정보 수정이 완료되었습니다.');
@@ -44,5 +44,5 @@ export default function useClubMutation() {
     },
   });
 
-  return { postClubMutation, putClubMutation, toggleClubActiveMutation };
+  return { addClubMutation, updateClubMutation, toggleClubActiveMutation };
 }

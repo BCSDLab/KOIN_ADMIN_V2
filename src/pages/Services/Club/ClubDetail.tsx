@@ -28,7 +28,7 @@ function ClubDetailContent() {
   const { id } = useParams();
   const [form] = CustomForm.useForm();
 
-  const { putClubMutation } = useClubMutation();
+  const { updateClubMutation } = useClubMutation();
 
   const { data: clubData } = useQuery(clubQueries.club(Number(id)));
   const { data: clubCategory } = useQuery(clubQueries.categoryList());
@@ -108,7 +108,7 @@ function ClubDetailContent() {
         user_id: values.user_id,
       }],
     };
-    putClubMutation.mutate(payload);
+    updateClubMutation.mutate(payload);
   };
 
   const handleValuesChange = (changedValues: any) => {

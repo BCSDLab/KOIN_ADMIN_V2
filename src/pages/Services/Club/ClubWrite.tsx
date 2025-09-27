@@ -18,7 +18,7 @@ export default function ClubWrite() {
 
   const { data: clubCategoryList } = useQuery(clubQueries.categoryList());
 
-  const { postClubMutation } = useClubMutation();
+  const { addClubMutation } = useClubMutation();
 
   const clubCategoryOptions: Record<string, string> = clubCategoryList
     ? clubCategoryList.club_categories.reduce((categoryMap, clubCategory) => {
@@ -56,7 +56,7 @@ export default function ClubWrite() {
         user_id: values.user_id,
       }],
     };
-    postClubMutation.mutate(payload);
+    addClubMutation.mutate(payload);
   };
 
   const handleValuesChange = (changedValues: any) => {

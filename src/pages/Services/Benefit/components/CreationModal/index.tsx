@@ -1,8 +1,9 @@
 import CustomForm from 'components/common/CustomForm';
 import { UploadOutlined } from '@ant-design/icons';
 import { Divider, message } from 'antd';
-import { useCreateBenefitCategoryMutation } from 'store/api/benefit';
 import { CreateBenefitRequest } from 'model/benefit.model';
+import { useMutation } from '@tanstack/react-query';
+import { createBenefitCategory } from 'api/benefit';
 import * as S from './index.style';
 
 interface Props {
@@ -10,16 +11,20 @@ interface Props {
 }
 export default function CreationModal({ closeCreateModal }: Props) {
   const [form] = CustomForm.useForm();
-  const [createBenefit, {
-    isError,
-  }] = useCreateBenefitCategoryMutation();
+
+  const { mutate: createBenefit, isError } = useMutation({
+    mutationFn: createBenefitCategory,
+    onSuccess: () => {
+      closeCreateModal();
+    },
+  });
 
   const onFinish = (formData: CreateBenefitRequest) => {
     if (!formData.detail || !formData.title || !formData.on_image_url || !formData.off_image_url) {
       message.error('모든 값을 입력하세요.');
       return;
     }
-    createBenefit(formData).then(() => closeCreateModal());
+    createBenefit(formData);
   };
 
   if (isError) message.error('혜택 등록에 실패했습니다.');

@@ -3,18 +3,21 @@ import { Divider } from 'antd';
 import CustomForm from 'components/common/CustomForm';
 import SELECT_OPTIONS from 'constant/user';
 import { useParams } from 'react-router-dom';
-import { useGetUserQuery } from 'store/api/user';
 import DetailHeading from 'components/common/DetailHeading';
+import { useQuery } from '@tanstack/react-query';
+import userQueries from 'queryFactory/userQueries';
 import useNicknameCheck from './hooks/useNicknameCheck';
 import useUserMutation from './hooks/useUserMutation';
 import * as S from './UserDetail.style';
 
 function UserDetail() {
   const { id } = useParams();
-  const { data: userData } = useGetUserQuery(Number(id));
+  const { data: userData } = useQuery(userQueries.user(Number(id)));
   const [form] = CustomForm.useForm();
-  const { handleNicknameChange, checkDuplicateNickname, validator } = useNicknameCheck(form);
-  const { updateUser } = useUserMutation();
+  const {
+    handleNicknameChange, checkDuplicateNicknameMutation, validator,
+  } = useNicknameCheck(form);
+  const { updateUserMutation } = useUserMutation();
   const { pattern } = CustomForm.validateUtils();
 
   return (
@@ -30,7 +33,7 @@ function UserDetail() {
             <CustomForm
               form={form}
               initialValues={userData}
-              onFinish={updateUser}
+              onFinish={updateUserMutation.mutate}
             >
               <Divider orientation="left">기본 정보</Divider>
               <CustomForm.Checkbox name="is_authed" disabled>이메일 인증 완료 여부</CustomForm.Checkbox>
@@ -42,7 +45,9 @@ function UserDetail() {
               <CustomForm.Input label="이름" name="name" />
               <CustomForm.GridRow gridColumns="1fr auto">
                 <CustomForm.Input label="닉네임" name="nickname" onChange={handleNicknameChange} rules={[{ validator }]} />
-                <CustomForm.Button onClick={checkDuplicateNickname}>중복확인</CustomForm.Button>
+                <CustomForm.Button onClick={checkDuplicateNicknameMutation.mutate}>
+                  중복확인
+                </CustomForm.Button>
               </CustomForm.GridRow>
               <CustomForm.GridRow gridColumns="1fr 1fr">
                 <CustomForm.Input

@@ -69,13 +69,3 @@ export interface OwnerResponse {
   attachments_id: number[] | null;
   shops_id: number[] | null;
 }
-
-export interface DeleteOwnerResponse {
-  success: boolean;
-  id: number;
-}
-
-export interface OwnerRequestMutateResponseType {
-  success: boolean;
-  id: number;
-}

@@ -1,12 +1,12 @@
 import { Flex, Pagination } from 'antd';
 import { useState } from 'react';
-import historyQueries from 'queryFactory/historyQueries';
-import { useQuery } from '@tanstack/react-query';
+import { useGetHistoriesQuery } from 'store/api/history';
 import * as S from './History.style';
 
 export default function History() {
   const [page, setPage] = useState<number>(1);
-  const { data: histories } = useQuery(historyQueries.history({ page }));
+
+  const { data: histories } = useGetHistoriesQuery({ page });
   const pagination = {
     current: page,
     onChange: setPage,

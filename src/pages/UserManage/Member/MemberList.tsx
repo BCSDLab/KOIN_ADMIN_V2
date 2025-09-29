@@ -1,11 +1,10 @@
 import { TRACK_LIST, TRACK_MAPPER } from 'constant/member';
 import { Track } from 'model/member.model';
 import { useState } from 'react';
+import { useGetMemberListQuery } from 'store/api/member';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
 import CustomForm from 'components/common/CustomForm';
-import memberQueries from 'queryFactory/memberQueries';
-import { useQuery } from '@tanstack/react-query';
 import * as S from './MemberList.style';
 import MemberCard from './components/MemberCard';
 import AddMemberModal from './components/AddMemberModal';
@@ -19,11 +18,11 @@ const POSITION_SCORE = {
 function MemberList() {
   const [currentTrack, setTrack] = useState<Track>('FrontEnd');
   const { value: isDeleted, changeValue: handleDeleted } = useBooleanState(false);
-  const { data: membersRes } = useQuery(memberQueries.memberList({
+  const { data: membersRes } = useGetMemberListQuery({
     page: 1,
     track: TRACK_MAPPER[currentTrack],
     is_deleted: isDeleted,
-  }));
+  });
   const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
 
   return (

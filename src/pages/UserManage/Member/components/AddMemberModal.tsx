@@ -8,10 +8,10 @@ import useMemberMutation from '../useMemberMutation';
 
 export default function AddMemberModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();
-  const { addMember } = useMemberMutation(1);
+  const { addMemberMutation } = useMemberMutation(1);
 
   const createMember = (values: Partial<Member>) => {
-    addMember(values);
+    addMemberMutation.mutate(values);
     onCancel();
     form.resetFields();
   };

@@ -4,27 +4,27 @@ import {
 } from 'api/abTest';
 
 const abTestQueries = {
-  allKey: () => ['abTest'],
+  allKeys: () => ['abTest'],
 
-  abTestsKey: (page: number, limit: number) => [...abTestQueries.allKey(), page, limit],
+  abTestsKey: (page: number, limit: number) => [...abTestQueries.allKeys(), page, limit],
   abTests: (page: number, limit: number) => queryOptions({
     queryKey: abTestQueries.abTestsKey(page, limit),
     queryFn: () => getABTests(page, limit),
   }),
 
-  abTestKey: (id: number) => [...abTestQueries.allKey(), id],
+  abTestKey: (id: number) => [...abTestQueries.allKeys(), id],
   abTest: (id: number) => queryOptions({
     queryKey: abTestQueries.abTestKey(id),
     queryFn: () => getABTest(id),
   }),
 
-  userNameKey: (name: string) => [...abTestQueries.allKey(), 'user', name],
+  userNameKey: (name: string) => [...abTestQueries.allKeys(), 'user', name],
   userName: (name: string) => queryOptions({
     queryKey: abTestQueries.userNameKey(name),
     queryFn: () => getUserByName(name),
   }),
 
-  userIDKey: (id: number | string) => [...abTestQueries.allKey(), 'user', id],
+  userIDKey: (id: number | string) => [...abTestQueries.allKeys(), 'user', id],
   userID: (id: number | string) => queryOptions({
     queryKey: abTestQueries.userIDKey(id),
     queryFn: () => getUserByID(id),

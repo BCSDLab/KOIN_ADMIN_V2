@@ -3,17 +3,19 @@ import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
 import { Button, Switch } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { useGetNoticeListQuery } from 'store/api/notice';
+import { useQuery } from '@tanstack/react-query';
+import noticeQueries from 'queryFactory/noticeQueries';
 import * as S from './NoticeList.style';
 
 export default function NoticeList() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [showDeleted, setShowDeleted] = useState(false);
-  const { data: noticesResponse } = useGetNoticeListQuery({
+
+  const { data: noticesResponse } = useQuery(noticeQueries.noticeList({
     page,
     is_deleted: showDeleted,
-  });
+  }));
 
   return (
     <S.Container>

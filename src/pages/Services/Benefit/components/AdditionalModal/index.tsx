@@ -2,9 +2,11 @@ import {
   Input, Divider, InputRef, Button, List, message,
 } from 'antd';
 import { useRef, useState } from 'react';
-import { useAddBenefitShopsMutation, useSearchShopsQuery } from 'store/api/benefit';
 import { Shops } from 'model/benefit.model';
 import { MinusCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import benefitQueries from 'queryFactory/benefitQueries';
+import { addBenefitShops } from 'api/benefit';
 import * as S from './index.style';
 // eslint-disable-next-line
 import * as Style from '../../index.style';
@@ -29,13 +31,18 @@ export default function AdditionalModal({ id, closeAdditionModal }: Props) {
   const userInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
-  const { data } = useSearchShopsQuery({ id, keyword }, {
-    skip: !id || !keyword,
+
+  const { data } = useQuery(benefitQueries.searchShops(id, keyword));
+  const { mutate: addShopMutation, isError, isPending } = useMutation({
+    mutationFn: addBenefitShops,
+    onSuccess: () => {
+      message.success('상점을 추가했습니다.');
+      setShops([]);
+      setDetails([]);
+      setKeyword('');
+      closeAdditionModal();
+    },
   });
-  const [addShopMutation, {
-    isError,
-    isLoading,
-  }] = useAddBenefitShopsMutation();
   const focusOn = () => setIsFocus(true);
   const focusOff = () => setIsFocus(false);
   const addShop = (shopId: number, name: string) => {
@@ -61,14 +68,7 @@ export default function AdditionalModal({ id, closeAdditionModal }: Props) {
         message.error('상세정보를 입력해주세요.');
         return;
       }
-      await addShopMutation({ id, shop_details: details })
-        .then(() => {
-          message.success('상점을 추가했습니다.');
-          setShops([]);
-          setDetails([]);
-          setKeyword('');
-          closeAdditionModal();
-        });
+      addShopMutation({ id, shop_details: details });
     }
   };
 
@@ -142,7 +142,7 @@ export default function AdditionalModal({ id, closeAdditionModal }: Props) {
       <S.FlexRight>
         <Button
           onClick={ConfirmAddShop}
-          disabled={isLoading}
+          disabled={isPending}
         >
           <UploadOutlined />
           완료

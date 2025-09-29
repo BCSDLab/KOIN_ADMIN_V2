@@ -2,8 +2,10 @@ import { message, Divider, Flex } from 'antd';
 import { useEffect, useState } from 'react';
 import CustomForm from 'components/common/CustomForm';
 import { OS, UpdateAppVersionRequest } from 'model/forceUpdate.model';
-import { useGetAppVersionQuery, useUpdateAppVersionMutation } from 'store/api/forceUpdate';
 import OSDropdown from 'pages/Update/components/OSDropdown';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import forceUpdateQueries from 'queryFactory/forceUpdate';
+import { updateAppVersion } from 'api/forceUpdate';
 import * as S from './ForceUpdate.style';
 
 const versionRegex = /^\d+\.\d+\.\d+$/;
@@ -32,14 +34,27 @@ const textAreaStyle = {
 };
 
 export default function ForceUpdate() {
+  const queryClient = useQueryClient();
   const [os, setOs] = useState<OS>('android');
 
   const [currentVersionForm] = CustomForm.useForm();
   const [afterVersionForm] = CustomForm.useForm();
   const { pattern, required } = CustomForm.validateUtils();
 
-  const { data: version } = useGetAppVersionQuery(os);
-  const [updateVersion] = useUpdateAppVersionMutation();
+  const { data: version } = useQuery(forceUpdateQueries.getAppVersion(os));
+
+  const { mutate: updateVersion } = useMutation({
+    mutationFn: updateAppVersion,
+    onSuccess: () => {
+      afterVersionForm.resetFields();
+      message.success('업데이트 완료');
+      queryClient.invalidateQueries({ queryKey: forceUpdateQueries.allKey() });
+    },
+    onError: (error: any) => {
+      const msg = error?.response?.data?.message ?? '업데이트 실패';
+      message.error(msg);
+    },
+  });
 
   const handleOS = (type: OS) => {
     setOs(type);
@@ -51,18 +66,7 @@ export default function ForceUpdate() {
       version: formData.version,
       title: formData.title,
       content: formData.content,
-    })
-      .then(() => {
-        afterVersionForm.setFieldsValue({
-          version: '',
-          title: '',
-          content: '',
-        });
-        message.success('업데이트 완료');
-      })
-      .catch(({ data }) => {
-        message.error(data.message);
-      });
+    });
   };
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { useGetBenefitCategoryQuery } from 'store/api/benefit';
+import { useQuery } from '@tanstack/react-query';
+import benefitQueries from 'queryFactory/benefitQueries';
 import * as S from './index.style';
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export default function Category({ selected, setSelected, onClickBenefit }: Props) {
-  const { data } = useGetBenefitCategoryQuery();
+  const { data } = useQuery(benefitQueries.getBenefitCategory());
 
   useEffect(() => {
     if (data) setSelected(data.benefits[0].id);

@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { useGetPendingClubListQuery } from 'store/api/clubRequest';
 import CustomTable from 'components/common/CustomTable';
+import { useQuery } from '@tanstack/react-query';
+import clubRequestQueries from 'queryFactory/clubRequestQueries';
 import customColumns from './Components/CustomColumns/CustomColumns';
 import * as S from './ClubManagerRequestList.style';
 
 export default function ClubManagerList() {
   const [page, setPage] = useState(1);
-  const { data: clubManagerRes } = useGetPendingClubListQuery({ page });
+
+  const { data: clubManagerRes } = useQuery(clubRequestQueries.pendingList({ page }));
 
   const transformedRes = clubManagerRes && {
     ...clubManagerRes,

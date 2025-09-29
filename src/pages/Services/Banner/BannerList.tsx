@@ -2,11 +2,11 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Flex, Switch } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetBannerCategoryListQuery } from 'store/api/bannerCategory';
 import useBooleanState from 'utils/hooks/useBoolean';
 import CustomTable from 'components/common/CustomTable';
 import { useQuery } from '@tanstack/react-query';
 import bannerQueries from 'queryFactory/banner';
+import bannerCategoryQueries from 'queryFactory/bannerCategoryQueries';
 import BannerTabs from './components/BannerTab/BannerTab';
 import useBannerColumns from './components/CustomColumn/CustomColumn';
 import CategoryDescriptionBox from './components/Description/Description';
@@ -18,7 +18,7 @@ export default function BannerList() {
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const { value: isActive, changeValue: handleActive } = useBooleanState(false);
-  const { data: BannerCategory } = useGetBannerCategoryListQuery();
+  const { data: BannerCategory } = useQuery(bannerCategoryQueries.list());
   const { updateBannerPriority, toggleBannerActive } = useBannerMutation();
   const columns = useBannerColumns({ toggleBannerActive, updateBannerPriority });
 

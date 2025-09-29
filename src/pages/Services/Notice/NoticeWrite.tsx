@@ -17,7 +17,7 @@ export default function NoticeWrite() {
   const { required } = CustomForm.validateUtils();
   const [form] = CustomForm.useForm();
   const editorRef = useRef<Editor | null>(null);
-  const { addNotice } = useNoticeMutation();
+  const { addNoticeMutation } = useNoticeMutation();
   const [uploadfile] = useUploadfileMutation();
 
   const handleFinish = (values: any) => {
@@ -25,7 +25,7 @@ export default function NoticeWrite() {
     if (editorContent) {
       values.content = editorContent;
     }
-    addNotice(values);
+    addNoticeMutation.mutate(values);
   };
 
   const handleImageUpload = async (blob: Blob) => {
@@ -58,18 +58,18 @@ export default function NoticeWrite() {
             rules={[required()]}
             hooks={{
               addImageBlobHook:
-              async (blob: Blob, callback: (url: string, altText: string) => void) => {
-                try {
-                  const formData = await handleImageUpload(blob);
-                  const response = await uploadfile({
-                    domain: 'admin',
-                    image: formData,
-                  }).unwrap();
-                  callback(response.file_url, '');
-                } catch (error) {
-                  message.error('이미지 업로드에 실패했습니다.');
-                }
-              },
+                async (blob: Blob, callback: (url: string, altText: string) => void) => {
+                  try {
+                    const formData = await handleImageUpload(blob);
+                    const response = await uploadfile({
+                      domain: 'admin',
+                      image: formData,
+                    }).unwrap();
+                    callback(response.file_url, '');
+                  } catch (error) {
+                    message.error('이미지 업로드에 실패했습니다.');
+                  }
+                },
             }}
           />
         </S.FormWrapper>

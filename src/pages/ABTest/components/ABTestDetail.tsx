@@ -10,9 +10,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CustomForm from 'components/common/CustomForm';
 import HistoryArea from 'components/common/HistoryArea';
 import { useGetABTestQuery } from 'store/api/abtest';
-import { useGetHistoriesQuery } from 'store/api/history';
 import { ABTest } from 'model/abTest.model';
 import useBooleanState from 'utils/hooks/useBoolean';
+import { useQuery } from '@tanstack/react-query';
+import historyQueries from 'queryFactory/historyQueries';
 import useABTestMutation from './hook/useABTestMutation';
 import * as S from './ABTestDetail.style';
 import UserManageModal from './UserManageModal';
@@ -33,7 +34,10 @@ export default function ABTestDetail() {
   const [variables, setVariables] = useState<Variable[]>([]);
   const [sliderValues, setSliderValues] = useState<number[]>([]);
   const [winner, setWinner] = useState<string>('');
-  const { data: histories } = useGetHistoriesQuery({ page: 1, domainId: Number(id) });
+  // const { data: histories } = useGetHistoriesQuery({ page: 1, domainId: Number(id) });
+  const { data: histories } = useQuery(historyQueries.history({
+    page: 1, domainId: Number(id),
+  }));
 
   // eslint-disable-next-line max-len
   const { value: checkModal, setTrue: checkModalOpen, setFalse: checkModalClose } = useBooleanState();
@@ -259,7 +263,7 @@ export default function ABTestDetail() {
         footer={null}
       >
         {id && abTestData
-        && <UserManageModal ABTestId={id} ABTestVariables={abTestData.variables} /> }
+          && <UserManageModal ABTestId={id} ABTestVariables={abTestData.variables} />}
       </Modal>
 
       <Modal open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>

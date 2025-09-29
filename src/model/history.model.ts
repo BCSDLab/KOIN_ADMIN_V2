@@ -13,7 +13,7 @@ export interface HistoriesRequest {
   limit?: number;
   requestMethod?: string;
   domainName?: string;
-  domainId?: number;
+  domainId?: number | null;
 }
 
 export interface HistoriesResponse {

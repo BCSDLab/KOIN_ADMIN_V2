@@ -1,8 +1,9 @@
 import type { ColumnsType } from 'antd/es/table';
-import { RedirectLink } from 'model/banner.model';
+import { BannerPriorityParams, RedirectLink } from 'model/banner.model';
 import BannerRedirectLinks from 'pages/Services/Banner/components/CustomColumn/BannerRedirectLink/BannerRedirectLink';
 import BannerActiveSwitch from 'pages/Services/Banner/components/CustomColumn/BannerActiveSwitch/BannerActiveSwitch';
 import BannerPriorityControl from 'pages/Services/Banner/components/CustomColumn/BannerPriorityControl/BannerPriorityControl';
+import { UseMutateFunction } from '@tanstack/react-query';
 
 interface Banner {
   id: number;
@@ -12,8 +13,16 @@ interface Banner {
 }
 
 interface Props {
-  toggleBannerActive: (id: number, checked: boolean) => void;
-  updateBannerPriority: (id: number, params: { change_type: 'UP' | 'DOWN' }) => void;
+  toggleBannerActive: UseMutateFunction<void, Error, {
+    id: number;
+    body: {
+      is_active: boolean;
+    };
+  }, unknown>
+  updateBannerPriority: UseMutateFunction<void, Error, {
+    id: number;
+    body: BannerPriorityParams;
+  }, unknown>
 }
 
 export default function useBannerColumns({

@@ -35,3 +35,13 @@ export interface MemberTableHead {
   student_number: string;
   is_deleted: boolean;
 }
+
+export interface GetMemberResponse {
+  memberList: MemberTableHead[],
+  totalPage: number
+}
+
+export interface DeleteMemberResponse {
+  success: boolean;
+  id: number;
+}

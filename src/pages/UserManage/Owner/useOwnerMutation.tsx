@@ -1,23 +1,25 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
 import { OwnerResponse } from 'model/owner.model';
+import { ownerQueries } from 'queryFactory/ownerQueries';
 import { useNavigate } from 'react-router-dom';
-import { useUpdateOwnerMutation } from 'store/api/owner';
+import { updateOwner } from 'api/owner';
 
 export default function useOwnerMutation(id: number) {
-  const [updateOwnerMutation] = useUpdateOwnerMutation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const updateOwner = (formData: Partial<OwnerResponse>) => {
-    updateOwnerMutation({ id, ...formData })
-      .unwrap()
-      .then(() => {
-        message.success('정보 수정이 완료되었습니다.');
-        navigate(-1);
-      })
-      .catch(({ data }) => {
-        message.error(data.message);
-      });
-  };
+  const updateOwnerMutation = useMutation({
+    mutationFn: (formData: Partial<OwnerResponse>) => updateOwner({ id, ...formData }),
+    onSuccess: () => {
+      message.success('정보 수정이 완료되었습니다.');
+      queryClient.invalidateQueries({ queryKey: ownerQueries.allKeys() });
+      navigate(-1);
+    },
+    onError: (error) => {
+      message.error(error.message || '에러가 발생했습니다.');
+    },
+  });
 
-  return { updateOwner };
+  return { updateOwnerMutation };
 }

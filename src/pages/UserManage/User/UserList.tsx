@@ -1,12 +1,11 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import userQueries from 'queryFactory/userQueries';
+import { useGetUserListQuery } from 'store/api/user';
 import * as S from './UserList.style';
 
 function UserList() {
   const [page, setPage] = useState(1);
-  const { data: usersRes } = useQuery(userQueries.userList(page));
+  const { data: usersRes } = useGetUserListQuery(page);
 
   return (
     <S.Container>

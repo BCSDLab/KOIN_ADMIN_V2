@@ -1,63 +1,67 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
-import {
-  updateMember, deleteMember, addMember, undeleteMember,
-} from 'api/member';
 import { Member } from 'model/member.model';
-import memberQueries from 'queryFactory/memberQueries';
 import { useNavigate } from 'react-router-dom';
+import {
+  useAddMemberMutation, useDeleteMemberMutation, useUndeleteMemberMutation, useUpdateMemberMutation,
+} from 'store/api/member';
 
 export default function useMemberMutation(id: number) {
+  const [updateMemberMutation] = useUpdateMemberMutation();
+  const [deleteMemberMutation] = useDeleteMemberMutation();
+  const [addMemberMutation] = useAddMemberMutation();
+  const [undeleteMemberMutation] = useUndeleteMemberMutation();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const updateMemberMutation = useMutation({
-    mutationFn: (formData: Partial<Member>) => updateMember(formData),
-    onSuccess: () => {
-      message.success('정보 수정이 완료되었습니다.');
-      queryClient.invalidateQueries({ queryKey: memberQueries.allKeys() });
-      navigate(-1);
-    },
-    onError: (error) => {
-      message.error(error.message || '에러가 발생했습니다.');
-    },
-  });
 
-  const deleteMemberMutation = useMutation({
-    mutationFn: () => deleteMember(id),
-    onSuccess: () => {
-      message.success('삭제되었습니다.');
-      queryClient.invalidateQueries({ queryKey: memberQueries.allKeys() });
-      navigate(-1);
-    },
-    onError: (error) => {
-      message.error(error.message || '에러가 발생했습니다.');
-    },
-  });
+  const updateMember = (formData: Partial<Member>) => {
+    if (formData) {
+      updateMemberMutation({ id, ...formData })
+        .unwrap()
+        .then(() => {
+          message.success('정보 수정이 완료되었습니다.');
+          navigate(-1);
+        })
+        .catch(({ data }) => {
+          message.error(data.error.message);
+        });
+    }
+  };
 
-  const addMemberMutation = useMutation({
-    mutationFn: (formData: Partial<Member>) => addMember(formData),
-    onSuccess: () => {
-      message.success('추가되었습니다.');
-      queryClient.invalidateQueries({ queryKey: memberQueries.allKeys() });
-    },
-    onError: (error) => {
-      message.error(error.message || '에러가 발생했습니다.');
-    },
-  });
+  function deleteMember() {
+    deleteMemberMutation(id)
+      .unwrap()
+      .then(() => {
+        message.success('삭제되었습니다.');
+        navigate(-1);
+      }).catch((({ data }) => {
+        message.error(data.error.message);
+      }));
+  }
 
-  const undeleteMemberMutation = useMutation({
-    mutationFn: () => undeleteMember(id),
-    onSuccess: () => {
-      message.success('복구되었습니다.');
-      queryClient.invalidateQueries({ queryKey: memberQueries.allKeys() });
-      navigate(-1);
-    },
-    onError: (error) => {
-      message.error(error.message || '에러가 발생했습니다.');
-    },
-  });
+  function addMember(formData: Partial<Member>) {
+    if (FormData) {
+      addMemberMutation(formData)
+        .unwrap()
+        .then(() => {
+          message.success('추가되었습니다.');
+        })
+        .catch(({ data }) => {
+          message.error(data.error.message);
+        });
+    }
+  }
+
+  function undeleteMember() {
+    undeleteMemberMutation(id)
+      .unwrap()
+      .then(() => {
+        message.success('복구되었습니다..');
+        navigate(-1);
+      }).catch((({ data }) => {
+        message.error(data.error.message);
+      }));
+  }
 
   return {
-    updateMemberMutation, deleteMemberMutation, addMemberMutation, undeleteMemberMutation,
+    updateMember, deleteMember, addMember, undeleteMember,
   };
 }

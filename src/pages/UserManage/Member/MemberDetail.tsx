@@ -3,19 +3,16 @@ import { Divider } from 'antd';
 import CustomForm from 'components/common/CustomForm';
 import { useParams } from 'react-router-dom';
 import DetailHeading from 'components/common/DetailHeading';
-import { useQuery } from '@tanstack/react-query';
-import memberQueries from 'queryFactory/memberQueries';
+import { useGetMemberQuery } from 'store/api/member';
 import * as S from './MemberDetail.style';
 import useMemberMutation from './useMemberMutation';
 import DetailForm from './components/DetailForm';
 
 function MemberDetail() {
   const { id } = useParams();
-  const { data: memberData } = useQuery(memberQueries.member(Number(id)));
+  const { data: memberData } = useGetMemberQuery(Number(id));
   const [form] = CustomForm.useForm();
-  const {
-    updateMemberMutation, deleteMemberMutation, undeleteMemberMutation,
-  } = useMemberMutation(Number(id));
+  const { updateMember, deleteMember, undeleteMember } = useMemberMutation(Number(id));
 
   return (
     <S.Container>
@@ -30,7 +27,7 @@ function MemberDetail() {
             <CustomForm
               form={form}
               initialValues={memberData}
-              onFinish={updateMemberMutation.mutate}
+              onFinish={updateMember}
             >
               <DetailForm form={form} />
               <S.ButtonWrap>
@@ -39,20 +36,12 @@ function MemberDetail() {
                 </CustomForm.Button>
                 {memberData.is_deleted
                   ? (
-                    <CustomForm.Button
-                      danger
-                      icon={<ReloadOutlined />}
-                      onClick={undeleteMemberMutation.mutate}
-                    >
+                    <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteMember}>
                       유저 복구
                     </CustomForm.Button>
                   )
                   : (
-                    <CustomForm.Button
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={deleteMemberMutation.mutate}
-                    >
+                    <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteMember}>
                       유저 삭제
                     </CustomForm.Button>
                   )}

@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
 import CustomForm from 'components/common/CustomForm';
-import { useQuery } from '@tanstack/react-query';
-import { ownerQueries } from 'queryFactory/ownerQueries';
+import { useGetOwnerQuery } from 'store/api/owner';
 import DetailForm from './components/DetailForm';
 
 import * as S from './OwnerDetail.style';
@@ -12,9 +11,9 @@ import useOwnerMutation from './useOwnerMutation';
 
 export default function OwnerDetail() {
   const { id } = useParams();
-  const { data: ownerData } = useQuery(ownerQueries.owner(Number(id)));
+  const { data: ownerData } = useGetOwnerQuery(Number(id));
   const [form] = CustomForm.useForm();
-  const { updateOwnerMutation } = useOwnerMutation(Number(id));
+  const { updateOwner } = useOwnerMutation(Number(id));
 
   return (
     <S.Wrap>
@@ -26,7 +25,7 @@ export default function OwnerDetail() {
           </S.BreadCrumb>
           <S.FormWrap>
             <CustomForm
-              onFinish={updateOwnerMutation.mutate}
+              onFinish={updateOwner}
               form={form}
               initialValues={ownerData}
             >

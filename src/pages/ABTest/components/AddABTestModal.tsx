@@ -8,8 +8,9 @@ import {
 } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
 import { ABTest } from 'model/abTest.model';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addABTest } from 'api/abTest';
+import abTestQueries from 'queryFactory/abTestQueries';
 import * as S from './AddABTestModal.style';
 import NewTest from './NewTest';
 
@@ -29,9 +30,13 @@ function AddABTestModal({ onCancel, creator }: { onCancel: () => void, creator: 
       rate: 50, displayName: '', name: '',
     },
   ]);
+  const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
     mutationFn: addABTest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: abTestQueries.allKeys() });
+    },
   });
 
   const handleSliderChange = (values: number[]) => {

@@ -9,10 +9,11 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import CustomForm from 'components/common/CustomForm';
 import HistoryArea from 'components/common/HistoryArea';
-import { useGetABTestQuery } from 'store/api/abtest';
 import { useGetHistoriesQuery } from 'store/api/history';
 import { ABTest } from 'model/abTest.model';
 import useBooleanState from 'utils/hooks/useBoolean';
+import { useQuery } from '@tanstack/react-query';
+import abTestQueries from 'queryFactory/abTestQueries';
 import useABTestMutation from './hook/useABTestMutation';
 import * as S from './ABTestDetail.style';
 import UserManageModal from './UserManageModal';
@@ -26,8 +27,8 @@ interface Variable {
 export default function ABTestDetail() {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { data: abTestData, isLoading } = useGetABTestQuery(id);
-  const { modifyABTest, deleteABTest, postWinner } = useABTestMutation();
+  const { data: abTestData, isLoading } = useQuery(abTestQueries.abTest(Number(id)));
+  const { modifyABTestMutation, deleteABTestMutation, postWinnerMutation } = useABTestMutation();
   const [form] = CustomForm.useForm();
   const navigate = useNavigate();
   const [variables, setVariables] = useState<Variable[]>([]);
@@ -99,13 +100,10 @@ export default function ABTestDetail() {
   };
 
   const onFinish = (values: ABTest) => {
-    modifyABTest(id, values, {
+    modifyABTestMutation({ id, data: values }, {
       onSuccess: () => {
         message.success('AB 테스트가 수정되었습니다.');
         navigate('/abtest');
-      },
-      onError: (errorMessage) => {
-        message.error(errorMessage);
       },
     });
   };
@@ -244,7 +242,7 @@ export default function ABTestDetail() {
           <S.Item>
             <Button
               danger
-              onClick={() => { postWinner({ id, winner_name: winner }); }}
+              onClick={() => { postWinnerMutation({ id, winner_name: winner }); }}
             >
               승자 선택
             </Button>
@@ -269,13 +267,11 @@ export default function ABTestDetail() {
             <Button
               danger
               onClick={() => {
-                deleteABTest(id, {
+                if (!id) return;
+                deleteABTestMutation(id, {
                   onSuccess: () => {
                     message.success('AB 테스트가 삭제되었습니다.');
                     navigate('/abtest');
-                  },
-                  onError: (errorMessage) => {
-                    message.error(errorMessage);
                   },
                 });
                 setIsModalOpen(false);

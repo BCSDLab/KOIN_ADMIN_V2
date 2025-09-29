@@ -6,16 +6,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   DeleteOutlined, UploadOutlined, EditOutlined, LeftOutlined, CloseOutlined,
 } from '@ant-design/icons';
+import { useGetNoticeQuery } from 'store/api/notice';
 import {
   Button, Divider, Modal, message,
 } from 'antd';
 import { Editor } from '@toast-ui/react-editor';
 import { useUploadfileMutation } from 'store/api/upload';
 import { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
+import { useGetHistoriesQuery } from 'store/api/history';
 import HistoryArea from 'components/common/HistoryArea';
-import { useQuery } from '@tanstack/react-query';
-import historyQueries from 'queryFactory/historyQueries';
-import noticeQueries from 'queryFactory/noticeQueries';
 import useNoticeMutation from './useNoticeMutation';
 import * as S from './NoticeDetail.style';
 
@@ -25,14 +24,12 @@ export default function NoticeDetail() {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const editorRef = useRef<Editor | null>(null);
-  const { updateNoticeMutation, deleteNoticeMutation } = useNoticeMutation();
+  const { data: notice } = useGetNoticeQuery(Number(id));
+  const { updateNotice, deleteNotice } = useNoticeMutation();
   const [uploadfile] = useUploadfileMutation();
   const { required } = CustomForm.validateUtils();
   const [form] = CustomForm.useForm();
-  const {
-    data: histories,
-  } = useQuery(historyQueries.history({ page: 1, domainId: Number(id) }));
-  const { data: notice } = useQuery(noticeQueries.notice(Number(id)));
+  const { data: histories } = useGetHistoriesQuery({ page: 1, domainId: Number(id) });
 
   const handleFinish = (values: NoticeRequest) => {
     const editorContent = editorRef.current?.getInstance().getHTML();
@@ -43,7 +40,7 @@ export default function NoticeDetail() {
       ...values,
     };
 
-    updateNoticeMutation.mutate(noticeForm, {
+    updateNotice(noticeForm, {
       onSuccess: () => setIsEditing(false),
     });
   };
@@ -85,18 +82,18 @@ export default function NoticeDetail() {
                   rules={[required()]}
                   hooks={{
                     addImageBlobHook:
-                      async (blob: Blob, callback: (url: string, altText: string) => void) => {
-                        try {
-                          const formData = await handleImageUpload(blob);
-                          const response = await uploadfile({
-                            domain: 'admin',
-                            image: formData,
-                          }).unwrap();
-                          callback(response.file_url, '');
-                        } catch (error) {
-                          message.error('이미지 업로드에 실패했습니다.');
-                        }
-                      },
+                    async (blob: Blob, callback: (url: string, altText: string) => void) => {
+                      try {
+                        const formData = await handleImageUpload(blob);
+                        const response = await uploadfile({
+                          domain: 'admin',
+                          image: formData,
+                        }).unwrap();
+                        callback(response.file_url, '');
+                      } catch (error) {
+                        message.error('이미지 업로드에 실패했습니다.');
+                      }
+                    },
                   }}
                 />
               ) : (
@@ -146,7 +143,7 @@ export default function NoticeDetail() {
               </Button>
               <Button
                 danger
-                onClick={() => deleteNoticeMutation.mutate(Number(id))}
+                onClick={() => deleteNotice(Number(id))}
               >
                 삭제
               </Button>

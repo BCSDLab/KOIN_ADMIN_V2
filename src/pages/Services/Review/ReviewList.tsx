@@ -1,9 +1,8 @@
 import { Checkbox, Skeleton, Pagination } from 'antd';
 import { useState } from 'react';
+import { useGetReviewListQuery } from 'store/api/review';
 import * as Common from 'styles/List.style';
 import ScrollUpButton from 'components/common/ScrollUpButton/ScrollUpButton';
-import { useQuery } from '@tanstack/react-query';
-import reviewQueries from 'queryFactory/reviewQueries';
 import ReviewCard from './ReviewCard';
 import * as S from './ReviewList.style';
 
@@ -14,7 +13,7 @@ export default function ReviewList() {
   const [isReported, setIsReported] = useState<boolean>(false);
   const {
     data, isLoading,
-  } = useQuery(reviewQueries.reivewList({ page, limit: LIMIT, isReported }));
+  } = useGetReviewListQuery({ page, limit: LIMIT, isReported });
 
   const filterReportedReview = () => {
     setIsReported((prev) => !prev);

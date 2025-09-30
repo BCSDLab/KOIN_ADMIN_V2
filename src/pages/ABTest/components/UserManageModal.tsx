@@ -20,7 +20,7 @@ function UserManageModal({ ABTestId, ABTestVariables }: UserManageModalProps) {
   const { moveUserMutation } = useABTestMutation();
   const [page, setPage] = useState(1);
   const [name, setName] = useState<string>('');
-  const [userId, setUserId] = useState<number>(0);
+  const [userId, setUserId] = useState<number>();
   const [deviceId, setDeviceId] = useState<number>();
   const [step, setStep] = useState<number>(1);
   // eslint-disable-next-line max-len

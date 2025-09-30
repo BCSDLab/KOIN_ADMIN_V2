@@ -48,7 +48,7 @@ export const getUserByName = async (name: string) => {
   return resData;
 };
 
-export const getUserByID = async (id: number | string) => {
+export const getUserByID = async (id: number | string | undefined) => {
   const { data: resData } = await accessClient.get(`/abtest/user/${id}/device`);
   return resData;
 };

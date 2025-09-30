@@ -24,8 +24,8 @@ const abTestQueries = {
     queryFn: () => getUserByName(name),
   }),
 
-  userIDKey: (id: number | string) => [...abTestQueries.allKeys(), 'user', id],
-  userID: (id: number | string) => queryOptions({
+  userIDKey: (id: number | string | undefined) => [...abTestQueries.allKeys(), 'user', id],
+  userID: (id: number | string | undefined) => queryOptions({
     queryKey: abTestQueries.userIDKey(id),
     queryFn: () => getUserByID(id),
     enabled: !!id,

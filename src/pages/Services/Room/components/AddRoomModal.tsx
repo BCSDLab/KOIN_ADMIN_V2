@@ -1,32 +1,22 @@
 /* eslint-disable no-restricted-imports */
 import { UploadOutlined } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
-import { RoomResponse } from 'model/room.model';
-import { message } from 'antd';
+import type { RoomResponse } from 'model/room.model';
 import * as S from 'styles/List.style';
 import DetailForm from './DetailForm';
 import useRoomMutation from '../useRoomMutation';
 
 export default function AddRoomModal({ onCancel }: { onCancel: () => void }) {
   const [form] = CustomForm.useForm();
-  const { addRoom } = useRoomMutation(1);
+  const { addRoomMutation } = useRoomMutation();
 
   const createRoom = (values: Partial<RoomResponse>) => {
-    addRoom(values, {
+    addRoomMutation.mutate(values, {
       onSuccess: () => {
-        message.success('정보 추가가 완료되었습니다.');
         onCancel();
         form.resetFields();
       },
-      onError: (errorMessage) => {
-        message.error(errorMessage);
-      },
     });
-    // .then(() => {
-    //   onCancel();
-    //   form.resetFields();
-    // })
-    // .catch();
   };
 
   return (

@@ -1,67 +1,67 @@
 import { message } from 'antd';
-import { RoomResponse } from 'model/room.model';
+import type { RoomResponse } from 'model/room.model';
 import { useNavigate } from 'react-router-dom';
 import {
-  useAddRoomMutation, useDeleteRoomMutation, useUndeleteRoomMutation, useUpdateRoomMutation,
-} from 'store/api/room';
+  addRoom, updateRoom, deleteRoom, undeleteRoom,
+} from 'api/room';
+import roomQueries from 'queryFactory/roomQueries';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export default function useRoomMutation(id: number) {
-  const [updateRoomMutation] = useUpdateRoomMutation();
-  const [deleteRoomMutation] = useDeleteRoomMutation();
-  const [addRoomMutation] = useAddRoomMutation();
-  const [undeleteRoomMutation] = useUndeleteRoomMutation();
+export default function useRoomMutation() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const deleteRoom = () => {
-    deleteRoomMutation(id)
-      .unwrap()
-      .then(() => {
-        message.success('삭제되었습니다.');
-        navigate(-1);
-      })
-      .catch(({ data }) => {
-        message.error(data.message);
-      });
-  };
+  const addRoomMutation = useMutation({
+    mutationFn: (body: Partial<RoomResponse>) => addRoom(body),
+    onSuccess: () => {
+      message.success('방이 추가되었습니다.');
+      queryClient.invalidateQueries({ queryKey: roomQueries.allKeys() });
+    },
+    onError: (error: any) => {
+      message.error(error?.message ?? '방 추가 실패');
+    },
+  });
 
-  const updateRoom = (formData: Partial<RoomResponse>) => {
-    updateRoomMutation({ id, ...formData })
-      .unwrap()
-      .then(() => {
-        message.success('정보 수정이 완료되었습니다.');
-        navigate(-1);
-      })
-      .catch(({ data }) => {
-        message.error(data.message);
-      });
-  };
+  const updateRoomMutation = useMutation({
+    mutationFn: (payload: Pick<RoomResponse, 'id'> & Partial<RoomResponse>) => updateRoom(payload),
+    onSuccess: () => {
+      message.success('정보 수정이 완료되었습니다.');
+      queryClient.invalidateQueries({ queryKey: roomQueries.allKeys() });
+      navigate(-1);
+    },
+    onError: (error: any) => {
+      message.error(error?.message ?? '수정 실패');
+    },
+  });
 
-  const addRoom = (formData: Partial<RoomResponse>, {
-    onSuccess,
-    onError,
-  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
-    addRoomMutation({ ...formData })
-      .unwrap()
-      .then(() => {
-        onSuccess?.();
-      })
-      .catch(({ data }) => {
-        onError?.(data.message);
-      });
-  };
+  const deleteRoomMutation = useMutation({
+    mutationFn: (id:number) => deleteRoom(id),
+    onSuccess: () => {
+      message.success('삭제되었습니다.');
+      queryClient.invalidateQueries({ queryKey: roomQueries.allKeys() });
+      navigate(-1);
+    },
+    onError: (error: any) => {
+      message.error(error?.message ?? '삭제 실패');
+    },
+  });
 
-  function undeleteRoom() {
-    undeleteRoomMutation(id)
-      .unwrap()
-      .then(() => {
-        message.success('복구되었습니다.');
-        navigate(-1);
-      }).catch((({ data }) => {
-        message.error(data.message);
-      }));
-  }
+  const undeleteRoomMutation = useMutation({
+    mutationFn: (id:number) => undeleteRoom(id),
+    onSuccess: () => {
+      message.success('복구되었습니다.');
+      queryClient.invalidateQueries({ queryKey: roomQueries.allKeys() });
+      navigate(-1);
+    },
+    onError: (error: any) => {
+      message.error(error?.message ?? '복구 실패');
+    },
+  });
 
   return {
-    updateRoom, deleteRoom, addRoom, undeleteRoom,
+    addRoomMutation,
+    updateRoomMutation,
+    deleteRoomMutation,
+    undeleteRoomMutation,
   } as const;
 }

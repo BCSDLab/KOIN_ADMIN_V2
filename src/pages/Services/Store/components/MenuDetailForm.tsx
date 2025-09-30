@@ -1,4 +1,5 @@
 import { DeleteOutlined } from '@ant-design/icons';
+import { useQuery } from '@tanstack/react-query';
 import {
   Button,
   Checkbox, Divider, Form, Input, Space,
@@ -6,17 +7,20 @@ import {
 import { FormInstance } from 'antd/lib';
 import CustomForm from 'components/common/CustomForm';
 import { MenuCategory } from 'model/menuCategory';
-import { MenuResponse } from 'model/menus.model';
+import type { MenuResponse } from 'model/menus.model';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetMenuCategoriesQuery } from 'store/api/storeMenu/category';
 import useBooleanState from 'utils/hooks/useBoolean';
+import shopMenuCategoryQueries from 'queryFactory/shopMenuCategoryQueries';
 
 export default function MenuDetailForm({ form, storeMenu }: {
   form: FormInstance, storeMenu?: MenuResponse
 }) {
-  const { id } = useParams();
-  const { data: menuCategories } = useGetMenuCategoriesQuery(Number(id));
+  const { id: shopId } = useParams();
+  const { data: menuCategories } = useQuery({
+    ...shopMenuCategoryQueries.list(Number(shopId)),
+  });
+
   const { required } = CustomForm.validateUtils();
   const {
     value: isSingleMenu,

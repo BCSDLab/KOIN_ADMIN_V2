@@ -2,7 +2,7 @@
 import CustomForm from 'components/common/CustomForm';
 import { Divider } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
-import STORE_OPTION from 'constant/store';
+import SHOP_OPTION from 'constant/shop';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Address } from 'model/address.model';
 import StoreCategory from './StoreCategory';
@@ -64,7 +64,7 @@ export default function StoreDetailForm({ form }: { form: FormInstance }) {
         옵션
       </Divider>
       <S.CheckboxWrap>
-        {STORE_OPTION.map((optionData) => (
+        {SHOP_OPTION.map((optionData) => (
           <CustomForm.Checkbox key={optionData.name} name={optionData.data} defaultChecked={false}>
             {optionData.name}
           </CustomForm.Checkbox>

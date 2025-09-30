@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import { BannerCategoriesResponse, BannerCategory } from 'model/bannerCategory.model';
+import type { BannerCategoriesResponse, BannerCategory } from 'model/bannerCategory.model';
 
 export const getBannerCategoryList = async () => {
   const { data } = await accessClient.get<BannerCategoriesResponse>('admin/banner-categories');

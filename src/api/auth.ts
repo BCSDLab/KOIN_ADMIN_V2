@@ -1,6 +1,6 @@
 import accessClient from 'api';
 import axios from 'axios';
-import {
+import type {
   AdminInfo, ChangePasswordRequest, LoginRequest, LoginResponse,
 } from 'model/auth.model';
 

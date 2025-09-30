@@ -8,7 +8,7 @@ const historyQueries = {
   historyKeys: (
     {
       page,
-      domainId = null,
+      domainId,
       limit = 30,
     }: HistoriesRequest,
   ) => [

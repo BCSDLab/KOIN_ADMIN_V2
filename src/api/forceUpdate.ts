@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import { AppVersionResponse, OS, UpdateAppVersionRequest } from 'model/forceUpdate.model';
+import type { AppVersionResponse, OS, UpdateAppVersionRequest } from 'model/forceUpdate.model';
 
 export const getAppVersion = async (type: OS): Promise<AppVersionResponse> => {
   const res = await accessClient.get<AppVersionResponse>(`/admin/version/${type}`);

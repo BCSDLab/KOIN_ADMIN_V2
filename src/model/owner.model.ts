@@ -7,10 +7,6 @@ export interface OwnersResponse extends ListPagination {
   owners: Owner[];
 }
 
-export interface OwnersParam {
-  page: number;
-}
-
 export interface Owner {
   created_at: string;
   email: string;
@@ -68,4 +64,14 @@ export interface OwnerResponse {
   company_registration_number: string;
   attachments_id: number[] | null;
   shops_id: number[] | null;
+}
+
+export interface DeleteOwnerResponse {
+  success: boolean;
+  id: number;
+}
+
+export interface OwnerRequestMutateResponseType {
+  success: boolean;
+  id: number;
 }

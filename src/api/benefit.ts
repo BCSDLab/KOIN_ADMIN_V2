@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import {
+import type {
   BenefitCategoryResponse,
   GetBenefitShopsResponse,
   SearchResponse,

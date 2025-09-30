@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
-import { UserDetail } from 'model/user.model';
+import type { UserDetail } from 'model/user.model';
 import { useNavigate } from 'react-router-dom';
 import filterObject from 'utils/ts/filterObject';
 import userQueries from 'queryFactory/userQueries';

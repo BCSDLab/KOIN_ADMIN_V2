@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { getMember, getMemberList } from 'api/member';
-import { MembersParam, GetMemberResponse, MembersResponse } from 'model/member.model';
+import type { MembersParam, GetMemberResponse, MembersResponse } from 'model/member.model';
 
 const memberQueries = {
   allKeys: () => ['members'] as const,

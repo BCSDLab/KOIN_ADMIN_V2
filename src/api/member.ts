@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import {
+import type {
   MembersParam, MembersResponse, Member, DeleteMemberResponse,
 } from 'model/member.model';
 

@@ -1,5 +1,5 @@
 import { TRACK_LIST, TRACK_MAPPER } from 'constant/member';
-import { Track } from 'model/member.model';
+import type { Track } from 'model/member.model';
 import { useState } from 'react';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';

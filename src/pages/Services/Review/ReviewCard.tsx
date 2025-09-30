@@ -1,4 +1,4 @@
-import { ReviewContent } from 'model/review.model';
+import type { ReviewContent } from 'model/review.model';
 import { Button, Modal } from 'antd';
 import { useState } from 'react';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';

@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { Editor } from '@toast-ui/react-editor';
 import { useUploadfileMutation } from 'store/api/upload';
-import { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
+import type { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
 import HistoryArea from 'components/common/HistoryArea';
 import { useQuery } from '@tanstack/react-query';
 import historyQueries from 'queryFactory/historyQueries';

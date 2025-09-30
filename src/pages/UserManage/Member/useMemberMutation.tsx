@@ -3,7 +3,7 @@ import { message } from 'antd';
 import {
   updateMember, deleteMember, addMember, undeleteMember,
 } from 'api/member';
-import { Member } from 'model/member.model';
+import type { Member } from 'model/member.model';
 import memberQueries from 'queryFactory/memberQueries';
 import { useNavigate } from 'react-router-dom';
 

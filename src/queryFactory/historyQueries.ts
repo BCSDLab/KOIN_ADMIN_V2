@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import getHistories from 'api/history';
-import { HistoriesRequest } from 'model/history.model';
+import type { HistoriesRequest } from 'model/history.model';
 
 const historyQueries = {
   allKeys: () => ['histories'] as const,

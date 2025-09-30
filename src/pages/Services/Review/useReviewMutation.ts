@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
 import { deleteReview, setRivewDismissed } from 'api/review';
-import { SetReviewParam } from 'model/review.model';
+import type { SetReviewParam } from 'model/review.model';
 import reviewQueries from 'queryFactory/reviewQueries';
 
 export default function useReviewMutation() {

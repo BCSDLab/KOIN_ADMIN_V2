@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import { OwnersResponse, OwnerResponse, OwnerRequestMutateResponseType } from 'model/owner.model';
+import type { OwnersResponse, OwnerResponse, OwnerRequestMutateResponseType } from 'model/owner.model';
 
 export const getOwnerRequest = async (id: number) => {
   const response = await accessClient.get<OwnerResponse>(`admin/users/owner/${id}`);

@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-imports */
 import { UploadOutlined } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
-import { Member } from 'model/member.model';
+import type { Member } from 'model/member.model';
 import DetailForm from './DetailForm';
 import * as S from '../MemberList.style';
 import useMemberMutation from '../useMemberMutation';

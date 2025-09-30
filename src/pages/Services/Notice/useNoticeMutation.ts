@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
+import type { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addNotice, updateNotice, deleteNotice } from 'api/notice';

@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import { UserDetail, UsersResponse } from 'model/user.model';
+import type { UserDetail, UsersResponse } from 'model/user.model';
 
 export const getUser = async (id: number) => {
   const response = await accessClient.get<UserDetail>(`admin/users/student/${id}`);

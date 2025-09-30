@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { getUser, getUserList } from 'api/user';
-import { UserListResponseType, UsersResponse } from 'model/user.model';
+import type { UserListResponseType, UsersResponse } from 'model/user.model';
 
 const userQueries = {
   allKeys: () => ['users'] as const,

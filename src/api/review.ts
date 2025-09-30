@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import {
+import type {
   GetReviewListParam, ReviewListResponse, SetReviewParam,
 } from 'model/review.model';
 

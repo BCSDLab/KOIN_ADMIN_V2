@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { getAppVersion } from 'api/forceUpdate';
-import { OS } from 'model/forceUpdate.model';
+import type { OS } from 'model/forceUpdate.model';
 
 const forceUpdateQueries = {
   allKey: () => ['appVersion'],

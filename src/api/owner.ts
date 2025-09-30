@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import {
+import type {
   OwnerResponse, OwnersResponse, DeleteOwnerResponse,
 } from 'model/owner.model';
 

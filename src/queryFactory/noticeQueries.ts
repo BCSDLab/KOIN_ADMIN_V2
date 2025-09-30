@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { getNotice, getNoticeList } from 'api/notice';
-import { NoticesParam, NoticesResponse, TransformedNoticesResponse } from 'model/notice.model';
+import type { NoticesParam, NoticesResponse, TransformedNoticesResponse } from 'model/notice.model';
 
 const noticeQueries = {
   allkeys: () => ['notices'] as const,

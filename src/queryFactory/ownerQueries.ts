@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { getOwner, getOwnerList } from 'api/owner';
-import { OwnerListResponse, OwnersResponse } from 'model/owner.model';
+import type { OwnerListResponse, OwnersResponse } from 'model/owner.model';
 
 export const ownerQueries = {
   allKeys: () => ['owners'] as const,

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
-import { OwnerResponse } from 'model/owner.model';
+import type { OwnerResponse } from 'model/owner.model';
 import { ownerQueries } from 'queryFactory/ownerQueries';
 import { useNavigate } from 'react-router-dom';
 import { updateOwner } from 'api/owner';

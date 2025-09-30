@@ -1,5 +1,5 @@
 import accessClient from 'api';
-import {
+import type {
   NoticeRequest, NoticesParam, NoticesResponse, NoticeResponse, DeleteNoticeResponse,
 } from 'model/notice.model';
 

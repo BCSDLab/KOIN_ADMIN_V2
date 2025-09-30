@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { getReviewList } from 'api/review';
-import { GetReviewListParam } from 'model/review.model';
+import type { GetReviewListParam } from 'model/review.model';
 
 const reviewQueries = {
   allkeys: () => ['reivews'] as const,

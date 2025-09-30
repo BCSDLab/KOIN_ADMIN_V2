@@ -3,9 +3,9 @@ import { getOwner, getOwnerList } from 'api/owner';
 import type { OwnerListResponse, OwnersResponse } from 'model/owner.model';
 
 export const ownerQueries = {
-  allKeys: () => ['owners'] as const,
+  allKeys: () => ['owners'],
 
-  ownerKeys: (id: number) => [...ownerQueries.allKeys(), id] as const,
+  ownerKeys: (id: number) => [...ownerQueries.allKeys(), id],
   owner: (id: number) => queryOptions({
     queryKey: ownerQueries.ownerKeys(id),
     queryFn: () => getOwner(id),

@@ -3,7 +3,7 @@ import getHistories from 'api/history';
 import type { HistoriesRequest } from 'model/history.model';
 
 const historyQueries = {
-  allKeys: () => ['histories'] as const,
+  allKeys: () => ['histories'],
 
   historyKeys: (
     {
@@ -14,7 +14,7 @@ const historyQueries = {
   ) => [
     ...historyQueries.allKeys(),
     page, domainId, limit,
-  ] as const,
+  ],
   history: (options: HistoriesRequest) => queryOptions({
     queryKey: historyQueries.historyKeys(options),
     queryFn: () => getHistories(options),

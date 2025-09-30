@@ -3,7 +3,7 @@ import { getMember, getMemberList } from 'api/member';
 import type { MembersParam, GetMemberResponse, MembersResponse } from 'model/member.model';
 
 const memberQueries = {
-  allKeys: () => ['members'] as const,
+  allKeys: () => ['members'],
 
   memberListKeys: ({
     page,
@@ -11,7 +11,7 @@ const memberQueries = {
     is_deleted,
   }: MembersParam) => [...memberQueries.allKeys(), {
     page, track, is_deleted,
-  }] as const,
+  }],
   memberList: (param: MembersParam) => queryOptions({
     queryKey: memberQueries.memberListKeys(param),
     queryFn: () => getMemberList(param),
@@ -21,7 +21,7 @@ const memberQueries = {
     }),
   }),
 
-  memberKeys: (id: number) => [...memberQueries.allKeys(), id] as const,
+  memberKeys: (id: number) => [...memberQueries.allKeys(), id],
   member: (id: number) => queryOptions({
     queryKey: memberQueries.memberKeys(id),
     queryFn: () => getMember(id),

@@ -3,15 +3,15 @@ import { getOwnerRequest, getOwnerRequestList } from 'api/ownerRequest';
 import type { OwnerRequestListResponse, OwnersResponse } from 'model/owner.model';
 
 const ownerRequestQueries = {
-  allkeys: () => ['ownerRequests'] as const,
+  allkeys: () => ['ownerRequests'],
 
-  ownerRequestKeys: (id: number) => [...ownerRequestQueries.allkeys(), id] as const,
+  ownerRequestKeys: (id: number) => [...ownerRequestQueries.allkeys(), id],
   ownerRequest: (id: number) => queryOptions({
     queryKey: ownerRequestQueries.ownerRequestKeys(id),
     queryFn: () => getOwnerRequest(id),
   }),
 
-  ownerRequestListKeys: (page: number) => [...ownerRequestQueries.allkeys(), page] as const,
+  ownerRequestListKeys: (page: number) => [...ownerRequestQueries.allkeys(), page],
   ownerRequestList: (page: number) => queryOptions({
     queryKey: ownerRequestQueries.ownerRequestListKeys(page),
     queryFn: () => getOwnerRequestList(page),

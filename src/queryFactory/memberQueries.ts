@@ -4,6 +4,7 @@ import type { MembersParam, GetMemberResponse, MembersResponse } from 'model/mem
 
 const memberQueries = {
   allKeys: () => ['members'] as const,
+
   memberListKeys: ({
     page,
     track,
@@ -19,6 +20,7 @@ const memberQueries = {
       totalPage: data.total_page,
     }),
   }),
+
   memberKeys: (id: number) => [...memberQueries.allKeys(), id] as const,
   member: (id: number) => queryOptions({
     queryKey: memberQueries.memberKeys(id),

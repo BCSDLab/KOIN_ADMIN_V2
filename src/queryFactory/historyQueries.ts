@@ -4,6 +4,7 @@ import type { HistoriesRequest } from 'model/history.model';
 
 const historyQueries = {
   allKeys: () => ['histories'] as const,
+
   historyKeys: (
     {
       page,

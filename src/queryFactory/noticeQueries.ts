@@ -4,11 +4,13 @@ import type { NoticesParam, NoticesResponse, TransformedNoticesResponse } from '
 
 const noticeQueries = {
   allkeys: () => ['notices'] as const,
+
   noticeKeys: (id: number) => [...noticeQueries.allkeys(), id] as const,
   notice: (id: number) => queryOptions({
     queryKey: noticeQueries.noticeKeys(id),
     queryFn: () => getNotice(id),
   }),
+
   noticeListKeys: (param: NoticesParam) => [...noticeQueries.allkeys(), param] as const,
   noticeList: (param: NoticesParam) => queryOptions({
     queryKey: noticeQueries.noticeListKeys(param),

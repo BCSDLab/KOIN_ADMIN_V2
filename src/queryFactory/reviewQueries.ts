@@ -4,6 +4,7 @@ import type { GetReviewListParam } from 'model/review.model';
 
 const reviewQueries = {
   allkeys: () => ['reivews'] as const,
+
   reivewListKeys: ({
     page, limit, isReported,
   }: GetReviewListParam) => [...reviewQueries.allkeys(), { page, limit, isReported }] as const,

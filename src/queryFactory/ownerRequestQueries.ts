@@ -4,11 +4,13 @@ import type { OwnerRequestListResponse, OwnersResponse } from 'model/owner.model
 
 const ownerRequestQueries = {
   allkeys: () => ['ownerRequests'] as const,
+
   ownerRequestKeys: (id: number) => [...ownerRequestQueries.allkeys(), id] as const,
   ownerRequest: (id: number) => queryOptions({
     queryKey: ownerRequestQueries.ownerRequestKeys(id),
     queryFn: () => getOwnerRequest(id),
   }),
+
   ownerRequestListKeys: (page: number) => [...ownerRequestQueries.allkeys(), page] as const,
   ownerRequestList: (page: number) => queryOptions({
     queryKey: ownerRequestQueries.ownerRequestListKeys(page),

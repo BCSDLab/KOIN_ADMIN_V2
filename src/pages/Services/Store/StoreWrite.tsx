@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Flex, message } from 'antd';
+import { Flex } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import STORE_OPTION from 'constant/store';
+import SHOP_OPTION from 'constant/shop';
 import { CreateStoreParams, DAY } from 'model/store.model';
 import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
 import * as S from 'styles/Detail.style';
 import * as L from './StoreWrite.style';
-import useStoreMutation from './components/useStoreMutation';
+import useShopMutation from './components/useShopMutation';
 import StoreDetailForm from './components/StoreDetailForm';
 
 const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
@@ -25,7 +25,7 @@ const defaultTimeInfo = DAYS.map((_, index) => DEFAULT_TIME_TEMPLATE(index));
 export default function StoreWrite() {
   const navigate = useNavigate();
   const [form] = CustomForm.useForm<CreateStoreParams>();
-  const { addStore } = useStoreMutation(1);
+  const { addShopMutation } = useShopMutation();
 
   const buildFinalAddress = () => {
     const base = (form.getFieldValue('address') ?? '').toString().trim();
@@ -43,23 +43,16 @@ export default function StoreWrite() {
       open: openField,
     } as Partial<CreateStoreParams>;
 
-    addStore(
-      payload,
-      {
-        onSuccess: () => {
-          message.success('정보 추가가 완료되었습니다.');
-          form.resetFields();
-          navigate(-1);
-        },
-        onError: (errorMessage) => {
-          message.error(errorMessage);
-        },
+    addShopMutation.mutate(payload, {
+      onSuccess: () => {
+        form.resetFields();
+        navigate(-1);
       },
-    );
+    });
   };
 
   useEffect(() => {
-    STORE_OPTION.forEach((optionData) => {
+    SHOP_OPTION.forEach((optionData) => {
       form.setFieldValue(optionData.data, false);
     });
     form.setFieldValue('image_urls', []);

@@ -1,4 +1,4 @@
-const STORE_OPTION = [
+const SHOP_OPTION = [
   {
     name: '배달 가능',
     data: 'delivery',
@@ -13,4 +13,4 @@ const STORE_OPTION = [
   },
 ] as const;
 
-export default STORE_OPTION;
+export default SHOP_OPTION;

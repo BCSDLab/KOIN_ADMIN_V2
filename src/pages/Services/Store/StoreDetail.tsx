@@ -3,17 +3,23 @@ import CustomForm from 'components/common/CustomForm';
 import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
-import { useGetStoreQuery } from 'store/api/store';
-import { ModifyStoreParams } from 'model/store.model';
-import useStoreMutation from './components/useStoreMutation';
+import type { ModifyStoreParams } from 'model/store.model';
+import { useQuery } from '@tanstack/react-query';
+import shopQueries from 'queryFactory/shopQueries';
+import useShopMutation from './components/useShopMutation';
 import * as S from './StoreDetail.style';
 import StoreDetailForm from './components/StoreDetailForm';
 import MenuList from './components/MenuList';
 
 export default function StoreDetail() {
   const { id } = useParams();
-  const { data: storeData } = useGetStoreQuery(Number(id));
-  const { updateStore, deleteStore, undeleteStore } = useStoreMutation(Number(id));
+  const shopId = Number(id);
+  const { data: shopData } = useQuery(shopQueries.detail(Number(id)));
+  const {
+    updateShopMutation,
+    deleteShopMutation,
+    undeleteShopMutation,
+  } = useShopMutation();
   const [storeForm] = CustomForm.useForm<Partial<ModifyStoreParams>>();
 
   const onFinish = (values : Partial<ModifyStoreParams>) => {
@@ -21,22 +27,23 @@ export default function StoreDetail() {
     // open만 업데이트 되지않아 재할당함
     updatedValues.open = storeForm.getFieldValue('open');
     // TODO: 상점 메뉴 수정 로직 추가
-    updateStore(updatedValues);
+    // updateStore(updatedValues);
+    updateShopMutation.mutate({ id: Number(id), ...updatedValues });
   };
 
   return (
     <S.Container>
-      {storeData && (
+      {shopData && (
       <>
         <DetailHeading>Store Detail</DetailHeading>
         <S.BreadCrumb>
-          {`Store Management / Store Detail / ${storeData?.name}`}
+          {`Store Management / Store Detail / ${shopData?.name}`}
         </S.BreadCrumb>
         <S.FormWrap>
           <CustomForm
             onFinish={onFinish}
             form={storeForm}
-            initialValues={storeData}
+            initialValues={shopData}
             style={{ fontFamily: 'Noto Sans KR' }}
           >
             <Divider orientation="left">기본 정보</Divider>
@@ -45,14 +52,22 @@ export default function StoreDetail() {
             <Divider orientation="left" style={{ marginTop: '40px', marginBottom: '40px' }}>메뉴</Divider>
             <MenuList />
             <S.ButtonWrap>
-              {storeData?.is_deleted
+              {shopData?.is_deleted
                 ? (
-                  <CustomForm.Button danger icon={<ReloadOutlined />} onClick={undeleteStore}>
+                  <CustomForm.Button
+                    danger
+                    icon={<ReloadOutlined />}
+                    onClick={() => undeleteShopMutation.mutate(shopId)}
+                  >
                     복구
                   </CustomForm.Button>
                 )
                 : (
-                  <CustomForm.Button danger icon={<DeleteOutlined />} onClick={deleteStore}>
+                  <CustomForm.Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => deleteShopMutation.mutate(shopId)}
+                  >
                     삭제
                   </CustomForm.Button>
                 )}

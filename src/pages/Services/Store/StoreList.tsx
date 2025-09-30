@@ -3,18 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Switch } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import CustomTable from 'components/common/CustomTable';
-import { useGetStoreListQuery } from 'store/api/store';
+import { useQuery } from '@tanstack/react-query';
 import useBooleanState from 'utils/hooks/useBoolean';
+import shopQueries from 'queryFactory/shopQueries';
 import * as S from './StoreList.style';
 
 function StoreList() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const { value: isDeletedStore, changeValue: containIsDeletedStore } = useBooleanState(false);
-  const { data: StoreRes } = useGetStoreListQuery({
-    page,
-    is_deleted: isDeletedStore,
-  });
+
+  const { data: StoreRes } = useQuery(shopQueries.list({ page, is_deleted: isDeletedStore }));
 
   return (
     <S.Container>

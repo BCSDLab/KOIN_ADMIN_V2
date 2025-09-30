@@ -3,7 +3,8 @@ import OSDropdown from 'pages/Update/components/OSDropdown';
 import { useState } from 'react';
 import { OS } from 'model/forceUpdate.model';
 import CustomTable from 'components/common/CustomTable';
-import { useGetUpdateListQuery } from 'store/api/updateList';
+import { useQuery } from '@tanstack/react-query';
+import updateListQueries from 'queryFactory/updateListQueries';
 import * as S from './UpdateList.style';
 
 export default function UpdateList() {
@@ -11,7 +12,9 @@ export default function UpdateList() {
 
   const [page, setPage] = useState<number>(1);
 
-  const { data: updateList } = useGetUpdateListQuery({ page, type: os });
+  const { data: updateList } = useQuery(
+    updateListQueries.list({ page, type: os }),
+  );
 
   const handleOS = (type: OS) => {
     setOs(type);

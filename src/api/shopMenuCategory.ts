@@ -7,7 +7,8 @@ export const getShopMenuCategories = async (id:number):Promise<MenuCategories> =
   return res.data;
 };
 
-export const addShopMenuCategories = async (payload :{ id, name }):Promise<MenuCategory> => {
+export const addShopMenuCategories = async (payload :{ id: number; name: string })
+:Promise<MenuCategory> => {
   const { id, name } = payload;
   const res = await accessClient.post<MenuCategory>(`/admin/shops/${id}/menus/categories`, { name });
   return res.data;

@@ -6,7 +6,7 @@ import MemberList from 'pages/UserManage/Member/MemberList';
 import Shop from 'pages/Services/Store/ShopList';
 import UserList from 'pages/UserManage/User/UserList';
 import {
-  Navigate, Outlet, Route, Routes, useLocation,
+  Outlet, Route, Routes,
 } from 'react-router-dom';
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
@@ -40,13 +40,6 @@ import ClubManagerList from 'pages/UserManage/ClubManager/ClubManagerList';
 import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubManagerRequestList';
 
 function RequireAuth() {
-  const location = useLocation();
-  const token = useToken();
-
-  if (token === null) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
   return (
     <DefaultLayout>
       <Outlet />

@@ -2,7 +2,9 @@ import {
   Form, Input, Button, List, Space,
 } from 'antd';
 import { Address } from 'model/address.model';
-import { useLazyGetAddressSearchQuery } from 'store/api/address';
+import { useQuery } from '@tanstack/react-query';
+import addressQueries from 'queryFactory/addressQueries';
+import { useState } from 'react';
 import * as S from './AddressSearch.style';
 
 const { Search } = Input;
@@ -13,12 +15,17 @@ interface AddressSearchProps {
 
 export default function AddressSearch({ onSelect } : AddressSearchProps) {
   const [form] = Form.useForm<{ keyword: string }>();
-  const [trigger, { data, isFetching }] = useLazyGetAddressSearchQuery();
+  const [searchParams, setSearchParams] = useState({
+    keyword: '',
+    currentPage: '1',
+    countPerPage: '10',
+  });
+  const { data, isFetching } = useQuery(addressQueries.addressSearch(searchParams));
 
   const items = data?.addresses ?? [];
 
   const onFinish = ({ keyword }: { keyword: string }) => {
-    trigger({ keyword });
+    setSearchParams({ keyword, currentPage: '1', countPerPage: '10' });
   };
 
   const watched = Form.useWatch('keyword', form) ?? '';

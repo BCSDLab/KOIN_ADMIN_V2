@@ -1,9 +1,9 @@
 const uploadQueries = {
-  allKeys: () => ['upload'] as const,
+  allKeys: () => ['upload'],
 
-  fileKeys: () => [...uploadQueries.allKeys(), 'file'] as const,
+  fileKeys: () => [...uploadQueries.allKeys(), 'file'],
 
-  filesKeys: () => [...uploadQueries.allKeys(), 'files'] as const,
+  filesKeys: () => [...uploadQueries.allKeys(), 'files'],
 };
 
 export default uploadQueries;

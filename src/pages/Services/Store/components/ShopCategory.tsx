@@ -1,13 +1,13 @@
 /* eslint-disable no-restricted-imports */
 import { Divider, FormInstance } from 'antd';
 import { useState } from 'react';
-import { ShopCategoriesModel } from 'model/store.model';
+import { ShopCategoriesModel } from 'model/shop.model';
 import { Category } from 'model/category.model';
 import categoryQueries from 'queryFactory/categoryQueries';
 import { useQuery } from '@tanstack/react-query';
-import * as S from '../StoreDetail.style';
+import * as S from '../ShopDetail.style';
 
-export default function StoreCategory({ form } : { form: FormInstance }) {
+export default function ShopCategory({ form } : { form: FormInstance }) {
   const { data: categoryList } = useQuery(categoryQueries.list());
   // formData를 직접적으로 수정하면, 렌더링이 발생하지 않아 state를 따로 만들어서 관리
   const [selectedCategory, setSelectedCategory] = useState<ShopCategoriesModel[]>(form.getFieldValue('shop_categories') ?? []);

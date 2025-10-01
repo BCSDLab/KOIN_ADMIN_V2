@@ -5,12 +5,12 @@ import { FormInstance } from 'antd/es/form/Form';
 import SHOP_OPTION from 'constant/shop';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Address } from 'model/address.model';
-import StoreCategory from './StoreCategory';
+import ShopCategory from './ShopCategory';
 import OpenTimeForm from './OpenTimeForm';
 import AddressSearch from './AddressSearch';
-import * as S from '../StoreDetail.style';
+import * as S from '../ShopDetail.style';
 
-export default function StoreDetailForm({ form }: { form: FormInstance }) {
+export default function ShopDetailForm({ form }: { form: FormInstance }) {
   const { required, max, pattern } = CustomForm.validateUtils();
   const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState(false);
 
@@ -58,7 +58,7 @@ export default function StoreDetailForm({ form }: { form: FormInstance }) {
       <CustomForm.TextArea label="설명" name="description" maxLength={200} rules={[required]} />
       <CustomForm.Input label="카테고리 목록" name="category_ids" disabled rules={[required]} />
       <CustomForm.Input label="메인 카테고리" name="main_category_id" disabled rules={[required]} />
-      <StoreCategory form={form} />
+      <ShopCategory form={form} />
       <OpenTimeForm form={form} />
       <Divider orientation="left" style={{ marginTop: '40px' }}>
         옵션

@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import type { StoreDetailForm, StoreResponse } from 'model/store.model';
+import type { ShopDetailForm, ShopResponse } from 'model/shop.model';
 import { useNavigate } from 'react-router-dom';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -16,7 +16,7 @@ export default function useShopMutation() {
   const navigate = useNavigate();
 
   const addShopMutation = useMutation({
-    mutationFn: (body: Partial<StoreResponse>) => addShop(body),
+    mutationFn: (body: Partial<ShopResponse>) => addShop(body),
     onSuccess: () => {
       message.success('가게 추가가 완료되었습니다.');
       queryClient.invalidateQueries({ queryKey: shopQueries.allKeys() });
@@ -27,7 +27,7 @@ export default function useShopMutation() {
   });
 
   const updateShopMutation = useMutation({
-    mutationFn: (payload: { id: number } & Partial<StoreDetailForm>) => updateShop(payload),
+    mutationFn: (payload: { id: number } & Partial<ShopDetailForm>) => updateShop(payload),
     onSuccess: () => {
       message.success('정보 수정이 완료되었습니다.');
       queryClient.invalidateQueries({ queryKey: shopQueries.allKeys() });

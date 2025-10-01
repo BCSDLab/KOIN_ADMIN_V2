@@ -1,25 +1,25 @@
 import type {
-  StoreDetailForm,
-  StoreParams, StoreResponse, StoresResponse,
-} from 'model/store.model';
+  ShopDetailForm,
+  ShopParams, ShopResponse, ShopsResponse,
+} from 'model/shop.model';
 import accessClient from './index';
 
-export const getShopList = async (params:StoreParams):Promise<StoresResponse> => {
-  const res = await accessClient.get<StoresResponse>('admin/shops', { params });
+export const getShopList = async (params:ShopParams):Promise<ShopsResponse> => {
+  const res = await accessClient.get<ShopsResponse>('admin/shops', { params });
   return res.data;
 };
 
-export const getShop = async (id:number):Promise<StoreResponse> => {
-  const res = await accessClient.get<StoreResponse>(`admin/shops/${id}`);
+export const getShop = async (id:number):Promise<ShopResponse> => {
+  const res = await accessClient.get<ShopResponse>(`admin/shops/${id}`);
   return res.data;
 };
 
-export const addShop = async (body:Partial<StoreResponse>):Promise<StoreResponse> => {
-  const res = await accessClient.post<StoreResponse>('admin/shops', body);
+export const addShop = async (body:Partial<ShopResponse>):Promise<ShopResponse> => {
+  const res = await accessClient.post<ShopResponse>('admin/shops', body);
   return res.data;
 };
 
-export const updateShop = async (payload:Pick<StoreResponse, 'id'> & Partial<StoreDetailForm>):Promise<void> => {
+export const updateShop = async (payload:Pick<ShopResponse, 'id'> & Partial<ShopDetailForm>):Promise<void> => {
   const { id, ...body } = payload;
   await accessClient.put<void>(`admin/shops/${id}`, body);
 };

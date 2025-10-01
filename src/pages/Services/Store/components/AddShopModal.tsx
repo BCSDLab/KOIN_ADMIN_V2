@@ -4,16 +4,16 @@ import { UploadOutlined } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
 
 import * as S from 'styles/List.style';
-import { CreateStoreParams, DAY } from 'model/store.model';
+import { CreateShopParams, DAY } from 'model/shop.model';
 import SHOP_OPTION from 'constant/shop';
 import { useEffect } from 'react';
 import useShopMutation from './useShopMutation';
-import StoreDetailForm from './StoreDetailForm';
+import ShopDetailForm from './ShopDetailForm';
 
 const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
 export default function AddShopModal({ closeModal }: { closeModal: () => void }) {
-  const [form] = CustomForm.useForm<CreateStoreParams>();
+  const [form] = CustomForm.useForm<CreateShopParams>();
 
   const { addShopMutation } = useShopMutation();
 
@@ -34,21 +34,21 @@ export default function AddShopModal({ closeModal }: { closeModal: () => void })
     form.setFieldValue('image_urls', []);
   }, [form]);
 
-  const createStore = (values: Partial<CreateStoreParams>) => {
+  const createShop = (values: Partial<CreateShopParams>) => {
     const openField = form.getFieldValue('open');
     addShopMutation.mutate({ ...values, open: openField });
   };
 
   return (
     <CustomForm
-      onFinish={createStore}
+      onFinish={createShop}
       form={form}
       initialValues={{
         open: defaultTimeInfo,
       }}
     >
       <S.DetailFormWrap>
-        <StoreDetailForm form={form} />
+        <ShopDetailForm form={form} />
         <S.SubmitButtonWrap>
           <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
             완료

@@ -1,8 +1,8 @@
 import { queryOptions, skipToken } from '@tanstack/react-query';
 import type {
-  StoreDetailForm, StoreParams, StoreResponse,
-  StoresResponse, StoreTransformResponse,
-} from 'model/store.model';
+  ShopDetailForm, ShopParams, ShopResponse,
+  ShopsResponse, ShopTransformResponse,
+} from 'model/shop.model';
 import {
   getShopList,
   getShop,
@@ -11,11 +11,11 @@ import {
 const shopQueries = {
   allKeys: () => ['shop'],
 
-  listKeys: (params:StoreParams) => [...shopQueries.allKeys(), 'list', { params }],
-  list: (params: StoreParams) => queryOptions({
+  listKeys: (params:ShopParams) => [...shopQueries.allKeys(), 'list', { params }],
+  list: (params: ShopParams) => queryOptions({
     queryKey: shopQueries.listKeys(params),
     queryFn: () => getShopList(params),
-    select: (data:StoresResponse):StoreTransformResponse => {
+    select: (data:ShopsResponse):ShopTransformResponse => {
       return {
         ...data,
         shops: data.shops.map((shop) => ({
@@ -30,7 +30,7 @@ const shopQueries = {
   detail: (id?: number) => queryOptions({
     queryKey: id != null ? shopQueries.detailKeys(id) : ['shop', 'detail', 'NO_ID'],
     queryFn: id != null ? () => getShop(id) : skipToken,
-    select: (data:StoreResponse):StoreDetailForm => {
+    select: (data:ShopResponse):ShopDetailForm => {
       return {
         ...data,
         category_ids: data.shop_categories.map((category) => category.id),

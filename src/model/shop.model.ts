@@ -13,7 +13,7 @@ export interface MenuCategoriesModel {
   name: string;
 }
 
-export interface StoreOpen {
+export interface ShopOpen {
   close_time: string;
   closed: boolean;
   day_of_week: typeof DAY;
@@ -25,7 +25,7 @@ export interface ShopCategoriesModel {
   name: string;
 }
 
-export interface StoreResponse {
+export interface ShopResponse {
   address: string;
   delivery: true;
   delivery_price: number;
@@ -35,7 +35,7 @@ export interface StoreResponse {
   is_deleted: false;
   menu_categories: MenuCategoriesModel[];
   name: string;
-  open: StoreOpen[];
+  open: ShopOpen[];
   pay_bank: boolean;
   pay_card: boolean;
   phone: string;
@@ -43,11 +43,11 @@ export interface StoreResponse {
   main_category_id: number;
 }
 
-export interface StoreDetailForm extends StoreResponse {
+export interface ShopDetailForm extends ShopResponse {
   category_ids: number[];
 }
 
-export interface StoreTableHead {
+export interface ShopTableHead {
   category_names: string[];
   id: number;
   is_deleted: boolean;
@@ -55,7 +55,7 @@ export interface StoreTableHead {
   phone: number;
 }
 
-export interface StoreTransformHead {
+export interface ShopTransformHead {
   category_names: string;
   id: number;
   is_deleted: boolean;
@@ -63,28 +63,28 @@ export interface StoreTransformHead {
   phone: number;
 }
 
-export interface StoresResponse {
+export interface ShopsResponse {
   current_count: number;
   current_page: number;
-  shops: StoreTableHead[],
+  shops: ShopTableHead[],
   total_count: number;
   total_page: number;
 }
 
-export interface StoreTransformResponse {
+export interface ShopTransformResponse {
   current_count: number;
   current_page: number;
-  shops: StoreTransformHead[],
+  shops: ShopTransformHead[],
   total_count: number;
   total_page: number;
 }
 
-export interface StoreParams {
+export interface ShopParams {
   page: number;
   is_deleted: boolean;
 }
 
-export interface CreateStoreParams {
+export interface CreateShopParams {
   address: string;
   address_detail: string
   category_ids: number[];
@@ -93,14 +93,14 @@ export interface CreateStoreParams {
   description: string;
   image_urls: string[];
   name: string;
-  open: StoreOpen[];
+  open: ShopOpen[];
   pay_bank: boolean;
   pay_card: boolean;
   phone: string;
   main_category_id: number;
 }
 
-export interface ModifyStoreParams extends CreateStoreParams {
+export interface ModifyShopParams extends CreateShopParams {
   phone: string;
   bank: string;
   account_number: string;

@@ -16,7 +16,7 @@ export default function useClubMutation() {
       queryClient.invalidateQueries({ queryKey: clubQueries.allKey() });
       navigate(-1);
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '동아리 추가 실패');
     },
   });
@@ -27,7 +27,7 @@ export default function useClubMutation() {
       message.success('정보 수정이 완료되었습니다.');
       queryClient.invalidateQueries({ queryKey: clubQueries.allKey() });
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '정보 수정 실패');
     },
   });
@@ -39,7 +39,7 @@ export default function useClubMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: clubQueries.allKey() });
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '상태 변경 실패');
     },
   });

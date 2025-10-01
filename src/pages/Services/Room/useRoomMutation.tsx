@@ -17,7 +17,7 @@ export default function useRoomMutation() {
       message.success('방이 추가되었습니다.');
       queryClient.invalidateQueries({ queryKey: roomQueries.allKeys() });
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '방 추가 실패');
     },
   });
@@ -29,7 +29,7 @@ export default function useRoomMutation() {
       queryClient.invalidateQueries({ queryKey: roomQueries.allKeys() });
       navigate(-1);
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '수정 실패');
     },
   });
@@ -41,7 +41,7 @@ export default function useRoomMutation() {
       queryClient.invalidateQueries({ queryKey: roomQueries.allKeys() });
       navigate(-1);
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '삭제 실패');
     },
   });
@@ -53,7 +53,7 @@ export default function useRoomMutation() {
       queryClient.invalidateQueries({ queryKey: roomQueries.allKeys() });
       navigate(-1);
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '복구 실패');
     },
   });

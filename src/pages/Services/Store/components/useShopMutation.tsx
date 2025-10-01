@@ -21,7 +21,7 @@ export default function useShopMutation() {
       message.success('가게 추가가 완료되었습니다.');
       queryClient.invalidateQueries({ queryKey: shopQueries.allKeys() });
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '가게 추가 실패');
     },
   });
@@ -33,7 +33,7 @@ export default function useShopMutation() {
       queryClient.invalidateQueries({ queryKey: shopQueries.allKeys() });
       navigate(-1);
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '수정 실패');
     },
   });
@@ -45,7 +45,7 @@ export default function useShopMutation() {
       queryClient.invalidateQueries({ queryKey: shopQueries.allKeys() });
       navigate(-1);
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '삭제 실패');
     },
   });
@@ -57,7 +57,7 @@ export default function useShopMutation() {
       queryClient.invalidateQueries({ queryKey: shopQueries.allKeys() });
       navigate(-1);
     },
-    onError: (error: any) => {
+    onError: (error) => {
       message.error(error?.message ?? '복구 실패');
     },
   });

@@ -6,13 +6,12 @@ import MemberList from 'pages/UserManage/Member/MemberList';
 import Store from 'pages/Services/Store/StoreList';
 import UserList from 'pages/UserManage/User/UserList';
 import {
-  Navigate, Outlet, Route, Routes, useLocation,
+  Outlet, Route, Routes,
 } from 'react-router-dom';
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
 import MemberDetail from 'pages/UserManage/Member/MemberDetail';
-import { useToken } from 'store/slice/auth';
 import StoreWrite from 'pages/Services/Store/StoreWrite';
 import StoreDetail from 'pages/Services/Store/StoreDetail';
 import CategoryDetail from 'pages/Services/Category/CategoryDetail';
@@ -40,13 +39,6 @@ import ClubManagerList from 'pages/UserManage/ClubManager/ClubManagerList';
 import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubManagerRequestList';
 
 function RequireAuth() {
-  const location = useLocation();
-  const token = useToken();
-
-  if (token === null) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
   return (
     <DefaultLayout>
       <Outlet />

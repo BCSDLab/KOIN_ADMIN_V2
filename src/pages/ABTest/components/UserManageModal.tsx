@@ -2,7 +2,8 @@ import { Input, Button } from 'antd';
 import CustomTable from 'components/common/CustomTable';
 import { ABTestUserMoveRequest } from 'model/abTest.model';
 import { useState } from 'react';
-import { useGetUserByIDQuery, useGetUserByNameQuery } from 'store/api/abtest';
+import { useQuery } from '@tanstack/react-query';
+import abTestQueries from 'queryFactory/abTestQueries';
 import useABTestMutation from './hook/useABTestMutation';
 import * as S from './UserManageModal.style';
 
@@ -16,7 +17,7 @@ interface UserManageModalProps {
   ABTestVariables? : ABTestVariable[]
 }
 function UserManageModal({ ABTestId, ABTestVariables }: UserManageModalProps) {
-  const { moveUser } = useABTestMutation();
+  const { moveUserMutation } = useABTestMutation();
   const [page, setPage] = useState(1);
   const [name, setName] = useState<string>('');
   const [userId, setUserId] = useState<number>();
@@ -28,13 +29,11 @@ function UserManageModal({ ABTestId, ABTestVariables }: UserManageModalProps) {
   };
 
   const [experimentGroup, setExperimentGroup] = useState<string>('');
-  const { data: userData } = useGetUserByNameQuery(name);
-  const { data: deviceData } = useGetUserByIDQuery(userId, {
-    skip: !userId,
-  });
+  const { data: userData } = useQuery(abTestQueries.userName(name));
+  const { data: deviceData } = useQuery(abTestQueries.userID(userId));
 
   const handleFinish = (data:ABTestUserMoveRequest) => {
-    moveUser(data);
+    moveUserMutation(data);
   };
 
   const handleUserID = (id: number) => {

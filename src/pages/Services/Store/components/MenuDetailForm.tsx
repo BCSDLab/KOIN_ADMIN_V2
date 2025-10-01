@@ -6,8 +6,8 @@ import {
 } from 'antd';
 import { FormInstance } from 'antd/lib';
 import CustomForm from 'components/common/CustomForm';
-import { MenuCategory } from 'model/menuCategory';
-import type { MenuResponse } from 'model/menus.model';
+import { ShopMenuCategory } from 'model/shopMenuCategory';
+import type { MenuResponse } from 'model/shopMenus.model';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import useBooleanState from 'utils/hooks/useBoolean';
@@ -17,7 +17,7 @@ export default function MenuDetailForm({ form, storeMenu }: {
   form: FormInstance, storeMenu?: MenuResponse
 }) {
   const { id: shopId } = useParams();
-  const { data: menuCategories } = useQuery({
+  const { data: ShopMenuCategories } = useQuery({
     ...shopMenuCategoryQueries.list(Number(shopId)),
   });
 
@@ -26,7 +26,7 @@ export default function MenuDetailForm({ form, storeMenu }: {
     value: isSingleMenu,
     changeValue: isSingleMenuChange,
   } = useBooleanState(storeMenu?.is_single);
-  const options = menuCategories?.menu_categories.map((category: MenuCategory) => ({
+  const options = ShopMenuCategories?.menu_categories.map((category: ShopMenuCategory) => ({
     label: category.name,
     value: category.id,
   }));

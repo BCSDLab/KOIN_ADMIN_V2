@@ -1,7 +1,7 @@
 import accessClient from 'api';
 import type {
   MenusResponse, MenuResponse, MutationMenuArgs, Menu,
-} from 'model/menus.model';
+} from 'model/shopMenus.model';
 
 export const getMenusList = async (id: number): Promise<MenusResponse> => {
   const res = await accessClient.get<MenusResponse>(`/admin/shops/${id}/menus`);

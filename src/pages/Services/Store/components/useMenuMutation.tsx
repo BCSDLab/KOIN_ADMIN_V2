@@ -1,4 +1,4 @@
-import type { Menu, MenuBody } from 'model/menus.model';
+import type { Menu, MenuBody } from 'model/shopMenus.model';
 import { useMutation } from '@tanstack/react-query';
 import { addMenu, updateMenu, deleteMenu } from 'api/shopMenu';
 

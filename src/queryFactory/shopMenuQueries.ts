@@ -3,7 +3,7 @@ import {
   getMenusList,
   getMenu,
 } from 'api/shopMenu';
-import type { MenusResponse, MenuResponse } from 'model/menus.model';
+import type { MenusResponse, MenuResponse } from 'model/shopMenus.model';
 
 const shopMenuQueries = {
   allKeys: () => ['shopMenus'],

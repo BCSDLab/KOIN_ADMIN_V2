@@ -15,11 +15,11 @@ import AddMenuForm from './AddMenuForm';
 
 export default function MenuList() {
   const { id: shopId } = useParams();
-  const { data: storeMenusData } = useQuery({
+  const { data: shopMenusData } = useQuery({
     ...shopMenuQueries.list(Number(shopId)),
   });
   const [menuId, setMenuId] = useState<number>();
-  const menuListCategories = storeMenusData?.menu_categories ?? [];
+  const menuListCategories = shopMenusData?.menu_categories ?? [];
   const { deleteMenuMutation, updateMenuMutation, isDeleting } = useMenuMutation(Number(shopId));
 
   const [menuForm] = CustomForm.useForm();

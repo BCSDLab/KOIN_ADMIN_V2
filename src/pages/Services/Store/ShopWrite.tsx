@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Flex } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import SHOP_OPTION from 'constant/shop';
-import { CreateStoreParams, DAY } from 'model/store.model';
+import { CreateShopParams, DAY } from 'model/shop.model';
 import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
 import * as S from 'styles/Detail.style';
-import * as L from './StoreWrite.style';
+import * as L from './ShopWrite.style';
 import useShopMutation from './components/useShopMutation';
-import StoreDetailForm from './components/StoreDetailForm';
+import ShopDetailForm from './components/ShopDetailForm';
 
 const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
@@ -22,9 +22,9 @@ const DEFAULT_TIME_TEMPLATE = (index:number) => ({
 
 const defaultTimeInfo = DAYS.map((_, index) => DEFAULT_TIME_TEMPLATE(index));
 
-export default function StoreWrite() {
+export default function ShopWrite() {
   const navigate = useNavigate();
-  const [form] = CustomForm.useForm<CreateStoreParams>();
+  const [form] = CustomForm.useForm<CreateShopParams>();
   const { addShopMutation } = useShopMutation();
 
   const buildFinalAddress = () => {
@@ -33,7 +33,7 @@ export default function StoreWrite() {
     return [base, detail].filter(Boolean).join(' ');
   };
 
-  const createStore = (values: Partial<CreateStoreParams>) => {
+  const createShop = (values: Partial<CreateShopParams>) => {
     const openField = form.getFieldValue('open');
     const finalAddress = buildFinalAddress();
 
@@ -41,7 +41,7 @@ export default function StoreWrite() {
       ...values,
       address: finalAddress,
       open: openField,
-    } as Partial<CreateStoreParams>;
+    } as Partial<CreateShopParams>;
 
     addShopMutation.mutate(payload, {
       onSuccess: () => {
@@ -61,17 +61,17 @@ export default function StoreWrite() {
   return (
     <S.Container>
       <L.HeadingWrapper>
-        <DetailHeading>Store Create</DetailHeading>
+        <DetailHeading>Shop Create</DetailHeading>
       </L.HeadingWrapper>
       <CustomForm
-        onFinish={createStore}
+        onFinish={createShop}
         form={form}
         initialValues={{
           open: defaultTimeInfo,
         }}
       >
         <L.DetailFormWrap>
-          <StoreDetailForm form={form} />
+          <ShopDetailForm form={form} />
 
           <Flex justify="end" gap="10px">
             <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">

@@ -6,14 +6,14 @@ import CustomTable from 'components/common/CustomTable';
 import { useQuery } from '@tanstack/react-query';
 import useBooleanState from 'utils/hooks/useBoolean';
 import shopQueries from 'queryFactory/shopQueries';
-import * as S from './StoreList.style';
+import * as S from './ShopList.style';
 
-function StoreList() {
+function ShopList() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const { value: isDeletedStore, changeValue: containIsDeletedStore } = useBooleanState(false);
+  const { value: isDeletedShop, changeValue: containIsDeletedShop } = useBooleanState(false);
 
-  const { data: StoreRes } = useQuery(shopQueries.list({ page, is_deleted: isDeletedStore }));
+  const { data: ShopRes } = useQuery(shopQueries.list({ page, is_deleted: isDeletedShop }));
 
   return (
     <S.Container>
@@ -30,19 +30,19 @@ function StoreList() {
       </S.ModalWrap>
       <S.SwitchWrapper>
         <Switch
-          onClick={containIsDeletedStore}
-          checked={isDeletedStore}
+          onClick={containIsDeletedShop}
+          checked={isDeletedShop}
           checkedChildren="deleted"
           unCheckedChildren="existing"
         />
       </S.SwitchWrapper>
-      {StoreRes && (
+      {ShopRes && (
         <CustomTable
-          data={StoreRes.shops}
+          data={ShopRes.shops}
           pagination={{
             current: page,
             onChange: setPage,
-            total: StoreRes.total_page,
+            total: ShopRes.total_page,
           }}
           columnSize={[20, 10, 20, 20]}
           hiddenColumns={['is_deleted']}
@@ -52,4 +52,4 @@ function StoreList() {
   );
 }
 
-export default StoreList;
+export default ShopList;

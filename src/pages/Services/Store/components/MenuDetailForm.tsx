@@ -13,8 +13,8 @@ import { useParams } from 'react-router-dom';
 import useBooleanState from 'utils/hooks/useBoolean';
 import shopMenuCategoryQueries from 'queryFactory/shopMenuCategoryQueries';
 
-export default function MenuDetailForm({ form, storeMenu }: {
-  form: FormInstance, storeMenu?: MenuResponse
+export default function MenuDetailForm({ form, shopMenu }: {
+  form: FormInstance, shopMenu?: MenuResponse
 }) {
   const { id: shopId } = useParams();
   const { data: ShopMenuCategories } = useQuery({
@@ -25,7 +25,7 @@ export default function MenuDetailForm({ form, storeMenu }: {
   const {
     value: isSingleMenu,
     changeValue: isSingleMenuChange,
-  } = useBooleanState(storeMenu?.is_single);
+  } = useBooleanState(shopMenu?.is_single);
   const options = ShopMenuCategories?.menu_categories.map((category: ShopMenuCategory) => ({
     label: category.name,
     value: category.id,
@@ -40,8 +40,8 @@ export default function MenuDetailForm({ form, storeMenu }: {
   return (
     <CustomForm
       form={form}
-      initialValues={storeMenu}
-      name="storeMenuDetail"
+      initialValues={shopMenu}
+      name="shopMenuDetail"
     >
       <Form.Item label="카테고리" name="category_ids" rules={[required]}>
         <Checkbox.Group options={options} />

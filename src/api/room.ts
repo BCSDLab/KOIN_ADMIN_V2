@@ -1,16 +1,13 @@
 import type {
   RoomParams,
-  RoomResponse, RoomsResponse, RoomTableHead,
+  RoomResponse, RoomsResponse,
 } from 'model/room.model';
 import accessClient from './index';
 
 export const getRoomList = async (params: RoomParams):
-Promise<{ roomList: RoomTableHead[]; totalPage: number }> => {
+Promise<RoomsResponse> => {
   const res = await accessClient.get<RoomsResponse>('admin/lands', { params });
-  return {
-    roomList: res.data.lands,
-    totalPage: res.data.total_page,
-  };
+  return res.data;
 };
 
 export const getRoom = async (id: number): Promise<RoomResponse> => {

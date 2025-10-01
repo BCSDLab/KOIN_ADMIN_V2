@@ -1,5 +1,7 @@
 import { queryOptions, skipToken } from '@tanstack/react-query';
-import type { RoomParams } from 'model/room.model';
+import type {
+  RoomParams, RoomsResponse, TransformedRoomsResponse,
+} from 'model/room.model';
 import {
   getRoomList,
   getRoom,
@@ -12,6 +14,13 @@ const roomQueries = {
   list: (params:RoomParams) => queryOptions({
     queryKey: roomQueries.listKeys(params),
     queryFn: () => getRoomList(params),
+    select: (data:RoomsResponse):TransformedRoomsResponse => {
+      return {
+        roomList: data.lands,
+        totalPage: data.total_page,
+      };
+    },
+
   }),
 
   detailKeys: (id:number) => [...roomQueries.allKeys(), 'detail', id],

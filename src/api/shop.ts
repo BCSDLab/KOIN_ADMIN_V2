@@ -1,28 +1,17 @@
 import type {
   StoreDetailForm,
-  StoreParams, StoreResponse, StoreTransformResponse, StoresResponse,
+  StoreParams, StoreResponse, StoresResponse,
 } from 'model/store.model';
 import accessClient from './index';
 
-export const getShopList = async (params:StoreParams):Promise<StoreTransformResponse> => {
+export const getShopList = async (params:StoreParams):Promise<StoresResponse> => {
   const res = await accessClient.get<StoresResponse>('admin/shops', { params });
-  const { data } = res;
-  return {
-    ...data,
-    shops: data.shops.map((store) => ({
-      ...store,
-      category_names: store.category_names.join(', '),
-    })),
-  };
+  return res.data;
 };
 
-export const getShop = async (id:number):Promise<StoreDetailForm> => {
+export const getShop = async (id:number):Promise<StoreResponse> => {
   const res = await accessClient.get<StoreResponse>(`admin/shops/${id}`);
-  const { data } = res;
-  return {
-    ...data,
-    category_ids: data.shop_categories.map((category) => category.id),
-  };
+  return res.data;
 };
 
 export const addShop = async (body:Partial<StoreResponse>):Promise<StoreResponse> => {

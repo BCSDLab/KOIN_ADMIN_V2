@@ -1,5 +1,7 @@
 import { Button } from 'antd';
-import { useDeleteBenefitCategoryMutation, useGetBenefitCategoryQuery } from 'store/api/benefit';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import benefitQueries from 'queryFactory/benefitQueries';
+import { deleteBenefitCategory } from 'api/benefit';
 import * as S from './index.style';
 
 interface Props {
@@ -7,9 +9,12 @@ interface Props {
   closeModal: () => void;
 }
 export default function DeleteBenefitCategoryModal({ id, closeModal }: Props) {
-  const [deleteMutation] = useDeleteBenefitCategoryMutation();
-  const { data } = useGetBenefitCategoryQuery();
-  const deleteBenefitCatogory = () => {
+  const { mutate: deleteMutation } = useMutation({
+    mutationFn: deleteBenefitCategory,
+  });
+
+  const { data } = useQuery(benefitQueries.getBenefitCategory());
+  const deleteBenefitCategoryButton = () => {
     if (id) {
       deleteMutation({ id });
       closeModal();
@@ -29,7 +34,7 @@ export default function DeleteBenefitCategoryModal({ id, closeModal }: Props) {
       <S.ButtonContainer>
         <S.ButtonSet>
           <Button onClick={closeModal}>취소</Button>
-          <Button onClick={deleteBenefitCatogory}>삭제</Button>
+          <Button onClick={deleteBenefitCategoryButton}>삭제</Button>
         </S.ButtonSet>
       </S.ButtonContainer>
     </>

@@ -1,0 +1,25 @@
+import { queryOptions } from '@tanstack/react-query';
+import getHistories from 'api/history';
+import type { HistoriesRequest } from 'model/history.model';
+
+const historyQueries = {
+  allKeys: () => ['histories'],
+
+  historyKeys: (
+    {
+      page,
+      domainId,
+      limit = 30,
+    }: HistoriesRequest,
+  ) => [
+    ...historyQueries.allKeys(),
+    page, domainId, limit,
+  ],
+  history: (options: HistoriesRequest) => queryOptions({
+    queryKey: historyQueries.historyKeys(options),
+    queryFn: () => getHistories(options),
+    refetchOnMount: true,
+  }),
+};
+
+export default historyQueries;

@@ -12,7 +12,6 @@ import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
 import MemberDetail from 'pages/UserManage/Member/MemberDetail';
-import { useToken } from 'store/slice/auth';
 import ShopWrite from 'pages/Services/Store/ShopWrite';
 import ShopDetail from 'pages/Services/Store/ShopDetail';
 import CategoryDetail from 'pages/Services/Category/CategoryDetail';

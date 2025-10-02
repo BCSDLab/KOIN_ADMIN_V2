@@ -1,11 +1,7 @@
 import { Middleware, configureStore } from '@reduxjs/toolkit';
 import authReducer from 'store/slice/auth';
 import { authApi } from './api/auth';
-import { roomApi } from './api/room';
 import { uploadApi } from './api/upload';
-import { storeApi } from './api/store';
-import { storeMenuApi } from './api/storeMenu';
-import { menuCategoriesApi } from './api/storeMenu/category';
 import { abTestApi } from './api/abtest';
 import { benefitApi } from './api/benefit';
 import { updateListApi } from './api/updateList';
@@ -15,11 +11,7 @@ import { addressApi } from './api/address';
 
 const apiList = [
   authApi,
-  roomApi,
   uploadApi,
-  storeApi,
-  storeMenuApi,
-  menuCategoriesApi,
   abTestApi,
   benefitApi,
   updateListApi,

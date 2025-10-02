@@ -1,9 +1,10 @@
 import sha256 from 'sha256';
 import { Button, Flex, message } from 'antd';
-import { useChangePasswordMutation } from 'store/api/auth';
 import useBooleanState from 'utils/hooks/useBoolean';
 import CustomForm from 'components/common/CustomForm';
 import { styled } from 'styled-components';
+import { useMutation } from '@tanstack/react-query';
+import { changePassword } from 'api/auth';
 
 interface PasswordFormData {
   currentPassword: string,
@@ -18,7 +19,6 @@ const ButtonContainer = styled(Flex)`
 export default function ChangePasswordFormModal() {
   const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState(false);
 
-  const [changePassword] = useChangePasswordMutation();
   const [changePasswordForm] = CustomForm.useForm();
   const { required } = CustomForm.validateUtils();
 
@@ -27,19 +27,25 @@ export default function ChangePasswordFormModal() {
     changePasswordForm.resetFields();
   };
 
+  const { mutate: changePasswordMutation } = useMutation({
+    mutationFn: changePassword,
+    onSuccess: () => {
+      message.success('비밀번호 변경 완료');
+      handleModalClose();
+    },
+    onError: (error) => {
+      message.error(error.message || '비밀번호 변경 실패');
+    },
+  });
+
   const onFinish = (formData: PasswordFormData) => {
     const hashedCurrentPassword = sha256(formData.currentPassword);
     const hashedNewPassword = sha256(formData.passwordConfirmation);
 
-    changePassword({ old_password: hashedCurrentPassword, new_password: hashedNewPassword })
-      .unwrap()
-      .then(() => {
-        message.success('비밀번호 변경 완료');
-        handleModalClose();
-      })
-      .catch(({ data }) => {
-        message.error(data.message);
-      });
+    changePasswordMutation({
+      old_password: hashedCurrentPassword,
+      new_password: hashedNewPassword,
+    });
   };
 
   return (

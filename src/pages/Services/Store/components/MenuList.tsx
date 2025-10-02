@@ -4,25 +4,29 @@ import CustomForm from 'components/common/CustomForm';
 import { Card, Divider } from 'antd';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
-import { useGetMenusListQuery } from 'store/api/storeMenu';
 import { useState } from 'react';
 import getDefaultValueArr from 'utils/ts/getDefaultValueArr';
+import shopMenuQueries from 'queryFactory/shopMenuQueries';
+import { useQuery } from '@tanstack/react-query';
 import * as S from './MenuList.style';
 import MenuDetailForm from './MenuDetail';
 import useMenuMutation from './useMenuMutation';
 import AddMenuForm from './AddMenuForm';
 
 export default function MenuList() {
-  const { id } = useParams();
-  const { data: storeMenusData } = useGetMenusListQuery(Number(id));
+  const { id: shopId } = useParams();
+  const { data: shopMenusData } = useQuery({
+    ...shopMenuQueries.list(Number(shopId)),
+  });
   const [menuId, setMenuId] = useState<number>();
-  const menuListCategories = storeMenusData?.menu_categories ?? [];
-  const { deleteMenu, updateMenu, isDeleting } = useMenuMutation(Number(id));
+  const menuListCategories = shopMenusData?.menu_categories ?? [];
+  const { deleteMenuMutation, updateMenuMutation, isDeleting } = useMenuMutation(Number(shopId));
+
   const [menuForm] = CustomForm.useForm();
 
   const handleClick = (selectedMenuId: number) => {
     if (menuId && selectedMenuId) {
-      updateMenu(menuId, menuForm?.getFieldsValue());
+      updateMenuMutation.mutate({ menuId, body: menuForm?.getFieldsValue() });
     }
     if (selectedMenuId === menuId) {
       setMenuId(undefined);
@@ -44,7 +48,7 @@ export default function MenuList() {
               fields={getDefaultValueArr(menuList)}
             >
               <CustomForm.List name="menus">
-                {(menus, { remove }) => (
+                {(menus) => (
                   <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
                     {menus.map((field) => (
                       <S.CardWrap
@@ -68,8 +72,7 @@ export default function MenuList() {
                         <DeleteOutlined
                           onClick={async () => {
                             if (!isDeleting) {
-                              await deleteMenu(menuList?.menus[field.name].id);
-                              remove(field.name);
+                              await deleteMenuMutation.mutateAsync(menuList?.menus[field.name].id);
                             }
                           }}
                           style={{ marginTop: 12 }}

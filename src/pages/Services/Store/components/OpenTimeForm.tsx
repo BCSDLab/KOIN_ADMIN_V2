@@ -1,13 +1,13 @@
 /* eslint-disable no-restricted-imports */
 import { Divider, Select, TimePicker } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
-import { StoreOpen } from 'model/store.model';
+import { ShopOpen } from 'model/shop.model';
 import { useState } from 'react';
 import CustomForm from 'components/common/CustomForm';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import * as S from '../StoreDetail.style';
+import * as S from '../ShopDetail.style';
 
 const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
 const TABLE_TYPES = {
@@ -28,11 +28,11 @@ const TABLE_TYPES = {
 dayjs.extend(customParseFormat);
 
 function OpenTimeForm({ form }: { form: FormInstance }) {
-  const openTimeInfo: StoreOpen[] = form.getFieldValue('open');
+  const openTimeInfo: ShopOpen[] = form.getFieldValue('open');
   const [selectType, setSelectType] = useState<keyof typeof TABLE_TYPES>('직접 지정');
   const newOpenTimeInfo = [...openTimeInfo];
 
-  const handleTimeFormChange = (index: number, key: keyof StoreOpen, value: string | string[]) => {
+  const handleTimeFormChange = (index: number, key: keyof ShopOpen, value: string | string[]) => {
     const selected = TABLE_TYPES[selectType];
     for (let i = 0; i < selected.colSize[index]; i += 1) {
       const newIndex = selected.dateList[index] + i;

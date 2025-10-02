@@ -18,7 +18,7 @@ export interface Menu {
   single_price: number;
 }
 
-export interface MenuCategory {
+export interface ShopMenuCategory {
   id: number;
   menus: Menu[];
   name: string;
@@ -26,7 +26,7 @@ export interface MenuCategory {
 
 export interface MenusResponse {
   count: number;
-  menu_categories: MenuCategory[];
+  menu_categories: ShopMenuCategory[];
 }
 
 export interface MenuResponse {

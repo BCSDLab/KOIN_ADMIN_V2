@@ -9,19 +9,19 @@ import useMenuMutation from './useMenuMutation';
 import * as S from './MenuList.style';
 
 export default function AddMenuForm() {
-  const { id } = useParams();
+  const { id: shopId } = useParams();
   const [form] = CustomForm.useForm();
-  const { addMenu } = useMenuMutation(Number(id));
-  const { value: isVisible, changeValue: chagneIsVisible } = useBooleanState();
+  const { addMenuMutation } = useMenuMutation(Number(shopId));
+  const { value: isVisible, changeValue: changeIsVisible } = useBooleanState();
   const handleClick = () => {
     const values = form.getFieldsValue();
-    addMenu(values, {
+    addMenuMutation.mutate(values, {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');
         form.resetFields();
         form.setFieldValue('image_urls', []);
       },
-      onError: (error) => {
+      onError: (error:any) => {
         if (error?.violations) message.error(error.violations[0]);
         else message.error(error.message);
       },
@@ -32,7 +32,7 @@ export default function AddMenuForm() {
   }, [form]);
   return (
     <>
-      <S.MenuAddButton onClick={() => chagneIsVisible()} type="dashed" icon={<PlusOutlined />}>메뉴 추가</S.MenuAddButton>
+      <S.MenuAddButton onClick={() => changeIsVisible()} type="dashed" icon={<PlusOutlined />}>메뉴 추가</S.MenuAddButton>
       <S.NewMenuWrap $isVisible={isVisible}>
         <CustomForm
           form={form}

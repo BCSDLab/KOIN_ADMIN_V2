@@ -1,9 +1,10 @@
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
-import { useGetRoomListQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { Switch } from 'antd';
+import { useQuery } from '@tanstack/react-query';
+import roomQueries from 'queryFactory/roomQueries';
 import * as S from './RoomList.style';
 import AddRoomModal from './components/AddRoomModal';
 
@@ -11,10 +12,7 @@ function RoomList() {
   const [page, setPage] = useState(1);
   const { setTrue: openModal, value: isModalOpen, setFalse: closeModal } = useBooleanState();
   const { value: isDeleted, changeValue: handleDeleted } = useBooleanState(false);
-  const { data: roomRes } = useGetRoomListQuery({
-    page,
-    is_deleted: isDeleted,
-  });
+  const { data: roomRes } = useQuery(roomQueries.list({ page, is_deleted: isDeleted }));
 
   return (
     <S.Container>

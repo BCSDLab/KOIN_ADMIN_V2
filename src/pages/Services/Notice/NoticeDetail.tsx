@@ -10,7 +10,7 @@ import {
   Button, Divider, Modal, message,
 } from 'antd';
 import { Editor } from '@toast-ui/react-editor';
-import { useUploadfileMutation } from 'store/api/upload';
+import { useUploadFileMutation } from 'hooks/useUploadMutation';
 import type { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
 import HistoryArea from 'components/common/HistoryArea';
 import { useQuery } from '@tanstack/react-query';
@@ -26,7 +26,7 @@ export default function NoticeDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const editorRef = useRef<Editor | null>(null);
   const { updateNoticeMutation, deleteNoticeMutation } = useNoticeMutation();
-  const [uploadfile] = useUploadfileMutation();
+  const { mutateAsync: uploadFile } = useUploadFileMutation();
   const { required } = CustomForm.validateUtils();
   const [form] = CustomForm.useForm();
   const {
@@ -85,18 +85,15 @@ export default function NoticeDetail() {
                   rules={[required()]}
                   hooks={{
                     addImageBlobHook:
-                      async (blob: Blob, callback: (url: string, altText: string) => void) => {
-                        try {
-                          const formData = await handleImageUpload(blob);
-                          const response = await uploadfile({
-                            domain: 'admin',
-                            image: formData,
-                          }).unwrap();
-                          callback(response.file_url, '');
-                        } catch (error) {
-                          message.error('이미지 업로드에 실패했습니다.');
-                        }
-                      },
+                    async (blob: Blob, callback: (url: string, altText: string) => void) => {
+                      try {
+                        const formData = await handleImageUpload(blob);
+                        const res = await uploadFile({ domain: 'admin', image: formData });
+                        callback(res.file_url, '');
+                      } catch {
+                        message.error('이미지 업로드에 실패했습니다.');
+                      }
+                    },
                   }}
                 />
               ) : (

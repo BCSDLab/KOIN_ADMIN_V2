@@ -3,7 +3,7 @@ import Bus from 'pages/Services/Bus';
 import CategoryList from 'pages/Services/Category/CategoryList';
 import Login from 'pages/Login';
 import MemberList from 'pages/UserManage/Member/MemberList';
-import Store from 'pages/Services/Store/StoreList';
+import Shop from 'pages/Services/Store/ShopList';
 import UserList from 'pages/UserManage/User/UserList';
 import {
   Outlet, Route, Routes,
@@ -12,8 +12,9 @@ import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
 import MemberDetail from 'pages/UserManage/Member/MemberDetail';
-import StoreWrite from 'pages/Services/Store/StoreWrite';
-import StoreDetail from 'pages/Services/Store/StoreDetail';
+import { useToken } from 'store/slice/auth';
+import ShopWrite from 'pages/Services/Store/ShopWrite';
+import ShopDetail from 'pages/Services/Store/ShopDetail';
 import CategoryDetail from 'pages/Services/Category/CategoryDetail';
 import OwnerList from 'pages/UserManage/Owner/OwnerList';
 import OwnerRequestList from 'pages/UserManage/OwnerRequest/OwnerRequestList';
@@ -51,10 +52,10 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<RequireAuth />}>
-        <Route index element={<Store />} />
-        <Route path="/store" element={<Store />} />
-        <Route path="/store/write" element={<StoreWrite />} />
-        <Route path="/store/:id" element={<StoreDetail />} />
+        <Route index element={<Shop />} />
+        <Route path="/store" element={<Shop />} />
+        <Route path="/store/write" element={<ShopWrite />} />
+        <Route path="/store/:id" element={<ShopDetail />} />
         <Route path="/category" element={<CategoryList />} />
         <Route path="/category/:id" element={<CategoryDetail />} />
         <Route path="/bus" element={<Bus />} />

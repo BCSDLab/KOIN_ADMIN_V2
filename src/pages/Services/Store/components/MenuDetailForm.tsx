@@ -1,28 +1,32 @@
 import { DeleteOutlined } from '@ant-design/icons';
+import { useQuery } from '@tanstack/react-query';
 import {
   Button,
   Checkbox, Divider, Form, Input, Space,
 } from 'antd';
 import { FormInstance } from 'antd/lib';
 import CustomForm from 'components/common/CustomForm';
-import { MenuCategory } from 'model/menuCategory';
-import { MenuResponse } from 'model/menus.model';
+import { ShopMenuCategory } from 'model/shopMenuCategory';
+import type { MenuResponse } from 'model/shopMenus.model';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetMenuCategoriesQuery } from 'store/api/storeMenu/category';
 import useBooleanState from 'utils/hooks/useBoolean';
+import shopMenuCategoryQueries from 'queryFactory/shopMenuCategoryQueries';
 
-export default function MenuDetailForm({ form, storeMenu }: {
-  form: FormInstance, storeMenu?: MenuResponse
+export default function MenuDetailForm({ form, shopMenu }: {
+  form: FormInstance, shopMenu?: MenuResponse
 }) {
-  const { id } = useParams();
-  const { data: menuCategories } = useGetMenuCategoriesQuery(Number(id));
+  const { id: shopId } = useParams();
+  const { data: ShopMenuCategories } = useQuery({
+    ...shopMenuCategoryQueries.list(Number(shopId)),
+  });
+
   const { required } = CustomForm.validateUtils();
   const {
     value: isSingleMenu,
     changeValue: isSingleMenuChange,
-  } = useBooleanState(storeMenu?.is_single);
-  const options = menuCategories?.menu_categories.map((category: MenuCategory) => ({
+  } = useBooleanState(shopMenu?.is_single);
+  const options = ShopMenuCategories?.menu_categories.map((category: ShopMenuCategory) => ({
     label: category.name,
     value: category.id,
   }));
@@ -36,8 +40,8 @@ export default function MenuDetailForm({ form, storeMenu }: {
   return (
     <CustomForm
       form={form}
-      initialValues={storeMenu}
-      name="storeMenuDetail"
+      initialValues={shopMenu}
+      name="shopMenuDetail"
     >
       <Form.Item label="카테고리" name="category_ids" rules={[required]}>
         <Checkbox.Group options={options} />

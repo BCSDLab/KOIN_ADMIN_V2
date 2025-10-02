@@ -3,9 +3,9 @@ import { UploadOutlined } from '@ant-design/icons';
 import {
   Button, Upload, message,
 } from 'antd';
-import { Domain } from 'model/upload.model';
+import type { Domain } from 'model/upload.model';
 import { useState } from 'react';
-import { useUploadfileMutation } from 'store/api/upload';
+import { useUploadFileMutation } from 'hooks/useUploadMutation';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/es/form/Form';
 import { RcFile } from 'antd/lib/upload';
@@ -30,7 +30,8 @@ const createUploadFile = (fileUrl: string, index: number): UploadFile => {
 export default function CustomSingleUpload({
   form, domain, name, accept,
 }: Props) {
-  const [uploadFile] = useUploadfileMutation();
+  const { mutateAsync: uploadFile } = useUploadFileMutation();
+
   const [uploadFileList, setUploadFileList] = useState<string[]>([form.getFieldValue(name)]);
   let convertedFileList: UploadFile[] = [];
 
@@ -38,23 +39,21 @@ export default function CustomSingleUpload({
     convertedFileList = uploadFileList?.map(createUploadFile);
   }
 
-  const handleUpload = (file: RcFile) => {
+  const handleUpload = async (file: RcFile) => {
     const image = new FormData();
     image.append('multipartFile', file);
 
-    uploadFile({ domain, image })
-      .unwrap()
-      .then((value) => {
-        setUploadFileList([value.file_url]);
-        form.setFieldValue(name, value.file_url);
-        message.success('업로드에 성공했습니다.');
-      })
-      .catch(() => {
-        message.error('업로드에 실패했습니다.');
-      });
+    try {
+      const res = await uploadFile({ domain, image });
+      setUploadFileList([res.file_url]);
+      form.setFieldValue(name, res.file_url);
+      message.success('업로드에 성공했습니다.');
+    } catch {
+      message.error('업로드에 실패했습니다.');
+    }
+
     return true;
   };
-
   const removeUpload = (file: UploadFile) => {
     const index = uploadFileList.indexOf(file.url ?? '');
     const newFileList = uploadFileList.slice();

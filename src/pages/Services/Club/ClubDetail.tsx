@@ -1,7 +1,6 @@
 import { Flex } from 'antd';
 import { useMemo, Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetClubCategoryListQuery, useGetClubQuery } from 'store/api/club';
 import {
   ClubUpdateFormValues, ClubUpdateRequest,
 } from 'model/club.model';
@@ -11,8 +10,10 @@ import DetailHeading from 'components/common/DetailHeading';
 import useBooleanState from 'utils/hooks/useBoolean';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import * as S from 'styles/Detail.style';
+import { useQuery } from '@tanstack/react-query';
+import clubQueries from 'queryFactory/clubQueries';
+import useClubMutation from 'pages/Services/Club/useClubMutation';
 import ClubForm from './Components/ClubForm/ClubForm';
-import useClubMutation from './useClubMutation';
 
 function LoadingFallback() {
   return (
@@ -27,10 +28,10 @@ function ClubDetailContent() {
   const { id } = useParams();
   const [form] = CustomForm.useForm();
 
-  const { data: clubData } = useGetClubQuery(Number(id));
-  const { data: clubCategory } = useGetClubCategoryListQuery();
-  const { updateClub } = useClubMutation();
+  const { updateClubMutation } = useClubMutation();
 
+  const { data: clubData } = useQuery(clubQueries.club(Number(id)));
+  const { data: clubCategory } = useQuery(clubQueries.categoryList());
   const {
     setTrue: openUpdateModal,
     value: isUpdateModalOpen,
@@ -107,7 +108,7 @@ function ClubDetailContent() {
         user_id: values.user_id,
       }],
     };
-    updateClub(payload);
+    updateClubMutation.mutate(payload);
   };
 
   const handleValuesChange = (changedValues: any) => {

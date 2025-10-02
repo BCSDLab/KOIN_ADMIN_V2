@@ -1,67 +1,51 @@
 import { message } from 'antd';
-import { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
+import type { NoticeRequest, NoticeUpdateForm } from 'model/notice.model';
 import { useNavigate } from 'react-router-dom';
-import { useAddNoticeMutation, useDeleteNoticeMutation, useUpdateNoticeMutation } from 'store/api/notice';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addNotice, updateNotice, deleteNotice } from 'api/notice';
+import noticeQueries from 'queryFactory/noticeQueries';
 
 const useNoticeMutation = () => {
-  const [addNoticeMutation] = useAddNoticeMutation();
-  const [updateNoticeMutation] = useUpdateNoticeMutation();
-  const [deleteNoticeMutation] = useDeleteNoticeMutation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const addNotice = (formData: NoticeRequest, {
-    onSuccess,
-    onError,
-  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
-    addNoticeMutation({ ...formData })
-      .unwrap()
-      .then(() => {
-        onSuccess?.();
-        message.success('공지사항 게시가 완료되었습니다.');
-        navigate(-1);
-      })
-      .catch(({ data }) => {
-        onError?.(data.message);
-        message.error(data.message);
-      });
-  };
+  const addNoticeMutation = useMutation({
+    mutationFn: (formData: NoticeRequest) => addNotice(formData),
+    onSuccess: () => {
+      message.success('공지사항 게시가 완료되었습니다.');
+      queryClient.invalidateQueries({ queryKey: noticeQueries.allkeys() });
+      navigate(-1);
+    },
+    onError: (error) => {
+      message.error(error.message || '에러가 발생했습니다.');
+    },
+  });
 
-  const updateNotice = (formData: NoticeUpdateForm, {
-    onSuccess,
-    onError,
-  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
-    updateNoticeMutation({ ...formData })
-      .unwrap()
-      .then(() => {
-        message.success('공지사항 수정이 완료되었습니다.');
-        onSuccess?.();
-        navigate(-1);
-      })
-      .catch(({ data }) => {
-        onError?.(data.message);
-        message.error(data.message);
-        navigate(-1);
-      });
-  };
+  const updateNoticeMutation = useMutation({
+    mutationFn: (formData: NoticeUpdateForm) => updateNotice(formData),
+    onSuccess: () => {
+      message.success('공지사항 수정이 완료되었습니다.');
+      queryClient.invalidateQueries({ queryKey: noticeQueries.allkeys() });
+      navigate(-1);
+    },
+    onError: (error) => {
+      message.error(error.message || '에러가 발생했습니다.');
+    },
+  });
 
-  const deleteNotice = (id: number, {
-    onSuccess,
-    onError,
-  }: { onSuccess?: () => void, onError?: (message: string) => void } = {}) => {
-    deleteNoticeMutation(id)
-      .unwrap()
-      .then(() => {
-        onSuccess?.();
-        message.success('공지사항이 삭제되었습니다.');
-        navigate(-1);
-      })
-      .catch(({ data }) => {
-        onError?.(data.message);
-        message.error(data.message);
-      });
-  };
+  const deleteNoticeMutation = useMutation({
+    mutationFn: (id: number) => deleteNotice(id),
+    onSuccess: () => {
+      message.success('공지사항이 삭제되었습니다.');
+      queryClient.invalidateQueries({ queryKey: noticeQueries.allkeys() });
+      navigate(-1);
+    },
+    onError: (error) => {
+      message.error(error.message || '에러가 발생했습니다.');
+    },
+  });
 
-  return { addNotice, updateNotice, deleteNotice };
+  return { addNoticeMutation, updateNoticeMutation, deleteNoticeMutation };
 };
 
 export default useNoticeMutation;

@@ -1,9 +1,9 @@
 import {
   BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { refreshAccessToken } from 'store/slice/auth';
 import { API_PATH } from 'constant';
-import { RootState } from 'store';
+import store, { RootState } from 'store';
+import { login } from 'store/slice/auth';
 
 interface RefreshResponse {
   refresh_token: string;
@@ -47,13 +47,11 @@ FetchBaseQueryError
     ) as { data: RefreshResponse };
 
     if (refresh.data) {
-      api.dispatch(
-        refreshAccessToken({
-          token: refresh.data.token, refresh_token: refresh.data.refresh_token,
-        }),
-      );
-
       // 액세스 토큰 갱신 후 다시 요청
+      store.dispatch(login({
+        token: refresh.data.token,
+        refresh_token: refresh.data.refresh_token,
+      }));
       result = await baseQuery(args, api, extraOptions);
     } else {
       throw new Error('refresh failed');

@@ -1,21 +1,25 @@
 import { useParams } from 'react-router-dom';
 import { FormInstance } from 'antd/lib/form';
-import { useGetMenuQuery } from 'store/api/storeMenu';
+import { useQuery } from '@tanstack/react-query';
+import shopMenuQueries from 'queryFactory/shopMenuQueries';
 import MenuDetailForm from './MenuDetailForm';
 
 export default function MenuDetail({ menuId, form }:{ menuId?: number, form: FormInstance }) {
   const { id } = useParams();
-  const skip = menuId === undefined;
-  const { data: storeMenu } = useGetMenuQuery({ id: Number(id), menuId: menuId! }, { skip });
+
+  const { data: shopMenu } = useQuery({
+    ...shopMenuQueries
+      .detail({ id: Number(id), menuId: menuId! }),
+  });
 
   // form 초기화
-  form.setFieldsValue(storeMenu);
-  form.setFieldValue('image_urls', storeMenu?.image_urls);
+  form.setFieldsValue(shopMenu);
+  form.setFieldValue('image_urls', shopMenu?.image_urls);
 
   return (
     <div>
-      {storeMenu
-      && <MenuDetailForm form={form} storeMenu={storeMenu} />}
+      {shopMenu
+      && <MenuDetailForm form={form} shopMenu={shopMenu} />}
     </div>
   );
 }

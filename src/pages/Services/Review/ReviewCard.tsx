@@ -1,10 +1,10 @@
-import { ReviewContent } from 'model/review.model';
-import { Button, message, Modal } from 'antd';
+import type { ReviewContent } from 'model/review.model';
+import { Button, Modal } from 'antd';
 import { useState } from 'react';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
-import { useDeleteReviewMutation, useSetReviewDismissedMutation } from 'store/api/review';
 import { KOIN_URL } from 'constant';
 import * as S from './ReviewCard.style';
+import useReviewMutation from './useReviewMutation';
 
 interface Props {
   review: ReviewContent;
@@ -18,28 +18,13 @@ export default function ReviewCard({ review, currentPage }: Props) {
   const toggle = () => {
     setIsOpen((prev) => !prev);
   };
+  const { deleteReviewMutation, setReviewDismissedMutation } = useReviewMutation();
 
-  const [deleteReview, {
-    isLoading: isDeleteLoading,
-    isError: isDeleteError,
-  }] = useDeleteReviewMutation();
-  const [dismissReview, {
-    isLoading: isDismissLoading,
-    isError: isDismissError,
-  }] = useSetReviewDismissedMutation();
-
-  if (isDeleteError) {
-    message.error('리뷰 삭제에 실패했습니다');
-  }
-  if (isDismissError) {
-    message.error('리뷰 상태 변경에 실패했습니다.');
-  }
+  const { mutate: deleteReview, isPending: isDeleteLoading } = deleteReviewMutation;
+  const { mutate: dismissReview, isPending: isDismissLoading } = setReviewDismissedMutation;
 
   const deleteSpecificReview = () => {
-    deleteReview({
-      id: review.reviewId,
-      page: currentPage,
-    });
+    deleteReview(review.reviewId);
   };
 
   const dismissSpecificReview = () => {

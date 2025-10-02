@@ -12,7 +12,7 @@ export default function AddCategoryModal({ onCancel }: { onCancel: () => void })
   const { addCategory } = useCategoryMutation();
 
   const createCategory = (values: Category) => {
-    addCategory(values, {
+    addCategory.mutate(values, {
       onSuccess: () => {
         message.success('정보 추가가 완료되었습니다.');
         onCancel();

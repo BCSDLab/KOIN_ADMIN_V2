@@ -13,10 +13,10 @@ interface AddUserFormProps {
 export default function AddUserForm({ test_id, data }: AddUserFormProps) {
   const [form] = CustomForm.useForm();
 
-  const { moveUser } = useABTestMutation();
+  const { moveUserMutation } = useABTestMutation();
 
   const onFinish = (values: any) => {
-    moveUser({
+    moveUserMutation({
       id: test_id,
       data: {
         device_id: values.device_id,

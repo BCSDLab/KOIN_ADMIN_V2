@@ -3,12 +3,12 @@ import { UploadOutlined } from '@ant-design/icons';
 import {
   Button, Modal, Upload, message,
 } from 'antd';
-import { Domain } from 'model/upload.model';
+import type { Domain } from 'model/upload.model';
 import { useState } from 'react';
-import { useUploadfileMutation } from 'store/api/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { FormInstance } from 'antd/es/form/Form';
 import { RcFile } from 'antd/lib/upload';
+import { useUploadFileMutation } from 'hooks/useUploadMutation';
 import * as S from './CustomForm.style';
 
 interface Props {
@@ -29,7 +29,8 @@ const createUploadFile = (fileUrl: string, index: number): UploadFile => {
 export default function CustomMultipleUpload({ form, domain, name }: Props) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
-  const [uploadFile] = useUploadfileMutation();
+  const { mutateAsync: uploadFile } = useUploadFileMutation();
+
   const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
   let convertedFileList: UploadFile[] = [];
   convertedFileList = uploadFileList?.map(createUploadFile);
@@ -52,23 +53,22 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
     setPreviewOpen(true);
   };
 
-  const handleUpload = (file: RcFile) => {
+  const handleUpload = async (file: RcFile) => {
     const image = new FormData();
     image.append('multipartFile', file);
 
-    uploadFile({ domain, image })
-      .unwrap()
-      .then((value) => {
-        setUploadFileList([...uploadFileList, value.file_url]);
-        form.setFieldValue(name, [
-          ...uploadFileList,
-          value.file_url,
-        ]);
-        message.success('업로드에 성공했습니다.');
-      })
-      .catch(() => {
-        message.error('업로드에 실패했습니다.');
+    try {
+      const value = await uploadFile({ domain, image });
+      setUploadFileList((prev) => {
+        const next = [...prev, value.file_url];
+        form.setFieldValue(name, next);
+        return next;
       });
+      message.success('업로드에 성공했습니다.');
+    } catch {
+      message.error('업로드에 실패했습니다.');
+    }
+
     return true;
   };
 

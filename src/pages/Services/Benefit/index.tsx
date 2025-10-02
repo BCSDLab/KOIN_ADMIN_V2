@@ -2,7 +2,9 @@ import * as Common from 'styles/List.style';
 import CustomForm from 'components/common/CustomForm';
 import { useState } from 'react';
 import { Button, message } from 'antd';
-import { useDeleteBenefitShopsMutation, useGetBenefitShopsQuery } from 'store/api/benefit';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import benefitQueries from 'queryFactory/benefitQueries';
+import { deleteBenefitShops } from 'api/benefit';
 import * as S from './index.style';
 import Category from './components/Category';
 import AdditionalModal from './components/AdditionalModal';
@@ -13,13 +15,16 @@ import BenefitDetailModifyModal from './components/BenefitDetailModifyModal';
 
 export default function BenefitPage() {
   const [selected, setSelected] = useState<number>();
-  const { data } = useGetBenefitShopsQuery(selected, {
-    skip: !selected,
+  const { data } = useQuery(benefitQueries.getBenefitShops(selected));
+  const { mutate: deleteShopsMutation } = useMutation({
+    mutationFn: deleteBenefitShops,
+    onSuccess: () => {
+      message.success('상점을 삭제했습니다.');
+    },
   });
-  const [deleteShopsMutation] = useDeleteBenefitShopsMutation();
   const [isAdditionOpen, setIsAdditionOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [isDeleteOpne, setIsDeleteOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isModifyOpen, setIsModifyOpen] = useState(false);
   const [isBenefitDetailOpen, setIsBenefitDetailOpen] = useState(false);
   const [selectedShop, setSelectedShop] = useState<number[]>([]);
@@ -40,7 +45,9 @@ export default function BenefitPage() {
     setSelectedShop([]);
   };
   const deleteShops = () => {
-    if (selected && selectedShop.length > 0) deleteShopsMutation({ id: selected, shop_ids: selectedShop }).then(() => message.success('상점을 삭제했습니다.'));
+    if (selected && selectedShop.length > 0) {
+      deleteShopsMutation({ id: selected, shop_ids: selectedShop });
+    }
   };
   const onShopClickAll = () => {
     if (data) {
@@ -78,7 +85,7 @@ export default function BenefitPage() {
               title="카테고리 삭제 확인"
               width={600}
               footer={null}
-              open={isDeleteOpne}
+              open={isDeleteOpen}
               onCancel={() => handleModal(setIsDeleteOpen, 'delete', 'close')}
               onClick={() => handleModal(setIsDeleteOpen, 'delete', 'open')}
               isDelete

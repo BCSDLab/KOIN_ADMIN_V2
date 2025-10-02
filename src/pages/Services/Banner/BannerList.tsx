@@ -2,10 +2,11 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Flex, Switch } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetBannerListQuery } from 'store/api/banner';
-import { useGetBannerCategoryListQuery } from 'store/api/bannerCategory';
 import useBooleanState from 'utils/hooks/useBoolean';
 import CustomTable from 'components/common/CustomTable';
+import { useQuery } from '@tanstack/react-query';
+import bannerQueries from 'queryFactory/banner';
+import bannerCategoryQueries from 'queryFactory/bannerCategoryQueries';
 import BannerTabs from './components/BannerTab/BannerTab';
 import useBannerColumns from './components/CustomColumn/CustomColumn';
 import CategoryDescriptionBox from './components/Description/Description';
@@ -17,7 +18,7 @@ export default function BannerList() {
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const { value: isActive, changeValue: handleActive } = useBooleanState(false);
-  const { data: BannerCategory } = useGetBannerCategoryListQuery();
+  const { data: BannerCategory } = useQuery(bannerCategoryQueries.list());
   const { updateBannerPriority, toggleBannerActive } = useBannerMutation();
   const columns = useBannerColumns({ toggleBannerActive, updateBannerPriority });
 
@@ -35,16 +36,11 @@ export default function BannerList() {
     return categories.find((category) => category.id === selectedCategory)?.name;
   }, [categories, selectedCategory]);
 
-  const { data: BannerRes } = useGetBannerListQuery(
-    {
-      page,
-      banner_category_name: selectedCategoryName ?? '',
-      is_active: isActive ? true : undefined,
-    },
-    {
-      skip: !selectedCategoryName,
-    },
-  );
+  const { data: BannerRes } = useQuery(bannerQueries.bannerList({
+    page,
+    is_active: isActive ? true : undefined,
+    banner_category_name: selectedCategoryName ?? '',
+  }));
 
   return (
     <S.Container>

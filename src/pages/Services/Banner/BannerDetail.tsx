@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import { useParams } from 'react-router-dom';
-import { useGetBannerQuery } from 'store/api/banner';
 import useBooleanState from 'utils/hooks/useBoolean';
 import CustomForm from 'components/common/CustomForm';
 import DetailHeading from 'components/common/DetailHeading';
@@ -11,13 +10,15 @@ import CustomBreadcrumb from 'components/common/CustomBreadCrumb';
 import * as S from 'styles/Detail.style';
 import { Flex } from 'antd';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
+import { useQuery } from '@tanstack/react-query';
+import bannerQueries from 'queryFactory/banner';
 import useBannerMutation from './useBannerMutation';
 import BannerForm from './components/BannerForm/BannerForm';
 
 export default function BannerDetail() {
   const { id } = useParams();
   const editorRef = useRef<Editor | null>(null);
-  const { data: bannerData, isError, isLoading } = useGetBannerQuery(Number(id));
+  const { data: bannerData, isError, isLoading } = useQuery(bannerQueries.banner(Number(id)));
   const [form] = CustomForm.useForm();
   const { updateBanner, deleteBanner } = useBannerMutation();
 
@@ -78,7 +79,7 @@ export default function BannerDetail() {
 
   const handleDelete = () => {
     closeDeleteModal();
-    deleteBanner(Number(id));
+    deleteBanner({ id: Number(id) });
   };
 
   if (isLoading) {

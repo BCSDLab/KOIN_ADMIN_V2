@@ -44,3 +44,8 @@ export interface NoticeUpdateForm {
   title: string;
   content: string;
 }
+
+export interface DeleteNoticeResponse {
+  success: boolean;
+  id: number;
+}

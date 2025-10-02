@@ -10,3 +10,5 @@ const authQueries = {
     queryFn: getAdminInfo,
   }),
 };
+
+export default authQueries;

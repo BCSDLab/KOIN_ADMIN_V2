@@ -21,9 +21,8 @@ export default function AddMenuForm() {
         form.resetFields();
         form.setFieldValue('image_urls', []);
       },
-      onError: (error:any) => {
-        if (error?.violations) message.error(error.violations[0]);
-        else message.error(error.message);
+      onError: (error) => {
+        message.error(error.message);
       },
     });
   };

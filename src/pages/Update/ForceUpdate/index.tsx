@@ -50,9 +50,8 @@ export default function ForceUpdate() {
       message.success('업데이트 완료');
       queryClient.invalidateQueries({ queryKey: forceUpdateQueries.allKey() });
     },
-    onError: (error: any) => {
-      const msg = error?.response?.data?.message ?? '업데이트 실패';
-      message.error(msg);
+    onError: (error) => {
+      message.error(error.message);
     },
   });
 

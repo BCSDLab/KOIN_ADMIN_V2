@@ -37,6 +37,9 @@ import ClubDetail from 'pages/Services/Club/ClubDetail';
 import ClubWrite from 'pages/Services/Club/ClubWrite';
 import ClubManagerList from 'pages/UserManage/ClubManager/ClubManagerList';
 import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubManagerRequestList';
+import CoopshopUpdate from 'pages/Update/CoopshopUpdate';
+import ShuttleBusUpdate from 'pages/Update/ShuttleBusUpdate';
+import CommutingBusUpdate from 'pages/Update/CommutingBusUpdate';
 
 function RequireAuth() {
   return (
@@ -77,6 +80,9 @@ function App() {
         <Route path="/notice/write" element={<NoticeWrite />} />
         <Route path="/force-update" element={<ForceUpdate />} />
         <Route path="/update-list" element={<UpdateList />} />
+        <Route path="/shuttleBus-update" element={<ShuttleBusUpdate />} />
+        <Route path="/commutingBus-update" element={<CommutingBusUpdate />} />
+        <Route path="/coopshop-update" element={<CoopshopUpdate />} />
         <Route path="/history" element={<History />} />
         <Route path="/banner" element={<BannerList />} />
         <Route path="banner/:id" element={<BannerDetail />} />

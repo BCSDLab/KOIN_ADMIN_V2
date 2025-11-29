@@ -9,7 +9,7 @@ interface SemesterDropdownType {
   setProgress: (progress: ProgressType) => void;
 }
 
-const SEMESTAR_LABEL: Record<Semester, string> = {
+const SEMESTER_LABEL: Record<Semester, string> = {
   REGULAR: '정규학기',
   SEASONAL: '계절학기',
   VACATION: '방학',
@@ -48,7 +48,7 @@ function BusSemesterDropdown({ semester, setSemester, setProgress }: SemesterDro
       <Button style={{ minWidth: '110px' }}>
         <Space>
           {!semester && '학기선택'}
-          {semester && SEMESTAR_LABEL[semester]}
+          {semester && SEMESTER_LABEL[semester]}
           <DownOutlined />
         </Space>
       </Button>

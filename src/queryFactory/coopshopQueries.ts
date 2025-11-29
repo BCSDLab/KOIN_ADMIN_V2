@@ -1,14 +1,14 @@
 import { queryOptions } from '@tanstack/react-query';
-import { getCoopshopSemesterList } from 'api/coopshopUpdate';
+import { getCoopShopSemesterList } from 'api/coopShopUpdate';
 
-const coopshopQueries = {
-  allkeys: () => ['coopshop'],
+const coopShopQueries = {
+  allkeys: () => ['coopShop'],
 
-  coopshopSemesterListKeys: () => [...coopshopQueries.allkeys(), 'semesterList'],
-  coopshopSemesterList: () => queryOptions({
-    queryKey: coopshopQueries.coopshopSemesterListKeys(),
-    queryFn: () => getCoopshopSemesterList(),
+  coopShopSemesterListKeys: () => [...coopShopQueries.allkeys(), 'semesterList'],
+  coopShopSemesterList: () => queryOptions({
+    queryKey: coopShopQueries.coopShopSemesterListKeys(),
+    queryFn: () => getCoopShopSemesterList(),
   }),
 };
 
-export default coopshopQueries;
+export default coopShopQueries;

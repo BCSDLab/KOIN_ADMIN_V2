@@ -1,17 +1,17 @@
 /* eslint-disable react/no-array-index-key */
-import type { CoopshopInfo } from 'model/coopshop.model';
-import Book from 'assets/Coopshop/book.svg';
-import Cafe from 'assets/Coopshop/cafe.svg';
-import Cut from 'assets/Coopshop/cut.svg';
-import Flatware from 'assets/Coopshop/flatware.svg';
-import Laundry from 'assets/Coopshop/laundry.svg';
-import PostOffice from 'assets/Coopshop/post-office.svg';
-import Print from 'assets/Coopshop/print.svg';
-import Glasses from 'assets/Coopshop/glasses.svg';
-import * as S from './CoopshopPreview.style';
+import type { CoopShopInfo } from 'model/coopShop.model';
+import Book from 'assets/CoopShop/book.svg';
+import Cafe from 'assets/CoopShop/cafe.svg';
+import Cut from 'assets/CoopShop/cut.svg';
+import Flatware from 'assets/CoopShop/flatware.svg';
+import Laundry from 'assets/CoopShop/laundry.svg';
+import PostOffice from 'assets/CoopShop/post-office.svg';
+import Print from 'assets/CoopShop/print.svg';
+import Glasses from 'assets/CoopShop/glasses.svg';
+import * as S from './CoopShopPreview.style';
 
-interface CoopshopPreviewProps {
-  uploadedData: CoopshopInfo[];
+interface CoopShopPreviewProps {
+  uploadedData: CoopShopInfo[];
 }
 
 const CAFETERIA_HEAD_TABLE = {
@@ -34,7 +34,7 @@ const SHOP_ICON: Record<string, React.ReactNode> = {
   우편취급국: <PostOffice />,
 };
 
-function CoopshopPreview({ uploadedData }: CoopshopPreviewProps) {
+function CoopShopPreview({ uploadedData }: CoopShopPreviewProps) {
   const getFormattedShopTime = (open: string, close: string) => {
     if (open === close) {
       return open;
@@ -124,4 +124,4 @@ function CoopshopPreview({ uploadedData }: CoopshopPreviewProps) {
   );
 }
 
-export default CoopshopPreview;
+export default CoopShopPreview;

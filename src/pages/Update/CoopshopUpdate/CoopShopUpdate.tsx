@@ -1,30 +1,30 @@
 import { useState } from 'react';
 import type { UploadFile } from 'antd';
 import type { ProgressType } from 'model/bus.model';
-import type { SemesterInfo } from 'model/coopshop.model';
+import type { SemesterInfo } from 'model/coopShop.model';
 import {
   Flex, Button, Modal, Form, Input, DatePicker, message, Empty,
 } from 'antd';
 import DownloadExcel from 'components/common/DownloadExcel';
 import UploadExcel from 'components/common/UploadExcel';
 import SelectExcel from 'components/common/SelectExcel';
-import CoopshopPreview from './components/CoopshopPreview';
-import CoopshopSemesterDropdown from './components/CoopshopSemesterDropdown';
-import useCoopshopUpdateMutation from './useCoopshopUpdateMutation';
-import * as S from './index.style';
+import CoopShopPreview from './components/CoopShopPreview';
+import CoopShopSemesterDropdown from './components/CoopShopSemesterDropdown';
+import useCoopShopUpdateMutation from './useCoopShopUpdateMutation';
+import * as S from './CoopShopUpdate.style';
 
-function CoopshopUpdate() {
+function CoopShopUpdate() {
   const [semester, setSemester] = useState<SemesterInfo | null>(null);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [progress, setProgress] = useState<ProgressType>('initial');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const {
-    addCoopshopSemester,
-    uploadCoopshopTimetable,
+    addCoopShopSemester,
+    uploadCoopShopTimetable,
     uploadedData,
-    migrateCoopshopTimetable,
-  } = useCoopshopUpdateMutation();
+    migrateCoopShopTimetable,
+  } = useCoopShopUpdateMutation();
 
   const isInitial = progress === 'initial';
   const isFileSelected = progress === 'selectedFile';
@@ -34,7 +34,7 @@ function CoopshopUpdate() {
     try {
       const values = await form.validateFields();
 
-      addCoopshopSemester.mutate(
+      addCoopShopSemester.mutate(
         {
           semester: values.semester,
           from_date: values.startDate.format('YYYY-MM-DD'),
@@ -68,7 +68,7 @@ function CoopshopUpdate() {
       return;
     }
 
-    migrateCoopshopTimetable.mutate(
+    migrateCoopShopTimetable.mutate(
       {
         semesterId: semester.semesterId,
         uploadedData,
@@ -90,7 +90,7 @@ function CoopshopUpdate() {
       <Flex vertical gap="large">
         <S.Heading>생협</S.Heading>
         <Flex justify="space-between" align="center" gap="large">
-          <CoopshopSemesterDropdown
+          <CoopShopSemesterDropdown
             semester={semester}
             setSemester={setSemester}
             setIsModalOpen={setIsModalOpen}
@@ -109,10 +109,10 @@ function CoopshopUpdate() {
                 : fileList[0].name}
             </S.TextBox>
             <UploadExcel
-              mutation={uploadCoopshopTimetable}
+              mutation={uploadCoopShopTimetable}
               fileList={fileList}
               setProgress={setProgress}
-              kindOfExcel="coopshop"
+              kindOfExcel="coopShop"
               isDisabled={!isFileSelected}
             />
           </S.FileSettingWrapper>
@@ -126,7 +126,7 @@ function CoopshopUpdate() {
             <Empty description="값이 없습니다." />
           )}
           {uploadedData && isUploadComplete && (
-            <CoopshopPreview uploadedData={uploadedData.coop_shops} />
+            <CoopShopPreview uploadedData={uploadedData.coop_shops} />
           )}
         </S.FileDataWrapper>
         <Flex justify="flex-end" gap="large">
@@ -174,4 +174,4 @@ function CoopshopUpdate() {
   );
 }
 
-export default CoopshopUpdate;
+export default CoopShopUpdate;

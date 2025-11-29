@@ -3,28 +3,28 @@ import { Dropdown, Button, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import type { ProgressType } from 'model/bus.model';
-import type { SemesterInfo } from 'model/coopshop.model';
-import coopshopQueries from 'queryFactory/coopshopQueries';
+import type { SemesterInfo } from 'model/coopShop.model';
+import coopShopQueries from 'queryFactory/coopShopQueries';
 
-interface CoopshopSemesterDropdownType {
+interface CoopShopSemesterDropdownType {
   semester: SemesterInfo | null;
   setSemester: (semester: SemesterInfo | null) => void;
   setIsModalOpen: (event: boolean) => void;
   setProgress: (progress: ProgressType) => void;
 }
 
-function CoopshopSemesterDropdown({
+function CoopShopSemesterDropdown({
   semester, setSemester, setIsModalOpen, setProgress,
-}: CoopshopSemesterDropdownType) {
-  const { data: coopshopSemesterList } = useQuery(coopshopQueries.coopshopSemesterList());
+}: CoopShopSemesterDropdownType) {
+  const { data: coopShopSemesterList } = useQuery(coopShopQueries.coopShopSemesterList());
 
-  const semesters: MenuProps['items'] = coopshopSemesterList?.map((coopshopSemester, index) => ({
-    label: coopshopSemester.semester,
+  const semesters: MenuProps['items'] = coopShopSemesterList?.map((coopShopSemester, index) => ({
+    label: coopShopSemester.semester,
     key: index,
     onClick: () => {
       setSemester({
-        sememsterName: coopshopSemester.semester,
-        semesterId: coopshopSemester.id,
+        sememsterName: coopShopSemester.semester,
+        semesterId: coopShopSemester.id,
       });
       setProgress('selectedSemester');
     },
@@ -56,4 +56,4 @@ function CoopshopSemesterDropdown({
   );
 }
 
-export default CoopshopSemesterDropdown;
+export default CoopShopSemesterDropdown;

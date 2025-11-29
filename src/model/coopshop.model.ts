@@ -3,27 +3,27 @@ export interface SemesterInfo {
   semesterId: number;
 }
 
-export interface CoopshopSemesterData {
+export interface CoopShopSemesterData {
   semester: string;
   from_date: string;
   to_date: string;
 }
 
-export interface CoopshopSemesterListResponse extends CoopshopSemesterData {
+export interface CoopShopSemesterListResponse extends CoopShopSemesterData {
   id: number;
   is_applied: boolean;
 }
 
-export interface CoopshopResponse {
-  coop_shops: CoopshopInfo[];
+export interface CoopShopResponse {
+  coop_shops: CoopShopInfo[];
 }
 
-export interface CoopshopInfo {
-  coop_shop_info: CoopshopDetailInfo;
+export interface CoopShopInfo {
+  coop_shop_info: CoopShopDetailInfo;
   operation_hours: OperationHour[];
 }
 
-export interface CoopshopDetailInfo {
+export interface CoopShopDetailInfo {
   name: string;
   phone: string;
   location: string;

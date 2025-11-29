@@ -1,20 +1,20 @@
 import accessClient from 'api';
 import type {
-  CoopshopSemesterListResponse, CoopshopSemesterData, CoopshopResponse,
-} from 'model/coopshop.model';
+  CoopShopSemesterListResponse, CoopShopSemesterData, CoopShopResponse,
+} from 'model/coopShop.model';
 
-export const getCoopshopSemesterList = async () => {
-  const response = await accessClient.get<CoopshopSemesterListResponse[]>('admin/coopshop/semesters');
+export const getCoopShopSemesterList = async () => {
+  const response = await accessClient.get<CoopShopSemesterListResponse[]>('admin/coopshop/semesters');
   return response.data;
 };
 
-export const postCoopshopSemesterList = async (body:CoopshopSemesterData) => {
+export const postCoopShopSemesterList = async (body:CoopShopSemesterData) => {
   const response = await accessClient.post('admin/coopshop/semesters', body);
   return response.data;
 };
 
-export const postCoopshopTimetable = async (body: FormData) => {
-  const response = await accessClient.post<CoopshopResponse>(
+export const postCoopShopTimetable = async (body: FormData) => {
+  const response = await accessClient.post<CoopShopResponse>(
     'admin/coopshop/timetable/excel',
     body,
     {
@@ -26,7 +26,7 @@ export const postCoopshopTimetable = async (body: FormData) => {
   return response.data;
 };
 
-export const putCoopshopTimetable = async (body : CoopshopResponse, id: number) => {
+export const putCoopShopTimetable = async (body : CoopShopResponse, id: number) => {
   const response = await accessClient.put(`admin/coopshop/timetable/${id}`, body);
   return response;
 };

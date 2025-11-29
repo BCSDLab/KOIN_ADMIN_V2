@@ -1,11 +1,11 @@
 import type { UseMutationResult } from '@tanstack/react-query';
 import type { CommutingBusRouteInfoResponse, ProgressType, ShuttleBusRouteInfoResponse } from 'model/bus.model';
-import type { CoopshopResponse } from 'model/coopshop.model';
+import type { CoopShopResponse } from 'model/coopShop.model';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message } from 'antd';
 import { RcFile, UploadFile } from 'antd/es/upload';
 
-type ExcelType = 'shuttleBus' | 'coopshop' | 'commutingBus';
+type ExcelType = 'shuttleBus' | 'coopShop' | 'commutingBus';
 
 type ExcelNameType = {
   [key in ExcelType]: string;
@@ -13,14 +13,14 @@ type ExcelNameType = {
 
 const excelName: ExcelNameType = {
   shuttleBus: 'shuttle-bus-timetable',
-  coopshop: 'coop-shop-excel',
+  coopShop: 'coop-shop-excel',
   commutingBus: 'commuting-bus-timetable',
 };
 
 type ExcelResponseType =
   | CommutingBusRouteInfoResponse
   | ShuttleBusRouteInfoResponse
-  | CoopshopResponse;
+  | CoopShopResponse;
 
 interface UploadExcelType {
   kindOfExcel: ExcelType,

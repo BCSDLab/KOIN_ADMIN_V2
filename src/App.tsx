@@ -37,7 +37,7 @@ import ClubDetail from 'pages/Services/Club/ClubDetail';
 import ClubWrite from 'pages/Services/Club/ClubWrite';
 import ClubManagerList from 'pages/UserManage/ClubManager/ClubManagerList';
 import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubManagerRequestList';
-import CoopshopUpdate from 'pages/Update/CoopshopUpdate';
+import CoopShopUpdate from 'pages/Update/CoopShopUpdate/CoopShopUpdate';
 import ShuttleBusUpdate from 'pages/Update/ShuttleBusUpdate';
 import CommutingBusUpdate from 'pages/Update/CommutingBusUpdate';
 
@@ -82,7 +82,7 @@ function App() {
         <Route path="/update-list" element={<UpdateList />} />
         <Route path="/shuttleBus-update" element={<ShuttleBusUpdate />} />
         <Route path="/commutingBus-update" element={<CommutingBusUpdate />} />
-        <Route path="/coopshop-update" element={<CoopshopUpdate />} />
+        <Route path="/coopShop-update" element={<CoopShopUpdate />} />
         <Route path="/history" element={<History />} />
         <Route path="/banner" element={<BannerList />} />
         <Route path="banner/:id" element={<BannerDetail />} />

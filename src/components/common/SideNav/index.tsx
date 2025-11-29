@@ -66,7 +66,7 @@ const items: MenuProps['items'] = [
     getItem('강제 업데이트 목록 관리', '/update-list', <UnorderedListOutlined />),
     getItem('셔틀버스 업데이트', '/shuttleBus-update', <ScheduleOutlined />),
     getItem('등하교버스 업데이트', '/commutingBus-update', <ScheduleOutlined />),
-    getItem('생협 업데이트', '/coopshop-update', <ScheduleOutlined />),
+    getItem('생협 업데이트', '/coopShop-update', <ScheduleOutlined />),
   ]),
   getItem('히스토리', 'history', <HistoryOutlined />, [
     getItem('로그 히스토리', '/history', <FlagOutlined />),

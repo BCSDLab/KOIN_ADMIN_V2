@@ -27,7 +27,6 @@ export const RouteType = styled.div<{ $type: string }>`
   padding: 2px 4px;
   color: #fff;
   border-radius: 4px;
-  font-size: 12px;
   background-color: ${(props) => ROUTE_TYPE_COLORS[props.$type]};
 `;
 
@@ -67,7 +66,6 @@ export const Standard = styled.div`
 export const Detail = styled.div`
   color: #727272;
   font-size: 12px;
-  font-weight: 400;
 `;
 
 export const Time = styled.div`

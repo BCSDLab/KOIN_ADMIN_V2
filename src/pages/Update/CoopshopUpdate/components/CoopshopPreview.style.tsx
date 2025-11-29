@@ -153,7 +153,6 @@ export const InfoDescriptionContainer = styled.div`
 export const InfoDescription = styled.div`
   color: #041a44;
   font-family: Pretendard, sans-serif;
-  font-size: 16px;
   font-weight: 500;
   line-height: 160%;
 `;

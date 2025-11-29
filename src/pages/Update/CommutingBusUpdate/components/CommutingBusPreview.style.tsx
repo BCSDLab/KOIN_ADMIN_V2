@@ -66,7 +66,6 @@ export const Standard = styled.div`
 export const Detail = styled.div`
   color: #727272;
   font-size: 12px;
-  font-weight: 400;
 `;
 
 export const Time = styled.div`

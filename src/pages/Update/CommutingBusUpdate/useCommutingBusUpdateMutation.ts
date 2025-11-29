@@ -1,16 +1,26 @@
 import { useMutation } from '@tanstack/react-query';
 import type { CommutingBusRouteInfoResponse, Semester } from 'model/bus.model';
 import { postCommutingBusTimetable, putCommutingBusTimetable } from 'api/commutingBusUpdate';
+import { AxiosError } from 'axios';
 
 const useCommutingBusUpdateMutation = () => {
-  const uploadCommutingBusTimetable = useMutation({
+  const uploadCommutingBusTimetable = useMutation<
+  CommutingBusRouteInfoResponse,
+  AxiosError<{ message?: string }>,
+  FormData>({
     mutationFn: (formData: FormData) => postCommutingBusTimetable(formData),
   });
 
-  const migrateCommutingBusTimetable = useMutation({
+  const migrateCommutingBusTimetable = useMutation<
+  void,
+  AxiosError<{ message?: string }>,
+  {
+    uploadedData: CommutingBusRouteInfoResponse;
+    semesterType: Semester;
+  }>({
     mutationFn: ({ uploadedData, semesterType }: {
       uploadedData: CommutingBusRouteInfoResponse;
-      semesterType: Semester
+      semesterType: Semester;
     }) => putCommutingBusTimetable(uploadedData, semesterType),
   });
 

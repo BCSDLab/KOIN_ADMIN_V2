@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { CoopShopResponse, CoopShopSemesterData } from 'model/coopShop.model';
 import coopShopQueries from 'queryFactory/coopShopQueries';
 import { postCoopShopSemesterList, postCoopShopTimetable, putCoopShopTimetable } from 'api/coopShopUpdate';
+import { AxiosError } from 'axios';
 
 const useCoopShopUpdateMutation = () => {
   const queryClient = useQueryClient();
@@ -14,14 +15,23 @@ const useCoopShopUpdateMutation = () => {
     },
   });
 
-  const uploadCoopShopTimetable = useMutation({
+  const uploadCoopShopTimetable = useMutation<
+  CoopShopResponse,
+  AxiosError<{ message?: string }>,
+  FormData>({
     mutationFn: (formData: FormData) => postCoopShopTimetable(formData),
   });
 
-  const migrateCoopShopTimetable = useMutation({
+  const migrateCoopShopTimetable = useMutation<
+  void,
+  AxiosError<{ message?: string }>,
+  {
+    uploadedData: CoopShopResponse;
+    semesterId: number;
+  }>({
     mutationFn: ({ uploadedData, semesterId }: {
-      uploadedData: CoopShopResponse,
-      semesterId: number,
+      uploadedData: CoopShopResponse;
+      semesterId: number;
     }) => putCoopShopTimetable(uploadedData, semesterId),
   });
 

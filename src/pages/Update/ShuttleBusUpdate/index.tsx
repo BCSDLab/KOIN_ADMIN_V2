@@ -8,6 +8,7 @@ import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
 import BusSemesterDropdown from 'components/common/BusDropdown';
 import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
+import { AxiosError } from 'axios';
 import ShuttleBusPreview from './components/ShuttleBusPreview';
 import useShuttleBusUpdateMutation from './useShuttleBusUpdateMutation';
 import * as S from './index.style';
@@ -48,8 +49,9 @@ function ShuttleBusUpdate() {
           message.success('정상적으로 이관되었습니다.');
           resetData();
         },
-        onError: () => {
-          message.error('오류가 발생하였습니다.');
+        onError: (error: AxiosError<{ message?: string }>) => {
+          const errorMessage = error.response?.data.message || '에러가 발생했습니다.';
+          message.error(errorMessage);
         },
       },
     );

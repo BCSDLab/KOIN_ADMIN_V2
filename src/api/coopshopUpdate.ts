@@ -28,5 +28,5 @@ export const postCoopShopTimetable = async (body: FormData) => {
 
 export const putCoopShopTimetable = async (body : CoopShopResponse, id: number) => {
   const response = await accessClient.put(`admin/coopshop/timetable/${id}`, body);
-  return response;
+  return response.data;
 };

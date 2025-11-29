@@ -8,6 +8,7 @@ import {
 import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
 import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
+import { AxiosError } from 'axios';
 import CoopShopPreview from './components/CoopShopPreview';
 import CoopShopSemesterDropdown from './components/CoopShopSemesterDropdown';
 import useCoopShopUpdateMutation from './useCoopShopUpdateMutation';
@@ -47,7 +48,7 @@ function CoopShopUpdate() {
             message.success('학기를 추가하였습니다.');
           },
           onError: () => {
-            message.error('다시 입력해주세요.');
+            message.error('오류가 발생하였습니다.');
           },
         },
       );
@@ -78,8 +79,9 @@ function CoopShopUpdate() {
           message.success('정상적으로 이관되었습니다.');
           resetData();
         },
-        onError: () => {
-          message.error('오류가 발생하였습니다.');
+        onError: (error: AxiosError<{ message?: string }>) => {
+          const errorMessage = error.response?.data.message || '에러가 발생했습니다.';
+          message.error(errorMessage);
         },
       },
     );

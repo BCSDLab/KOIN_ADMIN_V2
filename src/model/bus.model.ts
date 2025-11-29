@@ -13,7 +13,7 @@ export interface BusRouteInfo {
 
 interface Node {
   name: string;
-  detail: null | string;
+  detail: string | null;
 }
 
 interface Route {

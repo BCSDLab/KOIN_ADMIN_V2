@@ -18,7 +18,7 @@ interface Node {
 
 interface Route {
   arrival_time: (string | null)[];
-  detail: null | string;
+  detail: string | null;
   name: string;
 }
 

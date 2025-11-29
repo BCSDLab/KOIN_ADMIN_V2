@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { Flex } from 'antd';
 import type { BusRouteInfo } from 'model/bus.model';
-import BusIcon from 'assets/Bus/bus-icon-32x32.svg';
+import BusIcon from 'assets/Bus/bus.svg';
 import * as S from './CommutingBusPreview.style';
 
 interface CommutingBusPreviewProps {

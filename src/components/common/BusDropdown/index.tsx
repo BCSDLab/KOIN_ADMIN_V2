@@ -15,40 +15,27 @@ const SEMESTER_LABEL: Record<Semester, string> = {
   VACATION: '방학',
 } as const;
 
+const SEMESTER_ITEMS: MenuProps['items'] = (
+  Object.entries(SEMESTER_LABEL) as [Semester, string][]
+).map(([value, label]) => ({
+  key: value,
+  label,
+}));
+
 function BusSemesterDropdown({ semester, setSemester, setProgress }: SemesterDropdownType) {
-  const items: MenuProps['items'] = [
-    {
-      label: '정규학기',
-      key: '0',
-      onClick: () => {
-        setSemester('REGULAR');
-        setProgress('selectedSemester');
-      },
-    },
-    {
-      label: '계절학기',
-      key: '1',
-      onClick: () => {
-        setSemester('SEASONAL');
-        setProgress('selectedSemester');
-      },
-    },
-    {
-      label: '방학',
-      key: '2',
-      onClick: () => {
-        setSemester('VACATION');
-        setProgress('selectedSemester');
-      },
-    },
-  ];
+  const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
+    setSemester(key as Semester);
+    setProgress('selectedSemester');
+  };
 
   return (
-    <Dropdown menu={{ items }} trigger={['click']}>
+    <Dropdown
+      menu={{ items: SEMESTER_ITEMS, onClick: handleMenuClick }}
+      trigger={['click']}
+    >
       <Button style={{ minWidth: '110px' }}>
         <Space>
-          {!semester && '학기선택'}
-          {semester && SEMESTER_LABEL[semester]}
+          {semester ? SEMESTER_LABEL[semester] : '학기선택'}
           <DownOutlined />
         </Space>
       </Button>

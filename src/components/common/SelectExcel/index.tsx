@@ -28,6 +28,7 @@ function SelectExcel({
           return false;
         }}
         showUploadList={false}
+        accept=".xls,.xlsx,.xlsm"
       >
         <Button disabled={isDisabled} icon={<SelectOutlined />}>Select</Button>
       </Upload>

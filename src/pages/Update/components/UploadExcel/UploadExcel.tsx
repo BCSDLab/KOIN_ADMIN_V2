@@ -42,10 +42,9 @@ function UploadExcel({
     formData.append(`${excelName[kindOfExcel]}`, file);
 
     mutation.mutate(formData, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         message.success('파일을 정상적으로 업로드하였습니다.');
         setProgress('completeUpload');
-        console.log(data);
       },
       onError: () => message.error('오류가 발생하였습니다.'),
     });

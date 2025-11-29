@@ -4,10 +4,10 @@ import {
 } from 'antd';
 import type { UploadFile } from 'antd';
 import type { Semester, ProgressType } from 'model/bus.model';
-import DownloadExcel from 'components/common/DownloadExcel';
+import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
 import BusSemesterDropdown from 'components/common/BusDropdown';
-import UploadExcel from 'components/common/UploadExcel';
-import SelectExcel from 'components/common/SelectExcel';
+import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
+import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import CommutingBusPreview from './components/CommutingBusPreview';
 import useCommutingBusUpdateMutation from './useCommutingBusUpdateMutation';
 import * as S from './index.style';

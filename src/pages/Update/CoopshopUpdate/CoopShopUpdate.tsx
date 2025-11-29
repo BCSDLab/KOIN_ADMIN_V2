@@ -5,9 +5,9 @@ import type { SemesterInfo } from 'model/coopShop.model';
 import {
   Flex, Button, Modal, Form, Input, DatePicker, message, Empty,
 } from 'antd';
-import DownloadExcel from 'components/common/DownloadExcel';
-import UploadExcel from 'components/common/UploadExcel';
-import SelectExcel from 'components/common/SelectExcel';
+import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
+import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
+import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import CoopShopPreview from './components/CoopShopPreview';
 import CoopShopSemesterDropdown from './components/CoopShopSemesterDropdown';
 import useCoopShopUpdateMutation from './useCoopShopUpdateMutation';

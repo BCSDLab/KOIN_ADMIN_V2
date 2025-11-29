@@ -4,10 +4,10 @@ import type { UploadFile } from 'antd';
 import {
   Flex, Button, Empty, message,
 } from 'antd';
-import DownloadExcel from 'components/common/DownloadExcel';
+import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
 import BusSemesterDropdown from 'components/common/BusDropdown';
-import UploadExcel from 'components/common/UploadExcel';
-import SelectExcel from 'components/common/SelectExcel';
+import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
+import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import ShuttleBusPreview from './components/ShuttleBusPreview';
 import useShuttleBusUpdateMutation from './useShuttleBusUpdateMutation';
 import * as S from './index.style';

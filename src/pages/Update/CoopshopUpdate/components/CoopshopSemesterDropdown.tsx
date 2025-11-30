@@ -7,8 +7,8 @@ import type { SemesterInfo } from 'model/coopShop.model';
 import coopShopQueries from 'queryFactory/coopShopQueries';
 
 interface CoopShopSemesterDropdownType {
-  semester: SemesterInfo | null;
-  setSemester: (semester: SemesterInfo | null) => void;
+  semester: SemesterInfo | undefined;
+  setSemester: (semester: SemesterInfo | undefined) => void;
   setIsModalOpen: (event: boolean) => void;
   setProgress: (progress: ProgressType) => void;
 }

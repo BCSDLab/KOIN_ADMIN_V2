@@ -4,7 +4,7 @@ import type { MenuProps } from 'antd';
 import type { ProgressType, Semester } from 'model/bus.model';
 
 interface SemesterDropdownType {
-  semester: Semester | null;
+  semester: Semester | undefined;
   setSemester: (semester: Semester) => void;
   setProgress: (progress: ProgressType) => void;
 }

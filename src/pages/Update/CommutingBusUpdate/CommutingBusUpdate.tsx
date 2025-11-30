@@ -5,16 +5,16 @@ import {
 import type { UploadFile } from 'antd';
 import type { Semester, ProgressType } from 'model/bus.model';
 import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
-import BusSemesterDropdown from 'components/common/BusDropdown';
 import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import { AxiosError } from 'axios';
+import BusSemesterDropdown from 'pages/Update/components/BusSemesterDropdown/BusSemesterDropdown';
 import CommutingBusPreview from './components/CommutingBusPreview';
 import useCommutingBusUpdateMutation from './useCommutingBusUpdateMutation';
 import * as S from './CommutingBusUpdate.style';
 
 function CommutingBusUpdate() {
-  const [semester, setSemester] = useState<Semester | null>(null);
+  const [semester, setSemester] = useState<Semester | undefined>(undefined);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [progress, setProgress] = useState<ProgressType>('initial');
   const {
@@ -28,7 +28,7 @@ function CommutingBusUpdate() {
   const isUploadComplete = progress === 'completeUpload';
 
   const resetData = () => {
-    setSemester(null);
+    setSemester(undefined);
     setFileList([]);
     setProgress('initial');
   };

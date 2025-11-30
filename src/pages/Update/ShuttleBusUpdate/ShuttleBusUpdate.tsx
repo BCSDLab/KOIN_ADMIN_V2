@@ -5,7 +5,7 @@ import {
   Flex, Button, Empty, message,
 } from 'antd';
 import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
-import BusSemesterDropdown from 'components/common/BusDropdown';
+import BusSemesterDropdown from 'pages/Update/components/BusSemesterDropdown/BusSemesterDropdown';
 import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import { AxiosError } from 'axios';
@@ -14,7 +14,7 @@ import useShuttleBusUpdateMutation from './useShuttleBusUpdateMutation';
 import * as S from './ShuttleBusUpdate.style';
 
 function ShuttleBusUpdate() {
-  const [semester, setSemester] = useState<Semester | null>(null);
+  const [semester, setSemester] = useState<Semester | undefined>(undefined);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [progress, setProgress] = useState<ProgressType>('initial');
   const {
@@ -28,7 +28,7 @@ function ShuttleBusUpdate() {
   const isUploadComplete = progress === 'completeUpload';
 
   const resetData = () => {
-    setSemester(null);
+    setSemester(undefined);
     setFileList([]);
     setProgress('initial');
   };

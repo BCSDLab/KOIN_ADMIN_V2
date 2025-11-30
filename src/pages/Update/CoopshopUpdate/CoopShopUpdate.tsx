@@ -15,7 +15,7 @@ import useCoopShopUpdateMutation from './useCoopShopUpdateMutation';
 import * as S from './CoopShopUpdate.style';
 
 function CoopShopUpdate() {
-  const [semester, setSemester] = useState<SemesterInfo | null>(null);
+  const [semester, setSemester] = useState<SemesterInfo | undefined>(undefined);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [progress, setProgress] = useState<ProgressType>('initial');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,7 +58,7 @@ function CoopShopUpdate() {
   };
 
   const resetData = () => {
-    setSemester(null);
+    setSemester(undefined);
     setFileList([]);
     setProgress('initial');
   };

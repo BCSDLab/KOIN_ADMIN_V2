@@ -88,7 +88,7 @@ function CommutingBusUpdate() {
             />
           </S.FileSettingWrapper>
           <DownloadExcel
-            downloadURL="https://stage-static.koreatech.in/excel/commuting_bus_excel_file.xlsm"
+            type="commutingBus"
             isDisabled={isInitial}
           />
         </Flex>

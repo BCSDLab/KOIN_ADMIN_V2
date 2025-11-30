@@ -86,7 +86,7 @@ function ShuttleBusUpdate() {
             />
           </S.FileSettingWrapper>
           <DownloadExcel
-            downloadURL="https://stage-static.koreatech.in/excel/shuttle_bus_excel_file.xlsm"
+            type="shuttleBus"
             isDisabled={isInitial}
           />
         </Flex>

@@ -1,14 +1,15 @@
 import { Button } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
+import { EXCEL_DOWNLOAD_URL, DownloadType } from 'constant/bus';
 
 interface DownloadExcelProps {
-  downloadURL: string;
+  type: DownloadType;
   isDisabled: boolean;
 }
 
-function DownloadExcel({ downloadURL, isDisabled }: DownloadExcelProps) {
+function DownloadExcel({ type, isDisabled }: DownloadExcelProps) {
   return (
-    <Button href={downloadURL} disabled={isDisabled}>
+    <Button href={EXCEL_DOWNLOAD_URL[type]} disabled={isDisabled}>
       <DownloadOutlined />
       엑셀 양식 다운로드
     </Button>

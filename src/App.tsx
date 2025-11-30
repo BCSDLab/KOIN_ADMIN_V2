@@ -38,8 +38,8 @@ import ClubWrite from 'pages/Services/Club/ClubWrite';
 import ClubManagerList from 'pages/UserManage/ClubManager/ClubManagerList';
 import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubManagerRequestList';
 import CoopShopUpdate from 'pages/Update/CoopShopUpdate/CoopShopUpdate';
-import ShuttleBusUpdate from 'pages/Update/ShuttleBusUpdate';
-import CommutingBusUpdate from 'pages/Update/CommutingBusUpdate';
+import ShuttleBusUpdate from 'pages/Update/ShuttleBusUpdate/ShuttleBusUpdate';
+import CommutingBusUpdate from 'pages/Update/CommutingBusUpdate/CommutingBusUpdate';
 
 function RequireAuth() {
   return (

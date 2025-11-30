@@ -119,7 +119,7 @@ function CoopShopUpdate() {
             />
           </S.FileSettingWrapper>
           <DownloadExcel
-            downloadURL="https://stage-static.koreatech.in/excel/coop_shop_excel_file.xlsx"
+            type="coopShop"
             isDisabled={isInitial}
           />
         </Flex>

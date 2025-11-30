@@ -9,8 +9,8 @@ import BusSemesterDropdown from 'pages/Update/components/BusSemesterDropdown/Bus
 import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import { AxiosError } from 'axios';
-import ShuttleBusPreview from './components/ShuttleBusPreview';
-import useShuttleBusUpdateMutation from './useShuttleBusUpdateMutation';
+import ShuttleBusPreview from 'pages/Update/ShuttleBusUpdate/components/ShuttleBusPreview';
+import useShuttleBusUpdateMutation from 'pages/Update/ShuttleBusUpdate/useShuttleBusUpdateMutation';
 import * as S from './ShuttleBusUpdate.style';
 
 function ShuttleBusUpdate() {

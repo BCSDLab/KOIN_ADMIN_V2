@@ -10,9 +10,9 @@ import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import { AxiosError } from 'axios';
 import useBooleanState from 'utils/hooks/useBoolean';
-import useCoopShopUpdateMutation from './useCoopShopUpdateMutation';
-import CoopShopSemesterDropdown from './components/CoopShopSemesterDropdown';
-import CoopShopPreview from './components/CoopShopPreview';
+import useCoopShopUpdateMutation from 'pages/Update/CoopShopUpdate/useCoopShopUpdateMutation';
+import CoopShopSemesterDropdown from 'pages/Update/CoopShopUpdate/components/CoopShopSemesterDropdown';
+import CoopShopPreview from 'pages/Update/CoopShopUpdate/components/CoopShopPreview';
 import * as S from './CoopShopUpdate.style';
 
 function CoopShopUpdate() {

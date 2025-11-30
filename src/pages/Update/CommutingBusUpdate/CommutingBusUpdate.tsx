@@ -9,8 +9,8 @@ import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import { AxiosError } from 'axios';
 import BusSemesterDropdown from 'pages/Update/components/BusSemesterDropdown/BusSemesterDropdown';
-import CommutingBusPreview from './components/CommutingBusPreview';
-import useCommutingBusUpdateMutation from './useCommutingBusUpdateMutation';
+import CommutingBusPreview from 'pages/Update/CommutingBusUpdate/components/CommutingBusPreview';
+import useCommutingBusUpdateMutation from 'pages/Update/CommutingBusUpdate/useCommutingBusUpdateMutation';
 import * as S from './CommutingBusUpdate.style';
 
 function CommutingBusUpdate() {

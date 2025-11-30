@@ -10,7 +10,7 @@ interface ShuttleBusPreviewProps {
 
 function ShuttleBusPreview({ uploadedData }: ShuttleBusPreviewProps) {
   return (
-    <S.Container>
+    <S.InfoContainer>
       <Flex gap="100px" vertical>
         {uploadedData.map((data) => (
           <S.Main key={`${data.route_name}(${data.sub_name})`}>
@@ -36,8 +36,8 @@ function ShuttleBusPreview({ uploadedData }: ShuttleBusPreviewProps) {
                 </S.NodeWrapper>
               ))}
 
-              {data.route_info.map(({ name, detail, arrival_time }, routeIndex) => (
-                <S.TimeColumn key={`route-${routeIndex}`}>
+              {data.route_info.map(({ name, detail, arrival_time }) => (
+                <S.TimeColumn key={`${data.route_name}-${data.route_type}-${name}-${arrival_time}`}>
                   <S.Standard>
                     {name}
                     <br />
@@ -54,7 +54,7 @@ function ShuttleBusPreview({ uploadedData }: ShuttleBusPreviewProps) {
           </S.Main>
         ))}
       </Flex>
-    </S.Container>
+    </S.InfoContainer>
   );
 }
 

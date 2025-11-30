@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import type { CoopShopInfo } from 'model/coopShop.model';
 import Book from 'assets/CoopShop/book.svg';
 import Cafe from 'assets/CoopShop/cafe.svg';
@@ -59,68 +58,65 @@ function CoopShopPreview({ uploadedData }: CoopShopPreviewProps) {
   };
 
   return (
-    <S.Container>
-      <S.Main>
-        <S.InfoContainer>
-          {cafeteriaInfo && (
-            <S.InfoBlock>
-              <S.InfoCafeteria>
-                <S.InfoTitleContainer>
-                  <S.IconWrapper>
-                    <Flatware />
-                  </S.IconWrapper>
-                  <S.InfoTitle>학생식당</S.InfoTitle>
-                </S.InfoTitleContainer>
-                <S.Table>
-                  <thead>
-                    <tr>
-                      <S.TableHead>시간</S.TableHead>
-                      {CAFETERIA_HEAD_TABLE.row.map((type, timeIndex) => (
-                        <S.TableHead key={`${type}-${timeIndex}`}>{type}</S.TableHead>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {CAFETERIA_HEAD_TABLE.col.map((type) => (
-                      <tr key={type}>
-                        <S.TableCell>{type}</S.TableCell>
-                        {CAFETERIA_HEAD_TABLE.row.map((day) => {
-                          const timeText = getTimeToTypeAndDay(type, day);
-                          return (
-                            <S.TableCell $isClosed={timeText === '미운영'}>
-                              {timeText}
-                            </S.TableCell>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </S.Table>
-              </S.InfoCafeteria>
-            </S.InfoBlock>
-          )}
-
-          {filteredShops.map((shop) => (
-            <S.InfoBlock key={shop.coop_shop_info.name}>
+    <S.InfoContainer>
+      {cafeteriaInfo && (
+        <S.InfoBlock>
+          <S.InfoCafeteria>
+            <S.InfoTitleContainer>
               <S.IconWrapper>
-                {SHOP_ICON[shop.coop_shop_info.name] || <Cafe />}
+                <Flatware />
               </S.IconWrapper>
-              <S.InfoDescriptionContainer>
-                <S.InfoTitle>{shop.coop_shop_info.name}</S.InfoTitle>
-                {shop.operation_hours.map((hour) => (
-                  <S.InfoDescription>
-                    {`${hour.day_of_week}: ${getFormattedShopTime(
-                      hour.open_time,
-                      hour.close_time,
-                    )}`}
-                  </S.InfoDescription>
+              <S.InfoTitle>학생식당</S.InfoTitle>
+            </S.InfoTitleContainer>
+            <S.Table>
+              <thead>
+                <tr>
+                  <S.TableHead>시간</S.TableHead>
+                  {CAFETERIA_HEAD_TABLE.row.map((type) => (
+                    <S.TableHead key={type}>{type}</S.TableHead>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {CAFETERIA_HEAD_TABLE.col.map((type) => (
+                  <tr key={type}>
+                    <S.TableCell>{type}</S.TableCell>
+                    {CAFETERIA_HEAD_TABLE.row.map((day) => {
+                      const timeText = getTimeToTypeAndDay(type, day);
+                      return (
+                        <S.TableCell $isClosed={timeText === '미운영'}>
+                          {timeText}
+                        </S.TableCell>
+                      );
+                    })}
+                  </tr>
                 ))}
-              </S.InfoDescriptionContainer>
-            </S.InfoBlock>
-          ))}
-        </S.InfoContainer>
-      </S.Main>
-    </S.Container>
+              </tbody>
+            </S.Table>
+          </S.InfoCafeteria>
+        </S.InfoBlock>
+      )}
+
+      {filteredShops.map((shop) => (
+        <S.InfoBlock key={shop.coop_shop_info.name}>
+          <S.IconWrapper>
+            {SHOP_ICON[shop.coop_shop_info.name] || <Cafe />}
+          </S.IconWrapper>
+          <S.InfoDescriptionContainer>
+            <S.InfoTitle>{shop.coop_shop_info.name}</S.InfoTitle>
+            {shop.operation_hours.map((hour) => (
+              <S.InfoDescription>
+                {`${hour.day_of_week}: ${getFormattedShopTime(
+                  hour.open_time,
+                  hour.close_time,
+                )}`}
+              </S.InfoDescription>
+            ))}
+          </S.InfoDescriptionContainer>
+        </S.InfoBlock>
+      ))}
+    </S.InfoContainer>
+
   );
 }
 

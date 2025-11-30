@@ -1,50 +1,17 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  height: 100%;
-  overflow: scroll;
-`;
-
-export const Main = styled.div`
+export const InfoContainer = styled.div`
+  height: 600px;
   width: 100%;
   max-width: 1132px;
-  margin: 0 auto;
-  user-select: none;
-`;
-
-export const TitleContainer = styled.div`
+  margin: 50px auto 0;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  justify-content: center;
-  margin: 50px 0 84px;
-`;
-
-export const Title = styled.h2`
-  color: #000;
-  font-family: Pretendard, sans-serif;
-  font-size: 30px;
-  font-weight: 700;
-  line-height: normal;
-  margin: 0;
-`;
-
-export const Subtitle = styled.div`
-  color: #4b4b4b;
-  font-family: Pretendard, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 160%;
-`;
-
-export const InfoContainer = styled.div`
-  display: flex;
-  width: 100%;
-  gap: 12px;
   flex-wrap: wrap;
   flex-direction: column;
-  height: 600px;
-  margin-top: 50px;
+  gap: 12px;
+  overflow: scroll;
+  font-family: Pretendard, sans-serif;
+  user-select: none;
 `;
 
 export const InfoColumn = styled.div`
@@ -128,7 +95,6 @@ export const Table = styled.table`
 
 export const TableHead = styled.th`
   color: #072552;
-  font-family: Pretendard, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 160%;
@@ -137,7 +103,6 @@ export const TableHead = styled.th`
 
 export const TableCell = styled.td<{ $isClosed?: boolean }>`
   color: ${(props) => (props.$isClosed ? '#4590bb' : '#072552')};
-  font-family: Pretendard, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 160%;
@@ -152,7 +117,6 @@ export const InfoDescriptionContainer = styled.div`
 
 export const InfoDescription = styled.div`
   color: #041a44;
-  font-family: Pretendard, sans-serif;
   font-weight: 500;
   line-height: 160%;
 `;

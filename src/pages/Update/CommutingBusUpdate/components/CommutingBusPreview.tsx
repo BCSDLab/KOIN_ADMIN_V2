@@ -10,7 +10,7 @@ interface CommutingBusPreviewProps {
 
 function CommutingBusPreview({ uploadedData }: CommutingBusPreviewProps) {
   return (
-    <S.Container>
+    <S.InfoContainer>
       <Flex gap="100px" vertical>
         {uploadedData.map((data, dataIndex) => {
           const rowLength = data.node_info.length + 1;
@@ -60,7 +60,7 @@ function CommutingBusPreview({ uploadedData }: CommutingBusPreviewProps) {
           );
         })}
       </Flex>
-    </S.Container>
+    </S.InfoContainer>
   );
 }
 

@@ -11,7 +11,7 @@ import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import { AxiosError } from 'axios';
 import ShuttleBusPreview from './components/ShuttleBusPreview';
 import useShuttleBusUpdateMutation from './useShuttleBusUpdateMutation';
-import * as S from './index.style';
+import * as S from './ShuttleBusUpdate.style';
 
 function ShuttleBusUpdate() {
   const [semester, setSemester] = useState<Semester | null>(null);

@@ -11,7 +11,7 @@ import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import { AxiosError } from 'axios';
 import CommutingBusPreview from './components/CommutingBusPreview';
 import useCommutingBusUpdateMutation from './useCommutingBusUpdateMutation';
-import * as S from './index.style';
+import * as S from './CommutingBusUpdate.style';
 
 function CommutingBusUpdate() {
   const [semester, setSemester] = useState<Semester | null>(null);

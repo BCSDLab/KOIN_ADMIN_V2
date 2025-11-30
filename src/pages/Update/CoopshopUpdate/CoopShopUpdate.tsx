@@ -9,6 +9,7 @@ import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
 import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
 import { AxiosError } from 'axios';
+import useBooleanState from 'utils/hooks/useBoolean';
 import CoopShopPreview from './components/CoopShopPreview';
 import CoopShopSemesterDropdown from './components/CoopShopSemesterDropdown';
 import useCoopShopUpdateMutation from './useCoopShopUpdateMutation';
@@ -18,7 +19,7 @@ function CoopShopUpdate() {
   const [semester, setSemester] = useState<SemesterInfo | undefined>(undefined);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [progress, setProgress] = useState<ProgressType>('initial');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState();
   const [form] = Form.useForm();
   const {
     addCoopShopSemester,
@@ -44,11 +45,12 @@ function CoopShopUpdate() {
         {
           onSuccess: () => {
             form.resetFields();
-            setIsModalOpen(false);
+            closeModal();
             message.success('학기를 추가하였습니다.');
           },
-          onError: () => {
-            message.error('오류가 발생하였습니다.');
+          onError: (error: AxiosError<{ message?: string }>) => {
+            const errorMessage = error.response?.data.message || '에러가 발생했습니다.';
+            message.error(errorMessage);
           },
         },
       );
@@ -95,7 +97,7 @@ function CoopShopUpdate() {
           <CoopShopSemesterDropdown
             semester={semester}
             setSemester={setSemester}
-            setIsModalOpen={setIsModalOpen}
+            openModal={openModal}
             setProgress={setProgress}
           />
           <S.FileSettingWrapper>
@@ -142,7 +144,7 @@ function CoopShopUpdate() {
         title="학기 추가하기"
         open={isModalOpen}
         onOk={handleClickModalSubmit}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={closeModal}
       >
         <Form
           form={form}

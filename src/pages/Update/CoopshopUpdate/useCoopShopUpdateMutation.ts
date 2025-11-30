@@ -6,7 +6,11 @@ import { AxiosError } from 'axios';
 
 const useCoopShopUpdateMutation = () => {
   const queryClient = useQueryClient();
-  const addCoopShopSemester = useMutation({
+  const addCoopShopSemester = useMutation<
+  void,
+  AxiosError<{ message?: string }>,
+  CoopShopSemesterData
+  >({
     mutationFn: (semesterData: CoopShopSemesterData) => postCoopShopSemesterList(semesterData),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -18,7 +22,8 @@ const useCoopShopUpdateMutation = () => {
   const uploadCoopShopTimetable = useMutation<
   CoopShopResponse,
   AxiosError<{ message?: string }>,
-  FormData>({
+  FormData
+  >({
     mutationFn: (formData: FormData) => postCoopShopTimetable(formData),
   });
 
@@ -28,7 +33,8 @@ const useCoopShopUpdateMutation = () => {
   {
     uploadedData: CoopShopResponse;
     semesterId: number;
-  }>({
+  }
+  >({
     mutationFn: ({ uploadedData, semesterId }: {
       uploadedData: CoopShopResponse;
       semesterId: number;

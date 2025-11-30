@@ -9,12 +9,12 @@ import coopShopQueries from 'queryFactory/coopShopQueries';
 interface CoopShopSemesterDropdownType {
   semester: SemesterInfo | undefined;
   setSemester: (semester: SemesterInfo | undefined) => void;
-  setIsModalOpen: (event: boolean) => void;
+  openModal: () => void;
   setProgress: (progress: ProgressType) => void;
 }
 
 function CoopShopSemesterDropdown({
-  semester, setSemester, setIsModalOpen, setProgress,
+  semester, setSemester, openModal, setProgress,
 }: CoopShopSemesterDropdownType) {
   const { data: coopShopSemesterList } = useQuery(coopShopQueries.coopShopSemesterList());
 
@@ -34,7 +34,7 @@ function CoopShopSemesterDropdown({
     label: '학기 추가하기',
     key: 'add-Semester',
     onClick: () => {
-      setIsModalOpen(true);
+      openModal();
     },
   };
 

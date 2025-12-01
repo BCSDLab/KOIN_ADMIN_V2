@@ -7,7 +7,6 @@ import type { Semester, ProgressType } from 'model/bus.model';
 import DownloadExcel from 'pages/Update/components/DownloadExcel/DownloadExcel';
 import SelectExcel from 'pages/Update/components/SelectExcel/SelectExcel';
 import UploadExcel from 'pages/Update/components/UploadExcel/UploadExcel';
-import { AxiosError } from 'axios';
 import BusSemesterDropdown from 'pages/Update/components/BusSemesterDropdown/BusSemesterDropdown';
 import CommutingBusPreview from 'pages/Update/CommutingBusUpdate/components/CommutingBusPreview';
 import useCommutingBusUpdateMutation from 'pages/Update/CommutingBusUpdate/useCommutingBusUpdateMutation';
@@ -49,9 +48,8 @@ function CommutingBusUpdate() {
           message.success('정상적으로 이관되었습니다.');
           resetData();
         },
-        onError: (error: AxiosError<{ message?: string }>) => {
-          const errorMessage = error.response?.data.message || '에러가 발생했습니다.';
-          message.error(errorMessage);
+        onError: (error) => {
+          message.error(error.message);
         },
       },
     );

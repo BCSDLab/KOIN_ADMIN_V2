@@ -79,10 +79,13 @@ function App() {
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/notice/write" element={<NoticeWrite />} />
         <Route path="/force-update" element={<ForceUpdate />} />
-        <Route path="/update-list" element={<UpdateList />} />
-        <Route path="/shuttleBus-update" element={<ShuttleBusUpdate />} />
-        <Route path="/commutingBus-update" element={<CommutingBusUpdate />} />
-        <Route path="/coopShop-update" element={<CoopShopUpdate />} />
+        <Route path="/update">
+          <Route path="force" element={<ForceUpdate />} />
+          <Route path="update-list" element={<UpdateList />} />
+          <Route path="shuttle-bus" element={<ShuttleBusUpdate />} />
+          <Route path="commuting-bus" element={<CommutingBusUpdate />} />
+          <Route path="coop-shop" element={<CoopShopUpdate />} />
+        </Route>
         <Route path="/history" element={<History />} />
         <Route path="/banner" element={<BannerList />} />
         <Route path="banner/:id" element={<BannerDetail />} />

@@ -92,7 +92,7 @@ function CoopShopUpdate() {
   return (
     <S.Container>
       <Flex vertical gap="large">
-        <S.Heading>생협</S.Heading>
+        <S.Heading>생협 업데이트</S.Heading>
         <Flex justify="space-between" align="center" gap="large">
           <CoopShopSemesterDropdown
             semester={semester}

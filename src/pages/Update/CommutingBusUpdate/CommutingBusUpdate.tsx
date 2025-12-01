@@ -60,7 +60,7 @@ function CommutingBusUpdate() {
   return (
     <S.Container>
       <Flex vertical gap="large">
-        <S.Heading>등하교버스</S.Heading>
+        <S.Heading>등하교버스 업데이트</S.Heading>
         <Flex justify="space-between" align="center" gap="large">
           <BusSemesterDropdown
             semester={semester}

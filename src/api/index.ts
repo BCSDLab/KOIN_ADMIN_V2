@@ -1,7 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import axios from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import store from 'store';
 import { login, logout } from 'store/slice/auth';
+import { ApiErrorResponse } from 'interfaces/APIError';
+
+interface RetryableAxiosRequestConfig extends AxiosRequestConfig {
+  _retry?: boolean;
+}
 
 const accessClient = axios.create({
   baseURL: `${import.meta.env.VITE_API_PATH}`,
@@ -21,10 +26,10 @@ accessClient.interceptors.request.use((config) => {
 
 accessClient.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+  async (error: AxiosError<ApiErrorResponse>) => {
+    const originalRequest = error.config as RetryableAxiosRequestConfig | undefined;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
@@ -44,7 +49,10 @@ accessClient.interceptors.response.use(
           refresh_token: data.refresh_token,
         }));
 
-        originalRequest.headers.Authorization = `Bearer ${data.token}`;
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${data.token}`;
+        }
+
         return await accessClient(originalRequest);
       } catch (refreshError) {
         store.dispatch(logout());
@@ -52,6 +60,16 @@ accessClient.interceptors.response.use(
         window.location.href = '/login';
         return Promise.reject(refreshError);
       }
+    }
+
+    if (error.response?.data) {
+      const apiError = error.response.data;
+
+      if (apiError.message) {
+        error.message = apiError.message;
+      }
+
+      (error as AxiosError<ApiErrorResponse> & { apiError?: ApiErrorResponse }).apiError = apiError;
     }
 
     return Promise.reject(error);

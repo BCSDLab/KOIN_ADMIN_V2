@@ -35,8 +35,8 @@ export const ProfileImg = styled.img<{ position: PositionType }>`
   border-radius: 100%;
   background: black;
   position: absolute;
-  top: -36px;
-  right: 6px;
+  top: -70px;
+  right: 50px;
 
   border-width: 3px;
   border-style: solid;

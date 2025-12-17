@@ -5,8 +5,9 @@ import { MinusCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import * as S from 'pages/Services/Benefit/components/AdditionalModal/index.style';
 import { ShopInfo } from 'model/benefit.model';
 import { useEffect, useState } from 'react';
-import { useModifyBenefitDetailsMutation } from 'store/api/benefit';
 import * as Style from 'pages/Services/Benefit/index.style';
+import { useMutation } from '@tanstack/react-query';
+import { modifyBenefitDetails } from 'api/benefit';
 
 interface Props {
   closeBenefitModifyModal: () => void;
@@ -22,7 +23,10 @@ interface ModifyDetails {
 
 export default function BenefitDetailModifyModal({ closeBenefitModifyModal, shops }: Props) {
   const [details, setDetails] = useState<ModifyDetails[]>([]);
-  const [mutation] = useModifyBenefitDetailsMutation();
+
+  const { mutate: mutation } = useMutation({
+    mutationFn: modifyBenefitDetails,
+  });
 
   const handleDetail = (e: React.ChangeEvent<HTMLInputElement>, shopId: number) => {
     const { value } = e.target;

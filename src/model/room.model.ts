@@ -58,3 +58,8 @@ export interface RoomParams {
   page: number,
   is_deleted: boolean,
 }
+
+export interface TransformedRoomsResponse {
+  roomList: RoomTableHead[];
+  totalPage: number;
+}

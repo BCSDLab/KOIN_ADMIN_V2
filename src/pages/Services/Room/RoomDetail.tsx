@@ -1,19 +1,37 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetRoomQuery } from 'store/api/room';
 import CustomForm from 'components/common/CustomForm';
 import { DeleteOutlined, ReloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import DetailHeading from 'components/common/DetailHeading';
+import { useQuery } from '@tanstack/react-query';
+import roomQueries from 'queryFactory/roomQueries';
 import useRoomMutation from './useRoomMutation';
 import DetailForm from './components/DetailForm';
 import * as S from './RoomDetail.style';
 
 export default function RoomDetail() {
   const { id } = useParams();
-  const { data: roomData } = useGetRoomQuery(Number(id));
-  const { updateRoom, deleteRoom, undeleteRoom } = useRoomMutation(Number(id));
+  const roomId = Number(id);
+  const { data: roomData } = useQuery(roomQueries.detail(roomId));
+  const {
+    updateRoomMutation,
+    deleteRoomMutation,
+    undeleteRoomMutation,
+  } = useRoomMutation();
   const [form] = CustomForm.useForm();
+
+  const updateRoom = (values: any) => {
+    updateRoomMutation.mutate({ id: roomId, ...values });
+  };
+
+  const deleteRoom = () => {
+    deleteRoomMutation.mutate(roomId);
+  };
+
+  const undeleteRoom = () => {
+    undeleteRoomMutation.mutate(roomId);
+  };
 
   return (
     <S.Container>

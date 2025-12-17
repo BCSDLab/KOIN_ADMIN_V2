@@ -3,17 +3,17 @@ import Bus from 'pages/Services/Bus';
 import CategoryList from 'pages/Services/Category/CategoryList';
 import Login from 'pages/Login';
 import MemberList from 'pages/UserManage/Member/MemberList';
-import Store from 'pages/Services/Store/StoreList';
+import Shop from 'pages/Services/Store/ShopList';
 import UserList from 'pages/UserManage/User/UserList';
 import {
-  Navigate, Outlet, Route, Routes, useLocation,
+  Outlet, Route, Routes,
 } from 'react-router-dom';
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
 import MemberDetail from 'pages/UserManage/Member/MemberDetail';
-import { useToken } from 'store/slice/auth';
-import StoreDetail from 'pages/Services/Store/StoreDetail';
+import ShopWrite from 'pages/Services/Store/ShopWrite';
+import ShopDetail from 'pages/Services/Store/ShopDetail';
 import CategoryDetail from 'pages/Services/Category/CategoryDetail';
 import OwnerList from 'pages/UserManage/Owner/OwnerList';
 import OwnerRequestList from 'pages/UserManage/OwnerRequest/OwnerRequestList';
@@ -37,15 +37,11 @@ import ClubDetail from 'pages/Services/Club/ClubDetail';
 import ClubWrite from 'pages/Services/Club/ClubWrite';
 import ClubManagerList from 'pages/UserManage/ClubManager/ClubManagerList';
 import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubManagerRequestList';
+import CoopShopUpdate from 'pages/Update/CoopShopUpdate/CoopShopUpdate';
+import ShuttleBusUpdate from 'pages/Update/ShuttleBusUpdate/ShuttleBusUpdate';
+import CommutingBusUpdate from 'pages/Update/CommutingBusUpdate/CommutingBusUpdate';
 
 function RequireAuth() {
-  const location = useLocation();
-  const token = useToken();
-
-  if (token === null) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
   return (
     <DefaultLayout>
       <Outlet />
@@ -58,9 +54,10 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<RequireAuth />}>
-        <Route index element={<Store />} />
-        <Route path="/store" element={<Store />} />
-        <Route path="/store/:id" element={<StoreDetail />} />
+        <Route index element={<Shop />} />
+        <Route path="/store" element={<Shop />} />
+        <Route path="/store/write" element={<ShopWrite />} />
+        <Route path="/store/:id" element={<ShopDetail />} />
         <Route path="/category" element={<CategoryList />} />
         <Route path="/category/:id" element={<CategoryDetail />} />
         <Route path="/bus" element={<Bus />} />
@@ -82,7 +79,13 @@ function App() {
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/notice/write" element={<NoticeWrite />} />
         <Route path="/force-update" element={<ForceUpdate />} />
-        <Route path="/update-list" element={<UpdateList />} />
+        <Route path="/update">
+          <Route path="force" element={<ForceUpdate />} />
+          <Route path="update-list" element={<UpdateList />} />
+          <Route path="shuttle-bus" element={<ShuttleBusUpdate />} />
+          <Route path="commuting-bus" element={<CommutingBusUpdate />} />
+          <Route path="coop-shop" element={<CoopShopUpdate />} />
+        </Route>
         <Route path="/history" element={<History />} />
         <Route path="/banner" element={<BannerList />} />
         <Route path="banner/:id" element={<BannerDetail />} />

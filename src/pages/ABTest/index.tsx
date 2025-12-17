@@ -1,17 +1,18 @@
 import CustomForm from 'components/common/CustomForm';
 import CustomTable from 'components/common/CustomTable';
 import { useState } from 'react';
-import { useGetABTestsQuery } from 'store/api/abtest';
-import { useGetAdminInfoQuery } from 'store/api/auth';
 import useBooleanState from 'utils/hooks/useBoolean';
+import { useQuery } from '@tanstack/react-query';
+import abTestQueries from 'queryFactory/abTestQueries';
+import authQueries from 'queryFactory/authQueries';
 import * as S from './ABTest.style';
 import AddABTestModal from './components/AddABTestModal';
 
 export default function ABTest() {
   const [page, setPage] = useState(1);
-  const { data: abtestList } = useGetABTestsQuery({ page, limit: 10 });
+  const { data: abtestList } = useQuery(abTestQueries.abTests(page, 10));
   const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState();
-  const { data: adminInfo } = useGetAdminInfoQuery();
+  const { data: adminInfo } = useQuery(authQueries.adminInfo());
   return (
     <S.Container>
       <CustomForm.Modal

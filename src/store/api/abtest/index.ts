@@ -10,7 +10,7 @@ import { RootState } from 'store';
 export const abTestApi = createApi({
   reducerPath: 'abTestApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH}`,
+    baseUrl: `${import.meta.env.VITE_API_PATH}`,
     prepareHeaders: (headers, { getState }) => {
       const { token } = (getState() as RootState).auth;
       if (token) {

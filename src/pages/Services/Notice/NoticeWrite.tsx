@@ -8,7 +8,7 @@ import { Editor } from '@toast-ui/react-editor';
 import { LeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import useNoticeMutation from 'pages/Services/Notice/useNoticeMutation';
-import { useUploadfileMutation } from 'store/api/upload';
+import { useUploadFileMutation } from 'hooks/useUploadMutation';
 import * as S from './NoticeWrite.style';
 import * as T from './NoticeDetail.style';
 
@@ -17,15 +17,15 @@ export default function NoticeWrite() {
   const { required } = CustomForm.validateUtils();
   const [form] = CustomForm.useForm();
   const editorRef = useRef<Editor | null>(null);
-  const { addNotice } = useNoticeMutation();
-  const [uploadfile] = useUploadfileMutation();
+  const { addNoticeMutation } = useNoticeMutation();
+  const { mutateAsync: uploadFile } = useUploadFileMutation();
 
   const handleFinish = (values: any) => {
     const editorContent = editorRef.current?.getInstance().getHTML();
     if (editorContent) {
       values.content = editorContent;
     }
-    addNotice(values);
+    addNoticeMutation.mutate(values);
   };
 
   const handleImageUpload = async (blob: Blob) => {
@@ -57,14 +57,15 @@ export default function NoticeWrite() {
             ref={editorRef}
             rules={[required()]}
             hooks={{
-              addImageBlobHook: async (blob, callback) => {
+              addImageBlobHook:
+              async (blob: Blob, callback: (url: string, altText: string) => void) => {
                 try {
                   const formData = await handleImageUpload(blob);
-                  const response = await uploadfile({
+                  const res = await uploadFile({
                     domain: 'admin',
                     image: formData,
-                  }).unwrap();
-                  callback(response.file_url, '');
+                  });
+                  callback(res.file_url, '');
                 } catch (error) {
                   message.error('이미지 업로드에 실패했습니다.');
                 }

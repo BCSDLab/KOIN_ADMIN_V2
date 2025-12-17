@@ -46,3 +46,8 @@ export interface UserListData {
   major: string | null;
   student_number: string | null;
 }
+
+export interface UserListResponseType {
+  students: UserTableHead[];
+  totalPage: number;
+}

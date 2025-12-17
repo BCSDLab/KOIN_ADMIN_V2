@@ -1,40 +1,42 @@
-import { useEffect } from 'react';
-import { useLoginMutation } from 'store/api/auth';
-import sha256 from 'sha256';
-import { login, useToken } from 'store/slice/auth';
-import { useDispatch } from 'react-redux';
+/* eslint-disable @typescript-eslint/naming-convention */
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
 import CustomForm from 'components/common/CustomForm';
+import { useMutation } from '@tanstack/react-query';
+import { postLogin } from 'api/auth';
+import sha256 from 'sha256';
+import { message } from 'antd';
+import { login } from 'store/slice/auth';
+import { useDispatch } from 'react-redux';
 import * as S from './Login.style';
 
 function useLogin() {
-  const token = useToken();
-  const [loginMutation] = useLoginMutation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { mutate: loginMutation } = useMutation({
+    mutationFn: postLogin,
+    onSuccess: (value) => {
+      const { token, refresh_token } = value;
+      if (token && refresh_token) {
+        dispatch(login({ token, refresh_token }));
+      }
+      navigate('/store');
+    },
 
-  useEffect(() => {
-    if (token) navigate('/store');
-  }, [token, navigate]);
+    onError: (error) => {
+      if (error) {
+        message.error(error.message);
+      }
+    },
+  });
 
   const doLogin = (form: { id: string, password: string }) => {
     loginMutation({
       email: form.id,
       password: sha256(form.password),
-    })
-      .unwrap()
-      .then((value) => {
-        dispatch(login(value));
-      })
-      .catch(({ data }) => {
-        message.error(data.message);
-      });
+    });
   };
 
-  return {
-    doLogin,
-  };
+  return { doLogin };
 }
 
 function Login() {

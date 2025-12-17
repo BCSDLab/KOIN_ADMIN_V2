@@ -1,9 +1,11 @@
 import CustomTable from 'components/common/CustomTable';
-import { useGetCategoryListQuery, useUpdateCategoryOrderMutation } from 'store/api/category';
 import useBooleanState from 'utils/hooks/useBoolean';
 import CustomForm from 'components/common/CustomForm';
 import { Button } from 'antd';
 import { useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import categoryQueries from 'queryFactory/categoryQueries';
+import { updateCategoryOrder } from 'api/category';
 import * as S from './CategoryList.style';
 import AddCategoryModal from './components/AddCategoryModal';
 
@@ -15,7 +17,10 @@ interface OrderData {
 function OrderCategory({ orderData }: { orderData: OrderData[] }) {
   const [items, setItems] = useState(orderData);
   const [draggedItem, setDraggedItem] = useState<number | null>(null);
-  const [reorder] = useUpdateCategoryOrderMutation();
+
+  const { mutate: reorder } = useMutation({
+    mutationFn: updateCategoryOrder,
+  });
 
   const handleDragStart = (index: number) => {
     setDraggedItem(index);
@@ -58,7 +63,7 @@ function OrderCategory({ orderData }: { orderData: OrderData[] }) {
 }
 
 function CategoryList() {
-  const { data: categoryData } = useGetCategoryListQuery();
+  const { data: categoryData } = useQuery(categoryQueries.list());
   const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState();
 
   const orderData = categoryData?.map((category) => ({

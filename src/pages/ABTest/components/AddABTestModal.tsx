@@ -8,9 +8,11 @@ import {
 } from '@ant-design/icons';
 import CustomForm from 'components/common/CustomForm';
 import { ABTest } from 'model/abTest.model';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addABTest } from 'api/abTest';
+import abTestQueries from 'queryFactory/abTestQueries';
 import * as S from './AddABTestModal.style';
 import NewTest from './NewTest';
-import useABTestMutation from './hook/useABTestMutation';
 
 function AddABTestModal({ onCancel, creator }: { onCancel: () => void, creator: string }) {
   const [form] = CustomForm.useForm();
@@ -28,8 +30,14 @@ function AddABTestModal({ onCancel, creator }: { onCancel: () => void, creator: 
       rate: 50, displayName: '', name: '',
     },
   ]);
+  const queryClient = useQueryClient();
 
-  const { addABTest } = useABTestMutation();
+  const { mutate } = useMutation({
+    mutationFn: addABTest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: abTestQueries.allKeys() });
+    },
+  });
 
   const handleSliderChange = (values: number[]) => {
     const updatedTests = [...tests];
@@ -92,7 +100,7 @@ function AddABTestModal({ onCancel, creator }: { onCancel: () => void, creator: 
       ]);
       setSliderValues([50]);
     };
-    addABTest(newABTest, {
+    mutate(newABTest, {
       onSuccess: () => {
         message.success('테스트가 추가되었습니다.');
         onCancel();

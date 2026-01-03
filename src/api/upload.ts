@@ -1,18 +1,35 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import type {
-  Upload, UploadResponse, Uploads, UploadsResponse,
+  FileData, UploadURLResponse,
 } from 'model/upload.model';
-import accessClient from './index';
+import axios from 'axios';
+import accessClient from 'api';
 
-export const uploadFiles = async (payload: Uploads): Promise<UploadsResponse> => {
-  const { domain, images } = payload;
-  const url = `${domain}/upload/files`;
-  const res = await accessClient.post<UploadsResponse>(url, images);
-  return res.data;
+export const getPresignedUrl = async (domain:string, fileData: FileData) => {
+  const response = await accessClient.post<UploadURLResponse>(`${domain}/upload/url`, fileData);
+  return response.data;
 };
 
-export const uploadFile = async (payload: Upload): Promise<UploadResponse> => {
-  const { domain, image } = payload;
-  const url = `${domain}/upload/file`;
-  const res = await accessClient.post<UploadResponse>(url, image);
-  return res.data;
+export const uploadToS3 = async (presignedUrl: string, file: File) => {
+  await axios.put(presignedUrl, file, {
+    headers: { 'Content-Type': file.type },
+    withCredentials: false,
+  });
+};
+
+export const uploadFile = async (domain: string, file: File): Promise<string> => {
+  const fileData: FileData = {
+    content_length: file.size,
+    content_type: file.type,
+    file_name: file.name,
+  };
+
+  const { pre_signed_url, file_url } = await getPresignedUrl(domain, fileData);
+  await uploadToS3(pre_signed_url, file);
+
+  return file_url;
+};
+
+export const uploadFiles = async (domain: string, files: File[]): Promise<string[]> => {
+  return Promise.all(files.map((file) => uploadFile(domain, file)));
 };

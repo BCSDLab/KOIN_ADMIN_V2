@@ -39,14 +39,12 @@ export default function CustomSingleUpload({
     convertedFileList = uploadFileList?.map(createUploadFile);
   }
 
-  const handleUpload = async (file: RcFile) => {
-    const image = new FormData();
-    image.append('multipartFile', file);
-
+  const handleUpload = async (rcFile: RcFile) => {
+    const file: File = rcFile;
     try {
-      const res = await uploadFile({ domain, image });
-      setUploadFileList([res.file_url]);
-      form.setFieldValue(name, res.file_url);
+      const imageURL = await uploadFile({ domain, file });
+      setUploadFileList([imageURL]);
+      form.setFieldValue(name, imageURL);
       message.success('업로드에 성공했습니다.');
     } catch {
       message.error('업로드에 실패했습니다.');

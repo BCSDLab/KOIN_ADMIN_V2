@@ -53,14 +53,12 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
     setPreviewOpen(true);
   };
 
-  const handleUpload = async (file: RcFile) => {
-    const image = new FormData();
-    image.append('multipartFile', file);
-
+  const handleUpload = async (rcFile: RcFile) => {
+    const file: File = rcFile;
     try {
-      const value = await uploadFile({ domain, image });
+      const fileURL = await uploadFile({ domain, file });
       setUploadFileList((prev) => {
-        const next = [...prev, value.file_url];
+        const next = [...prev, fileURL];
         form.setFieldValue(name, next);
         return next;
       });

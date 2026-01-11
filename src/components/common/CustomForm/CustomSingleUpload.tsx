@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { UploadOutlined } from '@ant-design/icons';
 import {
-  Button, Upload, message,
+  Button, Upload, message, Form,
 } from 'antd';
 import type { Domain } from 'model/upload.model';
 import { useState } from 'react';
@@ -19,12 +19,12 @@ interface Props {
 }
 
 const createUploadFile = (fileUrl: string, index: number): UploadFile => {
-  return ({
+  return {
     uid: `${-(index + 1)}`,
     name: fileUrl,
     status: 'done',
     url: fileUrl,
-  });
+  };
 };
 
 export default function CustomSingleUpload({
@@ -32,11 +32,12 @@ export default function CustomSingleUpload({
 }: Props) {
   const { mutateAsync: uploadFile } = useUploadFileMutation();
 
-  const [uploadFileList, setUploadFileList] = useState<string[]>([form.getFieldValue(name)]);
-  let convertedFileList: UploadFile[] = [];
+  const initialUrl = form.getFieldValue(name);
+  const [uploadFileList, setUploadFileList] = useState<string[]>(initialUrl ? [initialUrl] : []);
 
+  let convertedFileList: UploadFile[] = [];
   if (uploadFileList[0]) {
-    convertedFileList = uploadFileList?.map(createUploadFile);
+    convertedFileList = uploadFileList.map(createUploadFile);
   }
 
   const handleUpload = async (rcFile: RcFile) => {
@@ -45,32 +46,28 @@ export default function CustomSingleUpload({
       const imageURL = await uploadFile({ domain, file });
       setUploadFileList([imageURL]);
       form.setFieldValue(name, imageURL);
-      message.success('업로드에 성공했습니다.');
     } catch {
       message.error('업로드에 실패했습니다.');
     }
-
-    return true;
-  };
-  const removeUpload = (file: UploadFile) => {
-    const index = uploadFileList.indexOf(file.url ?? '');
-    const newFileList = uploadFileList.slice();
-    newFileList.splice(index, 1);
-    setUploadFileList(newFileList);
-    form.setFieldValue(name, newFileList[0]);
-
     return false;
   };
 
+  const removeUpload = () => {
+    setUploadFileList([]);
+    form.setFieldValue(name, undefined);
+    return true;
+  };
+
   return (
-    <S.UploadWrap name={name}>
+    <S.UploadWrap>
+      <Form.Item name={name} hidden>
+        <input type="hidden" />
+      </Form.Item>
       <Upload
         accept={accept}
         listType="picture"
         className="upload-list-inline"
-        showUploadList={{
-          showRemoveIcon: true,
-        }}
+        showUploadList={{ showRemoveIcon: true }}
         beforeUpload={handleUpload}
         customRequest={() => {}}
         onRemove={removeUpload}

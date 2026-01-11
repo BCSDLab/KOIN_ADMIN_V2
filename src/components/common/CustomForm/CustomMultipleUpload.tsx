@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { UploadOutlined } from '@ant-design/icons';
 import {
-  Button, Modal, Upload, message,
+  Button, Form, Modal, Upload, message,
 } from 'antd';
 import type { Domain } from 'model/upload.model';
 import { useState } from 'react';
@@ -32,8 +32,7 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
   const { mutateAsync: uploadFile } = useUploadFileMutation();
 
   const [uploadFileList, setUploadFileList] = useState<string[]>(form.getFieldValue(name) || []);
-  let convertedFileList: UploadFile[] = [];
-  convertedFileList = uploadFileList?.map(createUploadFile);
+  const convertedFileList: UploadFile[] = uploadFileList.map(createUploadFile);
 
   const getBase64 = (file: any): Promise<string> => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -67,7 +66,7 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
       message.error('업로드에 실패했습니다.');
     }
 
-    return true;
+    return false;
   };
 
   const removeUpload = (file: UploadFile) => {
@@ -76,11 +75,14 @@ export default function CustomMultipleUpload({ form, domain, name }: Props) {
     newFileList.splice(index, 1);
     setUploadFileList(newFileList);
     form.setFieldValue(name, newFileList);
-    return false;
+    return true;
   };
 
   return (
-    <S.UploadWrap name={name}>
+    <S.UploadWrap>
+      <Form.Item name={name} hidden>
+        <input type="hidden" />
+      </Form.Item>
       <Upload
         listType="picture"
         className="upload-list-inline"

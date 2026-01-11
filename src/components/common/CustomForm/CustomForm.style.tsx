@@ -147,7 +147,7 @@ export const SwitchWrap = styled.h4`
   align-items: center;
 `;
 
-export const UploadWrap = styled(Form.Item)`
+export const UploadWrap = styled.div`
   margin-top: 40px;
   margin-left: 30px;
   .upload-list-inline .ant-upload-list-item {

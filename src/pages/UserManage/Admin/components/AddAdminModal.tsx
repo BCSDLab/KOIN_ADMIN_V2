@@ -28,7 +28,7 @@ export default function AddAdminModal({ onClose }: AddAdminModalProps) {
       form={form}
     >
       <S.DetailFormWrap>
-        <DetailForm />
+        <DetailForm isCreate />
         <S.SubmitButtonWrap>
           <CustomForm.Button icon={<UploadOutlined />} htmlType="submit">
             계정 생성

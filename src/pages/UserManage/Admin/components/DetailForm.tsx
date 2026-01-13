@@ -1,11 +1,22 @@
 import CustomForm from 'components/common/CustomForm';
 import { TRACK_OPTIONS, TEAM_OPTIONS } from 'constant/admin';
 
-export default function DetailForm() {
+interface DetailFormProps {
+  isCreate?: boolean;
+}
+
+export default function DetailForm({ isCreate = false }: DetailFormProps) {
   const { required, max, pattern } = CustomForm.validateUtils();
 
   return (
     <>
+      {!isCreate && (
+        <CustomForm.InputNumber
+          label="ID"
+          name="id"
+          disabled
+        />
+      )}
       <CustomForm.Input
         label="이름"
         name="name"
@@ -14,19 +25,22 @@ export default function DetailForm() {
       <CustomForm.Input
         label="이메일"
         name="email"
-        rules={[
-          required(),
-          max(50),
-          pattern(/^[a-zA-Z0-9._%+-]+$/, '이메일 형식이 올바르지 않습니다'),
-        ]}
+        disabled={!isCreate}
+        rules={
+          isCreate
+            ? [required(), max(50), pattern(/^[a-zA-Z0-9._%+-]+$/, '이메일 형식이 올바르지 않습니다')]
+            : undefined
+        }
         addonAfter="@koreatech.ac.kr"
       />
-      <CustomForm.Input
-        label="비밀번호"
-        name="password"
-        type="password"
-        rules={[required(), max(50)]}
-      />
+      {isCreate && (
+        <CustomForm.Input
+          label="비밀번호"
+          name="password"
+          type="password"
+          rules={[required(), max(50)]}
+        />
+      )}
       <CustomForm.GridRow gridColumns="1fr 1fr">
         <CustomForm.Select
           label="트랙"

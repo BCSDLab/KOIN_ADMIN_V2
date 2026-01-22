@@ -14,7 +14,10 @@ export default function AddAdminModal({ onClose }: AddAdminModalProps) {
   const { createAdminMutation } = useAdminMutation();
 
   const handleCreateAdmin = (values: SignUpAdminRequest) => {
-    createAdminMutation.mutate(values, {
+    createAdminMutation.mutate({
+      ...values,
+      email: `${values.email}@koreatech.ac.kr`,
+    }, {
       onSuccess: () => {
         onClose();
         form.resetFields();

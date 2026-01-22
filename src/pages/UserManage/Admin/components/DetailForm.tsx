@@ -1,5 +1,5 @@
 import CustomForm from 'components/common/CustomForm';
-import { TRACK_OPTIONS, TEAM_OPTIONS } from 'constant/admin';
+import { TRACK_OPTIONS } from 'constant/admin';
 
 interface DetailFormProps {
   isCreate?: boolean;
@@ -41,20 +41,12 @@ export default function DetailForm({ isCreate = false }: DetailFormProps) {
           rules={[required(), max(50)]}
         />
       )}
-      <CustomForm.GridRow gridColumns="1fr 1fr">
-        <CustomForm.Select
-          label="트랙"
-          name="track_name"
-          options={TRACK_OPTIONS}
-          rules={[required()]}
-        />
-        <CustomForm.Select
-          label="팀"
-          name="team_name"
-          options={TEAM_OPTIONS}
-          rules={[required()]}
-        />
-      </CustomForm.GridRow>
+      <CustomForm.Select
+        label="트랙"
+        name="track_name"
+        options={TRACK_OPTIONS}
+        rules={[required()]}
+      />
     </>
   );
 }

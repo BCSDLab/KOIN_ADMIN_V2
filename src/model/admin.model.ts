@@ -34,3 +34,7 @@ export interface SignUpAdminRequest {
 export interface ChangeAdminAuthedRequest {
   is_authed: boolean;
 }
+
+export interface ChangeAdminPermissionRequest {
+  super_admin: boolean;
+}

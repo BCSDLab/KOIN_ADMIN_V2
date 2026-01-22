@@ -1,10 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
-import { changeAdminInfo, createAdmin, changeAdminAuthed } from 'api/admin';
+import {
+  changeAdminInfo, createAdmin, changeAdminAuthed, changeAdminPermission,
+} from 'api/admin';
 import type {
   Admin,
   SignUpAdminRequest,
   ChangeAdminAuthedRequest,
+  ChangeAdminPermissionRequest,
   TrackType,
 } from 'model/admin.model';
 import adminQueries from 'queryFactory/adminQueries';
@@ -54,9 +57,24 @@ export default function useAdminMutation(id?: number) {
     },
   });
 
+  const changeAdminPermissionMutation = useMutation({
+    mutationFn: ({
+      id: adminId,
+      body,
+    }: { id: number; body: ChangeAdminPermissionRequest }) => changeAdminPermission(adminId, body),
+    onSuccess: () => {
+      message.success('권한이 변경되었습니다.');
+      queryClient.invalidateQueries({ queryKey: adminQueries.allKeys() });
+    },
+    onError: (error) => {
+      message.error(error.message || '에러가 발생했습니다.');
+    },
+  });
+
   return {
     updateAdminMutation,
     createAdminMutation,
     changeAdminAuthedMutation,
+    changeAdminPermissionMutation,
   };
 }

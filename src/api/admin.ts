@@ -4,6 +4,7 @@ import type {
   AdminListRequest,
   AdminListResponse,
   ChangeAdminAuthedRequest,
+  ChangeAdminPermissionRequest,
   SignUpAdminRequest,
 } from 'model/admin.model';
 
@@ -29,7 +30,7 @@ export const changeAdminInfo = async (id: number, data: Partial<Admin>) => {
   return response.data;
 };
 
-export const changeAdminPermission = async (id: number, data: Partial<Admin>) => {
+export const changeAdminPermission = async (id: number, data: ChangeAdminPermissionRequest) => {
   const response = await accessClient.put<void>(`admin/${id}/permission`, data);
   return response.data;
 };

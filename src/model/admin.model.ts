@@ -6,9 +6,8 @@ export interface Admin {
   email: string;
   name: string;
   track_name: string;
-  team_name: string;
-  can_create_admin: boolean;
   super_admin: boolean;
+  is_authed: boolean;
 }
 
 export interface AdminListRequest {
@@ -16,7 +15,6 @@ export interface AdminListRequest {
   limit?: number;
   isAuthed?: boolean;
   trackName?: TrackType;
-  teamName?: TeamType;
 }
 
 export interface AdminListResponse {
@@ -31,6 +29,9 @@ export interface SignUpAdminRequest {
   email: string;
   password: string;
   name: string;
-  track_type: string;
-  team_type: string;
+  track_name: string;
+}
+
+export interface ChangeAdminAuthedRequest {
+  is_authed: boolean;
 }

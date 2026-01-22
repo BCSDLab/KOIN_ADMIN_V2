@@ -13,4 +13,5 @@ export const ToolbarWrap = styled.div`
 export const FilterWrap = styled.div`
   display: flex;
   gap: 12px;
+  align-items: center;
 `;

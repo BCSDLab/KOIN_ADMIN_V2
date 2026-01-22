@@ -5,6 +5,7 @@ import type { AdminListRequest } from 'model/admin.model';
 interface AdminListParams {
   page?: number;
   trackName?: AdminListRequest['trackName'];
+  isAuthed?: boolean;
 }
 
 const adminQueries = {
@@ -16,6 +17,7 @@ const adminQueries = {
     queryFn: () => getAdminList({
       page: params.page,
       trackName: params.trackName,
+      isAuthed: params.isAuthed,
     }),
   }),
 

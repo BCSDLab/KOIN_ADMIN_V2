@@ -3,6 +3,7 @@ import type {
   Admin,
   AdminListRequest,
   AdminListResponse,
+  ChangeAdminAuthedRequest,
   SignUpAdminRequest,
 } from 'model/admin.model';
 
@@ -18,7 +19,6 @@ export const getAdminList = async (data: AdminListRequest) => {
       limit: data.limit,
       isAuthed: data.isAuthed,
       trackName: data.trackName,
-      teamName: data.teamName,
     },
   });
   return response.data;
@@ -31,6 +31,11 @@ export const changeAdminInfo = async (id: number, data: Partial<Admin>) => {
 
 export const changeAdminPermission = async (id: number, data: Partial<Admin>) => {
   const response = await accessClient.put<void>(`admin/${id}/permission`, data);
+  return response.data;
+};
+
+export const changeAdminAuthed = async (id: number, data: ChangeAdminAuthedRequest) => {
+  const response = await accessClient.put<void>(`admin/${id}/authed`, data);
   return response.data;
 };
 

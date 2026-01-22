@@ -5,9 +5,16 @@ import { useParams } from 'react-router-dom';
 import DetailHeading from 'components/common/DetailHeading';
 import { useQuery } from '@tanstack/react-query';
 import adminQueries from 'queryFactory/adminQueries';
+import { TRACK_OPTIONS } from 'constant/admin';
 import * as S from './AdminDetail.style';
 import useAdminMutation from './useAdminMutation';
 import DetailForm from './components/DetailForm';
+
+// track_name label을 key로 변환
+const getTrackKey = (label: string) => {
+  const entry = Object.entries(TRACK_OPTIONS).find(([, val]) => val === label);
+  return entry ? entry[0] : label;
+};
 
 export default function AdminDetail() {
   const { id } = useParams();
@@ -26,7 +33,10 @@ export default function AdminDetail() {
           <Divider />
           <CustomForm
             form={form}
-            initialValues={adminData}
+            initialValues={{
+              ...adminData,
+              track_name: getTrackKey(adminData.track_name),
+            }}
             onFinish={updateAdminMutation.mutate}
           >
             <DetailForm />

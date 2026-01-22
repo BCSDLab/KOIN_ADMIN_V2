@@ -1,7 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
 import { changeAdminInfo, createAdmin, changeAdminAuthed } from 'api/admin';
-import type { Admin, SignUpAdminRequest, ChangeAdminAuthedRequest } from 'model/admin.model';
+import type {
+  Admin,
+  SignUpAdminRequest,
+  ChangeAdminAuthedRequest,
+  TrackType,
+} from 'model/admin.model';
 import adminQueries from 'queryFactory/adminQueries';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +15,10 @@ export default function useAdminMutation(id?: number) {
   const queryClient = useQueryClient();
 
   const updateAdminMutation = useMutation({
-    mutationFn: (formData: Partial<Admin>) => changeAdminInfo(id!, formData),
+    mutationFn: (formData: Partial<Admin>) => changeAdminInfo(id!, {
+      track_name: formData.track_name as TrackType,
+      name: formData.name,
+    }),
     onSuccess: () => {
       message.success('정보 수정이 완료되었습니다.');
       queryClient.invalidateQueries({ queryKey: adminQueries.allKeys() });

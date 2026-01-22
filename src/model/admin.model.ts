@@ -1,11 +1,10 @@
 export type TrackType = 'FRONTEND' | 'BACKEND' | 'DESIGN' | 'ANDROID' | 'IOS' | 'GAME' | 'PM' | 'PL' | 'DA' | 'SECURITY';
-export type TeamType = 'BUSINESS' | 'USER' | 'CAMPUS' | 'KOIN';
 
 export interface Admin {
   id: number;
   email: string;
   name: string;
-  track_name: string;
+  track_name: TrackType;
   super_admin: boolean;
   is_authed: boolean;
 }
@@ -29,7 +28,7 @@ export interface SignUpAdminRequest {
   email: string;
   password: string;
   name: string;
-  track_name: string;
+  track_name: TrackType;
 }
 
 export interface ChangeAdminAuthedRequest {

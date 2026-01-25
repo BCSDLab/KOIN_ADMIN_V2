@@ -50,7 +50,7 @@ const items: MenuProps['items'] = [
 
   getItem('회원 관리', 'user', <UserOutlined />, [
     getItem('학생 회원', '/user', <UsergroupDeleteOutlined />),
-    getItem('괸리자', '/admin', <SolutionOutlined />),
+    getItem('관리자', '/admin', <SolutionOutlined />),
     getItem('사장님', '/owner', <UserSwitchOutlined />),
     getItem('사장님 권한 요청', '/owner-request', <UserAddOutlined />),
     getItem('동아리 관리자', '/club-manager', <UserAddOutlined />),

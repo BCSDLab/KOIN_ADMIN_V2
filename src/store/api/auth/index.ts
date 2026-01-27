@@ -32,7 +32,7 @@ export const authApi = createApi({
       }),
     }),
 
-    getAdminInfo: builder.query<AdminInfo, void>({
+    getMyInfo: builder.query<AdminInfo, void>({
       query: () => ({
         url: 'admin',
       }),
@@ -42,5 +42,5 @@ export const authApi = createApi({
 });
 
 export const {
-  useLoginMutation, useProtectedMutation, useGetAdminInfoQuery, useChangePasswordMutation,
+  useLoginMutation, useProtectedMutation, useGetMyInfoQuery, useChangePasswordMutation,
 } = authApi;

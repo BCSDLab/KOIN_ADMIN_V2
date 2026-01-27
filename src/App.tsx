@@ -40,6 +40,8 @@ import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubMana
 import CoopShopUpdate from 'pages/Update/CoopShopUpdate/CoopShopUpdate';
 import ShuttleBusUpdate from 'pages/Update/ShuttleBusUpdate/ShuttleBusUpdate';
 import CommutingBusUpdate from 'pages/Update/CommutingBusUpdate/CommutingBusUpdate';
+import AdminList from 'pages/UserManage/Admin/AdminList';
+import AdminDetail from 'pages/UserManage/Admin/AdminDetail';
 
 function RequireAuth() {
   return (
@@ -65,6 +67,8 @@ function App() {
         <Route path="/room/:id" element={<RoomDetail />} />
         <Route path="/user" element={<UserList />} />
         <Route path="/user/:id" element={<UserDetail />} />
+        <Route path="/admin" element={<AdminList />} />
+        <Route path="/admin/:id" element={<AdminDetail />} />
         <Route path="/owner" element={<OwnerList />} />
         <Route path="/owner/:id" element={<OwnerDetail />} />
         <Route path="/owner-request" element={<OwnerRequestList />} />

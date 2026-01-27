@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { getAdminInfo } from 'api/auth';
+import { getMyInfo } from 'api/auth';
 
 const authQueries = {
   allKeys: () => ['auth'],
@@ -7,7 +7,7 @@ const authQueries = {
   adminInfoKey: () => [...authQueries.allKeys(), 'admin', 'info'],
   adminInfo: () => queryOptions({
     queryKey: authQueries.adminInfoKey(),
-    queryFn: getAdminInfo,
+    queryFn: getMyInfo,
   }),
 };
 

@@ -18,7 +18,7 @@ export const postLogin = async ({ email, password }: LoginRequest) => {
   return data;
 };
 
-export const getAdminInfo = async () => {
+export const getMyInfo = async () => {
   const { data } = await accessClient.get<AdminInfo>('admin');
 
   return data;

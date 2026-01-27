@@ -48,12 +48,6 @@ export default function NoticeDetail() {
     });
   };
 
-  const handleImageUpload = async (blob: Blob) => {
-    const formData = new FormData();
-    formData.append('multipartFile', blob);
-    return formData;
-  };
-
   return (
     <S.Container>
       {notice && (
@@ -87,9 +81,9 @@ export default function NoticeDetail() {
                     addImageBlobHook:
                     async (blob: Blob, callback: (url: string, altText: string) => void) => {
                       try {
-                        const formData = await handleImageUpload(blob);
-                        const res = await uploadFile({ domain: 'admin', image: formData });
-                        callback(res.file_url, '');
+                        const file = new File([blob], `image-${Date.now()}.png`, { type: blob.type });
+                        const imageURL = await uploadFile({ domain: 'admin', file });
+                        callback(imageURL, '');
                       } catch {
                         message.error('이미지 업로드에 실패했습니다.');
                       }

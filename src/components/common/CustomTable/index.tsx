@@ -138,7 +138,7 @@ function CustomTable<TableData extends DefaultTableData>({
 
   return (
     <TableContainer>
-      {data.length === 0 ? (
+      {!data || data.length === 0 ? (
         <Empty description="값이 없습니다." />
       ) : (
         <>

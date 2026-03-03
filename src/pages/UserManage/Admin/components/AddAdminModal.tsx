@@ -1,4 +1,5 @@
 import { UploadOutlined } from '@ant-design/icons';
+import sha256 from 'sha256';
 import CustomForm from 'components/common/CustomForm';
 import type { SignUpAdminRequest } from 'model/admin.model';
 import useAdminMutation from 'pages/UserManage/Admin/useAdminMutation';
@@ -17,6 +18,7 @@ export default function AddAdminModal({ onClose }: AddAdminModalProps) {
     createAdminMutation.mutate({
       ...values,
       email: `${values.email}@koreatech.ac.kr`,
+      password: sha256(values.password),
     }, {
       onSuccess: () => {
         onClose();

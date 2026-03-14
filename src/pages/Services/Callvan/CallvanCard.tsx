@@ -59,7 +59,7 @@ export default function CallvanCard({ report }: Props) {
             <S.Label>피신고자 : </S.Label>
             {`${report.name} (${report.nickname})`}
           </S.InfoItem>
-          <S.InfoItem>{report.reported_at}</S.InfoItem>
+          <S.InfoItem>{report.reported_at.slice(0, 10)}</S.InfoItem>
         </S.InfoGroup>
       </S.InfoRow>
       <S.InfoRow>

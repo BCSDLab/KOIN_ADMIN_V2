@@ -21,11 +21,12 @@ export interface CallvanAccumulatedReport {
 export interface CallvanReport {
   report_id: number;
   report_status: string;
-  reported_user: {
-    id: number;
-    name: string;
-    nickname: string;
-  };
+type CallvanReportedUser = {
+  id: number;
+  name: string;
+  nickname: string;
+};
+  reported_user: CallvanReportedUser
   reported_at: string;
   reasons: CallvanReportReason[];
   process_type: string;

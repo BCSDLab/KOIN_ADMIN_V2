@@ -5,7 +5,7 @@ import {
   UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
   HistoryOutlined, FlagOutlined, BellOutlined, CommentOutlined, UsergroupAddOutlined,
-  ScheduleOutlined, SolutionOutlined,
+  ScheduleOutlined, SolutionOutlined, CarOutlined,
 } from '@ant-design/icons';
 import {
   Button, Flex, Menu, MenuProps,
@@ -46,6 +46,7 @@ const items: MenuProps['items'] = [
     getItem('공지사항', '/notice', <NotificationOutlined />),
     getItem('배너 관리', '/banner', <BellOutlined />),
     getItem('동아리 관리', '/club', <CommentOutlined />),
+    getItem('콜밴팟 사용자 관리', '/callvan', <CarOutlined />),
   ]),
 
   getItem('회원 관리', 'user', <UserOutlined />, [

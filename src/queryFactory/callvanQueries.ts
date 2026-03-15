@@ -1,5 +1,5 @@
-import { queryOptions } from '@tanstack/react-query';
-import { getCallvanList } from 'api/callvan';
+import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getCallvanList, postCallvanReports } from 'api/callvan';
 import type {
   CallvanParam,
   CallvanListResponse,
@@ -30,6 +30,16 @@ const callvanQueries = {
       return { reports, total_page: data.total_page };
     },
   }),
+};
+
+export const useProcessCallvan = (param: CallvanParam) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: postCallvanReports,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: callvanQueries.callvanListKeys(param) });
+    },
+  });
 };
 
 export default callvanQueries;

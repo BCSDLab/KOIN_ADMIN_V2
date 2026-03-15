@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { Select } from 'antd';
+import { Select, Image } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 
 export const Container = styled.div<{ isPending: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 14px 20px;
-  background: ${(props) => (props.isPending ? '#ffafaf' : '#ffffff')};
-  border: ${(props) => (props.isPending ? 'none' : '2px solid #1890ff')};
+  background: ${(props) => (props.isPending ? '#ffafaf' : '#effbff')};
+  border: ${(props) => (props.isPending ? 'none' : '2px solid #effbff')};
   border-radius: 10px;
   width: 100%;
   gap: 10px;
@@ -96,12 +96,12 @@ export const ImageRow = styled.div`
   flex-wrap: wrap;
 `;
 
-export const AttachImage = styled.img`
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-`;
+export const StyledImage = styled(Image)`
+  .ant-image-img {
+    object-fit: cover;
+    border-radius: 8px;
+  }
+` as typeof Image;
 
 export const PopoverHeader = styled.div`
   display: flex;
@@ -116,7 +116,18 @@ export const PopoverClose = styled(CloseOutlined)`
   color: #888;
 `;
 
+export const EditButton = styled.button`
+  background: transparent;
+  border: 1px solid #1890ff;
+  border-radius: 4px;
+  color: #1890ff;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 8px;
+`;
+
 export const StyledSelect = styled(Select)`
+  width: 180px;
   .ant-select-selection-placeholder {
     color: #000000ff;
   }

@@ -38,6 +38,7 @@ export default function CallvanList() {
               <CallvanCard
                 report={report}
                 key={report.id}
+                param={{ page, limit: LIMIT, only_pending: onlyPending }}
               />
             ))}
             {data && (

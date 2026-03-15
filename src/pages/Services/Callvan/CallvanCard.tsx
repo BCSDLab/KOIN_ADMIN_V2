@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Popover } from 'antd';
+import { message, Modal, Popover } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined, RightOutlined } from '@ant-design/icons';
-import type { TransformedCallvanReport } from 'model/callvan.model';
+import type { CallvanParam, TransformedCallvanReport } from 'model/callvan.model';
+import { useProcessCallvan } from 'queryFactory/callvanQueries';
 import * as S from './CallvanCard.style';
 
 interface Props {
   report: TransformedCallvanReport;
+  param: CallvanParam;
 }
 
 const STATUS_LABEL: Record<string, string> = {
@@ -27,10 +29,47 @@ const REASON_CODE_TYPE = {
   OTHER: '기타',
 };
 
-export default function CallvanCard({ report }: Props) {
+const formatReason = (reason: { reason_code: string; custom_text: string }) => {
+  const label = REASON_CODE_TYPE[reason.reason_code as keyof typeof REASON_CODE_TYPE]
+    ?? reason.reason_code;
+  return reason.reason_code === 'OTHER' && reason.custom_text
+    ? `${label}(${reason.custom_text})`
+    : label;
+};
+
+export default function CallvanCard({ report, param }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProcessType, setSelectedProcessType] = useState<string | null>(null);
   const isPending = report.report_status === 'PENDING';
+
+  const { mutate: processCallvan, isPending: isProcessing } = useProcessCallvan(param);
+
+  const handleSelectChange = (value: string) => {
+    setSelectedProcessType(value);
+  };
+
+  const handleConfirm = () => {
+    if (!selectedProcessType) return;
+    processCallvan(
+      { reportId: report.id, process_type: selectedProcessType },
+      {
+        onSuccess: () => {
+          message.success('처리가 완료되었습니다.');
+          setSelectedProcessType(null);
+        },
+        onError: (error: unknown) => {
+          type ApiError = { response?: { data?: { message?: string } } };
+          const msg = (error as ApiError)?.response?.data?.message;
+          message.error(msg ?? '처리 중 오류가 발생했습니다.');
+        },
+      },
+    );
+  };
+
+  const handleCancel = () => {
+    setSelectedProcessType(null);
+  };
 
   return (
     <S.Container isPending={isPending}>
@@ -49,7 +88,8 @@ export default function CallvanCard({ report }: Props) {
           <S.StyledSelect
             placeholder="처리 유형 선택"
             options={PROCESS_TYPE_OPTIONS}
-            style={{ width: 180 }}
+            value={selectedProcessType}
+            onChange={(value) => handleSelectChange(value as string)}
           />
         )}
       </S.Header>
@@ -59,14 +99,16 @@ export default function CallvanCard({ report }: Props) {
             <S.Label>피신고자 : </S.Label>
             {`${report.name} (${report.nickname})`}
           </S.InfoItem>
-          <S.InfoItem>{report.reported_at.slice(0, 10)}</S.InfoItem>
+          <S.InfoItem>
+            {`${report.reported_at.slice(0, 10)} ${report.reported_at.slice(11, 19)}`}
+          </S.InfoItem>
         </S.InfoGroup>
       </S.InfoRow>
       <S.InfoRow>
         <S.InfoGroup>
           <S.InfoItem>
             <S.Label>사유 : </S.Label>
-            {report.reasons.map((r) => REASON_CODE_TYPE[r.reason_code as keyof typeof REASON_CODE_TYPE] ?? r.reason_code).join(', ')}
+            {report.reasons.map(formatReason).join(', ')}
           </S.InfoItem>
           <S.InfoItem>
             <S.Label>누적 </S.Label>
@@ -91,7 +133,7 @@ export default function CallvanCard({ report }: Props) {
                           {`${index + 1}. ${r.reported_at.slice(0, 10)}`}
                         </div>
                         <div style={{ paddingLeft: 16 }}>
-                          {`사유 : ${r.reasons.map((reason) => REASON_CODE_TYPE[reason.reason_code as keyof typeof REASON_CODE_TYPE] ?? reason.reason_code).join(', ')}`}
+                          {`사유 : ${r.reasons.map(formatReason).join(', ')}`}
                           &nbsp;&nbsp;
                           {`처리 유형 : ${PROCESS_TYPE_OPTIONS.find((o) => o.value === r.process_type)?.label ?? '없음'}`}
                         </div>
@@ -114,7 +156,13 @@ export default function CallvanCard({ report }: Props) {
           {report.attachment_urls.length > 0 ? (
             <S.ImageRow>
               {report.attachment_urls.map((url) => (
-                <S.AttachImage key={url} src={url} alt="첨부 이미지" loading="lazy" />
+                <S.StyledImage
+                  key={url}
+                  src={url}
+                  alt="첨부이미지"
+                  width={120}
+                  height={120}
+                />
               ))}
             </S.ImageRow>
           ) : (
@@ -125,6 +173,17 @@ export default function CallvanCard({ report }: Props) {
       <S.ToggleButton type="button" onClick={() => setIsOpen((prev) => !prev)}>
         {isOpen ? <CaretUpOutlined /> : <CaretDownOutlined />}
       </S.ToggleButton>
+      <Modal
+        title="처리 유형 확인"
+        open={!!selectedProcessType}
+        onOk={handleConfirm}
+        onCancel={handleCancel}
+        okText="확인"
+        cancelText="취소"
+        confirmLoading={isProcessing}
+      >
+        {`"${PROCESS_TYPE_OPTIONS.find((o) => o.value === selectedProcessType)?.label}" 처리하시겠습니까?`}
+      </Modal>
     </S.Container>
   );
 }

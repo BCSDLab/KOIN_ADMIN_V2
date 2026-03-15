@@ -18,15 +18,15 @@ export interface CallvanAccumulatedReport {
   reasons: CallvanReportReason[];
 }
 
-export interface CallvanReport {
-  report_id: number;
-  report_status: string;
-type CallvanReportedUser = {
+export interface CallvanReportUser {
   id: number;
   name: string;
   nickname: string;
-};
-  reported_user: CallvanReportedUser
+}
+export interface CallvanReport {
+  report_id: number;
+  report_status: string;
+  reported_user: CallvanReportUser;
   reported_at: string;
   reasons: CallvanReportReason[];
   process_type: string;
@@ -66,4 +66,5 @@ export interface TransformedCallvanListResponse {
 
 export interface CallvanBanRequest {
   reportId: number;
+  process_type: string;
 }

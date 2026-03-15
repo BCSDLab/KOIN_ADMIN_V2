@@ -32,6 +32,7 @@ import History from 'pages/History';
 import BannerList from 'pages/Services/Banner/BannerList';
 import BannerWrite from 'pages/Services/Banner/BannerWrite';
 import BannerDetail from 'pages/Services/Banner/BannerDetail';
+import CallvanList from 'pages/Services/Callvan/CallvanList';
 import ClubList from 'pages/Services/Club/ClubList';
 import ClubDetail from 'pages/Services/Club/ClubDetail';
 import ClubWrite from 'pages/Services/Club/ClubWrite';
@@ -99,6 +100,7 @@ function App() {
         <Route path="/club/write" element={<ClubWrite />} />
         <Route path="/club-manager" element={<ClubManagerList />} />
         <Route path="/club-manager-request" element={<ClubManagerRequestList />} />
+        <Route path="/callvan" element={<CallvanList />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>
     </Routes>

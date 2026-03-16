@@ -7,9 +7,9 @@ import type {
 } from 'model/callvan.model';
 
 const callvanQueries = {
-  allkeys: () => ['callvan'],
+  allKeys: () => ['callvan'],
 
-  callvanListKeys: (param: CallvanParam) => [...callvanQueries.allkeys(), param],
+  callvanListKeys: (param: CallvanParam) => [...callvanQueries.allKeys(), param],
   callvanList: (param: CallvanParam) => queryOptions({
     queryKey: callvanQueries.callvanListKeys(param),
     queryFn: () => getCallvanList(param),
@@ -27,7 +27,7 @@ const callvanQueries = {
         description: report.description,
         attachment_urls: report.attachment_urls,
       }));
-      return { reports, total_page: data.total_page };
+      return { reports, total_page: data.total_page, total_count: data.total_count };
     },
   }),
 };

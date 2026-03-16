@@ -62,6 +62,7 @@ export interface TransformedCallvanReport {
 export interface TransformedCallvanListResponse {
   reports: TransformedCallvanReport[];
   total_page: number;
+  total_count: number;
 }
 
 export interface CallvanBanRequest {

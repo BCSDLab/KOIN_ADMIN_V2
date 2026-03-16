@@ -43,7 +43,7 @@ export default function CallvanList() {
             ))}
             {data && (
               <Pagination
-                total={data.total_page * LIMIT}
+                total={data.total_count}
                 current={page}
                 onChange={(num) => setPage(num)}
                 showSizeChanger={false}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useBooleanState from 'utils/hooks/useBoolean';
 import { message, Modal, Popover } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined, RightOutlined } from '@ant-design/icons';
 import type { CallvanParam, TransformedCallvanReport } from 'model/callvan.model';
@@ -38,16 +39,12 @@ const formatReason = (reason: { reason_code: string; custom_text: string }) => {
 };
 
 export default function CallvanCard({ report, param }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { value: isOpen, changeValue: toggleOpen } = useBooleanState(false);
+  const { value: isModalOpen, setTrue: openModal, setFalse: closeModal } = useBooleanState(false);
   const [selectedProcessType, setSelectedProcessType] = useState<string | null>(null);
   const isPending = report.report_status === 'PENDING';
 
   const { mutate: processCallvan, isPending: isProcessing } = useProcessCallvan(param);
-
-  const handleSelectChange = (value: string) => {
-    setSelectedProcessType(value);
-  };
 
   const handleConfirm = () => {
     if (!selectedProcessType) return;
@@ -79,19 +76,20 @@ export default function CallvanCard({ report, param }: Props) {
             {STATUS_LABEL[report.report_status] ?? report.report_status}
           </S.StatusBadge>
         </S.HeaderLeft>
-        {!isPending && (
-          <S.ProcessText>
-            {`처리 : ${PROCESS_TYPE_OPTIONS.find((o) => o.value === report.process_type)?.label ?? report.process_type}`}
-          </S.ProcessText>
-        )}
-        {isPending && (
-          <S.StyledSelect
-            placeholder="처리 유형 선택"
-            options={PROCESS_TYPE_OPTIONS}
-            value={selectedProcessType}
-            onChange={(value) => handleSelectChange(value as string)}
-          />
-        )}
+        {isPending
+          ? (
+            <S.StyledSelect
+              placeholder="처리 유형 선택"
+              options={PROCESS_TYPE_OPTIONS}
+              value={selectedProcessType}
+              onChange={setSelectedProcessType}
+            />
+          )
+          : (
+            <S.ProcessText>
+              {`처리 : ${PROCESS_TYPE_OPTIONS.find((o) => o.value === report.process_type)?.label ?? report.process_type}`}
+            </S.ProcessText>
+          )}
       </S.Header>
       <S.InfoRow>
         <S.InfoGroup>
@@ -116,13 +114,13 @@ export default function CallvanCard({ report, param }: Props) {
             {isOpen && (
               <Popover
                 open={isModalOpen}
-                onOpenChange={(v) => setIsModalOpen(v)}
+                onOpenChange={(v) => (v ? openModal() : closeModal())}
                 trigger="click"
                 placement="right"
                 title={(
                   <S.PopoverHeader>
                     <span>누적 신고 내역</span>
-                    <S.PopoverClose onClick={() => setIsModalOpen(false)} />
+                    <S.PopoverClose onClick={closeModal} />
                   </S.PopoverHeader>
                 )}
                 content={(
@@ -170,7 +168,7 @@ export default function CallvanCard({ report, param }: Props) {
           )}
         </>
       )}
-      <S.ToggleButton type="button" onClick={() => setIsOpen((prev) => !prev)}>
+      <S.ToggleButton type="button" onClick={toggleOpen}>
         {isOpen ? <CaretUpOutlined /> : <CaretDownOutlined />}
       </S.ToggleButton>
       <Modal

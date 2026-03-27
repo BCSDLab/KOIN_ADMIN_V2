@@ -2,10 +2,10 @@ import {
   AppstoreOutlined, UserOutlined, ShopOutlined,
   HomeOutlined, UserSwitchOutlined,
   UsergroupDeleteOutlined, FolderOpenOutlined, ControlOutlined,
-  UserAddOutlined, BoldOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
+  UserAddOutlined, ApartmentOutlined, SnippetsOutlined, GiftOutlined,
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
   HistoryOutlined, FlagOutlined, BellOutlined, CommentOutlined, UsergroupAddOutlined,
-  ScheduleOutlined, SolutionOutlined,
+  ScheduleOutlined, SolutionOutlined, CarOutlined,
 } from '@ant-design/icons';
 import {
   Button, Flex, Menu, MenuProps,
@@ -46,6 +46,7 @@ const items: MenuProps['items'] = [
     getItem('공지사항', '/notice', <NotificationOutlined />),
     getItem('배너 관리', '/banner', <BellOutlined />),
     getItem('동아리 관리', '/club', <CommentOutlined />),
+    getItem('콜밴팟 사용자 관리', '/callvan', <CarOutlined />),
   ]),
 
   getItem('회원 관리', 'user', <UserOutlined />, [
@@ -54,8 +55,11 @@ const items: MenuProps['items'] = [
     getItem('사장님', '/owner', <UserSwitchOutlined />),
     getItem('사장님 권한 요청', '/owner-request', <UserAddOutlined />),
     getItem('동아리 관리자', '/club-manager', <UserAddOutlined />),
-    getItem('동아리 관리자 권한 요청', '/club-manager-request', <UsergroupAddOutlined />),
-    getItem('BCSD Lab', '/member', <BoldOutlined />),
+    getItem(
+      '동아리 관리자 권한 요청',
+      '/club-manager-request',
+      <UsergroupAddOutlined />,
+    ),
   ]),
 
   getItem('테스트', 'test', <ControlOutlined />, [
@@ -64,9 +68,17 @@ const items: MenuProps['items'] = [
 
   getItem('업데이트', 'update', <IssuesCloseOutlined />, [
     getItem('강제 업데이트 관리', '/update/force', <FormOutlined />),
-    getItem('강제 업데이트 목록 관리', '/update/update-list', <UnorderedListOutlined />),
+    getItem(
+      '강제 업데이트 목록 관리',
+      '/update/update-list',
+      <UnorderedListOutlined />,
+    ),
     getItem('셔틀버스 업데이트', '/update/shuttle-bus', <ScheduleOutlined />),
-    getItem('등하교버스 업데이트', '/update/commuting-bus', <ScheduleOutlined />),
+    getItem(
+      '등하교버스 업데이트',
+      '/update/commuting-bus',
+      <ScheduleOutlined />,
+    ),
     getItem('생협 업데이트', '/update/coop-shop', <ScheduleOutlined />),
   ]),
 
@@ -97,7 +109,7 @@ const LogoImg = styled.img`
 
 const AccountContainer = styled(Flex)`
   margin-top: 12px;
-  
+
   button {
     border: none;
     box-shadow: none;

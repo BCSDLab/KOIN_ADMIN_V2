@@ -2,7 +2,6 @@ import DefaultLayout from 'layout/defaultLayout';
 import Bus from 'pages/Services/Bus';
 import CategoryList from 'pages/Services/Category/CategoryList';
 import Login from 'pages/Login';
-import MemberList from 'pages/UserManage/Member/MemberList';
 import Shop from 'pages/Services/Store/ShopList';
 import UserList from 'pages/UserManage/User/UserList';
 import {
@@ -11,7 +10,6 @@ import {
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
-import MemberDetail from 'pages/UserManage/Member/MemberDetail';
 import ShopWrite from 'pages/Services/Store/ShopWrite';
 import ShopDetail from 'pages/Services/Store/ShopDetail';
 import CategoryDetail from 'pages/Services/Category/CategoryDetail';
@@ -32,6 +30,7 @@ import History from 'pages/History';
 import BannerList from 'pages/Services/Banner/BannerList';
 import BannerWrite from 'pages/Services/Banner/BannerWrite';
 import BannerDetail from 'pages/Services/Banner/BannerDetail';
+import CallvanList from 'pages/Services/Callvan/CallvanList';
 import ClubList from 'pages/Services/Club/ClubList';
 import ClubDetail from 'pages/Services/Club/ClubDetail';
 import ClubWrite from 'pages/Services/Club/ClubWrite';
@@ -73,8 +72,6 @@ function App() {
         <Route path="/owner/:id" element={<OwnerDetail />} />
         <Route path="/owner-request" element={<OwnerRequestList />} />
         <Route path="/owner-request/:id" element={<OwnerRequestDetail />} />
-        <Route path="/member" element={<MemberList />} />
-        <Route path="/member/:id" element={<MemberDetail />} />
         <Route path="/abtest" element={<ABTest />} />
         <Route path="/abtest/:id" element={<ABTestDetail />} />
         <Route path="/review" element={<ReviewList />} />
@@ -99,6 +96,7 @@ function App() {
         <Route path="/club/write" element={<ClubWrite />} />
         <Route path="/club-manager" element={<ClubManagerList />} />
         <Route path="/club-manager-request" element={<ClubManagerRequestList />} />
+        <Route path="/callvan" element={<CallvanList />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>
     </Routes>

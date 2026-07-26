@@ -24,6 +24,7 @@ import BenefitPage from 'pages/Services/Benefit';
 import NoticeList from 'pages/Services/Notice/NoticeList';
 import NoticeDetail from 'pages/Services/Notice/NoticeDetail';
 import NoticeWrite from 'pages/Services/Notice/NoticeWrite';
+import ArticleAiSummary from 'pages/Services/ArticleAiSummary/ArticleAiSummary';
 import ForceUpdate from 'pages/Update/ForceUpdate';
 import UpdateList from 'pages/Update/UpdateList';
 import History from 'pages/History';
@@ -79,6 +80,7 @@ function App() {
         <Route path="/notice" element={<NoticeList />} />
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/notice/write" element={<NoticeWrite />} />
+        <Route path="/article-ai-summary" element={<ArticleAiSummary />} />
         <Route path="/force-update" element={<ForceUpdate />} />
         <Route path="/update">
           <Route path="force" element={<ForceUpdate />} />

@@ -36,4 +36,13 @@ export const TITLE_MAPPER: Record<string, string> = {
   club_manager_id: '동아리 관리자 ID',
   club_manager_name: '이름',
   club_name: '동아리명',
+  article_id: '게시글 ID',
+  article_title: '게시글 제목',
+  status: '상태',
+  retry_count: '재시도 횟수',
+  updated_at: '수정일',
+  summary_id: '요약 ID',
+  event_type: '이벤트 유형',
+  failure_type: '실패 유형',
+  message: '메시지',
 };

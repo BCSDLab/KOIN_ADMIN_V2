@@ -14,7 +14,7 @@ interface CoopShopPreviewProps {
 }
 
 const CAFETERIA_HEAD_TABLE = {
-  row: ['평일', '주말'],
+  row: ['평일', '토요일'],
   col: ['아침', '점심', '저녁'],
 };
 

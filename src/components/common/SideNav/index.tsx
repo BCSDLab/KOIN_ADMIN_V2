@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from 'store/slice/auth';
 import styled from 'styled-components';
+import SoldOutReportIcon from 'assets/SoldOutReport/SoldOutReport.svg';
 import ChangePasswordFormModal from './ChangePasswordFormModal';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -48,6 +49,7 @@ const items: MenuProps['items'] = [
     getItem('배너 관리', '/banner', <BellOutlined />),
     getItem('동아리 관리', '/club', <CommentOutlined />),
     getItem('콜밴팟 사용자 관리', '/callvan', <CarOutlined />),
+    getItem('식단 품절 제보 관리', '/sold-out-report', <SoldOutReportIcon />),
   ]),
 
   getItem('회원 관리', 'user', <UserOutlined />, [

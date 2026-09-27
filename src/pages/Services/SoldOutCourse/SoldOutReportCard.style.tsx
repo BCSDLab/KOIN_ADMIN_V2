@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Select, Image } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
+import { Image } from 'antd';
 
 export const Container = styled.div<{ isPending: boolean }>`
   display: flex;
@@ -26,29 +25,10 @@ export const HeaderLeft = styled.div`
   gap: 12px;
 `;
 
-export const HeaderRight = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
 export const StatusBadge = styled.span<{ isPending: boolean }>`
   font-weight: 700;
   font-size: 15px;
   color: ${(props) => (props.isPending ? '#000' : '#1890ff')};
-`;
-
-export const BadgeCount = styled.span`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #404040;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 700;
 `;
 
 export const InfoRow = styled.div`
@@ -77,13 +57,6 @@ export const ProcessText = styled.span<{ processType: 'APPROVE' | 'REJECT' | nul
   color: ${(props) => (props.processType === 'REJECT' ? '#ff0000' : '#175C8f')};
 `;
 
-export const SectionTitle = styled.div`
-  font-weight: 600;
-  font-size: 14px;
-  color: #404040;
-  margin-top: 4px;
-`;
-
 export const SectionContent = styled.div`
   font-size: 14px;
   color: #606060;
@@ -102,36 +75,6 @@ export const StyledImage = styled(Image)`
     border-radius: 8px;
   }
 ` as typeof Image;
-
-export const PopoverHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-`;
-
-export const PopoverClose = styled(CloseOutlined)`
-  cursor: pointer;
-  font-size: 12px;
-  color: #888;
-`;
-
-export const EditButton = styled.button`
-  background: transparent;
-  border: 1px solid #1890ff;
-  border-radius: 4px;
-  color: #1890ff;
-  cursor: pointer;
-  font-size: 12px;
-  padding: 2px 8px;
-`;
-
-export const StyledSelect = styled(Select)`
-  width: 180px;
-  .ant-select-selection-placeholder {
-    color: #000000ff;
-  }
-` as typeof Select;
 
 export const ToggleButton = styled.button`
   background: transparent;

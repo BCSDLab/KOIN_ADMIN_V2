@@ -1,16 +1,12 @@
-import { useState } from 'react';
 import useBooleanState from 'utils/hooks/useBoolean';
-import { Modal } from 'antd';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
 import type {
-  SoldOutProcessType,
   SoldOutReport,
 } from 'model/soldOutReport.model';
 import * as S from './SoldOutReportCard.style';
 
 interface Props {
   report: SoldOutReport;
-  onProcess: (id: number, processType: SoldOutProcessType) => void;
 }
 
 const STATUS_LABEL: Record<string, string> = {
@@ -23,20 +19,9 @@ const PROCESS_TYPE_OPTIONS = [
   { label: '반려', value: 'REJECT' },
 ];
 
-export default function SoldOutReportCard({ report, onProcess }: Props) {
+export default function SoldOutReportCard({ report }: Props) {
   const { value: isOpen, changeValue: toggleOpen } = useBooleanState(false);
-  const [selectedProcessType, setSelectedProcessType] = useState<SoldOutProcessType | null>(null);
   const isPending = report.report_status === 'PENDING';
-
-  const handleConfirm = () => {
-    if (!selectedProcessType) return;
-    onProcess(report.id, selectedProcessType);
-    setSelectedProcessType(null);
-  };
-
-  const handleCancel = () => {
-    setSelectedProcessType(null);
-  };
 
   return (
     <S.Container isPending={isPending}>
@@ -106,16 +91,6 @@ export default function SoldOutReportCard({ report, onProcess }: Props) {
       <S.ToggleButton type="button" onClick={toggleOpen}>
         {isOpen ? <CaretUpOutlined /> : <CaretDownOutlined />}
       </S.ToggleButton>
-      <Modal
-        title="처리 유형 확인"
-        open={!!selectedProcessType}
-        onOk={handleConfirm}
-        onCancel={handleCancel}
-        okText="확인"
-        cancelText="취소"
-      >
-        {`"${PROCESS_TYPE_OPTIONS.find((o) => o.value === selectedProcessType)?.label}" 처리하시겠습니까?`}
-      </Modal>
     </S.Container>
   );
 }

@@ -1,14 +1,22 @@
 import styled from 'styled-components';
+import type { SoldOutReportStatus } from 'model/dining.model';
 
 export * from 'styles/ReportCard.style';
 
-export const StatusBadge = styled.span<{ isPending: boolean }>`
+const STATUS_COLOR: Record<SoldOutReportStatus, string> = {
+  PENDING: '#000',
+  APPROVED: '#1890ff',
+  REJECTED: '#c0392b',
+};
+
+export const StatusBadge = styled.span<{ status: SoldOutReportStatus }>`
   font-weight: 700;
   font-size: 15px;
-  color: ${(props) => (props.isPending ? '#000' : '#1890ff')};
+  color: ${(props) => STATUS_COLOR[props.status]};
 `;
 
-export const ProcessText = styled.span<{ processType: 'APPROVE' | 'REJECT' | null }>`
-  font-size: 14px;
-  color: ${(props) => (props.processType === 'REJECT' ? '#ff0000' : '#175C8f')};
+export const SlackNotice = styled.div`
+  text-align: right;
+  font-size: 13px;
+  color: #888;
 `;

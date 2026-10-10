@@ -1,7 +1,7 @@
 export interface Dining {
   id: number;
   date: string;
-  type: string;
+  type: 'BREAKFAST' | 'LUNCH' | 'DINNER';
   place: 'A코너' | 'B코너' | 'C코너';
 }
 

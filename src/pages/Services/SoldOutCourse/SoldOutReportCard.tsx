@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from 'antd';
 import useBooleanState from 'utils/hooks/useBoolean';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
-import type { SoldOutReportSummary } from 'model/dining.model';
+import type { SoldOutReportSummary, SoldOutReportStatus } from 'model/dining.model';
 import diningQueries from 'queryFactory/diningQueries';
 import * as S from './SoldOutReportCard.style';
 
@@ -10,7 +10,7 @@ interface Props {
   report: SoldOutReportSummary;
 }
 
-const STATUS_LABEL: Record<string, string> = {
+const STATUS_LABEL: Record<SoldOutReportStatus, string> = {
   PENDING: '미처리',
   APPROVED: '승인',
   REJECTED: '반려',
@@ -69,7 +69,7 @@ export default function SoldOutReportCard({ report }: Props) {
               </S.InfoItem>
               <S.InfoItem>
                 <S.Label>처리 시간 : </S.Label>
-                {report.processed_at ?? '-'}
+                {(report.processed_at)?.replace('-', '.')?.slice(0, 16) ?? '-'}
               </S.InfoItem>
             </S.InfoGroup>
           </S.InfoRow>

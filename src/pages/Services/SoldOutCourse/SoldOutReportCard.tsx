@@ -16,6 +16,11 @@ const STATUS_LABEL: Record<SoldOutReportStatus, string> = {
   REJECTED: '반려',
 };
 
+const PROCESSING_LABEL = {
+  PENDING: '미처리',
+  COMPLETED: '처리완료',
+};
+
 const DINING_TYPE_LABEL: Record<string, string> = {
   BREAKFAST: '아침',
   LUNCH: '점심',
@@ -42,10 +47,15 @@ export default function SoldOutReportCard({ report }: Props) {
     <S.Container isPending={isPending}>
       <S.Header>
         <S.HeaderLeft>
+          <S.ProcessingBadge isPending={isPending}>
+            {isPending ? PROCESSING_LABEL.PENDING : PROCESSING_LABEL.COMPLETED}
+          </S.ProcessingBadge>
+        </S.HeaderLeft>
+        <S.HeaderRight>
           <S.StatusBadge status={report.status}>
             {STATUS_LABEL[report.status] ?? report.status}
           </S.StatusBadge>
-        </S.HeaderLeft>
+        </S.HeaderRight>
       </S.Header>
       <S.InfoRow>
         <S.InfoGroup>

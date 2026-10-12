@@ -25,6 +25,12 @@ export const HeaderLeft = styled.div`
   gap: 12px;
 `;
 
+export const HeaderRight = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
 export const InfoRow = styled.div`
   display: flex;
   align-items: center;

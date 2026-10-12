@@ -10,9 +10,15 @@ const STATUS_COLOR: Record<SoldOutReportStatus, string> = {
 };
 
 export const StatusBadge = styled.span<{ status: SoldOutReportStatus }>`
-  font-weight: 700;
+  font-weight: 500;
   font-size: 15px;
   color: ${(props) => STATUS_COLOR[props.status]};
+`;
+
+export const ProcessingBadge = styled.span<{ isPending: boolean }>`
+  font-weight: 700;
+  font-size: 15px;
+  color: ${(props) => (props.isPending ? '#000' : '#1890ff')};
 `;
 
 export const SlackNotice = styled.div`

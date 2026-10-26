@@ -4,9 +4,7 @@ import CategoryList from 'pages/Services/Category/CategoryList';
 import Login from 'pages/Login';
 import Shop from 'pages/Services/Store/ShopList';
 import UserList from 'pages/UserManage/User/UserList';
-import {
-  Outlet, Route, Routes,
-} from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import UserDetail from 'pages/UserManage/User/UserDetail';
 import RoomList from 'pages/Services/Room/RoomList';
 import RoomDetail from 'pages/Services/Room/RoomDetail';
@@ -38,6 +36,7 @@ import ClubWrite from 'pages/Services/Club/ClubWrite';
 import ClubManagerList from 'pages/UserManage/ClubManager/ClubManagerList';
 import ClubManagerRequestList from 'pages/UserManage/ClubManagerRequest/ClubManagerRequestList';
 import CoopShopUpdate from 'pages/Update/CoopShopUpdate/CoopShopUpdate';
+import SoldOutReportList from 'pages/Services/SoldOutCourse/SoldOutReportList';
 import ShuttleBusUpdate from 'pages/Update/ShuttleBusUpdate/ShuttleBusUpdate';
 import CommutingBusUpdate from 'pages/Update/CommutingBusUpdate/CommutingBusUpdate';
 import AdminList from 'pages/UserManage/Admin/AdminList';
@@ -97,8 +96,12 @@ function App() {
         <Route path="/club/:id" element={<ClubDetail />} />
         <Route path="/club/write" element={<ClubWrite />} />
         <Route path="/club-manager" element={<ClubManagerList />} />
-        <Route path="/club-manager-request" element={<ClubManagerRequestList />} />
+        <Route
+          path="/club-manager-request"
+          element={<ClubManagerRequestList />}
+        />
         <Route path="/callvan" element={<CallvanList />} />
+        <Route path="/sold-out-report" element={<SoldOutReportList />} />
         <Route path="*" element={<h1>404</h1>} />
       </Route>
     </Routes>

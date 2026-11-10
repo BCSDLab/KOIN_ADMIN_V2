@@ -6,6 +6,7 @@ import {
   NotificationOutlined, IssuesCloseOutlined, FormOutlined, UnorderedListOutlined,
   HistoryOutlined, FlagOutlined, BellOutlined, CommentOutlined, UsergroupAddOutlined,
   ScheduleOutlined, SolutionOutlined, CarOutlined, RobotOutlined,
+  ShoppingCartOutlined, RocketOutlined,
 } from '@ant-design/icons';
 import {
   Button, Flex, Menu, MenuProps,
@@ -42,6 +43,9 @@ const items: MenuProps['items'] = [
       getItem('카테고리', '/category', <FolderOpenOutlined />),
       getItem('리뷰 관리', '/review', <SnippetsOutlined />),
       getItem('혜택 관리', '/benefit', <GiftOutlined />),
+    ]),
+    getItem('주문 가능 상점', 'service-orderable-store', <ShoppingCartOutlined />, [
+      getItem('코인 딜리버리 서비스 요청', '/delivery-request', <RocketOutlined />),
     ]),
     getItem('복덕방', '/room', <HomeOutlined />),
     getItem('공지사항', '/notice', <NotificationOutlined />),
@@ -144,7 +148,7 @@ function SideNav() {
       <Menu
         onClick={onClickMenu}
         selectedKeys={selectedKeys}
-        defaultOpenKeys={['service', 'service-store', 'user']}
+        defaultOpenKeys={['service', 'service-store', 'service-orderable-store', 'user']}
         mode="inline"
         items={items}
       />

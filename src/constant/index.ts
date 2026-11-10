@@ -45,4 +45,5 @@ export const TITLE_MAPPER: Record<string, string> = {
   event_type: '이벤트 유형',
   failure_type: '실패 유형',
   message: '메시지',
+  request_status: '상태',
 };

@@ -41,6 +41,8 @@ import ShuttleBusUpdate from 'pages/Update/ShuttleBusUpdate/ShuttleBusUpdate';
 import CommutingBusUpdate from 'pages/Update/CommutingBusUpdate/CommutingBusUpdate';
 import AdminList from 'pages/UserManage/Admin/AdminList';
 import AdminDetail from 'pages/UserManage/Admin/AdminDetail';
+import DeliveryRequestList from 'pages/Services/DeliveryRequest/DeliveryRequestList';
+import DeliveryRequestDetail from 'pages/Services/DeliveryRequest/DeliveryRequestDetail';
 
 function RequireAuth() {
   return (
@@ -76,6 +78,8 @@ function App() {
         <Route path="/abtest/:id" element={<ABTestDetail />} />
         <Route path="/review" element={<ReviewList />} />
         <Route path="/benefit" element={<BenefitPage />} />
+        <Route path="/delivery-request" element={<DeliveryRequestList />} />
+        <Route path="/delivery-request/:id" element={<DeliveryRequestDetail />} />
         <Route path="/notice" element={<NoticeList />} />
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/notice/write" element={<NoticeWrite />} />
